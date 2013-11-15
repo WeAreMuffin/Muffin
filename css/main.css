@@ -1,5 +1,6 @@
 /* Loading the fonts files from GWF */
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Fredoka+One|Leckerli+One);
+@import url(http://fonts.googleapis.com/css?family=Patua+One);
 
 
 /* On fait les resets standards */
@@ -17,7 +18,7 @@ h2,
 h3,
 h4,
 h5 {
-    font-family: 'Fredoka One', cursive;
+    font-family: 'Patua One', cursive;
     font-weight: 400;
 }
 
@@ -31,8 +32,8 @@ body {
     font-size: 1em;
     line-height: 1.4;
     background-color: #F7E4BE;
-        color: #413E4A;
-        font-family: 'Lato', sans-serif;
+    color: #413E4A;
+    font-family: 'Lato', sans-serif;
 }
 
 ::-moz-selection {
@@ -97,15 +98,14 @@ body {
     border-bottom: 20px solid #B38184;
 }
 
-.footer-container,
-.main aside {
+.footer-container {
     border-top: 20px solid #B38184;
 }
 
 .header-container,
 .footer-container,
 .main aside {
-    background: #B38184;
+    background: rgb(204, 158, 154);
 }
 
 .title {
@@ -157,7 +157,6 @@ nav a:hover {
 
 .main aside {
     color: #F7E4BE;
-    padding: 0px 5% 10px;
 }
 
 .footer-container footer {
@@ -173,16 +172,83 @@ nav a:hover {
     padding-top: 20px;
 }
 
+/* ===============
+    PLACEHOLDERS
+   =============== */
+::-webkit-input-placeholder { color:#96857A; }
+::-moz-placeholder { color:#96857A; } /* firefox 19+ */
+:-ms-input-placeholder { color:#96857A; } /* ie */
+
 /* ==========================================================================
-   Author's custom styles
+                             Spécifiques au site
    ========================================================================== */
 
+/* 
+    ------------------------------------------------------------------------
+                            Boutons et formulaires
+    ------------------------------------------------------------------------                            
+*/
+
+input[type="text"],
+button
+{
+    border: 2px solid transparent;
+    box-shadow: none;
+    outline: none;
+    padding: 2px 5px;
+}
+
+label {
+    margin-right: 5px;
+}
+
+input[type="text"]
+{
+    border: 2px solid #413E4A;
+    background-color: transparent;
+    color: #413E4A;
+    border-radius: 3px;
+}
+
+button
+{
+    color: #413E4A;
+    border: none;
+    background-color: transparent;
+    vertical-align: sub;
+}
 
 
+/* 
+    ------------------------------------------------------------------------
+        Position du aside dans le header, pour avoir la bulle latérale
+    ------------------------------------------------------------------------                            
+*/
+article > header > aside
+{
+    display: inline-block;
+    width: 29%;
+    max-width: 70px;
+    height: 70px;
+    margin: 10px 0px;
+    padding: 0px;
+    border: 5px solid rgb(204, 158, 154);
+    text-align: center;
+    font-size: 50px;
+    border-radius: 0px 10px 10px 10px;
+    line-height: 75px;
+}
 
-
-
-
+article > header > div[role="title"]
+{
+    display: inline-block;
+    width: 70%;
+    height: 70px;
+    margin: 10px 0px 10px 20px;
+    padding: 0px;
+    line-height: 75px;
+    vertical-align: super;
+}
 
 
 
@@ -197,9 +263,9 @@ nav a:hover {
 
 @media only screen and (min-width: 480px) {
 
-/* ====================
-    INTERMEDIATE: Menu
-   ==================== */
+    /* ====================
+        INTERMEDIATE: Menu
+       ==================== */
 
     nav a {
         float: left;
@@ -217,9 +283,9 @@ nav a:hover {
         margin-right: 0;
     }
 
-/* ========================
-    INTERMEDIATE: IE Fixes
-   ======================== */
+    /* ========================
+        INTERMEDIATE: IE Fixes
+       ======================== */
 
     nav ul li {
         display: inline;
@@ -233,9 +299,9 @@ nav a:hover {
 @media only screen and (min-width: 768px) {
 
 
-/* ============
-    WIDE: Menu
-   ============ */
+    /* ============
+        WIDE: Menu
+       ============ */
 
     .title {
         float: left;
@@ -246,26 +312,33 @@ nav a:hover {
         width: 38%;
     }
 
-/* ============
-    WIDE: Main
-   ============ */
+    /* ============
+        WIDE: Main
+       ============ */
 
+    /* pour une double page 
+        .main article {
+            float: left;
+            width: 57%;
+        }
+    
+        .main aside {
+            float: right;
+            width: 28%;
+        }
+    */
+
+    /* pour une simple page */
     .main article {
-        float: left;
-        width: 57%;
-    }
 
-    .main aside {
-        float: right;
-        width: 28%;
     }
 }
 
 @media only screen and (min-width: 1140px) {
 
-/* ===============
-    Maximal Width
-   =============== */
+    /* ===============
+        Maximal Width
+       =============== */
 
     .wrapper {
         width: 1026px; /* 1140px - 10% for margins */
