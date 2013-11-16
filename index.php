@@ -28,7 +28,7 @@
 
         <div class="header-container">
             <header class="wrapper clearfix">
-                <h1 class="title">Trouver un titre</h1>
+                <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>chocolat triples pépites</span></i></h1>
                 <!-- // Pas besoin de navigation pour ce site...
                 <nav>
                     <ul>
@@ -49,11 +49,13 @@
             </div> <!-- #main -->
         </div> <!-- #main-container -->
 
+        <!-- // On n'a pas encore besoin de footer
         <div class="footer-container">
             <footer class="wrapper">
                 <h3>footer</h3>
             </footer>
         </div>
+        -->
 
 
         <script src="js/vendor/jquery.makeforms.min.js"></script>

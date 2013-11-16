@@ -37,28 +37,31 @@ Si on a rentré un login déja existant
                 {
                     if (e.toString()[0] === "1")
                     {
-                        console.log("Code vérifié");
                         {
-                        console.log("Code vérifié");
-                        $.get("steps/step-2.php", {code: code, login: login}, 
-                        function(data) {
-                            $("#input-code").attr("disabled", "disabled");
-                            $("#input-code + button").attr("disabled", "disabled")
-                                .html("<span class='icon-checkmark'></span>");
-                            var data = $(data);
-                            data.addClass("loading");
-                            $("div[data-role='container']").children().slideUp();
-                            $("div[data-role='container']").html(data);
-                            setTimeout(function() {
-                                data.addClass("complete");
-                            }, 200);
-                        });
+                            $.get("steps/step-2.php", {code: code, login: login},
+                            function(data) {
+                                $("#input-code").attr("disabled", "disabled");
+                                $("#input-code + button").attr("disabled", "disabled")
+                                    .html("<span class='icon-checkmark'></span>");
+                                var data = $(data);
+                                data.addClass("loading");
+                                $("div[data-role='container']").children().slideUp();
+                                $("div[data-role='container']").html(data);
+                                setTimeout(function() {
+                                    data.addClass("complete");
+                                }, 200);
+                            });
+                        }
                     }
+                    else
+                    {
+                        $("#form-passphrase").parent().find("p[role='status']").html("");
+                        $("#input-passphrase").attr("style", "color: #C02942");
+                        $("#form-passphrase").find("button").prepend('<span style="color: #C02942;" class="icon-warning-sign"></span> ');
                     }
-                    console.log("Done !", e);
                 });
             };
-            
+
             var renvoyerCode = function(login)
             {
                 var button = $("#re-send-mail");
@@ -70,31 +73,27 @@ Si on a rentré un login déja existant
                     url: "modules/code.php"
                 }).done(function(e)
                 {
-                    
+
                     if (e.toString()[0] === "1")
                     {
                         button.html("Mail envoyé ! <span class='icon-checkmark'></span>");
-                        console.log("La mise a jour de " + login + " a réussi !");
                     }
                     else
                     {
                         button.html("Une erreur s'est produite <span class='icon-warning-outline'></span>");
-                        console.log("La mise a jour de " + login + " a échouée !");
                     }
-                    console.log("Done !", e);
                 });
             };
 
             $("#form-passphrase").submit(function(ev)
             {
                 ev.preventDefault();
-                $("#form-passphrase").parent().append("<p>Vérification en cours <span class='rotate'></span></p>");
-                console.log("Submit !");
+                $("#form-passphrase").parent().find("p[role='status']").html("Vérification en cours <span class='rotate'></span>");
                 verifierCode($("#input-passphrase").val(), $("#input-login").val());
                 return false;
             });
-            
-            $("#re-send-mail").click(function(){
+
+            $("#re-send-mail").click(function() {
                 renvoyerCode($("#input-login").val());
             });
         });

@@ -110,7 +110,6 @@ function compExists ($comp, $login)
     $sth = $pdo->prepare ($requete);
     $sth->execute (array (':id_competence' => $comp, ':id_user' => $login));
     $results = $sth->fetchAll ();
-    var_dump ($results);
     return (intval ($results[0][0]) >= 1);
 }
 
@@ -144,8 +143,6 @@ function insertOrUpdateSkill ($login, $code, $comp, $level)
     {
         $id_comp = getSkillId ($comp);
         $id_user = getUserId ($login);
-        echo ("id_comp = " . $id_comp);
-        echo ("id_user = " . $id_user);
         if ( compExists ($id_comp, $id_user) )
         {
             /** @TODO mettre à jour */

@@ -13,6 +13,7 @@ Si on a rentré un login non existant
         </div>
     </header>
     <section>
+        <p role="status"></p>
         <form id="form-passphrase">
             <input type="text" placeholder="Passphrase" id="input-passphrase" name="passphrase">
             <input type="hidden" id="input-login" value="<?php echo $_POST['login']; ?>" name="login">

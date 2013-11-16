@@ -358,6 +358,10 @@ div[role="description"] a.btn
     ------------------------------------------------------------------------                            
 */
 
+#form-result {
+    display: none;
+}
+
 #form-competences fieldset {
     display: inline-block;
     margin: 10px;
@@ -475,7 +479,7 @@ div[data-role="container"] > aside > div[role="icon"]
     text-align: center;
     font-size: 50px;
     border-radius: 0px 10px 10px 10px;
-    line-height: 75px;
+    line-height: 67px;
     background: #C02942;
 }
 
