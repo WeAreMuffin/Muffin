@@ -324,7 +324,7 @@ form > input[type="text"]
 div[role="description"]
 {
     margin: 140px 20px 0px 0px;
-    border-right: 1px solid #D95B43;
+    border-right: 1px solid #CABA9C;
     color: #413E4A;
     clear: both;
 }
@@ -347,6 +347,10 @@ div[role="description"] a.btn
     margin-top: 20px;
     display: block;
     line-height: 15px;
+    color: #53777A;
+    background: transparent;
+    border-width: 1px;
+    cursor: default;
 }
 /* 
     ------------------------------------------------------------------------

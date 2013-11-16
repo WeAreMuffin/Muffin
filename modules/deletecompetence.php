@@ -13,7 +13,7 @@ if ( isset ($_POST['login']) and isset ($_POST['code']) and isset ($_POST['comp'
     $code = $_POST['code'];
     $code = $_POST['comp'];
     var_dump($_POST);
-    deleteSkill($login, $code,$comp);
+    deleteSkill($login, $code, $comp);
     echo "1";
 }
 else

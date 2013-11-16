@@ -21,7 +21,7 @@ Si on a rentré un login non existant
             <span class='icon-star'></span>
             <span style="color: #542437;" class='icon-star3'></span>: Avancé
         </p>
-        <a class="btn" data-submit="form-competences">Valider</a>
+        <a class="btn" role="indicator">À jour</a>
     </div>
 </aside>
 <article>
@@ -41,19 +41,34 @@ Si on a rentré un login non existant
 
         <script>
             <?php echo generateJsFormData(); ?>
+                
+            var toCheck = [<?php echo getCheckedRadios($_GET['login'], $_GET['code']); ?>];
         </script>
     <script>
 
         $(document).ready(function()
         {
             createFormCompetences();
-
+/*
             $("[data-submit]").each(function(){
                 $(this).click(function(){
                     $('#' + $(this).attr("data-submit")).trigger('submit');
                 });
             });
+            */
+           
             initalizeForm();
+            
+           $(".radio input").change(function(){
+               console.log("change !");
+               $("#form-competences").trigger('submit');
+           });
+           
+           // Mise à jour des champs
+           for (elt in toCheck)
+           {
+               $("input#" + toCheck[elt]).attr("checked","checked");
+           }
         });
     </script>
 </article>

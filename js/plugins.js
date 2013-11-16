@@ -27,6 +27,7 @@
 
 // pre-submit callback 
 function showRequest(formData, jqForm, options) {
+	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Enregistrement...");
 	// formData is an array; here we use $.param to convert it to a string to display it 
 	// but the form plugin does this for you automatically when it submits the data 
 	var queryString = $.param(formData);
@@ -35,7 +36,7 @@ function showRequest(formData, jqForm, options) {
 	// DOM element for the form do this: 
 	// var formElement = jqForm[0]; 
 
-	alert('About to submit: \n\n' + queryString);
+	console.log('About to submit: \n\n' + queryString);
 
 	// here we could return false to prevent the form from being submitted; 
 	// returning anything other than false will allow the form submit to continue 
@@ -44,6 +45,7 @@ function showRequest(formData, jqForm, options) {
 
 // post-submit callback 
 function showResponse(responseText, statusText, xhr, $form) {
+	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Enregistré.");
 	// for normal html responses, the first argument to the success callback 
 	// is the XMLHttpRequest object's responseText property 
 
@@ -55,7 +57,7 @@ function showResponse(responseText, statusText, xhr, $form) {
 	// property set to 'json' then the first argument to the success callback 
 	// is the json data object returned by the server 
 
-	alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+	console.log('status: ' + statusText + '\n\nresponseText: \n' + responseText +
 		'\n\nThe output div should have already been updated with the responseText.');
 }
 

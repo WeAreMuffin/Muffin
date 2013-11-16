@@ -34,7 +34,7 @@ function loginExists ($login)
  */
 function checkPassword ($login, $pass)
 {
-    sleep(1);
+    sleep (1);
     $pass = sha1 (trim (strtolower ($pass)));
     $pdo = getPDO ();
     $requete = "SELECT COUNT(*) FROM c_user WHERE login = :login AND pass = :pass";
@@ -144,8 +144,8 @@ function insertOrUpdateSkill ($login, $code, $comp, $level)
     {
         $id_comp = getSkillId ($comp);
         $id_user = getUserId ($login);
-        echo ("id_comp = ".$id_comp);
-        echo ("id_user = ".$id_user);
+        echo ("id_comp = " . $id_comp);
+        echo ("id_user = " . $id_user);
         if ( compExists ($id_comp, $id_user) )
         {
             /** @TODO mettre à jour */
@@ -169,7 +169,8 @@ function insertOrUpdateSkill ($login, $code, $comp, $level)
                     );
         }
     }
-    else return false;
+    else
+        return false;
 }
 
 /**
@@ -180,23 +181,27 @@ function insertOrUpdateSkill ($login, $code, $comp, $level)
  * @param string $comp le nom de la compétence
  * @return boolean true si la supression est un succès
  */
-function deleteSkill($login, $code, $comp)
+function deleteSkill ($login, $code, $comp)
 {
     $pdo = getPDO ();
     if ( checkPassword ($login, $code) )
     {
+        echo("check pass !");
         $id_comp = getSkillId ($comp);
         $id_user = getUserId ($login);
         if ( compExists ($id_comp, $id_user) )
         {
+            echo("exists !");
             $requete = "DELETE FROM c_user_competences "
                     . "WHERE id_user = :id_user AND id_competence = :id_comp";
             $sth = $pdo->prepare ($requete);
-            return ($sth->execute (array (':id_user' => $id_user,':id_comp' => $id_comp)) );
+            return ($sth->execute (array (':id_user' => $id_user, ':id_comp' => $id_comp)) );
         }
-        else return true;
+        else
+            return true;
     }
-    else return false;
+    else
+        return false;
 }
 
 /*   =======================================================================
@@ -252,4 +257,27 @@ function generateJsFormData ()
         $pre = $competence->id_categorie;
     }
     return ("window.items = { " . implode (',', $datas) . "};");
+}
+
+function getCheckedRadios ($login, $code)
+{
+    $pdo = getPDO ();
+    $datas = array ();
+    if ( checkPassword ($login, $code) )
+    {
+        $id_user = getUserId ($login);
+
+        $requete = "SELECT co.nom_competence AS nom, cuc.niveau AS lvl "
+                . "FROM c_user_competences cuc "
+                . "INNER JOIN c_competences co "
+                . "ON cuc.id_competence = co.id_competence "
+                . "WHERE id_user = :id_user";
+        $sth = $pdo->prepare ($requete);
+        $sth->execute (array (':id_user' => $id_user));
+        while ($elt = $sth->fetchObject ())
+        {
+            $datas[] = '"' . $elt->nom . "_" . $elt->lvl . '"';
+        }
+    }
+    return implode (",", $datas);
 }
