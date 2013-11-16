@@ -49,13 +49,12 @@
             </div> <!-- #main -->
         </div> <!-- #main-container -->
 
-        <!-- // On n'a pas encore besoin de footer
+
         <div class="footer-container">
             <footer class="wrapper">
-                <h3>footer</h3>
+                <h3>André Aubin - 2013</h3>
             </footer>
         </div>
-        -->
 
 
         <script src="js/vendor/jquery.makeforms.min.js"></script>

@@ -167,6 +167,14 @@ nav a:hover {
 .footer-container footer {
     color: #F7E4BE;
     padding: 20px 0;
+
+}
+
+.footer-container
+{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
 
 /* ===============
@@ -231,26 +239,26 @@ nav a:hover {
 
 @keyframes keyon
 {
-0% {transform: rotate(0deg); opacity: 0}
-1% {transform: rotate(220deg);opacity: 0}
-10% {transform: rotate(220deg); opacity: 0}
-30% {transform: translate(15px, 0px) rotate(220deg); opacity: 1}
-70% {transform: translate(15px, 0px) rotate(220deg); opacity: 1}
-90% {transform: translate(0px, 0px) rotate(220deg); opacity: 0}
-98% {transform: translate(0px, 0px) rotate(220deg); opacity: 0}
+    0% {transform: rotate(0deg); opacity: 0}
+    1% {transform: rotate(220deg);opacity: 0}
+    10% {transform: rotate(220deg); opacity: 0}
+    30% {transform: translate(15px, 0px) rotate(220deg); opacity: 1}
+    70% {transform: translate(15px, 0px) rotate(220deg); opacity: 1}
+    90% {transform: translate(0px, 0px) rotate(220deg); opacity: 0}
+    98% {transform: translate(0px, 0px) rotate(220deg); opacity: 0}
 }
 
 @keyframes lockon
 {
-0% {transform:rotate(0deg); opacity: 0}
-20% {transform:rotate(0deg); opacity: 1}
-45% {transform:rotate(0deg);opacity: 1}
-50% {transform:rotate(10deg);opacity: 1}
-55% {transform:rotate(-10deg);opacity: 1}
-60% {transform:rotate(10deg);opacity: 1}
-65% {transform:rotate(-10deg);opacity: 1}
-70% {transform:rotate(0deg); opacity: 1}
-90% {transform:rotate(0deg); opacity: 0}
+    0% {transform:rotate(0deg); opacity: 0}
+    20% {transform:rotate(0deg); opacity: 1}
+    45% {transform:rotate(0deg);opacity: 1}
+    50% {transform:rotate(10deg);opacity: 1}
+    55% {transform:rotate(-10deg);opacity: 1}
+    60% {transform:rotate(10deg);opacity: 1}
+    65% {transform:rotate(-10deg);opacity: 1}
+    70% {transform:rotate(0deg); opacity: 1}
+    90% {transform:rotate(0deg); opacity: 0}
 }
 
 /* 
@@ -461,6 +469,11 @@ div[role="description"] a.btn
         Position du aside dans le header, pour avoir la bulle latérale
     ------------------------------------------------------------------------                            
 */
+
+div[data-role="container"]
+{
+    min-height: 600px;
+}
 div[data-role="container"] > aside
 {
     display: inline-block;
