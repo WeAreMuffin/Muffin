@@ -193,6 +193,39 @@ nav a:hover {
 :-ms-input-placeholder { color:#96857A; } /* ie */
 
 /* ==========================================================================
+                             Footer
+   ========================================================================== */
+
+.footer-container footer div
+{
+    width: 33%;
+    display: inline-block;
+    margin: 0;
+}
+
+.footer-container footer div p,
+.footer-container footer div a
+{
+    color: rgba(158, 72, 56, 1);
+}
+
+.footer-container footer div a
+{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.git-add {
+    color: #3A4E16;
+    font-weight: bold;
+}
+
+.git-del {
+    color: #4D5355;
+    font-weight: bold;
+}
+
+/* ==========================================================================
                              Spécifiques au site
    ========================================================================== */
 
@@ -614,6 +647,19 @@ div[data-role="container"] > aside + article
     .wrapper {
         width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
+    }
+    
+    .footer-container footer div
+    {
+        width: 50%;
+        display: inline-block;
+        margin: 0;
+    }
+    
+    
+    .footer-container footer div[role='copyright']
+    {
+        display: none;
     }
 }
 

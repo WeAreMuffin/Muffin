@@ -52,7 +52,13 @@
 
         <div class="footer-container">
             <footer class="wrapper">
-                <h3>André Aubin - 2013</h3>
+                <div role="author">
+                    <p><span class="icon-quill"></span> <i>Made with love by <a href="http://www.lambdaweb.fr">lambdaweb</a></b> </i></p>
+                </div>
+                <div role="copyright">
+                </div>
+                <div role="git-info">
+                </div>
             </footer>
         </div>
 
