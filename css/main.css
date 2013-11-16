@@ -12,6 +12,10 @@ textarea {
     color: #73626E;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 /* Tous les titres sont en Fredoka */
 h1,
 h2,
@@ -95,17 +99,17 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #B38184;
+    border-bottom: 20px solid rgba(158, 72, 56, 1);
 }
 
 .footer-container {
-    border-top: 20px solid #B38184;
+    border-top: 20px solid rgba(158, 72, 56, 1);
 }
 
 .header-container,
-.footer-container,
-.main aside {
-    background: rgb(204, 158, 154);
+.footer-container
+{
+    background: #D95B43;
 }
 
 .title {
@@ -153,6 +157,7 @@ nav a:hover {
 
 .main article h1 {
     font-size: 2em;
+    margin-bottom: 0;
 }
 
 .main aside {
@@ -182,6 +187,71 @@ nav a:hover {
 /* ==========================================================================
                              Spécifiques au site
    ========================================================================== */
+
+.rotate:before
+{
+    animation: keyon 4s linear 0s infinite;
+    width: 30px;
+    height: 30px;
+    transform-origin: center center;
+    display: inline-block;
+    content: "\e6a5";
+    font-family: 'moon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    text-align: center;
+    line-height: 30px;
+    opacity: 0;
+}
+
+.rotate:after
+{
+    animation: lockon 4s linear 0s infinite;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    font-size: 2rem;
+    transform-origin: center center;
+    display: inline-block;
+    content: "\e6a6";
+    font-family: 'moon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    text-align: center;
+    line-height: 30px;
+}
+
+@keyframes keyon
+{
+0% {transform: rotate(0deg); opacity: 0}
+1% {transform: rotate(220deg);opacity: 0}
+10% {transform: rotate(220deg); opacity: 0}
+30% {transform: translate(15px, 0px) rotate(220deg); opacity: 1}
+70% {transform: translate(15px, 0px) rotate(220deg); opacity: 1}
+90% {transform: translate(0px, 0px) rotate(220deg); opacity: 0}
+98% {transform: translate(0px, 0px) rotate(220deg); opacity: 0}
+}
+
+@keyframes lockon
+{
+0% {transform:rotate(0deg); opacity: 0}
+20% {transform:rotate(0deg); opacity: 1}
+45% {transform:rotate(0deg);opacity: 1}
+50% {transform:rotate(10deg);opacity: 1}
+55% {transform:rotate(-10deg);opacity: 1}
+60% {transform:rotate(10deg);opacity: 1}
+65% {transform:rotate(-10deg);opacity: 1}
+70% {transform:rotate(0deg); opacity: 1}
+90% {transform:rotate(0deg); opacity: 0}
+}
 
 /* 
     ------------------------------------------------------------------------
@@ -218,38 +288,218 @@ button
     vertical-align: sub;
 }
 
+form > label,
+form > input[type="text"]
+{
+    min-height: 30px;
+    margin: 5px;
+    min-width: 50%;
+}
+
+.btn {
+    border: 2px solid #53777A;
+    background-color: #53777A;
+    color: #F7E4BE;
+    border-radius: 3px;
+    height: 30px;
+    padding: 4px 6px 6px 6px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.btn span[class^="icon-"]
+{
+    position: relative;
+    top: 3px;
+    padding-left: 5px;
+}
+
+
+/* 
+    ------------------------------------------------------------------------
+        Description latérale
+    ------------------------------------------------------------------------                            
+*/
+
+div[role="description"]
+{
+    margin: 140px 20px 0px 0px;
+    border-right: 1px solid #D95B43;
+    color: #413E4A;
+    clear: both;
+}
+
+p {
+    color: #887D72;
+}
+
+div[role="description"] p
+{
+    color: #887D72;
+    line-height: 20px;
+    margin: 0;
+}
+
+div[role="description"] a.btn
+{
+    width: 90%;
+    text-align: center;
+    margin-top: 20px;
+    display: block;
+    line-height: 15px;
+}
+/* 
+    ------------------------------------------------------------------------
+        Labels en étoile
+    ------------------------------------------------------------------------                            
+*/
+
+#form-competences fieldset {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+#form-competences fieldset h1 {
+    font-size: 3.6rem;
+    line-height: 0px;
+    vertical-align: top;
+    max-height: 60px;
+    margin-bottom: 5px;
+}
+
+#form-competences fieldset h4 {
+    line-height: 0px;
+}
+
+#form-competences input {
+    display: none;
+    opacity: 0;
+}
+
+#form-competences div.radio,
+#form-competences a.clear-all {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+#form-competences fieldset a.clear-all {
+    color: #F7E4BE;
+    position: relative;
+    top: 2px;
+}
+
+#form-competences fieldset:hover a.clear-all {
+    color: #887D72;
+}
+
+#form-competences div.radio input:checked + label[for$="low"]:before,
+#form-competences div.radio input + label[for$="low"]:hover:before {
+    color: rgb(255, 173, 0);
+}
+
+#form-competences div.radio input:checked + label[for$="med"]:before,
+#form-competences div.radio input + label[for$="med"]:hover:before {
+    color: #D95B43;
+}
+
+#form-competences div.radio input:checked + label[for$="high"]:before,
+#form-competences div.radio input + label[for$="high"]:hover:before {
+    color: #542437;
+}
+
+#form-competences fieldset div.radio input + label:before{
+    width: 20px;
+    height: 40px;
+    display: inline-block;
+    content: "\e679";
+    font-family: 'moon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#form-competences fieldset div.radio input + label:before{
+    color: #CEB789;
+}
+
+#form-competences fieldset:hover div.radio input + label:before{
+    color: #413E4A;
+}
+
+#form-competences div.radio input:checked + label:before{
+    content: "\e964";
+    font-size: 1.2rem;
+}
+
+
+
+#form-competences .breaker {
+    display: block;
+}
+
 
 /* 
     ------------------------------------------------------------------------
         Position du aside dans le header, pour avoir la bulle latérale
     ------------------------------------------------------------------------                            
 */
-article > header > aside
+div[data-role="container"] > aside
 {
     display: inline-block;
-    width: 29%;
-    max-width: 70px;
+    width: 20%;
+    vertical-align: top;
+}
+
+div[data-role="container"] > aside > div[role="icon"]
+{
+    float: right;
+    width: 70px;
     height: 70px;
-    margin: 10px 0px;
+    margin: 10px 20px 10px 0px;
     padding: 0px;
-    border: 5px solid rgb(204, 158, 154);
+    border: 5px solid #C02942;
     text-align: center;
     font-size: 50px;
     border-radius: 0px 10px 10px 10px;
     line-height: 75px;
+    background: #C02942;
 }
 
-article > header > div[role="title"]
+div[data-role="container"] > aside + article
 {
     display: inline-block;
-    width: 70%;
-    height: 70px;
-    margin: 10px 0px 10px 20px;
-    padding: 0px;
-    line-height: 75px;
-    vertical-align: super;
+    width: 79%;
 }
 
+.loading,
+.complete
+{
+    transition: all 0.4s;
+}
+
+.loading
+{
+    visibility: hidden;
+    position: relative;
+    bottom: -50px;
+}
+
+.complete
+{
+    visibility: visible;
+    position: relative;
+    bottom: 0px;
+}
 
 
 
