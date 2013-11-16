@@ -34,18 +34,9 @@ $login = $_POST['login'];
 $email = $login . '@student.42.fr';
 $pass = generatePassPhrase ();
 $subject = "Muffin - Votre muffinpass";
-$message = "<html>
-<head>
-  <title>Birthday Reminders for August</title>
-</head>
-<body>
-<p>Voici votre muffinpass: [ <b>$pass</b> ]</p>"
-        . "<p>Vous pouvez l'entrer dès maintenant sur "
-        . "<a href='http://muffin.lambdaweb.fr'>Muffin</a> avec votre uid ($login).</p>"
-        . "</body></html>";
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From: Muffin <no-reply@lambdaweb.fr>';
+$message = "Voici votre muffinpass: [ $pass ]\n"
+        . "Vous pouvez l'entrer dès maintenant sur http://muffin.lambdaweb.fr avec votre uid ($login).";
+$headers = 'From: Muffin <no-reply@lambdaweb.fr>';
 
 if ( $_POST['action'] == 'register' and isset ($_POST['login']) )
 {
