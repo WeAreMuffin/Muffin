@@ -1,9 +1,17 @@
 <!--
-Ce fichier va contenir la primère étape du questionnaire, c'est à dire la prise
+Ce fichier va contenir la première étape du questionnaire, c'est à dire la prise
 du login de l'étudiant, l'envoi d'un code à ce dernier et la vérification de ce
 code.
 -->
 
+<article data-content="home">
+    <header>
+        <div role="home-title">
+            <h3>Ce petit site a pour objectif de <span>recueillir</span> un maximum d'informations concernant les <span>compétences</span> de chacun,
+            et de les mettre à disposition pour faciliter les <span>échanges</span>, le <span>partage</span> et les <span>petits boulots</span>.</h3>
+        </div>
+    </header>
+</article>
 <aside>
     <div role="icon">
         <span class="icon-info"></span>

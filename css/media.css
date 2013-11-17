@@ -14,7 +14,15 @@
 
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
-
+    
+div[role="home-title"] h3
+{
+    font-size: 1.5rem;
+    line-height: 1.1em;
+    height: auto;
+    background-image: none;
+    padding-left: 0px;
+}
 
     #form-competences fieldset a.clear-all {
         color: #887D72;
@@ -140,6 +148,11 @@
 /* plus petit [tablette portrait] */
 @media only screen and (max-width: 480px) {
 
+    div[role="home-title"] h3
+{
+    text-align: center;
+}
+    
     .main article h1 {
         font-size: 1.5em;
     }

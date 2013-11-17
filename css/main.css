@@ -417,7 +417,53 @@ input + button > span[class^="icon-"] {
     padding-left: 5px;
 }
 
+/* 
+    ------------------------------------------------------------------------
+        Titre [home]
+    ------------------------------------------------------------------------                            
+*/
 
+div[role="home-title"]
+{
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+div[role="home-title"] h1
+{
+    line-height: 1em;
+    color: #D4B49B;
+    color: rgba(0, 0, 0, 0.28);
+    font-size: 3rem;
+    text-align: center;
+}
+
+
+div[role="home-title"] h3
+{
+    text-align: left;
+    font-size: 1.4rem;
+    line-height: 1em;
+    padding: 10px 0px 20px 0px;
+    color: #8D7562;
+    color: rgba(141, 117, 98, 0.61);
+    border-bottom: 5px solid rgba(158, 72, 56, 0.3);
+    height: 110px;
+    background-image: url("http://localhost/questionnaire-competences/css/../img/icons/Folded-Map.png");
+    padding-left: 200px;
+    background-repeat: no-repeat;
+    background-position: 5% 0%;
+    background-size: auto 90%;
+    margin-bottom: 25px;
+}
+
+
+div[role="home-title"] h3 span
+{
+    color: #8D7562;
+    color: rgba(141, 117, 98, 1);
+}
 /* 
     ------------------------------------------------------------------------
         Description latérale
