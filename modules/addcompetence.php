@@ -11,14 +11,14 @@ if ( isset ($_POST['login']) and isset ($_POST['code']) )
     $login = $_POST['login'];
     $code = $_POST['code'];
     $nom_joli = strtolower ($_POST['nom_competence']);
+    $nom_brut = '_'.htmlentities(str_replace (
+            array (' ', '+', '#'), array ('_', 'plus', 'diese'), $nom_joli
+    ));
     if ( preg_match ('/[<>?"\']+/', $nom_joli) > 0)
     {
         echo "-1";
     }
-    $nom_brut = '_'.htmlentities(str_replace (
-            array (' ', '+', '#'), array ('_', 'plus', 'diese'), $nom_joli
-    ));
-    if( insertCompetence ($login, $code, $nom_brut, $nom_joli, $icone) )
+    else if( insertCompetence ($login, $code, $nom_brut, $nom_joli, $icone) )
     {
         $nom_joli = ucfirst(htmlentities($nom_joli));
         $text = <<<EOT

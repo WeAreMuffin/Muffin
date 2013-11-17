@@ -204,6 +204,29 @@ nav a:hover {
 :-ms-input-placeholder { color:#96857A; } /* ie */
 
 /* ==========================================================================
+                             MODALS STYLES
+   ========================================================================== */
+
+#modal-info table {
+    width: 100%;
+}
+
+#modal-info table tr td {
+    padding: 5px;
+}
+
+#modal-info table tr td:nth-child(1) {
+    }
+#modal-info table tr td:nth-child(2) {
+        max-width: 20%;
+        color: rgba(0,0,0,0.2);
+    }
+#modal-info table tr td:nth-child(3) {
+        min-width: 60%;
+    }
+
+
+/* ==========================================================================
                              Footer
    ========================================================================== */
 
