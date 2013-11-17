@@ -1,5 +1,6 @@
 <?php
 
+session_start ();
 include_once './functions.php';
 
 // On nettoie les données contenues dans POST
@@ -58,7 +59,11 @@ else if ( $_POST['action'] == 'checkCode' and isset ($_POST['login']) and isset 
 {
     $pass = $_POST['code'];
     if ( checkPassword ($login, $pass) )
+    {
+        $_SESSION['login'] = $login;
+        $_SESSION['code'] = $pass;
         echo "1";
+    }
     else
         echo "0";
 }
@@ -66,6 +71,7 @@ else if ( $_POST['action'] == 'update' and isset ($_POST['login']) )
 {
     if ( updateUserToDatabase ($login, $pass) )
     {
+        session_destroy();
         // Si on arrive à envoyer le mail, alors on affiche 1
         if ( $fakeMail or mail ($email, $subject, $message, $headers) )
             echo "1";

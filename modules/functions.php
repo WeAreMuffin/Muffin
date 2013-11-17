@@ -32,10 +32,13 @@ function loginExists ($login)
  * @param string $pass le mot de passe (en clair)
  * @return bool true si tout est bon.
  */
-function checkPassword ($login, $pass)
+function checkPassword ($login, $pass, $sha = false)
 {
     sleep (1);
-    $pass = sha1 (trim (strtolower ($pass)));
+    if (!$sha)
+    {
+        $pass = sha1 (trim (strtolower ($pass)));
+    }
     $pdo = getPDO ();
     $requete = "SELECT COUNT(*) FROM c_user WHERE login = :login AND pass = :pass";
     $sth = $pdo->prepare ($requete);
@@ -289,9 +292,9 @@ function getJsonCodeForElement ($elt, $pre = false)
     $preText = ""; /* ($pre ? "<h5 class=\"breaker\">".addslashes($elt->nom)
       ."<small>".addslashes($elt->description)."</small></h5>" : ""); */
 
-    $name = htmlentities(ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence));
+    $name = htmlentities (ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence));
     $icone = ($elt->icone != null ? $elt->icone : "uniF002");
-    $str = strtolower (htmlentities($elt->nom_competence)) . ": { title: \"" . $name . "\","
+    $str = strtolower (htmlentities ($elt->nom_competence)) . ": { title: \"" . $name . "\","
             . "beforeTitle: '" . $preText . "<h1><span class=\"icon-" . $icone . "\"></span></h1>',"
             . "choices: niveaux() }";
     return $str;

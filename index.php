@@ -1,5 +1,6 @@
-
-
+<?php
+session_start ();
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,6 +19,7 @@
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/nprogress.css">
+        <link rel="stylesheet" href="css/modal.css">
         <link rel="stylesheet" href="css/moon.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/media.css">
@@ -49,8 +51,27 @@
 
         <div class="main-container">
             <div data-role="container" class="main wrapper clearfix">
-
-                <?php include_once 'steps/step-0.php'; ?>
+                <?php
+                if ( isset ($_SESSION['login']) and isset ($_SESSION['code']) )
+                {
+                    ?>
+                    <script>
+                        $(document).ready(function()
+                        {
+                            $.get("steps/step-2.php", {code: "<?= $_SESSION['code'] ?>", login: "<?= $_SESSION['login'] ?>"},
+                            function(data) {
+                                $("div[data-role='container']").html($(data)); 
+                            }
+                                );
+                        });
+                    </script>
+                    <?php
+                }
+                else
+                {
+                    include_once 'steps/step-0.php';
+                }
+                ?>
 
             </div> <!-- #main -->
         </div> <!-- #main-container -->
@@ -72,18 +93,19 @@
         <script src="js/vendor/jquery.form.min.js"></script>
         <script src="js/vendor/jquery.smooth-scroll.js"></script>
         <script src="js/vendor/nprogress.js"></script>
+        <script src="js/vendor/modal.js"></script>
         <script src="js/form-data.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
 
         <script>
-            var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
-            (function(d, t) {
-                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-                g.src = '//www.google-analytics.com/ga.js';
-                s.parentNode.insertBefore(g, s)
-            }(document, 'script'));
+                        var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+                        (function(d, t) {
+                        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                            g.src = '//www.google-analytics.com/ga.js';
+                            s.parentNode.insertBefore(g, s)
+                        }(document, 'script'));
         </script>
     </body>
 </html>

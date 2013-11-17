@@ -34,7 +34,7 @@ var saveToDatabase = function()
 		$("#form-competences").trigger('submit');
 	}
 	window.formChanged = false;
-}
+};
 
 function addCheckHandler(toCheck)
 {
