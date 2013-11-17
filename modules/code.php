@@ -30,7 +30,7 @@ $message = '
 
 // On récupère le login
 $login = $_POST['login'];
-$fakeMail = true;
+$fakeMail = false;
 
 $email = $login . '@student.42.fr';
 $pass = generatePassPhrase ();
