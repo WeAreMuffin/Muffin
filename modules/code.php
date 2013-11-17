@@ -72,3 +72,16 @@ else if ( $_POST['action'] == 'update' and isset ($_POST['login']) )
     else
         echo "-1";
 }
+else if ( $_POST['action'] == 'getLoginJson' and isset ($_POST['login']) )
+{
+    $infos = getLoginInformations ($_POST['login']);
+    if ( $infos )
+    {
+        echo '{ "nom" : "'
+        .ucfirst(strtolower($infos->nom)).'", "prenom" : "'
+                .ucfirst(strtolower($infos->prenom))
+                .'" }';
+    }
+    else
+        echo "0";
+}

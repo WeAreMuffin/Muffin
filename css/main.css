@@ -172,8 +172,8 @@ nav a:hover {
 
 .footer-container
 {
-    position: fixed;
-    bottom: 0px;
+    /*position: fixed;
+    bottom: 0px;*/
     width: 100%;
 }
 
@@ -348,6 +348,13 @@ form > input[type="text"]
     min-width: 50%;
 }
 
+
+input + button > span[class^="icon-"] {
+    position: relative;
+    top: 7px;
+    font-size: 2em;
+}
+
 .btn {
     border: 2px solid #53777A;
     background-color: #53777A;
@@ -470,6 +477,10 @@ div[role="description"] a.btn
     color: #542437;
 }
 
+#form-competences fieldset a.clear-all:hover {
+    color: #D95B43;
+}
+
 #form-competences fieldset div.radio input + label:before{
     width: 20px;
     height: 40px;
@@ -516,7 +527,7 @@ div[role="description"] a.btn
 
 div[data-role="container"]
 {
-    min-height: 600px;
+    min-height: 750px;
 }
 div[data-role="container"] > aside
 {
@@ -609,8 +620,8 @@ div[data-role="container"] > aside + article
     .oldie nav a {
         margin: 0 0.7%;
     }
-    
-    
+
+
 }
 
 @media only screen and (min-width: 768px) {

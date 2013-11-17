@@ -91,6 +91,22 @@ function getUserId ($login)
     return ($sth->fetchObject ()->id);
 }
 
+/**
+ * Va retourner les informations concernant le login fourni en parametre,
+ * qui sont le nom et le prenom.
+ * @param string $login le login a chercher
+ * @return StdObject l'object représentant le login
+ */
+function getLoginInformations($login)
+{
+    $pdo = getPDO ();
+    $requete = "SELECT * FROM c_42_logins "
+            . "WHERE login_eleve = :login";
+    $sth = $pdo->prepare ($requete);
+    $sth->execute (array (':login' => $login));
+    return ($sth->fetchObject ());
+}
+
 /*   =======================================================================
  *      Toutes les fonctions concernant l'insertion / maj de compétences
  *   =======================================================================  */

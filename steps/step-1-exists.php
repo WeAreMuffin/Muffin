@@ -8,7 +8,7 @@ Si on a rentré un login déja existant
 <article>
     <header>
         <div role="title">
-            <h1>Re-bonjour !</h1>
+            <h1 id="hello-name">Re-bonjour !</h1>
             <p>Il semblerait que tu sois déjà venu ! <a class="btn" id="re-send-mail">M'envoyer une nouvelle phrase <span class="icon-repeat"></span></a></p>
         </div>
     </header>
@@ -61,7 +61,6 @@ Si on a rentré un login déja existant
                     }
                 });
             };
-
             var renvoyerCode = function(login)
             {
                 var button = $("#re-send-mail");
@@ -84,6 +83,19 @@ Si on a rentré un login déja existant
                     }
                 });
             };
+            $.ajax({
+                type: "POST",
+                data: {login: $("#input-login").val().toString(), action: "getLoginJson"},
+                url: "modules/code.php",
+                success: function(e)
+                {
+                    console.log(e);
+                    console.log("END");
+                    e = $.parseJSON(e);
+                    $("#hello-name").html("Re-bonjour " + e.prenom + " " + e.nom + "!");
+                }
+            }).done(function(){console.log("done json");});
+
 
             $("#form-passphrase").submit(function(ev)
             {
@@ -92,7 +104,6 @@ Si on a rentré un login déja existant
                 verifierCode($("#input-passphrase").val(), $("#input-login").val());
                 return false;
             });
-
             $("#re-send-mail").click(function() {
                 renvoyerCode($("#input-login").val());
             });

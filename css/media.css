@@ -14,6 +14,8 @@
 
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
+
+
     #form-competences fieldset a.clear-all {
         color: #887D72;
     }
@@ -75,14 +77,30 @@
         border-radius: 5px;
     }
 
-    div[role="description-tablette"] .btn {
+    div[role="description-tablette"] .btn,
+    #re-send-mail {
         border: 1px solid #53777A;
         background-color: transparent;
         color: #53777A;
         display: block;
-        width: 50%;
-        margin: auto;
         height: 40px;
+    }
+
+    div[role="description-tablette"] .btn:hover {
+        background-color: rgba(255,255,255,0.3);
+        transition: all 0.5s;
+    }
+
+    div[role="description-tablette"] .btn {
+        margin: auto;
+        width: 90%;
+    }
+
+    #re-send-mail {
+        border: 1px solid transparent;
+        background-color: transparent;
+        margin: 0px;
+        padding: 0px;
     }
 
     h1.title {
@@ -117,6 +135,12 @@
 
     .main article h1 {
         font-size: 1.8em;
+    }
+
+    form > label, form > input[type="text"] {
+        margin: 5px;
+        padding: 2%;
+        min-width: 60%;
     }
 }
 
@@ -188,5 +212,23 @@
         top: 4px;
         left: 5px;
         font-size: 2rem;
+    }
+}
+
+/* tout petit [portable portrait] */
+@media only screen and (max-width: 340px) {
+
+    #form-login input[type="text"],
+    #form-passphrase input[type="text"] {
+        margin: 0px;
+        padding: 5%;
+        min-width: 60%;
+        width: 75%;
+        text-align: left;
+        display: inline-block;
+    }
+
+    input + button {
+        width: 15%;
     }
 }
