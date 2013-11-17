@@ -86,6 +86,7 @@ Si on a rentré un login non existant
 
         $(document).ready(function()
         {
+            $(".footer-container").addClass("nofix");
                 NProgress.start();
             createFormCompetences();
 
@@ -99,6 +100,7 @@ Si on a rentré un login non existant
             initalizeAddForm();
             addCheckHandler(window.toCheck);
                 NProgress.done();
+            treatResize();
             
         });
     </script>

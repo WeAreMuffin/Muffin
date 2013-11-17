@@ -204,15 +204,15 @@ var createFormCompetences = function()
 
 var treatResize = function()
 {
-	if ($(".wrapper.main").height() > $(window).height())
+	if ($("div[data-role='container']").height() >= $(window).height())
 	{
-		$("footer-container").addClass("fix");
+		$(".footer-container").addClass("nofix");
 	}
 	else
 	{
-		$("footer-container").removeClass("fix");
+		$(".footer-container").removeClass("nofix");
 	}
-}
+};
 
 window.createFormCompetences = createFormCompetences;
 
