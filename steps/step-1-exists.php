@@ -5,11 +5,12 @@ Si on a rentré un login déja existant
 <aside>
     <div role="icon"><span class="icon-key"></span></div>
 </aside>
-<article>
+<article data-content="exists">
     <header>
         <div role="title">
             <h1 id="hello-name">Re-bonjour !</h1>
-            <p>Il semblerait que tu sois déjà venu ! <a class="btn" id="re-send-mail">M'envoyer une nouvelle phrase <span class="icon-repeat"></span></a></p>
+            <p>Il semblerait que tu sois déjà venu !</p>
+            <p><a class="btn" id="re-send-mail">M'envoyer une nouvelle phrase <span class="icon-upload2"></span></a></p>
         </div>
     </header>
     <section>
@@ -23,6 +24,15 @@ Si on a rentré un login déja existant
     <script>
         $(document).ready(function()
         {
+            
+            var changeName = function(name)
+            {
+                $("[data-content='login']").addClass("disappear")
+                    .queue("fx",function(){
+                        $(this).html("<h1 class='entered-login'><i>" + name + "</i></h1>").dequeue();
+                    }).addClass("appear");
+            };
+            
             var verifierCode = function(code, login)
             {
                 $.ajax({
@@ -55,9 +65,10 @@ Si on a rentré un login déja existant
                     }
                     else
                     {
-                        $("#form-passphrase").parent().find("p[role='status']").html("");
+                        $("#form-passphrase").parent().parent().find("div[role='title'] > p").first().html("Mot de passe incorrect");
                         $("#input-passphrase").attr("style", "color: #C02942");
-                        $("#form-passphrase").find("button").prepend('<span style="color: #C02942;" class="icon-warning-sign"></span> ');
+                        $("#form-passphrase").find("button")
+                            .html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span> ');
                     }
                 });
             };
@@ -89,16 +100,18 @@ Si on a rentré un login déja existant
                 url: "modules/code.php",
                 success: function(e)
                 {
-                    console.log(e);
-                    console.log("END");
-                    e = $.parseJSON(e);
-                    $("#hello-name").html("Re-bonjour " + e.prenom + " " + e.nom + "!");
+                    if (e.toString() != "0")
+                    {
+                        e = $.parseJSON(e);
+                        $("#hello-name").html("Re-bonjour " + e.prenom + " !");
+                    }
                 }
-            }).done(function(){console.log("done json");});
+            });
 
 
             $("#form-passphrase").submit(function(ev)
             {
+                $("#input-passphrase + input + button").html("<span class='icon-time'></span>");
                 ev.preventDefault();
                 $("#form-passphrase").parent().find("p[role='status']").html("Vérification en cours <span class='rotate'></span>");
                 verifierCode($("#input-passphrase").val(), $("#input-login").val());

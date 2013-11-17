@@ -5,10 +5,10 @@ Si on a rentré un login non existant
 <aside>
     <div role="icon"><span class="icon-key"></span></div>
 </aside>
-<article>
+<article data-content="new">
     <header>
         <div role="title">
-            <h1>Génial !</h1>
+            <h1 id="hello-name">Génial !</h1>
             <p>Maintenant, va vite consulter tes mails et rentre la passphrase dans le champ ci-dessous</p>
         </div>
     </header>
@@ -56,8 +56,22 @@ Si on a rentré un login non existant
                 });
             };
 
+            $.ajax({
+                type: "POST",
+                data: {login: $("#input-login").val().toString(), action: "getLoginJson"},
+                url: "modules/code.php",
+                success: function(e)
+                {
+                    if (e.toString() != "0")
+                    {
+                        e = $.parseJSON(e);
+                        $("#hello-name").html("Génial, " + e.prenom + " !");
+                    }
+                }
+            });
             $("#form-passphrase").submit(function(ev)
             {
+                $("#input-passphrase + button").html("<span class='icon-time'></span>");
                 ev.preventDefault();
                 console.log("Submit !");
                 verifierCode($("#input-passphrase").val(), $("#input-login").val());

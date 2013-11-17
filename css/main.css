@@ -240,6 +240,50 @@ nav a:hover {
                              Spécifiques au site
    ========================================================================== */
 
+#re-send-mail {
+    color: #413E4A;
+border: 1px solid rgba(0, 0, 0, 0);
+background-color: rgba(0, 0, 0, 0.13);
+margin: 0px;
+line-height: 0px;
+padding: 10px;
+}
+
+#re-send-mail:hover {
+    color: #413E4A;
+border: 1px solid rgba(0, 0, 0, 0.22);
+background-color: rgba(0, 0, 0, 0.13);
+margin: 0px;
+line-height: 0px;
+padding: 10px;
+}
+
+.tra, .tra *{
+    transition: all 0.8s;
+}
+.disappear
+{
+    position: relative;
+    opacity: 0;
+    top: -50px;
+}
+
+.appear
+{
+    position: relative;
+    opacity: 1;
+    top: 0px;
+}
+
+input[disabled]{
+    background-color: transparent;
+    border: 2px solid #53777A !important;
+}
+
+input[disabled] + button {
+    color: #53777A !important;
+}
+
 .rotate:before
 {
     animation: keyon 4s linear 0s infinite;
@@ -344,7 +388,7 @@ form > label,
 form > input[type="text"]
 {
     min-height: 30px;
-    margin: 5px;
+    margin: 0px;
     min-width: 50%;
 }
 

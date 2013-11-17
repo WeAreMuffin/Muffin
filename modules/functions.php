@@ -107,6 +107,22 @@ function getLoginInformations($login)
     return ($sth->fetchObject ());
 }
 
+/**
+ * Va vérifier que le login passé en parametre est un étudiant 42
+ * @param string $login le login à vérifier
+ * @return bool true si le login est un étudiant
+ */
+function is42Student($login)
+{
+    $pdo = getPDO ();
+    $requete = "SELECT COUNT(*) FROM c_42_logins "
+            . "WHERE login_eleve = :login";
+    $sth = $pdo->prepare ($requete);
+    $sth->execute (array (':login' => $login));
+    $results = $sth->fetchAll ();
+    return (intval ($results[0][0]) >= 1);
+}
+
 /*   =======================================================================
  *      Toutes les fonctions concernant l'insertion / maj de compétences
  *   =======================================================================  */

@@ -9,14 +9,14 @@ code.
         <span class="icon-info"></span>
     </div>
 </aside>
-<article>
-    <header>
+<article data-content="login">
+    <header class="tra">
         <div role="title">
             <h1>Tout d'abord, qui est-tu ?</h1>
             <p>Entre ton uid pour t'identifier</p>
         </div>
     </header>
-    <section>
+    <section class="tra">
         <form id="form-login">
             <input type="text" placeholder="Uid" id="input-login" name="login">
             <button type="submit"><span class='icon-chevron-sign-right'></span></button>
@@ -26,6 +26,14 @@ code.
     <script>
         $(document).ready(function()
         {
+            
+            var displaceElt = function(disap, displace)
+            {
+                var height = displace.offset().top - disap.offset().top;
+                disap.addClass("disappear");
+                displace.attr("style","position: relative;top: -"+height+"px;");
+            }
+            
             var envoyerCode = function(login)
             {
                 $.ajax({
@@ -36,7 +44,6 @@ code.
                 {
                     if (e.toString()[0] === "1")
                     {
-                        console.log("L'enregistrement de " + login + " a réussi !");
                         $.get("steps/step-1-new.php", function(data) {
                             $("#input-login").attr("disabled", "disabled");
                             $("#input-login + button").attr("disabled", "disabled")
@@ -46,12 +53,12 @@ code.
                             $("div[data-role='container']").append(data);
                             setTimeout(function() {
                                 data.addClass("complete");
+                                displaceElt($("[data-content='login'] header"),$("[data-content='login'] form"));
                             }, 200);
                         });
                     }
                     else if(e.toString().slice(0,2) === "-1")
                     {
-                        console.log(login + " existe déja");
                         $.get("steps/step-1-exists.php", function(data) {
                             $("#input-login").attr("disabled", "disabled");
                             $("#input-login + button").attr("disabled", "disabled")
@@ -61,15 +68,23 @@ code.
                             $("div[data-role='container']").append(data);
                             setTimeout(function() {
                                 data.addClass("complete");
+                                displaceElt($("[data-content='login'] header"),$("[data-content='login'] form"));
                             }, 200);
                         });
                     }
-                    console.log("Done !", e);
+                    else if(e.toString().slice(0,2) === "-2")
+                    {
+                        $("[data-content='login'] div[role='title'] > p").first().html("Vous devez être un étudiant de 42");
+                         $("#input-login + button").html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span>');
+                    }
                 });
             };
+            
+            
 
             $("#form-login").submit(function(ev)
             {
+                $("#input-login + button").html("<span class='icon-time'></span>");
                 ev.preventDefault();
                 console.log("Submit !");
                 envoyerCode($("#input-login").val());

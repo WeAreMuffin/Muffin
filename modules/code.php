@@ -30,6 +30,7 @@ $message = '
 
 // On récupère le login
 $login = $_POST['login'];
+$fakeMail = true;
 
 $email = $login . '@student.42.fr';
 $pass = generatePassPhrase ();
@@ -40,10 +41,12 @@ $headers = 'From: Muffin <no-reply@lambdaweb.fr>';
 
 if ( $_POST['action'] == 'register' and isset ($_POST['login']) )
 {
-    if ( loginExists ($login) == false and saveUserToDatabase ($login, $pass) )
+    if ( !is42Student ($login) )
+        echo "-2";
+    else if ( loginExists ($login) == false and saveUserToDatabase ($login, $pass) )
     {
         // Si on arrive à envoyer le mail, alors on affiche 1
-        if ( mail ($email, $subject, $message, $headers) )
+        if ( $fakeMail or mail ($email, $subject, $message, $headers) )
             echo "1";
         else
             echo "0";
@@ -64,7 +67,7 @@ else if ( $_POST['action'] == 'update' and isset ($_POST['login']) )
     if ( updateUserToDatabase ($login, $pass) )
     {
         // Si on arrive à envoyer le mail, alors on affiche 1
-        if ( mail ($email, $subject, $message, $headers) )
+        if ( $fakeMail or mail ($email, $subject, $message, $headers) )
             echo "1";
         else
             echo "0";
@@ -78,9 +81,9 @@ else if ( $_POST['action'] == 'getLoginJson' and isset ($_POST['login']) )
     if ( $infos )
     {
         echo '{ "nom" : "'
-        .ucfirst(strtolower($infos->nom)).'", "prenom" : "'
-                .ucfirst(strtolower($infos->prenom))
-                .'" }';
+        . ucfirst (strtolower ($infos->nom)) . '", "prenom" : "'
+        . ucfirst (strtolower ($infos->prenom))
+        . '" }';
     }
     else
         echo "0";

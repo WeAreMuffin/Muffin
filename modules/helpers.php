@@ -2,8 +2,13 @@
 
 include_once '../config/configuration.php';
 
+/**
+ * Va retourner un object PDO
+ * @return \PDO
+ */
 function getPDO ()
 {
+    simulerLatence();
     // Retorune un tableau associatif contenant les identifiants à la base de données.
     $ids = getIds();
     $conn = null;
@@ -19,6 +24,9 @@ function getPDO ()
     return $conn;
 }
 
+/**
+ * Va un peu nettoyer le $_POST de ses inpuretées
+ */
 function sanitizePost ()
 {
     foreach ($_POST as $key => $value)
@@ -27,6 +35,9 @@ function sanitizePost ()
     }
 }
 
+/**
+ * Va un peu nettoyer le $_GET de ses inpuretées
+ */
 function sanitizeGet ()
 {
     foreach ($_GET as $key => $value)
@@ -35,11 +46,19 @@ function sanitizeGet ()
     }
 }
 
+/**
+ * modifie la value pour echapper les slashes
+ * @param string $value la value a echapper
+ */
 function clean_value (&$value)
 {
     $value = addslashes (trim ($value));
 }
 
+/**
+ * Va générer un pass "maison" ;)
+ * @return string le mot de passe maison
+ */
 function generatePassPhrase ()
 {
     $exclamations = array (
@@ -294,4 +313,15 @@ function generatePassPhrase ()
             .' '.$fruits[array_rand($fruits)]
             .$end[array_rand($end)];
     return strtolower($passPhrase);
+}
+
+/**
+ * Va simuler un petit temps de latence propre aux serveurs mous :)
+ */
+function simulerLatence()
+{
+    if ($_SERVER['HTTP_HOST'] == 'localhost')
+    {
+        sleep(1);
+    }
 }
