@@ -8,9 +8,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
+        <title>Muffin</title>
+        <meta name="description" content="Ce petit site a pour objectif de recueillir un maximum d'informations concernant les compétences de chacun, et de les mettre à disposition pour faciliter les échanges, le partage et les petits boulots.">
         <meta name="viewport" content="width=device-width">
+        <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-114.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-144.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144.png">
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/nprogress.css">
@@ -19,7 +23,7 @@
         <link rel="stylesheet" href="css/media.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
     </head>
@@ -71,13 +75,15 @@
         <script src="js/form-data.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-        
+
 
         <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
+            var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+            (function(d, t) {
+                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                g.src = '//www.google-analytics.com/ga.js';
+                s.parentNode.insertBefore(g, s)
+            }(document, 'script'));
         </script>
     </body>
 </html>
