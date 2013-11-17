@@ -172,6 +172,7 @@ var addClearItems = function()
 
 var createFormCompetences = function()
 {
+	console.log("form competences");
 	$("#form-competences div").makeForms({
 		components: window.items,
 		groupSize: 1,

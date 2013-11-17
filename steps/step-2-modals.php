@@ -14,11 +14,8 @@
                         <span class='icon-star'></span>
                         <span class='icon-star'></span>
                     </td>
-                    <td> ─ 
-                    </td>
-                    <td>
-                        Débutant
-                    </td>
+                    <td> ─  </td>
+                    <td> Débutant </td>
                 </tr>
                 <tr>
                     <td>
@@ -26,11 +23,8 @@
                         <span style="color: #D95B43;" class='icon-star3'></span>
                         <span class='icon-star'></span>
                     </td>
-                    <td> ─ 
-                    </td>
-                    <td>
-                        Intermédiaire
-                    </td>
+                    <td> ─  </td>
+                    <td> Intermédiaire </td>
                 </tr>
                 <tr>
                     <td>
@@ -38,21 +32,15 @@
                         <span class='icon-star'></span>
                         <span style="color: #542437;" class='icon-star3'></span>
                     </td>
-                    <td> ─ 
-                    </td>
-                    <td>
-                        Avancé
-                    </td>
+                    <td> ─  </td>
+                    <td> Avancé </td>
                 </tr>
                 <tr>
                     <td>
                         <span class="icon-remove-circle"></span>
                     </td>
-                    <td> ─ 
-                    </td>
-                    <td>
-                        Supprimer le niveau attribué.
-                    </td>
+                    <td> ─  </td>
+                    <td> Supprimer le niveau attribué. </td>
                 </tr>
             </table>
         </div>

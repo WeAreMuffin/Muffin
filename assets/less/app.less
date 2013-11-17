@@ -1,6 +1,6 @@
 /* Loading the fonts files from GWF */
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700|Fredoka+One|Leckerli+One);
-@import url(http://fonts.googleapis.com/css?family=Patua+One);
+@import url("http://fonts.googleapis.com/css?family=Lato:300,400,700|Fredoka+One|Leckerli+One");
+@import url("http://fonts.googleapis.com/css?family=Patua+One");
 
 
 /* On fait les resets standards */
@@ -16,7 +16,7 @@ textarea {
     box-sizing: border-box;
 }
 
-/* Tous les titres sont en Fredoka */
+/* Tous les titres sont en Patua */
 h1,
 h2,
 h3,
@@ -26,7 +26,7 @@ h5 {
     font-weight: 400;
 }
 
-/* La balise d'italique sera normale, mais utilisera une police différente */
+/* La balise d'italique sera normale, mais utilisera une police différente: Leckerli */
 i {
     font-style: normal;
     font-family: 'Leckerli One', cursive;
@@ -126,31 +126,36 @@ body {
     MOBILE: Menu
    ============== */
 
-nav ul {
-    margin: 0;
-    padding: 0;
-}
+nav {
+    ul {
+        margin: 0;
+        padding: 0;
+    }
 
-nav a {
-    display: block;
-    margin-bottom: 10px;
-    padding: 15px 0;
+    a {
+        display: block;
+        margin-bottom: 10px;
+        padding: 15px 0;
 
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
 
-    color: #F7E4BE;
-    background: #413E4A;
-}
+        color: #F7E4BE;
+        background: #413E4A;
 
-nav a:hover,
-nav a:visited {
-    color: white;
-}
+        &:hover,
+            &:visited
+            {
+            color: white;
+        }
 
-nav a:hover {
-    text-decoration: underline;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+
 }
 
 /* ==============
@@ -159,34 +164,36 @@ nav a:hover {
 
 .main {
     padding: 110px 0 160px 0px;
-}
 
-.main article h1 {
-    font-size: 2em;
-    margin-bottom: 0;
-}
+    article h1 {
+        font-size: 2em;
+        margin-bottom: 0;
+    }
 
-.main aside {
-    color: #F7E4BE;
-}
-
-.footer-container footer {
-    color: #F7E4BE;
-    padding: 20px 0;
-
+    aside {
+        color: #F7E4BE;
+    }
 }
 
 .footer-container
 {
+
     position: fixed;
     bottom: 0px;
     width: 100%;
+
+    &.nofix
+    {
+        position: static;
+    }
+
+    footer {
+        color: #F7E4BE;
+        padding: 20px 0;
+
+    }
 }
 
-.footer-container.nofix
-{
-    position: static;
-}
 
 /* ===============
     ALL: IE Fixes
@@ -209,21 +216,20 @@ nav a:hover {
 
 #modal-info table {
     width: 100%;
+
+    tr td {
+        padding: 5px;
+
+        &:nth-child(2) {
+            max-width: 20%;
+            color: rgba(0,0,0,0.2);
+        }
+        &:nth-child(3) {
+            min-width: 60%;
+        }
+    }
 }
 
-#modal-info table tr td {
-    padding: 5px;
-}
-
-#modal-info table tr td:nth-child(1) {
-    }
-#modal-info table tr td:nth-child(2) {
-        max-width: 20%;
-        color: rgba(0,0,0,0.2);
-    }
-#modal-info table tr td:nth-child(3) {
-        min-width: 60%;
-    }
 
 
 /* ==========================================================================
@@ -235,29 +241,27 @@ nav a:hover {
     width: 49%;
     display: inline-block;
     margin: 0;
-}
 
+    &[role="author"]
+    {
+        text-align: left;
+    }
 
-.footer-container footer div[role="author"]
-{
-    text-align: left;
-}
+    &[role="git-info"]
+    {
+        text-align: right;
+    }
 
-.footer-container footer div[role="git-info"]
-{
-    text-align: right;
-}
+    p, a
+    {
+        color: rgba(158, 72, 56, 1);
+    }
 
-.footer-container footer div p,
-.footer-container footer div a
-{
-    color: rgba(158, 72, 56, 1);
-}
-
-.footer-container footer div a
-{
-    text-decoration: none;
-    font-weight: bold;
+    a
+    {
+        text-decoration: none;
+        font-weight: bold;
+    }
 }
 
 .git-add {
@@ -281,16 +285,12 @@ nav a:hover {
     margin: 0px;
     line-height: 0px;
     padding: 10px;
+
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.22);
+    }
 }
 
-#re-send-mail:hover {
-    color: #413E4A;
-    border: 1px solid rgba(0, 0, 0, 0.22);
-    background-color: rgba(0, 0, 0, 0.13);
-    margin: 0px;
-    line-height: 0px;
-    padding: 10px;
-}
 
 .tra, .tra *{
     transition: all 0.8s;
@@ -442,14 +442,15 @@ input + button > span[class^="icon-"] {
     padding: 4px 6px 6px 6px;
     margin: 0px 5px;
     cursor: pointer;
+
+    span[class^="icon-"]
+    {
+        position: relative;
+        top: 3px;
+        padding-left: 5px;
+    }
 }
 
-.btn span[class^="icon-"]
-{
-    position: relative;
-    top: 3px;
-    padding-left: 5px;
-}
 
 /* 
     ------------------------------------------------------------------------
@@ -462,42 +463,40 @@ div[role="home-title"]
     width: 100%;
     box-sizing: border-box;
     display: block;
+    h1
+    {
+        line-height: 1em;
+        color: #D4B49B;
+        color: rgba(0, 0, 0, 0.28);
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    h3
+    {
+        text-align: left;
+        font-size: 1.4rem;
+        line-height: 1em;
+        padding: 10px 0px 20px 0px;
+        color: #8D7562;
+        color: rgba(141, 117, 98, 0.61);
+        border-bottom: 5px solid rgba(158, 72, 56, 0.3);
+        height: 110px;
+        background-image: url("http://localhost/questionnaire-competences/css/../img/icons/Folded-Map.png");
+        padding-left: 200px;
+        background-repeat: no-repeat;
+        background-position: 5% 0%;
+        background-size: auto 90%;
+        margin-bottom: 25px;
+
+        span
+        {
+            color: #8D7562;
+            color: rgba(141, 117, 98, 1);
+        }
+    }
 }
 
-div[role="home-title"] h1
-{
-    line-height: 1em;
-    color: #D4B49B;
-    color: rgba(0, 0, 0, 0.28);
-    font-size: 3rem;
-    text-align: center;
-}
-
-
-div[role="home-title"] h3
-{
-    text-align: left;
-    font-size: 1.4rem;
-    line-height: 1em;
-    padding: 10px 0px 20px 0px;
-    color: #8D7562;
-    color: rgba(141, 117, 98, 0.61);
-    border-bottom: 5px solid rgba(158, 72, 56, 0.3);
-    height: 110px;
-    background-image: url("http://localhost/questionnaire-competences/css/../img/icons/Folded-Map.png");
-    padding-left: 200px;
-    background-repeat: no-repeat;
-    background-position: 5% 0%;
-    background-size: auto 90%;
-    margin-bottom: 25px;
-}
-
-
-div[role="home-title"] h3 span
-{
-    color: #8D7562;
-    color: rgba(141, 117, 98, 1);
-}
 /* 
     ------------------------------------------------------------------------
         Description latérale
@@ -507,6 +506,19 @@ div[role="home-title"] h3 span
 div[role="description"]
 {
     margin: 140px 20px 0px 0px;
+
+    a.btn
+    {
+        width: 90%;
+        text-align: center;
+        margin-top: 10px;
+        display: block;
+        line-height: 15px;
+        color: #53777A;
+        background: transparent;
+        border-width: 1px;
+        cursor: default;
+    }
 }
 
 div[role="add-competence"],
@@ -523,54 +535,43 @@ div[role="show-stats"]
     border-right: 1px solid #CABA9C;
     color: #413E4A;
     clear: both;
+
+    p
+    {
+        color: #887D72;
+        line-height: 20px;
+        margin: 0;
+        margin-bottom: 20px;
+    }
 }
 
-div[role="add-competence"] #input-nom-comp
+div[role="add-competence"] 
 {
-    width: 78%;
-    margin: 10px 0%;
-}
+    #input-nom-comp
+    {
+        width: 78%;
+        margin: 10px 0%;
 
+        &+ button
+        {
+            width: 15%;
+            margin: 0px;
+            margin-right: 5%;
+            font-size: 0.7rem;
 
-div[role="add-competence"] #input-nom-comp + button
-{
-    width: 15%;
-    margin: 0px;
-    margin-right: 5%;
-    font-size: 0.7rem;
-}
-
-div[role="add-competence"] #input-nom-comp + button > span
-{
-    top: 4px;
+            &> span
+            {
+                top: 4px;
+            }
+        }
+    }
 }
 
 p {
     color: #887D72;
 }
 
-div[role="description"] p,
-div[role="add-competence"] p,
-div[role="show-stats"] p
-{
-    color: #887D72;
-    line-height: 20px;
-    margin: 0;
-    margin-bottom: 20px;
-}
 
-div[role="description"] a.btn
-{
-    width: 90%;
-    text-align: center;
-    margin-top: 10px;
-    display: block;
-    line-height: 15px;
-    color: #53777A;
-    background: transparent;
-    border-width: 1px;
-    cursor: default;
-}
 /* 
     ------------------------------------------------------------------------
         Labels en étoile
@@ -581,102 +582,110 @@ div[role="description"] a.btn
     display: none;
 }
 
-#form-competences fieldset {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    min-width: 130px;
-    text-align: center;
-}
+#form-competences 
+{
 
-#form-competences fieldset h1 {
-    font-size: 3.6rem;
-    line-height: 0px;
-    vertical-align: top;
-    max-height: 60px;
-    margin-bottom: 5px;
-}
-
-#form-competences fieldset h4 {
-    line-height: 0px;
-}
-
-#form-competences input {
-    display: none;
-    opacity: 0;
-}
-
-#form-competences div.radio,
-#form-competences a.clear-all {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-}
-
-#form-competences fieldset a.clear-all {
-    color: #F7E4BE;
-    position: relative;
-    top: 2px;
-}
-
-#form-competences fieldset:hover a.clear-all {
-    color: #887D72;
-}
-
-#form-competences div.radio input:checked + label[for$="low"]:before,
-#form-competences div.radio input + label[for$="low"]:hover:before {
-    color: rgb(255, 173, 0);
-}
-
-#form-competences div.radio input:checked + label[for$="med"]:before,
-#form-competences div.radio input + label[for$="med"]:hover:before {
-    color: #D95B43;
-}
-
-#form-competences div.radio input:checked + label[for$="high"]:before,
-#form-competences div.radio input + label[for$="high"]:hover:before {
-    color: #542437;
-}
-
-#form-competences fieldset a.clear-all:hover {
-    color: #D95B43;
-}
-
-#form-competences fieldset div.radio input + label:before{
-    width: 20px;
-    height: 40px;
-    display: inline-block;
-    content: "\e679";
-    font-family: 'moon';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-#form-competences fieldset div.radio input + label:before{
-    color: #CEB789;
-}
-
-#form-competences fieldset:hover div.radio input + label:before{
-    color: #413E4A;
-}
-
-#form-competences div.radio input:checked + label:before{
-    content: "\e964";
-    font-size: 1.2rem;
-}
+    fieldset {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        min-width: 130px;
+        text-align: center;
 
 
+        h1 {
+            font-size: 3.6rem;
+            line-height: 0px;
+            vertical-align: top;
+            max-height: 60px;
+            margin-bottom: 5px;
+        }
 
-#form-competences .breaker {
-    display: block;
+        h4 {
+            line-height: 0px;
+        }
+
+        a.clear-all {
+            color: #F7E4BE;
+            position: relative;
+            top: 2px;
+        }
+
+        &:hover a.clear-all {
+            color: #887D72;
+        }
+
+        a.clear-all:hover {
+            color: #D95B43;
+        }
+
+        div.radio,
+        a.clear-all {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        div.radio input {
+
+            &:checked + label[for$="low"]:before,
+                & + label[for$="low"]:hover:before {
+                color: rgb(255, 173, 0);
+            }
+
+            &:checked + label[for$="med"]:before,
+                & + label[for$="med"]:hover:before {
+                color: #D95B43;
+            }
+
+            &:checked + label[for$="high"]:before,
+                & + label[for$="high"]:hover:before {
+                color: #542437;
+            }
+
+            &:checked + label:before {
+                content: "\e964";
+                font-size: 1.2rem;
+            }
+
+            &+ label:before{
+                width: 20px;
+                height: 40px;
+                display: inline-block;
+                content: "\e679";
+                font-family: 'moon';
+                speak: none;
+                font-style: normal;
+                font-weight: normal;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+
+                /* Better Font Rendering =========== */
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                color: #CEB789;
+            }
+        }
+
+        &:hover div.radio input + label:before {
+            color: #413E4A;
+        }
+
+    }
+
+    input {
+        display: none;
+        opacity: 0;
+    }
+
+
+
+
+
+    .breaker {
+        display: block;
+    }
 }
 
 
@@ -688,34 +697,33 @@ div[role="description"] a.btn
 
 div[data-role="container"]
 {
-    /*min-height: 750px;*/
-}
-div[data-role="container"] > aside
-{
-    display: inline-block;
-    width: 20%;
-    vertical-align: top;
-}
+    & > aside
+    {
+        display: inline-block;
+        width: 20%;
+        vertical-align: top;
 
-div[data-role="container"] > aside > div[role="icon"]
-{
-    float: right;
-    width: 70px;
-    height: 70px;
-    margin: 10px 20px 10px 0px;
-    padding: 0px;
-    border: 5px solid #C02942;
-    text-align: center;
-    font-size: 50px;
-    border-radius: 0px 10px 10px 10px;
-    line-height: 67px;
-    background: #C02942;
-}
+        & > div[role="icon"]
+        {
+            float: right;
+            width: 70px;
+            height: 70px;
+            margin: 10px 20px 10px 0px;
+            padding: 0px;
+            border: 5px solid #C02942;
+            text-align: center;
+            font-size: 50px;
+            border-radius: 0px 10px 10px 10px;
+            line-height: 67px;
+            background: #C02942;
+        }
 
-div[data-role="container"] > aside + article
-{
-    display: inline-block;
-    width: 79%;
+        & + article
+        {
+            display: inline-block;
+            width: 79%;
+        }
+    }
 }
 
 .loading,
@@ -748,11 +756,6 @@ div[data-role="container"] > aside + article
 }
 
 
-
-
-
-
-
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -763,29 +766,34 @@ div[data-role="container"] > aside + article
         INTERMEDIATE: Menu
        ==================== */
 
-    nav a {
-        float: left;
-        width: 27%;
-        margin: 0 1.7%;
-        padding: 25px 2%;
-        margin-bottom: 0;
-    }
+    nav 
+    {
+        a {
+            float: left;
+            width: 27%;
+            margin: 0 1.7%;
+            padding: 25px 2%;
+            margin-bottom: 0;
+        }
 
-    nav li:first-child a {
-        margin-left: 0;
-    }
+        li{
+            &:first-child a {
+                margin-left: 0;
+            }
 
-    nav li:last-child a {
-        margin-right: 0;
+            &:last-child a {
+                margin-right: 0;
+            }
+        }
+
+        ul li {
+            display: inline;
+        }
     }
 
     /* ========================
         INTERMEDIATE: IE Fixes
        ======================== */
-
-    nav ul li {
-        display: inline;
-    }
 
     .oldie nav a {
         margin: 0 0.7%;
@@ -808,27 +816,6 @@ div[data-role="container"] > aside + article
     nav {
         float: right;
         width: 38%;
-    }
-
-    /* ============
-        WIDE: Main
-       ============ */
-
-    /* pour une double page 
-        .main article {
-            float: left;
-            width: 57%;
-        }
-    
-        .main aside {
-            float: right;
-            width: 28%;
-        }
-    */
-
-    /* pour une simple page */
-    .main article {
-
     }
 }
 

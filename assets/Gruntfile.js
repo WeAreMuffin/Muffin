@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 		less: {
 			development: {
 				options: {
-					paths: ["less"]
+					paths: ["less","less/vendor"]
 				},
 				files: {
 					"../css/<%= pkg.name %>.css": "less/main.less"
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 			},
 			production: {
 				options: {
-					paths: ["less"],
+					paths: ["less","less/vendor"],
 					cleancss: true
 				},
 				files: {
@@ -38,16 +38,17 @@ module.exports = function(grunt) {
 				stripBanners: true
 			},
 			dist: {
-				src: ['src/vendor/jquery.form.js',
-					'src/vendor/jquery.makeforms.js',
+				src: [
 					'src/vendor/jquery.smooth-scroll.js',
+					'src/vendor/jquery.makeforms.min.js',
+					'src/vendor/jquery.form.min.js',
 					'src/vendor/modal.js',
 					'src/vendor/nprogress.js',
 					'src/vendor/prefixfree.min.js',
 					'src/form-data.js',
 					'src/plugins.js',
 					'src/main.js'],
-				dest: 'dist/<%= pkg.name %>.js'
+				dest: '../js/<%= pkg.name %>.js'
 			}
 		},
 		uglify: {
@@ -60,28 +61,14 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			gruntfile: {
-				src: 'Gruntfile.js'
-			},
 			src: {
-				src: ['src/**/*.js']
-			},
-			test: {
-				src: ['test/**/*.js']
+				src: ['src/**/*.js', 'less/**/*.less']
 			}
 		},
 		watch: {
-			gruntfile: {
-				files: '<%= jshint.gruntfile.src %>',
-				tasks: ['jshint:gruntfile']
-			},
 			src: {
 				files: '<%= jshint.src.src %>',
-				tasks: ['jshint:src']
-			},
-			test: {
-				files: '<%= jshint.test.src %>',
-				tasks: ['jshint:test']
+				tasks: ['dev:src']
 			}
 		}
 	});
@@ -98,6 +85,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify']);
 	grunt.registerTask('server', ['watch']);
 	grunt.registerTask('test', ['jshint']);
-	grunt.registerTask('debug', ['clean', 'concat', 'uglify', 'less:development']);
-	grunt.registerTask('release', ['clean', 'concat', 'uglify', 'less:production']);
+	grunt.registerTask('dev', ['clean', 'concat', 'uglify', 'less:development']);
+	grunt.registerTask('prod', ['clean', 'concat', 'uglify', 'less:production']);
 };
