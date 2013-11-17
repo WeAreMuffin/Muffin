@@ -15,7 +15,7 @@ if ( isset ($_POST['login']) and isset ($_POST['code']) )
     {
         echo "-1";
     }
-    $nom_brut = htmlentities(str_replace (
+    $nom_brut = '_'.htmlentities(str_replace (
             array (' ', '+', '#'), array ('_', 'plus', 'diese'), $nom_joli
     ));
     if( insertCompetence ($login, $code, $nom_brut, $nom_joli, $icone) )
