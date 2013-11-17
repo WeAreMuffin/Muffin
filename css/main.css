@@ -242,20 +242,20 @@ nav a:hover {
 
 #re-send-mail {
     color: #413E4A;
-border: 1px solid rgba(0, 0, 0, 0);
-background-color: rgba(0, 0, 0, 0.13);
-margin: 0px;
-line-height: 0px;
-padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.13);
+    margin: 0px;
+    line-height: 0px;
+    padding: 10px;
 }
 
 #re-send-mail:hover {
     color: #413E4A;
-border: 1px solid rgba(0, 0, 0, 0.22);
-background-color: rgba(0, 0, 0, 0.13);
-margin: 0px;
-line-height: 0px;
-padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    background-color: rgba(0, 0, 0, 0.13);
+    margin: 0px;
+    line-height: 0px;
+    padding: 10px;
 }
 
 .tra, .tra *{
@@ -427,27 +427,63 @@ input + button > span[class^="icon-"] {
 div[role="description"]
 {
     margin: 140px 20px 0px 0px;
+}
+
+div[role="add-competence"],
+div[role="show-stats"]
+{
+    padding-top: 20px;
+}
+
+div[role="description"],
+div[role="add-competence"],
+div[role="show-stats"]
+{
+    margin: 0px 20px 0px 0px;
     border-right: 1px solid #CABA9C;
     color: #413E4A;
     clear: both;
+}
+
+div[role="add-competence"] #input-nom-comp
+{
+    width: 78%;
+    margin: 10px 0%;
+}
+
+
+div[role="add-competence"] #input-nom-comp + button
+{
+    width: 15%;
+    margin: 0px;
+    margin-right: 5%;
+    font-size: 0.7rem;
+}
+
+div[role="add-competence"] #input-nom-comp + button > span
+{
+    top: 4px;
 }
 
 p {
     color: #887D72;
 }
 
-div[role="description"] p
+div[role="description"] p,
+div[role="add-competence"] p,
+div[role="show-stats"] p
 {
     color: #887D72;
     line-height: 20px;
     margin: 0;
+    margin-bottom: 20px;
 }
 
 div[role="description"] a.btn
 {
     width: 90%;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
     display: block;
     line-height: 15px;
     color: #53777A;
@@ -469,6 +505,7 @@ div[role="description"] a.btn
     display: inline-block;
     margin: 10px;
     padding: 10px;
+    min-width: 130px;
     text-align: center;
 }
 
@@ -602,7 +639,8 @@ div[data-role="container"] > aside + article
 }
 
 .loading,
-.complete
+.complete,
+.preparing
 {
     transition: all 0.4s;
 }
@@ -614,8 +652,16 @@ div[data-role="container"] > aside + article
     bottom: -50px;
 }
 
+.preparing {
+    transition: all 0.4s;
+    opacity: 0;
+    position: relative;
+    bottom: -50px;
+}
+
 .complete
 {
+    opacity: 1;
     visibility: visible;
     position: relative;
     bottom: 0px;

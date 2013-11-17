@@ -8,7 +8,7 @@ include_once '../config/configuration.php';
  */
 function getPDO ()
 {
-    simulerLatence();
+    //simulerLatence();
     // Retorune un tableau associatif contenant les identifiants à la base de données.
     $ids = getIds();
     $conn = null;

@@ -25,6 +25,22 @@
 	}
 }());
 
+
+function addCheckHandler(toCheck)
+{
+	$(".radio input").change(function() {
+		console.log("change !");
+		$("#form-competences").trigger('submit');
+	});
+
+	// Mise à jour des champs
+	for (elt in toCheck)
+	{
+		$("input#" + toCheck[elt]).attr("checked", "checked");
+	}
+}
+;
+
 // pre-submit callback 
 function showRequest(formData, jqForm, options) {
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Enregistrement...");
@@ -56,6 +72,50 @@ var initalizeForm = function() {
 		return false;
 	});
 	addClearItems();
+};
+
+// pre-submit callback 
+function showAddRequest(formData, jqForm, options) {
+	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Ajout...");
+	$("#input-nom-comp + button").html("<span class='icon-time'></span>");
+	//var queryString = $.param(formData);
+	return true;
+}
+
+// post-submit callback 
+function showAddResponse(responseText, statusText, xhr, $form) {
+	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Ajouté.");
+	$("#input-nom-comp + button").html("<span class='icon-chevron-right'></span>");
+	console.log("responseText:", responseText);
+	console.log("statusText:", statusText);
+	var a = $(responseText);
+	a.addClass("preparing");
+	$("#form-competences > div").first().append(a);
+	addCheckHandler(window.toCheck);
+	setTimeout(function() {
+		a.addClass("complete").removeClass("preparing");
+	}, 1000);
+}
+
+var initalizeAddForm = function() {
+	var options = {
+		target: '#form-result', // target element(s) to be updated with server response 
+		beforeSubmit: showAddRequest, // pre-submit callback 
+		success: showAddResponse, // post-submit callback 
+		url: "modules/addcompetence.php",
+		type: "post"        // 'get' or 'post', override for form's 'method' attribute 
+	};
+
+	$('#form-add-competence').submit(function() {
+		// inside event callbacks 'this' is the DOM element so we first 
+		// wrap it in a jQuery object and then invoke ajaxSubmit 
+		console.log("initialized");
+		$(this).ajaxSubmit(options);
+
+		// !!! Important !!! 
+		// always return false to prevent standard browser submit and page navigation 
+		return false;
+	});
 };
 
 var addClearItems = function()
@@ -94,7 +154,7 @@ var addClearItems = function()
 
 var createFormCompetences = function()
 {
-	$("#form-competences").makeForms({
+	$("#form-competences div").makeForms({
 		components: window.items,
 		groupSize: 1,
 		templates:

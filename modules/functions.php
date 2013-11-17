@@ -97,7 +97,7 @@ function getUserId ($login)
  * @param string $login le login a chercher
  * @return StdObject l'object représentant le login
  */
-function getLoginInformations($login)
+function getLoginInformations ($login)
 {
     $pdo = getPDO ();
     $requete = "SELECT * FROM c_42_logins "
@@ -112,7 +112,7 @@ function getLoginInformations($login)
  * @param string $login le login à vérifier
  * @return bool true si le login est un étudiant
  */
-function is42Student($login)
+function is42Student ($login)
 {
     $pdo = getPDO ();
     $requete = "SELECT COUNT(*) FROM c_42_logins "
@@ -233,6 +233,36 @@ function deleteSkill ($login, $code, $comp)
         return false;
 }
 
+/**
+ * Va inserer une nouvelle compétence
+ * 
+ * @param string $login le login de l'utilisateur
+ * @param string $code le mot de passe de l'utilisateur
+ * @param string $nom_brut le nom de la competence en brut (ex: c_plus_plus)
+ * @param string $nom_joli le nom de la competence en joli (ex: C++)
+ * @param string $icone l'icone
+ * @return boolean true si l'insertion réussit
+ */
+function insertCompetence ($login, $code, $nom_brut, $nom_joli, $icone)
+{
+    $pdo = getPDO ();
+    if ( checkPassword ($login, $code) )
+    {
+        $requete = "INSERT INTO c_competences VALUES (null, :nom_brut, :nom_joli, null, :icone, 4)";
+        $sth = $pdo->prepare ($requete);
+        return ($sth->execute (array (
+                    ':nom_brut' => $nom_brut,
+                    ':nom_joli' => $nom_joli,
+                    ':icone' => $icone))
+                );
+    }
+    else
+    {
+        echo("error code interne");
+        return false;
+    }
+}
+
 /*   =======================================================================
  *        Toutes les fonctions concernant les données de formulaire
  *   =======================================================================  */
@@ -259,9 +289,9 @@ function getJsonCodeForElement ($elt, $pre = false)
     $preText = ""; /* ($pre ? "<h5 class=\"breaker\">".addslashes($elt->nom)
       ."<small>".addslashes($elt->description)."</small></h5>" : ""); */
 
-    $name = ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence);
+    $name = htmlentities(ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence));
     $icone = ($elt->icone != null ? $elt->icone : "uniF002");
-    $str = strtolower ($elt->nom_competence) . ": { title: \"" . $name . "\","
+    $str = strtolower (htmlentities($elt->nom_competence)) . ": { title: \"" . $name . "\","
             . "beforeTitle: '" . $preText . "<h1><span class=\"icon-" . $icone . "\"></span></h1>',"
             . "choices: niveaux() }";
     return $str;

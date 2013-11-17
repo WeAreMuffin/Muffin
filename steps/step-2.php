@@ -23,6 +23,23 @@ Si on a rentré un login non existant
         </p>
         <a class="btn" role="indicator">À jour</a>
     </div>
+    <div role="add-competence">
+        <h3 style="text-align: center;"><span class="icon-bulb"></span> <i>Ajouter</i></h3>
+        <p>Tu peux aussi ajouter de nouvelles compétences !</p>
+        <form id="form-add-competence">
+            <input type="text" placeholder="Competence" id="input-nom-comp" name="nom_competence">
+            <button type="submit"><span class='icon-chevron-sign-right'></span></button>
+            <input type="hidden" id="form-login" name="login" value="<?php echo $_GET['login']; ?>">
+            <input type="hidden" id="form-code" name="code" value="<?php echo $_GET['code']; ?>">
+        </form>
+    </div>
+    <!--
+    <div role="show-stats">
+        <h3 style="text-align: center;"><span class="icon-chart-pie"></span> <i>Et les autres ?</i></h3>
+        <p>Tu peux aussi voir les statistiques des résultats (anonymes)</p>
+        <a class="btn">Voir</a>
+    </div>
+    -->
 </aside>
 <article data-role="grid">
     <header>
@@ -52,6 +69,8 @@ Si on a rentré un login non existant
     </header>
     <section>
         <form id="form-competences">
+            <div>
+            </div>
             <input type="hidden" id="form-login" name="login" value="<?php echo $_GET['login']; ?>">
             <input type="hidden" id="form-code" name="code" value="<?php echo $_GET['code']; ?>">
         </form>
@@ -61,7 +80,7 @@ Si on a rentré un login non existant
         <script>
             <?php echo generateJsFormData(); ?>
                 
-            var toCheck = [<?php echo getCheckedRadios($_GET['login'], $_GET['code']); ?>];
+            window.toCheck = [<?php echo getCheckedRadios($_GET['login'], $_GET['code']); ?>];
         </script>
     <script>
 
@@ -77,17 +96,9 @@ Si on a rentré un login non existant
             */
            
             initalizeForm();
+            initalizeAddForm();
+            addCheckHandler(window.toCheck);
             
-           $(".radio input").change(function(){
-               console.log("change !");
-               $("#form-competences").trigger('submit');
-           });
-           
-           // Mise à jour des champs
-           for (elt in toCheck)
-           {
-               $("input#" + toCheck[elt]).attr("checked","checked");
-           }
         });
     </script>
 </article>
