@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/nprogress.css">
         <link rel="stylesheet" href="css/moon.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/media.css">
@@ -65,6 +66,8 @@
         <script src="js/vendor/jquery.makeforms.min.js"></script>
         <script src="js/vendor/prefixfree.min.js"></script>
         <script src="js/vendor/jquery.form.min.js"></script>
+        <script src="js/vendor/jquery.smooth-scroll.js"></script>
+        <script src="js/vendor/nprogress.js"></script>
         <script src="js/form-data.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>

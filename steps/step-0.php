@@ -8,7 +8,7 @@ code.
     <header>
         <div role="home-title">
             <h3>Ce petit site a pour objectif de <span>recueillir</span> un maximum d'informations concernant les <span>compétences</span> de chacun,
-            et de les mettre à disposition pour faciliter les <span>échanges</span>, le <span>partage</span> et les <span>petits boulots</span>.</h3>
+                et de les mettre à disposition pour faciliter les <span>échanges</span>, le <span>partage</span> et les <span>petits boulots</span>.</h3>
         </div>
     </header>
 </article>
@@ -34,16 +34,17 @@ code.
     <script>
         $(document).ready(function()
         {
-            
+
             var displaceElt = function(disap, displace)
             {
                 var height = displace.offset().top - disap.offset().top;
                 disap.addClass("disappear");
-                displace.attr("style","position: relative;top: -"+height+"px;");
-            }
-            
+                displace.attr("style", "position: relative;top: -" + height + "px;");
+            };
+
             var envoyerCode = function(login)
             {
+                NProgress.start();
                 $.ajax({
                     type: "POST",
                     data: {login: login, action: "register"},
@@ -52,6 +53,7 @@ code.
                 {
                     if (e.toString()[0] === "1")
                     {
+                        NProgress.inc();
                         $.get("steps/step-1-new.php", function(data) {
                             $("#input-login").attr("disabled", "disabled");
                             $("#input-login + button").attr("disabled", "disabled")
@@ -60,13 +62,16 @@ code.
                             data.addClass("loading");
                             $("div[data-role='container']").append(data);
                             setTimeout(function() {
+                                $.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: '#input-code' });
+                                NProgress.done();
                                 data.addClass("complete");
-                                displaceElt($("[data-content='login'] header"),$("[data-content='login'] form"));
+                                displaceElt($("[data-content='login'] header"), $("[data-content='login'] form"));
                             }, 200);
                         });
                     }
-                    else if(e.toString().slice(0,2) === "-1")
+                    else if (e.toString().slice(0, 2) === "-1")
                     {
+                        NProgress.inc();
                         $.get("steps/step-1-exists.php", function(data) {
                             $("#input-login").attr("disabled", "disabled");
                             $("#input-login + button").attr("disabled", "disabled")
@@ -75,20 +80,24 @@ code.
                             data.addClass("loading");
                             $("div[data-role='container']").append(data);
                             setTimeout(function() {
+                                
+                                $.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: '#input-code' });
+                                NProgress.done();
                                 data.addClass("complete");
-                                displaceElt($("[data-content='login'] header"),$("[data-content='login'] form"));
+                                displaceElt($("[data-content='login'] header"), $("[data-content='login'] form"));
                             }, 200);
                         });
                     }
-                    else if(e.toString().slice(0,2) === "-2")
+                    else if (e.toString().slice(0, 2) === "-2")
                     {
+                        NProgress.done();
                         $("[data-content='login'] div[role='title'] > p").first().html("Vous devez être un étudiant de 42");
-                         $("#input-login + button").html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span>');
+                        $("#input-login + button").html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span>');
                     }
                 });
             };
-            
-            
+
+
 
             $("#form-login").submit(function(ev)
             {

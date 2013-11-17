@@ -36,6 +36,7 @@ Si on a rentré un login non existant
                     url: "modules/code.php"
                 }).done(function(e)
                 {
+                NProgress.done();
                     if (e.toString()[0] === "1")
                     {
                         console.log("Code vérifié");
@@ -56,12 +57,14 @@ Si on a rentré un login non existant
                 });
             };
 
+                NProgress.start();
             $.ajax({
                 type: "POST",
                 data: {login: $("#input-login").val().toString(), action: "getLoginJson"},
                 url: "modules/code.php",
                 success: function(e)
                 {
+                    NProgress.done();
                     if (e.toString() != "0")
                     {
                         e = $.parseJSON(e);
@@ -71,6 +74,7 @@ Si on a rentré un login non existant
             });
             $("#form-passphrase").submit(function(ev)
             {
+                NProgress.start();
                 $("#input-passphrase + button").html("<span class='icon-time'></span>");
                 ev.preventDefault();
                 console.log("Submit !");

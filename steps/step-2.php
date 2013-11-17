@@ -86,18 +86,19 @@ Si on a rentré un login non existant
 
         $(document).ready(function()
         {
+                NProgress.start();
             createFormCompetences();
-/*
+
             $("[data-submit]").each(function(){
                 $(this).click(function(){
                     $('#' + $(this).attr("data-submit")).trigger('submit');
                 });
             });
-            */
            
             initalizeForm();
             initalizeAddForm();
             addCheckHandler(window.toCheck);
+                NProgress.done();
             
         });
     </script>

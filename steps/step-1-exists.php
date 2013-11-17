@@ -58,6 +58,7 @@ Si on a rentré un login déja existant
                                 $("div[data-role='container']").children().slideUp();
                                 $("div[data-role='container']").html(data);
                                 setTimeout(function() {
+                                    NProgress.done();
                                     data.addClass("complete");
                                 }, 200);
                             });
@@ -84,6 +85,7 @@ Si on a rentré un login déja existant
                 }).done(function(e)
                 {
 
+                NProgress.done();
                     if (e.toString()[0] === "1")
                     {
                         button.html("Mail envoyé ! <span class='icon-checkmark'></span>");
@@ -94,6 +96,8 @@ Si on a rentré un login déja existant
                     }
                 });
             };
+            
+                NProgress.start();
             $.ajax({
                 type: "POST",
                 data: {login: $("#input-login").val().toString(), action: "getLoginJson"},
@@ -111,6 +115,7 @@ Si on a rentré un login déja existant
 
             $("#form-passphrase").submit(function(ev)
             {
+                NProgress.start();
                 $("#input-passphrase + input + button").html("<span class='icon-time'></span>");
                 ev.preventDefault();
                 $("#form-passphrase").parent().find("p[role='status']").html("Vérification en cours <span class='rotate'></span>");
@@ -118,6 +123,7 @@ Si on a rentré un login déja existant
                 return false;
             });
             $("#re-send-mail").click(function() {
+                NProgress.start();
                 renvoyerCode($("#input-login").val());
             });
         });

@@ -25,12 +25,22 @@
 	}
 }());
 
+window.formChanged = false;
+
+var saveToDatabase = function()
+{
+	if (window.formChanged)
+	{
+		$("#form-competences").trigger('submit');
+	}
+	window.formChanged = false;
+}
 
 function addCheckHandler(toCheck)
 {
 	$(".radio input").change(function() {
 		console.log("change !");
-		$("#form-competences").trigger('submit');
+		window.formChanged = true;
 	});
 
 	// Mise à jour des champs
@@ -43,6 +53,7 @@ function addCheckHandler(toCheck)
 
 // pre-submit callback 
 function showRequest(formData, jqForm, options) {
+	NProgress.start();
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Enregistrement...");
 	//var queryString = $.param(formData);
 	return true;
@@ -50,6 +61,7 @@ function showRequest(formData, jqForm, options) {
 
 // post-submit callback 
 function showResponse(responseText, statusText, xhr, $form) {
+	NProgress.done();
 	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Enregistré.");
 }
 
@@ -72,10 +84,14 @@ var initalizeForm = function() {
 		return false;
 	});
 	addClearItems();
+
+	// La sauvegarde auto
+	setInterval(saveToDatabase, 5000);
 };
 
 // pre-submit callback 
 function showAddRequest(formData, jqForm, options) {
+	NProgress.start();
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Ajout...");
 	$("#input-nom-comp + button").html("<span class='icon-time'></span>");
 	//var queryString = $.param(formData);
@@ -93,6 +109,8 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	$("#form-competences > div").first().append(a);
 	addCheckHandler(window.toCheck);
 	setTimeout(function() {
+		$.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: a });
+		NProgress.done();
 		a.addClass("complete").removeClass("preparing");
 	}, 1000);
 }
@@ -183,6 +201,18 @@ var createFormCompetences = function()
 	 }
 	 });*/
 };
+
+var treatResize = function()
+{
+	if ($(".wrapper.main").height() > $(window).height())
+	{
+		$("footer-container").addClass("fix");
+	}
+	else
+	{
+		$("footer-container").removeClass("fix");
+	}
+}
 
 window.createFormCompetences = createFormCompetences;
 

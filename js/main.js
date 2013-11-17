@@ -6,6 +6,11 @@ $(document).ready(function()
 	$("input").change(function() {
 		console.log("change !");
 	});
+	NProgress.configure({showSpinner: false});
+	$("a").smoothScroll();
+
+	treatResize();
+	$(window).resize(treatResize);
 
 	/**
 	 * Json calls to Github Api

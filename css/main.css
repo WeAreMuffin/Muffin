@@ -99,7 +99,13 @@ body {
    =================== */
 
 .header-container {
+    height: 95px;
     border-bottom: 20px solid rgba(158, 72, 56, 1);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 999;
 }
 
 .footer-container {
@@ -152,7 +158,7 @@ nav a:hover {
    ============== */
 
 .main {
-    padding: 30px 0;
+    padding: 110px 0 160px 0px;
 }
 
 .main article h1 {
@@ -172,9 +178,14 @@ nav a:hover {
 
 .footer-container
 {
-    /*position: fixed;
-    bottom: 0px;*/
+    position: fixed;
+    bottom: 0px;
     width: 100%;
+}
+
+.footer-container.nofix
+{
+    position: static;
 }
 
 /* ===============
@@ -654,7 +665,7 @@ div[role="description"] a.btn
 
 div[data-role="container"]
 {
-    min-height: 750px;
+    /*min-height: 750px;*/
 }
 div[data-role="container"] > aside
 {
