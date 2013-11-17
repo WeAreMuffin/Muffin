@@ -198,9 +198,20 @@ nav a:hover {
 
 .footer-container footer div
 {
-    width: 33%;
+    width: 49%;
     display: inline-block;
     margin: 0;
+}
+
+
+.footer-container footer div[role="author"]
+{
+    text-align: left;
+}
+
+.footer-container footer div[role="git-info"]
+{
+    text-align: right;
 }
 
 .footer-container footer div p,
@@ -598,6 +609,8 @@ div[data-role="container"] > aside + article
     .oldie nav a {
         margin: 0 0.7%;
     }
+    
+    
 }
 
 @media only screen and (min-width: 768px) {
@@ -647,19 +660,6 @@ div[data-role="container"] > aside + article
     .wrapper {
         width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
-    }
-    
-    .footer-container footer div
-    {
-        width: 50%;
-        display: inline-block;
-        margin: 0;
-    }
-    
-    
-    .footer-container footer div[role='copyright']
-    {
-        display: none;
     }
 }
 

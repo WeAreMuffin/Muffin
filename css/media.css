@@ -1,0 +1,192 @@
+/*
+ * Pour les média queries délicates.
+ */
+
+
+
+.hidden-desktop {
+    display: none;
+}
+
+.visible-desktop {
+    display: block;
+}
+
+/* grand [tablette paysage] */
+@media only screen and (max-width: 1024px) {
+    #form-competences fieldset a.clear-all {
+        color: #887D72;
+    }
+
+    div[role="description-tablette"] {
+        margin: 0px;
+        text-align: center;
+    }
+
+    div[role="description-tablette"] > div {
+        display: inline-block;
+        width: auto;
+        padding: 5px 10px;
+    }
+
+    div[role="description"] {
+        display: none;
+    }
+
+    .hidden-desktop {
+        display: block;
+    }
+
+    .visible-desktop {
+        display: none !important;
+    }
+
+    div[data-role="container"] > aside + article[data-role="grid"] {
+        display: block;
+        width: 100%;
+        margin: auto;
+        text-align: center;
+    }
+
+    article[data-role="grid"] div[role="title"] h1
+    {
+        font-size: 4em;
+    }
+}
+
+/* petit [tablette paysage] */
+@media only screen and (max-width: 768px) {
+
+    div[role="description-tablette"] > div {
+        display: block;
+        width: 100%;
+        padding: 5px 10px;
+    }
+
+    div[role="description-tablette"] > div:first-child {
+        font-size: 2em;
+    }
+
+    div[role="description-tablette"] {
+        padding: 10px;
+        text-align: center;
+        background-color: #E6D2B0;
+        border: 1px solid #CAB695;
+        border-radius: 5px;
+    }
+
+    div[role="description-tablette"] .btn {
+        border: 1px solid #53777A;
+        background-color: transparent;
+        color: #53777A;
+        display: block;
+        width: 50%;
+        margin: auto;
+        height: 40px;
+    }
+
+    h1.title {
+        text-align: center;
+        width: 100%;
+        display: block;
+        font-size: 2.5em;
+    }
+
+    h1.title > i > span {
+        display: none;
+    }
+
+    .footer-container footer div
+    {
+        width: 100%;
+        display: block;
+        margin: 0;
+    }
+    .footer-container footer {
+        padding: 0px 0px 20px;
+    }
+    .footer-container footer div[role="author"]
+    {
+        text-align: center;
+    }
+
+    .footer-container footer div[role="git-info"]
+    {
+        text-align: center;
+    }
+
+    .main article h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* plus petit [tablette portrait] */
+@media only screen and (max-width: 480px) {
+
+    .main article h1 {
+        font-size: 1.5em;
+    }
+
+    div[data-role="container"] > aside + article {
+        display: block;
+        width: 100%;
+        margin: auto;
+        text-align: center;
+    }
+
+    div[data-role="container"] > aside {
+        display: block;
+        width: 20%;
+        margin: auto;
+        vertical-align: top;
+    }
+
+    div[data-role="container"] > aside > div[role="icon"] {
+        float: none;
+    }
+
+    form > label, form > input[type="text"] {
+        margin: 5px;
+        padding: 5%;
+        min-width: 80%;
+    }
+
+    div[role="title"] .btn {
+        display: block;
+        height: 40px;
+    }
+
+    .footer-container {
+        position: static;
+        bottom: 0px;
+        width: 100%;
+    }
+
+
+    article[data-role="grid"] div[role="title"] h1
+    {
+        font-size: 2em;
+    }
+
+    #form-competences div.radio, #form-competences a.clear-all {
+        width: 30px;
+        height: 30px;
+    }
+
+    #form-competences fieldset div.radio input + label:before {
+        width: 30px;
+        font-size: 2rem;
+    }
+
+    #form-competences div.radio input:checked + label:before {
+        font-size: 2.2rem;
+    }
+
+    #form-competences fieldset a.clear-all {
+        color: #CEB789;
+        position: relative;
+        top: 4px;
+        left: 5px;
+        font-size: 2rem;
+    }
+}

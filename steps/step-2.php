@@ -2,7 +2,7 @@
 Si on a rentré un login non existant
 -->
 <?php include_once '../modules/functions.php'; ?>
-<aside>
+<aside class="visible-desktop">
     <div role="icon"><span class="icon-briefcase"></span></div>
     <div role="description">
         <h3 style="text-align: center;"><span class="icon-pushpin"></span> <i>Notes</i></h3>
@@ -24,11 +24,30 @@ Si on a rentré un login non existant
         <a class="btn" role="indicator">À jour</a>
     </div>
 </aside>
-<article>
+<article data-role="grid">
     <header>
         <div role="title">
             <h1>Fabuleux !</h1>
             <p>Il ne te reste plus que à cocher tes compétences</p>
+        </div>
+        <div role="description-tablette" class="hidden-desktop">
+            <div><span class="icon-pushpin"></span> <i>Notes</i></div>
+        <div>
+            <span style="color: rgb(255, 173, 0);" class='icon-star3'></span>
+            <span class='icon-star'></span>
+            <span class='icon-star'></span>: Débutant
+        </div>
+        <div>
+            <span class='icon-star'></span>
+            <span style="color: #D95B43;" class='icon-star3'></span>
+            <span class='icon-star'></span>: Intermédiaire
+        </div>
+        <div>
+            <span class='icon-star'></span>
+            <span class='icon-star'></span>
+            <span style="color: #542437;" class='icon-star3'></span>: Avancé
+        </div>
+        <a class="btn" role="indicator">À jour</a>
         </div>
     </header>
     <section>

@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/moon.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/media.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
         
@@ -54,8 +55,6 @@
             <footer class="wrapper">
                 <div role="author">
                     <p><span class="icon-quill"></span> <i>Made with love by <a href="http://www.lambdaweb.fr">lambdaweb</a></b> </i></p>
-                </div>
-                <div role="copyright">
                 </div>
                 <div role="git-info">
                 </div>
