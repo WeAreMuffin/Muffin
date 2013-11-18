@@ -24,80 +24,7 @@ Si on a rentré un login déja existant
     <script>
         $(document).ready(function()
         {
-            
-            var changeName = function(name)
-            {
-                $("[data-content='login']").addClass("disappear")
-                    .queue("fx",function(){
-                        $(this).html("<h1 class='entered-login'><i>" + name + "</i></h1>").dequeue();
-                    }).addClass("appear");
-            };
-            
-            var verifierCode = function(code, login)
-            {
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        code: code,
-                        login: login,
-                        action: "checkCode"
-                    },
-                    url: "modules/code.php"
-                }).done(function(e)
-                {
-                    if (e.toString()[0] === "1")
-                    {
-                        {
-                            $.get("steps/step-2.php", {code: code, login: login},
-                            function(data) {
-                                $("#input-code").attr("disabled", "disabled");
-                                $("#input-code + button").attr("disabled", "disabled")
-                                    .html("<span class='icon-checkmark'></span>");
-                                var data = $(data);
-                                data.addClass("loading");
-                                $("div[data-role='container']").children().slideUp();
-                                $("div[data-role='container']").html(data);
-                                setTimeout(function() {
-                                    NProgress.done();
-                                    data.addClass("complete");
-                                }, 200);
-                            });
-                        }
-                    }
-                    else
-                    {
-                        $("#form-passphrase").parent().parent().find("div[role='title'] > p").first().html("Mot de passe incorrect");
-                        $("#input-passphrase").attr("style", "color: #C02942");
-                        $("#form-passphrase").find("button")
-                            .html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span> ');
-                    }
-                });
-            };
-            var renvoyerCode = function(login)
-            {
-                var button = $("#re-send-mail");
-                var span = button.find("span").first();
-                span.removeClass("icon-repeat").addClass("icon-time");
-                $.ajax({
-                    type: "POST",
-                    data: {login: login, action: "update"},
-                    url: "modules/code.php"
-                }).done(function(e)
-                {
-
-                NProgress.done();
-                    if (e.toString()[0] === "1")
-                    {
-                        button.html("Mail envoyé ! <span class='icon-checkmark'></span>");
-                    }
-                    else
-                    {
-                        button.html("Une erreur s'est produite <span class='icon-warning-outline'></span>");
-                    }
-                });
-            };
-            
-                NProgress.start();
+            NProgress.start();
             $.ajax({
                 type: "POST",
                 data: {login: $("#input-login").val().toString(), action: "getLoginJson"},
@@ -111,7 +38,6 @@ Si on a rentré un login déja existant
                     }
                 }
             });
-
 
             $("#form-passphrase").submit(function(ev)
             {

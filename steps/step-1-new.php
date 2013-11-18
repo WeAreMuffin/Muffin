@@ -24,38 +24,7 @@ Si on a rentré un login non existant
     <script>
         $(document).ready(function()
         {
-            var verifierCode = function(code, login)
-            {
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        code: code,
-                        login: login,
-                        action: "checkCode"
-                    },
-                    url: "modules/code.php"
-                }).done(function(e)
-                {
-                NProgress.done();
-                    if (e.toString()[0] === "1")
-                    {
-                        console.log("Code vérifié");
-                        $.get("steps/step-2.php", function(data) {
-                            $("#input-code").attr("disabled", "disabled");
-                            $("#input-code + button").attr("disabled", "disabled")
-                                .html("<span class='icon-checkmark'></span>");
-                            var data = $(data);
-                            data.addClass("loading");
-                            $("div[data-role='container']").children().slideUp();
-                            $("div[data-role='container']").html(data);
-                            setTimeout(function() {
-                                data.addClass("complete");
-                            }, 200);
-                        });
-                    }
-                    console.log("Done !", e);
-                });
-            };
+            
 
                 NProgress.start();
             $.ajax({

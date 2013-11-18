@@ -1,0 +1,4 @@
+## Définit les routes pour les controlleurs.
+
+routes: 
+    '/'             :   'Home'
