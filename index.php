@@ -12,17 +12,17 @@ session_start ();
         <title>Muffin</title>
         <meta name="description" content="Ce petit site a pour objectif de recueillir un maximum d'informations concernant les compétences de chacun, et de les mettre à disposition pour faciliter les échanges, le partage et les petits boulots.">
         <meta name="viewport" content="width=device-width">
+        <meta name="google" value="notranslate">
+        <meta name="application-name" content="Muffin">
+        <meta name="application-url" content="http://muffin.lambdaweb.fr/">
+        <link rel="canonical" href="http://muffin.lambdaweb.fr/">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-114.png">
         <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114.png">
         <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-144.png">
         <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144.png">
 
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/nprogress.css">
-        <link rel="stylesheet" href="css/modal.css">
-        <link rel="stylesheet" href="css/moon.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/media.css">
+        <link rel="stylesheet" href="css/Muffin.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -87,17 +87,7 @@ session_start ();
             </footer>
         </div>
 
-
-        <script src="js/vendor/jquery.makeforms.min.js"></script>
-        <script src="js/vendor/prefixfree.min.js"></script>
-        <script src="js/vendor/jquery.form.min.js"></script>
-        <script src="js/vendor/jquery.smooth-scroll.js"></script>
-        <script src="js/vendor/nprogress.js"></script>
-        <script src="js/vendor/modal.js"></script>
-        <script src="js/form-data.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
+        <script src="js/Muffin.js"></script>
 
         <script>
                         var _gaq = [['_setAccount', 'UA-45835616-1'], ['_trackPageview']];
