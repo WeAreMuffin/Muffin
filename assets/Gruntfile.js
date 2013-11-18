@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 		less: {
 			development: {
 				options: {
-					paths: ["less","less/vendor"]
+					paths: ["less", "less/vendor", "less/bootstrap"]
 				},
 				files: {
 					"../css/<%= pkg.name %>.css": "less/main.less"
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 			},
 			production: {
 				options: {
-					paths: ["less","less/vendor"],
+					paths: ["less", "less/vendor", "less/bootstrap"],
 					cleancss: true
 				},
 				files: {
@@ -39,15 +39,20 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'src/vendor/jquery.smooth-scroll.js',
-					'src/vendor/jquery.makeforms.min.js',
-					'src/vendor/jquery.form.min.js',
-					'src/vendor/modal.js',
-					'src/vendor/nprogress.js',
-					'src/vendor/prefixfree.min.js',
-					'src/form-data.js',
-					'src/plugins.js',
-					'src/main.js'],
+					'src/vendor/*.js',
+					'src/bootstrap/transition.js',
+					'src/bootstrap/alert.js',
+					'src/bootstrap/button.js',
+					'src/bootstrap/carousel.js',
+					'src/bootstrap/collapse.js',
+					'src/bootstrap/dropdown.js',
+					'src/bootstrap/modal.js',
+					'src/bootstrap/tooltip.js',
+					'src/bootstrap/popover.js',
+					'src/bootstrap/scrollspy.js',
+					'src/bootstrap/tab.js',
+					'src/bootstrap/affix.js',
+					'src/*.js'],
 				dest: '../js/<%= pkg.name %>.js'
 			}
 		},
@@ -62,7 +67,8 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			src: {
-				src: ['src/**/*.js', 'less/**/*.less']
+				src: ['Gruntfile.js', 'src/**/*.js',
+					'less/**/*.less', 'less/bootstrap/*.less']
 			}
 		},
 		watch: {

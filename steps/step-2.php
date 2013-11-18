@@ -6,7 +6,7 @@ Si on a rentré un login non existant
 <aside class="visible-desktop">
     <div role="icon"><span class="icon-briefcase"></span></div>
     <div role="description">
-        <a class="btn" href="#modal-info"><span class="icon-info-sign"></span></a>
+        <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-info-sign"></span></a>
         
         <a class="btn" role="indicator">À jour</a>
     </div>
@@ -55,6 +55,7 @@ Si on a rentré un login non existant
         </div>
     </header>
     <section>
+        <a href="#!"></a>
         <form id="form-competences">
             <div>
             </div>

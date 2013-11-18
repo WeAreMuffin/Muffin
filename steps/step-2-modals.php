@@ -1,12 +1,13 @@
-<section class="semantic-content" id="modal-info" tabindex="-1"
-         role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-
-    <div class="modal-inner">
-        <header id="modal-label">
-            <h1>Quelques explications ?</h1>
-        </header>
-        <div class="modal-content">
-            <h3><span class="icon-th-small"></span> Légende</h3>
+<!-- Modal -->
+<div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="Informations" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><span class="icon-th-small"></span>Quelques explications ?</h4>
+      </div>
+      <div class="modal-body">
+        <h3><span class="icon-th-small"></span> Légende</h3>
             <table>
                 <tr>
                     <td>
@@ -43,11 +44,14 @@
                     <td> Supprimer le niveau attribué. </td>
                 </tr>
             </table>
-        </div>
-        <footer><!-- Footer --></footer>
-    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-    <a href="#!" class="modal-close" title="Close this modal" data-close="Close"
-       data-dismiss="modal">×</a>
-</section>
+
 
