@@ -497,16 +497,82 @@ div[role="home-title"]
     }
 }
 
+
+/* 
+    ------------------------------------------------------------------------
+        Container principal
+    ------------------------------------------------------------------------                            
+*/
+
+div[data-role="container"]
+{
+    & > aside
+    {
+        display: inline-block;
+        width: 20%;
+        vertical-align: top;
+
+        & + article
+        {
+            display: inline-block;
+            width: 79%;
+        }
+    }
+}
+
+/* 
+    ------------------------------------------------------------------------
+        Header
+    ------------------------------------------------------------------------                            
+*/
+
+
+article[role="header"]
+{
+    & > header {
+
+        & > div[role="icon-container"]
+        {
+            display: inline-block;
+            width: 20%;
+            vertical-align: top;
+            clear: both;
+
+            & > div[role="icon"]
+            {
+                float: right;
+                width: 70px;
+                height: 70px;
+                margin: 10px 20px 10px 0px;
+                padding: 0px;
+                border: 5px solid  @muffin-red;
+                text-align: center;
+                font-size: 50px;
+                border-radius: 0px 10px 10px 10px;
+                line-height: 67px;
+                background: @muffin-red;
+                color: @muffin-yellow;
+                display: inline-block;
+            }
+        }
+
+        & > div[role="title"]
+        {
+            display: inline-block;
+            width: 79%;
+        }
+    }
+}
+
 /* 
     ------------------------------------------------------------------------
         Description latérale
     ------------------------------------------------------------------------                            
 */
 
-div[role="description"]
-{
-    margin: 140px 20px 0px 0px;
 
+aside.side-menu
+{
     a.btn
     {
         width: 90%;
@@ -517,7 +583,17 @@ div[role="description"]
         color: #53777A;
         background: transparent;
         border-width: 1px;
-        cursor: default;
+    }
+
+    ul[role="side-menu"]
+    {
+        margin: 40px 20px 0px 0px;
+        border-right: 1px solid #CABA9C;
+
+
+        li {
+            
+        }
     }
 }
 
@@ -532,7 +608,6 @@ div[role="add-competence"],
 div[role="show-stats"]
 {
     margin: 0px 20px 0px 0px;
-    border-right: 1px solid #CABA9C;
     color: #413E4A;
     clear: both;
 
@@ -691,40 +766,11 @@ p {
 
 /* 
     ------------------------------------------------------------------------
-        Position du aside dans le header, pour avoir la bulle latérale
+        Transitions & fading
     ------------------------------------------------------------------------                            
 */
 
-div[data-role="container"]
-{
-    & > aside
-    {
-        display: inline-block;
-        width: 20%;
-        vertical-align: top;
 
-        & > div[role="icon"]
-        {
-            float: right;
-            width: 70px;
-            height: 70px;
-            margin: 10px 20px 10px 0px;
-            padding: 0px;
-            border: 5px solid #C02942;
-            text-align: center;
-            font-size: 50px;
-            border-radius: 0px 10px 10px 10px;
-            line-height: 67px;
-            background: #C02942;
-        }
-
-        & + article
-        {
-            display: inline-block;
-            width: 79%;
-        }
-    }
-}
 
 .loading,
 .complete,

@@ -56,12 +56,11 @@
 }
 .modal-content {
   position: relative;
-  background-color: #ffffff;
+  background-color: #faedd5;
   border: 1px solid #999999;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-top: 1px solid transparent;
   border-radius: 6px;
-  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   background-clip: padding-box;
   outline: none;
 }
@@ -85,11 +84,14 @@
 .modal-header {
   padding: 15px;
   background-color: #d95b43;
-  border-bottom: 1px solid #ff0000;
+  border-bottom: 1px solid #9e4838;
   min-height: 16.428571429px;
+  color: #f7e4be;
 }
 .modal-header .close {
+  color: #f7e4be;
   margin-top: -2px;
+  float: right;
 }
 .modal-title {
   margin: 0;
@@ -103,7 +105,7 @@
   margin-top: 15px;
   padding: 19px 20px 20px;
   text-align: right;
-  border-top: 1px solid #ff0000;
+  border-top: 1px solid #9e4838;
   *zoom: 1;
 }
 .modal-footer:before,
@@ -131,10 +133,6 @@
     width: 600px;
     padding-top: 30px;
     padding-bottom: 30px;
-  }
-  .modal-content {
-    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
 }
 .tooltip {
@@ -4028,13 +4026,54 @@ div[role="home-title"] h3 span {
 }
 /* 
     ------------------------------------------------------------------------
+        Container principal
+    ------------------------------------------------------------------------                            
+*/
+div[data-role="container"] > aside {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+}
+div[data-role="container"] > aside + article {
+  display: inline-block;
+  width: 79%;
+}
+/* 
+    ------------------------------------------------------------------------
+        Header
+    ------------------------------------------------------------------------                            
+*/
+article[role="header"] > header > div[role="icon-container"] {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+  clear: both;
+}
+article[role="header"] > header > div[role="icon-container"] > div[role="icon"] {
+  float: right;
+  width: 70px;
+  height: 70px;
+  margin: 10px 20px 10px 0px;
+  padding: 0px;
+  border: 5px solid #c02942;
+  text-align: center;
+  font-size: 50px;
+  border-radius: 0px 10px 10px 10px;
+  line-height: 67px;
+  background: #c02942;
+  color: #f7e4be;
+  display: inline-block;
+}
+article[role="header"] > header > div[role="title"] {
+  display: inline-block;
+  width: 79%;
+}
+/* 
+    ------------------------------------------------------------------------
         Description latérale
     ------------------------------------------------------------------------                            
 */
-div[role="description"] {
-  margin: 140px 20px 0px 0px;
-}
-div[role="description"] a.btn {
+aside.side-menu a.btn {
   width: 90%;
   text-align: center;
   margin-top: 10px;
@@ -4043,7 +4082,10 @@ div[role="description"] a.btn {
   color: #53777A;
   background: transparent;
   border-width: 1px;
-  cursor: default;
+}
+aside.side-menu ul[role="side-menu"] {
+  margin: 40px 20px 0px 0px;
+  border-right: 1px solid #CABA9C;
 }
 div[role="add-competence"],
 div[role="show-stats"] {
@@ -4053,7 +4095,6 @@ div[role="description"],
 div[role="add-competence"],
 div[role="show-stats"] {
   margin: 0px 20px 0px 0px;
-  border-right: 1px solid #CABA9C;
   color: #413E4A;
   clear: both;
 }
@@ -4168,31 +4209,9 @@ p {
 }
 /* 
     ------------------------------------------------------------------------
-        Position du aside dans le header, pour avoir la bulle latérale
+        Transitions & fading
     ------------------------------------------------------------------------                            
 */
-div[data-role="container"] > aside {
-  display: inline-block;
-  width: 20%;
-  vertical-align: top;
-}
-div[data-role="container"] > aside > div[role="icon"] {
-  float: right;
-  width: 70px;
-  height: 70px;
-  margin: 10px 20px 10px 0px;
-  padding: 0px;
-  border: 5px solid #C02942;
-  text-align: center;
-  font-size: 50px;
-  border-radius: 0px 10px 10px 10px;
-  line-height: 67px;
-  background: #C02942;
-}
-div[data-role="container"] > aside + article {
-  display: inline-block;
-  width: 79%;
-}
 .loading,
 .complete,
 .preparing {
