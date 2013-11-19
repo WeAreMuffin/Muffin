@@ -9,7 +9,14 @@
         du login de l'étudiant, l'envoi d'un code à ce dernier et la vérification de ce
         code.
     #}
-
+{% if webdata.user %}
+<script>
+                        $(document).ready(function()
+                        {
+                            window.muffin.verifierCode("{{ webdata.session.code }}", "{{ webdata.user }}");
+                        });
+                    </script>
+{% else %}
     <article data-content="home">
         <header>
             <div role="home-title">
@@ -45,12 +52,12 @@
                     $("#input-login + button").html("<span class='icon-time'></span>");
                     ev.preventDefault();
                     console.log("Submit !");
-                    envoyerCode($("#input-login").val());
+                    window.muffin.envoyerCode($("#input-login").val());
                     return false;
                 });
             });
         </script>
     </article>
 
-
+{% endif %}
 {% endblock %}

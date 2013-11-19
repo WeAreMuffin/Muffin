@@ -1,9 +1,7 @@
 
-{% extends 'base.twig' %}
 
 
 
-{% block container %}
 {#
 <!--
 Si on a rentré un login non existant
@@ -24,6 +22,11 @@ include_once '../templates/side-menu.php';
 ?>
 #}
 
+
+{% block container %}
+{% include 'user.index.modals.twig' %}
+{% include 'user.index.header.twig' %}
+{% include 'user.index.side-menu.twig' %}
 <article data-role="grid">
     <section>
         <a href="#!"></a>
@@ -37,9 +40,9 @@ include_once '../templates/side-menu.php';
     </section>
 
     <script>
-<?php echo generateJsFormData (); ?>
+        {{ formDataJson }}
 
-        window.toCheck = [<?php echo getCheckedRadios ($_GET['login'], $_GET['code']); ?>];
+        window.toCheck = [{{ checkedRadios }}];
     </script>
     <script>
 
@@ -64,5 +67,6 @@ include_once '../templates/side-menu.php';
         });
     </script>
 </article>
+
 
 {% endblock %}

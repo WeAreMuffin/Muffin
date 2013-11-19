@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /*
  *
  * This file is part of the moon framework.
@@ -28,12 +29,16 @@
 class Login extends Controller
 {
 
-    public function index ($params)
+    public function index ($params = array ())
     {
         echo "Not allowed";
     }
 
     /**
+     * Va enregistrer l'utilisateur en parametre de l'url.
+     * 
+     * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
+     * 
      * @PathInfo('login')
      * @Ajax
      */
@@ -42,44 +47,183 @@ class Login extends Controller
         // Si à true, alors aucun mail ne sera envoyé.
         $fakeMail = true;
 
+        // On récupère le login fourni dans l'url
         $login = $this->getUrlParam ('login');
-        $pass = $this->generatePassPhrase ();
-        
-        $student = new Entities ("c_42_logins[login_eleve={$login}]");
-        $loginsExists = new Entities ("c_user[login={$login}]");
 
-        if ( !count($student) )
+        // On génère le mot de passe
+        $pass = $this->generatePassPhrase ();
+
+        // Le hash qui sera dans la bdd
+        $shapass = sha1 (trim (strtolower ($pass)));
+
+        // Liste des élèves 42 avec ce login
+        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
+
+        // Liste des élèves inscrits avec le même login
+        $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
+
+        // On récupère le template du message
+        $m = $this->getInscriptionEmailTemplate ($login, $pass);
+
+        if ( !count ($student) )
             echo "-2";
-        else if ( !count($loginsExists) == false and saveUserToDatabase ($login, $pass) )
+        else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
         {
             // Si on arrive à envoyer le mail, alors on affiche 1
-            if ( $fakeMail or mail ($email, $subject, $message, $headers) )
-                echo "1";
+            if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
+                echo "1".($fakeMail ? $pass : '');
             else
                 echo "0";
         }
         else
             echo "-1";
+    }
 
+    /**
+     * Va update le pass de l'utilisateur en parametre de l'url.
+     * 
+     * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
+     * 
+     * @PathInfo('login')
+     * @Ajax
+     */
+    public function update ($params = array ())
+    {
+        // Si à true, alors aucun mail ne sera envoyé.
+        $fakeMail = true;
 
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('login');
 
-        $projets = Moon::getAllHeavy ('project');
-        $insertform = Moon::create ('project')->generateInsertForm ();
-        $insertEquipeform = Moon::create ('equipe')->generateInsertForm ();
-        $customOption = new Option ('new', 'Nouveau');
-        $customOption->addData ('toggle', 'insert-equipe-form');
-        $insertform->getField ('id_equipe')->addOption ($customOption);
-        $this->addData ('projets', $projets);
-        $this->addData ('insertProjetForm', $insertform);
-        $this->addData ('insertEquipeForm', $insertEquipeform);
-        $this->render ();
+        // On génère le mot de passe
+        $pass = $this->generatePassPhrase ();
+
+        // Le hash qui sera dans la bdd
+        $shapass = sha1 (trim (strtolower ($pass)));
+
+        // Liste des élèves inscrits avec le même login
+        $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
+
+        // On récupère le template du message
+        $m = $this->getUpdateEmailTemplate ($login, $pass);
+
+        if ( count ($loginsExists) and Core::getBdd ()->update (
+                        array ("pass" => $shapass), 'c_user', array ("login" => $login)) )
+        {
+            // Si on arrive à envoyer le mail, alors on affiche 1
+            if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
+                echo "1".($fakeMail ? $pass : '');
+            else
+                echo "0";
+        }
+        else
+            echo "-1";
+    }
+
+    /**
+     * Va afficher une représentation json de l'utilisateur,
+     * comprenant le nom et le prénom.
+     * 
+     * @return un json {nom : -, prenom: -}
+     * 
+     * @PathInfo('login')
+     * @Ajax
+     */
+    public function json ($params = array ())
+    {
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('login');
+        $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
+
+        if ( $infos->exists () )
+        {
+            echo '{ "nom" : "'
+            . ucfirst (strtolower ($infos->nom)) . '", "prenom" : "'
+            . ucfirst (strtolower ($infos->prenom))
+            . '" }';
+        }
+        else
+            echo "0";
+    }
+
+    /**
+     * Va verifier que le code et le login dans post sont bien valides.
+     * Si c'est le cas, une session va être enregistrée.
+     * @Ajax
+     */
+    public function checkCode ($params = array ())
+    {
+        // On récupère le login fourni dans l'url
+        $code = htmlentities($_POST['code']);
+        $shacode = sha1 (trim (strtolower ($code)));
+        $login = htmlentities($_POST['login']);
+        $infos = new Entities ("c_user[login=\"{$login}\"][pass=\"{$shacode}\"]");
+
+        if ( count ($infos) == 1 )
+        {
+            $_SESSION['login'] = $login;
+            $_SESSION['code'] = $code;
+            $_SESSION['muffin_id'] = $infos->current ()->id;
+            echo "1";
+        }
+        else
+            echo "0";
+        echo "\ncode for $login = $code -> $shacode ";
+    }
+
+    /*
+     * *************************************************************************
+     *                  Méthodes internes & utilitaires
+     * *************************************************************************
+     */
+
+    /**
+     * Va retourner un tableau contenant les textes pour l'email d'inscription
+     * @param string $login le login de l'utilisateur
+     * @param string $pass le mot de passe généré <b>en clair</b>
+     * @return array un tableau associatif contenant [email,subject,message,headers]
+     */
+    protected function getInscriptionEmailTemplate ($login, $pass)
+    {
+        $email = $login . '@student.42.fr';
+        $subject = "Muffin - Votre muffinpass";
+        $message = "Voici votre muffinpass: [ $pass ]\n"
+                . "Vous pouvez l'entrer dès maintenant sur http://muffin.lambdaweb.fr avec votre uid ($login).";
+        $headers = 'From: Muffin <no-reply@lambdaweb.fr>';
+        return (array (
+            "email" => $email,
+            "subject" => $subject,
+            "message" => $message,
+            "headers" => $headers)
+                );
+    }
+
+    /**
+     * Va retourner un tableau contenant les textes pour l'email de mise à jour
+     * @param string $login le login de l'utilisateur
+     * @param string $pass le mot de passe généré <b>en clair</b>
+     * @return array un tableau associatif contenant [email,subject,message,headers]
+     */
+    protected function getUpdateEmailTemplate ($login, $pass)
+    {
+        $email = $login . '@student.42.fr';
+        $subject = "Muffin - Votre nouveau muffinpass";
+        $message = "Voici votre nouveau muffinpass: [ $pass ]\n"
+                . "Vous pouvez l'entrer dès maintenant sur http://muffin.lambdaweb.fr avec votre uid ($login).";
+        $headers = 'From: Muffin <no-reply@lambdaweb.fr>';
+        return (array (
+            "email" => $email,
+            "subject" => $subject,
+            "message" => $message,
+            "headers" => $headers)
+                );
     }
 
     /**
      * Va générer un pass "maison" ;)
      * @return string le mot de passe maison
      */
-    private function generatePassPhrase ()
+    protected function generatePassPhrase ()
     {
         $exclamations = array (
             "Woah!",
