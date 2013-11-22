@@ -70,8 +70,8 @@ var initalizeForm = function() {
 		target: '#form-result', // target element(s) to be updated with server response 
 		beforeSubmit: showRequest, // pre-submit callback 
 		success: showResponse, // post-submit callback 
-		url: "modules/updatecompetence.php",
-		type: "post"        // 'get' or 'post', override for form's 'method' attribute 
+		url: "User/updatecompetence",
+		type: "post"       // 'get' or 'post', override for form's 'method' attribute 
 	};
 
 	$('#form-competences').submit(function() {
@@ -120,7 +120,7 @@ var initalizeAddForm = function() {
 		target: '#form-result', // target element(s) to be updated with server response 
 		beforeSubmit: showAddRequest, // pre-submit callback 
 		success: showAddResponse, // post-submit callback 
-		url: "modules/addcompetence.php",
+		url: "User/addcompetence",
 		type: "post"        // 'get' or 'post', override for form's 'method' attribute 
 	};
 
@@ -152,7 +152,7 @@ var addClearItems = function()
 		var item = $(this);
 		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
 		$.ajax({
-			url: "modules/deletecompetence.php",
+			url: "User/deletecompetence",
 			type: 'POST',
 			data: {
 				login: $("#form-login").val(),
