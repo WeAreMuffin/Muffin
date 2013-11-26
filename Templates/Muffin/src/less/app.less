@@ -666,6 +666,7 @@ p {
         padding: 10px;
         min-width: 130px;
         text-align: center;
+        position: relative;
 
 
         h1 {
@@ -686,16 +687,36 @@ p {
             top: 2px;
         }
 
-        &:hover a.clear-all {
+        &:hover a.clear-all,
+        a.want-to-learn,
+        a.want-to-teach {
             color: #887D72;
         }
 
-        a.clear-all:hover {
+        a.clear-all:hover,
+        a.want-to-learn:hover,
+        a.want-to-teach:hover {
             color: #D95B43;
+        }
+        
+        a.want-to-learn
+        {
+            position: absolute;
+            top: 50px;
+            right: 0px;
+        }
+        
+        a.want-to-teach
+        {
+            position: absolute;
+            top: 70px;
+            right: 0px;
         }
 
         div.radio,
-        a.clear-all {
+        a.clear-all,
+        a.want-to-learn,
+        a.want-to-teach {
             width: 20px;
             height: 20px;
             display: inline-block;
@@ -719,7 +740,7 @@ p {
             }
 
             &:checked + label:before {
-                content: "\e964";
+                content: "\edb2";
                 font-size: 1.2rem;
             }
 
@@ -727,7 +748,7 @@ p {
                 width: 20px;
                 height: 40px;
                 display: inline-block;
-                content: "\e679";
+                content: "\edb0";
                 font-family: 'moon';
                 speak: none;
                 font-style: normal;

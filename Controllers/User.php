@@ -75,7 +75,7 @@ class User extends Controller
 
     public function addcompetence ($params)
     {
-        $icone = "starburst-outline";
+        $icone = "sale";
         $nom_joli = strtolower ($_POST['nom_competence']);
         $nom_brut = '_' . htmlentities (str_replace (
                                 array (' ', '+', '#'), array ('_', 'plus', 'diese'), $nom_joli

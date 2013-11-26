@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2013-11-22
+   mNymdhy          shddmy hNd       Sorti du four le 2013-11-26
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2013 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -2585,6 +2585,18 @@ var addClearItems = function()
 			fieldset.append("<a class='clear-all' data-items='"
 				+ radioElt.attr("name")
 				+ "'><span class='icon-remove-circle'></span></a>");
+		}
+		if (fieldset.find(".want-to-learn").length == 0)
+		{
+			fieldset.append("<a class='want-to-learn' data-items='"
+				+ radioElt.attr("name")
+				+ "'><span class='icon-student'></span></a>");
+		}
+		if (fieldset.find(".want-to-teach").length == 0)
+		{
+			fieldset.append("<a class='want-to-teach' data-items='"
+				+ radioElt.attr("name")
+				+ "'><span class='icon-love'></span></a>");
 		}
 	});
 	$("#form-competences fieldset a.clear-all").click(function() {

@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'moon';
-	src:url('../fonts/moon.eot');
-	src:url('../fonts/moon.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/moon.ttf') format('truetype'),
-		url('../fonts/moon.woff') format('woff'),
-		url('../fonts/moon.svg#moon') format('svg');
+	src:url('fonts/moon.eot');
+	src:url('fonts/moon.eot?#iefix') format('embedded-opentype'),
+		url('fonts/moon.ttf') format('truetype'),
+		url('fonts/moon.woff') format('woff'),
+		url('fonts/moon.svg#moon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
