@@ -1,4 +1,5 @@
 <?php
+header('Location: uc.php');
 session_start ();
 ?>
 <!DOCTYPE html>
