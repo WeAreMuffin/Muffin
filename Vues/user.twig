@@ -30,15 +30,12 @@ include_once '../templates/side-menu.php';
 <article data-role="grid">
     <section>
         <a href="#!"></a>
-        <form id="form-competences">
-            <div>
-            </div>
-        </form>
+        
+        {{ formDataJson }}
         <div id="form-result"></div>
     </section>
 
     <script>
-        {{ formDataJson }}
 
         window.toCheck = [{{ checkedRadios }}];
     </script>

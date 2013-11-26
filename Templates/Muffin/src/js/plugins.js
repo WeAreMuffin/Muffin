@@ -138,6 +138,9 @@ var initalizeAddForm = function() {
 
 var addClearItems = function()
 {
+	/**
+	 * On met les icones de supression, teach & learn
+	 */
 	$('#form-competences fieldset').each(function() {
 		var fieldset = $(this);
 		var radioElt = fieldset.find(".radio input").first();
@@ -147,6 +150,7 @@ var addClearItems = function()
 				+ radioElt.attr("name")
 				+ "'><span class='icon-remove-circle'></span></a>");
 		}
+		/*
 		if (fieldset.find(".want-to-learn").length == 0)
 		{
 			fieldset.append("<a class='want-to-learn' data-items='"
@@ -159,7 +163,13 @@ var addClearItems = function()
 				+ radioElt.attr("name")
 				+ "'><span class='icon-love'></span></a>");
 		}
+		*/
 	});
+	
+	/**
+	 * On bind le clic sur les boutons de supression à une requete ajax
+	 * pour supprimer le niveau
+	 */
 	$("#form-competences fieldset a.clear-all").click(function() {
 		var item = $(this);
 		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
@@ -180,6 +190,31 @@ var addClearItems = function()
 			});
 		});
 	});
+	
+	/**
+	 * On bind le clic sur les boutons de learn
+	 */
+	/*
+	$("#form-competences fieldset a.want-to-learn").click(function() {
+		var item = $(this);
+		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
+		$.ajax({
+			url: "User/deletecompetence",
+			type: 'POST',
+			data: {
+				login: $("#form-login").val(),
+				code: $("#form-code").val(),
+				comp: item.attr("data-items")
+			}
+		}).done(function(data) {
+			concerned.each(function() {
+				if ($(this).is(":checked"))
+				{
+					$(this).removeAttr("checked");
+				}
+			});
+		});
+	});*/
 };
 
 var createFormCompetences = function()

@@ -146,15 +146,14 @@ EOT;
      */
     protected function getJsonCodeForElement ($elt)
     {
-
-        $preText = "";
-
-        $name = htmlentities (ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence));
+        $bname = htmlentities (ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence));
+        $name = htmlentities (ucfirst ($elt->nom_competence));
         $icone = ($elt->icone != null ? $elt->icone : "uniF002");
-        $str = strtolower (htmlentities ($elt->nom_competence)) . ": { title: \"" . $name . "\","
-                . "beforeTitle: '" . $preText . "<h1><span class=\"icon-" . $icone . "\"></span></h1>',"
-                . "choices: window.muffin.niveaux() }";
-        return $str;
+        $this->addData('bname', $bname);
+        $this->addData('name', $name);
+        $this->addData('icon', $icone);
+        $tpl = $this->getRenderedHtml("user.form.element");
+        return $tpl;
     }
 
     /**
@@ -169,9 +168,13 @@ EOT;
         {
             $datas[] = $this->getJsonCodeForElement ($competence);
         }
-        return ("window.items = { " . implode (',', $datas) . "};");
+        return (implode ('', $datas));
     }
 
+    /**
+     * Va retourner la liste des radios checkées
+     * @return string la liste (json)
+     */
     protected function getCheckedRadios ()
     {
         $datas = array ();

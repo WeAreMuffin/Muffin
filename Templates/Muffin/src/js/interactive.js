@@ -26,14 +26,17 @@ window.muffin.niveaux = function(enable) {
 	if (enable === null || enable === undefined
 		|| enable === "")
 	{
-		n = {low: {label: ""}, med: {label: ""}, high: {label: ""}};
+		n = {low: {label: ""}, med: {label: ""}, high: {label: ""},
+			teach: { label: ""}, learn: { label: ""}};
 	}
 	else
 	{
 		n = {
 			low: {enable: enable, label: ""},
 			med: {enable: enable, label: ""},
-			high: {enable: enable, label: ""}
+			high: {enable: enable, label: ""},
+			teach: {enable: enable, label: ""},
+			learn: {enable: enable, label: ""}
 		};
 	}
 	return n;
