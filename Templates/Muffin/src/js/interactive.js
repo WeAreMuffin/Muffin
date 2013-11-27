@@ -21,26 +21,6 @@
 
 
 
-window.muffin.niveaux = function(enable) {
-	var n;
-	if (enable === null || enable === undefined
-		|| enable === "")
-	{
-		n = {low: {label: ""}, med: {label: ""}, high: {label: ""},
-			teach: { label: ""}, learn: { label: ""}};
-	}
-	else
-	{
-		n = {
-			low: {enable: enable, label: ""},
-			med: {enable: enable, label: ""},
-			high: {enable: enable, label: ""},
-			teach: {enable: enable, label: ""},
-			learn: {enable: enable, label: ""}
-		};
-	}
-	return n;
-};
 
 	/*
 	 * ============================================================================
@@ -140,7 +120,7 @@ window.muffin.niveaux = function(enable) {
 						$("#input-code").attr("disabled", "disabled");
 						$("#input-code + button").attr("disabled", "disabled")
 							.html("<span class='icon-checkmark'></span>");
-						var data = $(data);
+						data = $(data);
 						data.addClass("loading");
 						$("div[data-role='container']").children().slideUp();
 						$("div[data-role='container']").html(data);

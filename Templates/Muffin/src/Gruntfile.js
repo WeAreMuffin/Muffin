@@ -67,13 +67,13 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			src: {
-				src: ['Gruntfile.js', 'src/**/*.js',
+				src: ['Gruntfile.js', 'src/**/*.js', 'src/js/*.js',
 					'less/**/*.less', 'less/bootstrap/*.less']
 			}
 		},
 		watch: {
 			src: {
-				files: '<%= jshint.src.src %>',
+				files: "<%= concat.dist.src %>, 'less/**/*.less', 'less/bootstrap/*.less'",
 				tasks: ['dev:src']
 			}
 		}

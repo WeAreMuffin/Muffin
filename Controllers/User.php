@@ -41,40 +41,44 @@ class User extends Controller
 
     public function updatecompetence ($params)
     {
-        foreach ($_POST as $key => $value)
-        {
-            $comp = Moon::get ('c_competences', 'nom_competence', $key);
-            $id = $comp->id_competence;
-            $assoc = new Entities ("c_user_competences[id_user=\"{$_SESSION['muffin_id']}\"][id_competence=\"{$id}\"]");
+        $wtl = $this->filterPost ('want_to_learn');
+        $wtt = $this->filterPost ('want_to_teach');
+        $id = $this->filterPost ('id_competence');
+        $lvl = $this->filterPost ('niveau');
+       
+        $assoc = new Entities ("c_user_competences[id_user=\"{$_SESSION['muffin_id']}\"][id_competence=\"{$id}\"]");
 
-            if ( count ($assoc) == 1 )
-            {
-                $res = Core::getBdd ()->update (
-                        array ("niveau" => $value), 'c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
-            }
-            else
-            {
-                $res = Core::getBdd ()->insert (
-                        array ("id_user" => $_SESSION['muffin_id'],
-                    "id_competence" => $id, "niveau" => $value), 'c_user_competences');
-            }
+        if ( count ($assoc) == 1 )
+        {
+            $u = array ("niveau" => $lvl,
+                "want_to_learn" => $wtl == null ? '0' : $wtl,
+                "want_to_teach" => $wtt == null ? '0' : $wtt);
+            $res = Core::getBdd ()->update (
+                    $u, 'c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
+        }
+        else
+        {
+            $i = array ("id_user" => $_SESSION['muffin_id'],
+                "id_competence" => $id, "niveau" => $lvl,
+                "want_to_learn" => $wtl == null ? '0' : $wtl,
+                "want_to_teach" => $wtt == null ? '0' : $wtt);
+            $res = Core::getBdd ()->insert ($i, 'c_user_competences');
         }
         ($res != 0) ? ($ret = "1") : ($ret = "0");
         echo $ret;
     }
-    
-    public function deletecompetence($params)
+
+    public function deletecompetence ($params)
     {
-        $comp = Moon::get ('c_competences', 'nom_competence', $_POST['comp']);
-            $id = $comp->id_competence;
-        $res = Core::getBdd()->delete('c_user_competences', 
-                array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
+        $id = $this->filterPost ('id_competence');
+        $res = Core::getBdd ()->delete ('c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
         ($res != 0) ? ($ret = "1") : ($ret = "0");
         echo $ret;
     }
 
     public function addcompetence ($params)
     {
+        $id = false;
         $icone = "sale";
         $nom_joli = strtolower ($_POST['nom_competence']);
         $nom_brut = '_' . htmlentities (str_replace (
@@ -85,35 +89,16 @@ class User extends Controller
         {
             echo "-1";
         }
-        else if ( Core::getBdd ()->insert (
+        else if ( $id = Core::getBdd ()->insert (
                         array ("nom_competence" => $nom_brut,
                     "nom_usuel" => $nom_joli, "icone" => $icone, "categorie" => 4), 'c_competences') )
         {
             $nom_joli = ucfirst (htmlentities ($nom_joli));
-            $text = <<<EOT
-<fieldset>
-    <h1><span class="icon-$icone"></span></h1>
-    <h4>{$nom_joli}</h4>
-    <div class="radio">
-        <input type="radio" name="{$nom_brut}" id="{$nom_brut}_low" value="low">
-        <label for="{$nom_brut}_low"></label>
-    </div>
-    <div class="radio">
-        <input type="radio" name="{$nom_brut}" id="{$nom_brut}_med" value="med">
-        <label for="{$nom_brut}_med"></label>
-    </div>
-    <div class="radio">
-        <input type="radio" name="{$nom_brut}" id="{$nom_brut}_high" value="high">
-        <label for="{$nom_brut}_high"></label>
-    </div>
-    <a class="clear-all" data-items="{$nom_brut}"><span class="icon-remove-circle"></span></a>
-</fieldset>
-EOT;
-            echo "$text";
+            $new = Moon::get("c_competences","id_competence",$id);
+            echo $this->getJsonCodeForElement ($new);
         }
         else
         {
-            echo("error insert");
             echo "0";
         }
     }
@@ -147,12 +132,13 @@ EOT;
     protected function getJsonCodeForElement ($elt)
     {
         $bname = htmlentities (ucfirst ($elt->nom_usuel != null ? $elt->nom_usuel : $elt->nom_competence));
-        $name = htmlentities (ucfirst ($elt->nom_competence));
+        $name = htmlentities ($elt->nom_competence);
         $icone = ($elt->icone != null ? $elt->icone : "uniF002");
-        $this->addData('bname', $bname);
-        $this->addData('name', $name);
-        $this->addData('icon', $icone);
-        $tpl = $this->getRenderedHtml("user.form.element");
+        $this->addData ('bname', $bname);
+        $this->addData ('name', $name);
+        $this->addData ('icon', $icone);
+        $this->addData ('id_competence', $elt->id_competence);
+        $tpl = $this->getRenderedHtml ("user.form.element");
         return $tpl;
     }
 
@@ -182,7 +168,12 @@ EOT;
         $competences = new Entities ("c_user_competences[id_user=$id_user]");
         foreach ($competences as $key => $competence)
         {
-            $datas[] = '"' . $competence->c_competences->nom_competence . "_" . $competence->niveau . '"';
+            $nom =  $competence->c_competences->nom_competence;
+            if ( $competence->want_to_learn == "1")
+                $datas[] = '"wtl_' . $nom . '"';
+            if ( $competence->want_to_teach == "1")
+                $datas[] = '"wtt_' . $nom . '"';
+            $datas[] = '"' . $nom . "_" . $competence->niveau . '"';
         }
         return implode (",", $datas);
     }

@@ -26,11 +26,10 @@ $(document).ready(function()
 			var cDate = lastCommit.commit.committer.date.slice(0, 10);
 			var cAdd = lastCommit.stats.additions;
 			var cDel = lastCommit.stats.deletions;
-			var cTot = lastCommit.stats.additions;
 			var cStats = "<span class='icon-flow-tree'></span> <span class='git-add'>+" + cAdd + "</span>  <span class='git-del'>-" + cDel + "</span>";
 			$("div[role='git-info']").html("<p>\n\
 				<a href='https://github.com/lambda2/Muffin'><span class='icon-github'></span>\n\
-				v" + dataT[0].name + " datant du " + cDate + "  ─  " + cStats + "</a> </p>")
+				v" + dataT[0].name + " datant du " + cDate + "  ─  " + cStats + "</a> </p>");
 		});
 	});
 });

@@ -25,22 +25,11 @@
 	}
 }());
 
-window.formChanged = false;
-
-var saveToDatabase = function()
-{
-	if (window.formChanged)
-	{
-		$("#form-competences").trigger('submit');
-	}
-	window.formChanged = false;
-};
-
 function addCheckHandler(toCheck)
 {
-	$(".radio input").change(function() {
-		console.log("change !");
-		window.formChanged = true;
+	$("div[data-role='form-container'] form .radio input, div[data-role='form-container'] form input[type='checkbox']").change(function() {
+		console.log("change");
+		$(this).parents("form").trigger("submit");
 	});
 
 	// Mise à jour des champs
@@ -66,7 +55,7 @@ function showResponse(responseText, statusText, xhr, $form) {
 }
 
 var initalizeForm = function() {
-	var options = {
+	window.ioptions = {
 		target: '#form-result', // target element(s) to be updated with server response 
 		beforeSubmit: showRequest, // pre-submit callback 
 		success: showResponse, // post-submit callback 
@@ -74,10 +63,10 @@ var initalizeForm = function() {
 		type: "post"       // 'get' or 'post', override for form's 'method' attribute 
 	};
 
-	$('#form-competences').submit(function() {
+	$('div[data-role="form-container"] form').submit(function() {
 		// inside event callbacks 'this' is the DOM element so we first 
 		// wrap it in a jQuery object and then invoke ajaxSubmit 
-		$(this).ajaxSubmit(options);
+		$(this).ajaxSubmit(window.ioptions);
 
 		// !!! Important !!! 
 		// always return false to prevent standard browser submit and page navigation 
@@ -85,8 +74,6 @@ var initalizeForm = function() {
 	});
 	addClearItems();
 
-	// La sauvegarde auto
-	setInterval(saveToDatabase, 5000);
 };
 
 // pre-submit callback 
@@ -106,8 +93,10 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	console.log("statusText:", statusText);
 	var a = $(responseText);
 	a.addClass("preparing");
-	$("#form-competences > div").first().append(a);
+	$("div[data-role='form-container']").append(a);
 	addCheckHandler(window.toCheck);
+	a.submit(function() {$(this).ajaxSubmit(window.ioptions);return false;});
+	addClearItems()
 	setTimeout(function() {
 		$.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: a });
 		NProgress.done();
@@ -141,44 +130,29 @@ var addClearItems = function()
 	/**
 	 * On met les icones de supression, teach & learn
 	 */
-	$('#form-competences fieldset').each(function() {
+	$('div[data-role="form-container"] fieldset').each(function() {
 		var fieldset = $(this);
 		var radioElt = fieldset.find(".radio input").first();
 		if (fieldset.find(".clear-all").length == 0)
 		{
 			fieldset.append("<a class='clear-all' data-items='"
 				+ radioElt.attr("name")
-				+ "'><span class='icon-remove-circle'></span></a>");
+				+ "'><span class='icon-multiply'></span></a>");
 		}
-		/*
-		if (fieldset.find(".want-to-learn").length == 0)
-		{
-			fieldset.append("<a class='want-to-learn' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-student'></span></a>");
-		}
-		if (fieldset.find(".want-to-teach").length == 0)
-		{
-			fieldset.append("<a class='want-to-teach' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-love'></span></a>");
-		}
-		*/
 	});
 	
 	/**
 	 * On bind le clic sur les boutons de supression à une requete ajax
 	 * pour supprimer le niveau
 	 */
-	$("#form-competences fieldset a.clear-all").click(function() {
+	$("div[data-role='form-container'] form fieldset a.clear-all").click(function() {
 		var item = $(this);
-		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
+		var concerned = item.parent().find(".radio input[name='niveau']");
 		$.ajax({
 			url: "User/deletecompetence",
 			type: 'POST',
 			data: {
-				login: $("#form-login").val(),
-				code: $("#form-code").val(),
+				id_competence: item.parent().parent().find("input[name='id_competence']").val(),
 				comp: item.attr("data-items")
 			}
 		}).done(function(data) {
@@ -190,31 +164,6 @@ var addClearItems = function()
 			});
 		});
 	});
-	
-	/**
-	 * On bind le clic sur les boutons de learn
-	 */
-	/*
-	$("#form-competences fieldset a.want-to-learn").click(function() {
-		var item = $(this);
-		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
-		$.ajax({
-			url: "User/deletecompetence",
-			type: 'POST',
-			data: {
-				login: $("#form-login").val(),
-				code: $("#form-code").val(),
-				comp: item.attr("data-items")
-			}
-		}).done(function(data) {
-			concerned.each(function() {
-				if ($(this).is(":checked"))
-				{
-					$(this).removeAttr("checked");
-				}
-			});
-		});
-	});*/
 };
 
 var createFormCompetences = function()
