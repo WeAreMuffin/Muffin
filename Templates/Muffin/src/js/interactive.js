@@ -116,20 +116,20 @@
 			{
 				{
 					$.get("User/index",
-					function(data) {
-						$("#input-code").attr("disabled", "disabled");
-						$("#input-code + button").attr("disabled", "disabled")
-							.html("<span class='icon-checkmark'></span>");
-						data = $(data);
-						data.addClass("loading");
-						$("div[data-role='container']").children().slideUp();
-						$("div[data-role='container']").html(data);
-						reloadHandlers();
-						setTimeout(function() {
-							NProgress.done();
-							data.addClass("complete");
-						}, 200);
-					});
+						function(data) {
+							$("#input-code").attr("disabled", "disabled");
+							$("#input-code + button").attr("disabled", "disabled")
+								.html("<span class='icon-checkmark'></span>");
+							data = $(data);
+							data.addClass("loading");
+							$("div[data-role='container']").children().slideUp();
+							$("div[data-role='container']").html(data);
+							reloadHandlers();
+							setTimeout(function() {
+								NProgress.done();
+								data.addClass("complete");
+							}, 200);
+						});
 				}
 			}
 			else
@@ -168,10 +168,52 @@
 
 	/*
 	 * ============================================================================
-	 * Step-01 new Passw
+	 * Search for user data
 	 * ============================================================================
 	 */
 
+	muffin.searchUSerData = function()
+	{
+		var login = $("#search_comp_uid").val();
+		var button = $("#btn_search_comp_uid");
+		var span = button.find("span").first();
+		var status = $("#status_search_comp_uid");
+		var modal = ("#modal-explore");
+		if (login)
+		{
+			span.removeClass("icon-uniF488").addClass("icon-time");
+			$.ajax({
+				type: "GET",
+				url: "Search/user/" + login
+			}).done(function(e)
+			{
+
+				NProgress.done();
+				if (e.toString()[0] === "0")
+				{
+					status.html("Il semblerait que l'uid n'existe pas, ou que ses compétences ne soient pas publiques.");
+				}
+				else
+				{
+					$(modal).modal('hide');
+					e = $(e);
+						e.addClass("loading");
+						$("div[data-role='form-container']").children().slideUp();
+						$("div[data-role='form-container']").html(e);
+						setTimeout(function() {
+							NProgress.done();
+							e.addClass("complete");
+							reloadHandlers();
+						}, 200);
+				}
+			});
+		}
+		else
+		{
+			status.html("Vous devez rentrer un uid");
+		}
+
+	};
 
 
 })(jQuery);

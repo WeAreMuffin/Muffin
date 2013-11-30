@@ -82,7 +82,7 @@
 .modal-header {
   padding: 15px;
   background-color: #d95b43;
-  border-bottom: 1px solid #9e4838;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.11);
   min-height: 16.428571429px;
   color: #f7e4be;
 }
@@ -103,7 +103,7 @@
   margin-top: 15px;
   padding: 19px 20px 20px;
   text-align: right;
-  border-top: 1px solid #9e4838;
+  border-top: 1px solid rgba(0, 0, 0, 0.11);
   *zoom: 1;
 }
 .modal-footer:before,

@@ -44,7 +44,7 @@ function bindAjaxEvents()
 							reloadHandlers();
 						}, 200);
 					});
-		})
+		});
 	});
 }
 
@@ -119,7 +119,7 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	$("div[data-role='form-container']").append(a);
 	addCheckHandler(window.toCheck);
 	a.submit(function() {$(this).ajaxSubmit(window.ioptions);return false;});
-	addClearItems()
+	addClearItems();
 	setTimeout(function() {
 		$.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: a });
 		NProgress.done();
@@ -156,7 +156,7 @@ var addClearItems = function()
 	$('div[data-role="form-container"] fieldset').each(function() {
 		var fieldset = $(this);
 		var radioElt = fieldset.find(".radio input").first();
-		if (fieldset.find(".clear-all").length == 0)
+		if (fieldset.find(".clear-all").length === 0)
 		{
 			fieldset.append("<a class='clear-all' data-items='"
 				+ radioElt.attr("name")
