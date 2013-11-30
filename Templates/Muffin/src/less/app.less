@@ -439,7 +439,6 @@ input + button > span[class^="icon-"] {
     color: #F7E4BE;
     border-radius: 3px;
     height: 30px;
-    padding: 4px 6px 6px 6px;
     margin: 0px 5px;
     cursor: pointer;
 
@@ -579,10 +578,24 @@ aside.side-menu
         text-align: center;
         margin-top: 10px;
         display: block;
-        line-height: 15px;
+        line-height: 30px;
         color: #53777A;
         background: transparent;
         border-width: 1px;
+
+        span[class^="icon"]
+        {
+            position: relative;
+            top: 7px;
+            left: 6px;
+            padding-left: 5px;
+            float: left;
+        }
+
+        &[role="indicator"]
+        {
+            border-color: transparent;
+        }
     }
 
     ul[role="side-menu"]
@@ -649,6 +662,39 @@ p {
 
 /* 
     ------------------------------------------------------------------------
+        icones du header
+    ------------------------------------------------------------------------                            
+*/
+
+.header-container
+{
+    header
+    {
+        a.btn
+        {
+            background-color: transparent;
+            border: none;
+            height: 95px;
+            float: right;
+            font-size: 2em;
+            line-height: 75px;
+            color: @muffin-orange-dark;
+
+            &:hover
+                {
+                color: #723B30;
+            }
+
+            &[role="indicator"]
+            {
+                font-size: 1em;
+            }
+        }
+    }
+}
+
+/* 
+    ------------------------------------------------------------------------
         Labels en étoile
     ------------------------------------------------------------------------                            
 */
@@ -657,6 +703,39 @@ p {
     display: none;
 }
 
+.modal-body
+{
+    form
+    {
+        label
+        {
+            display: block;
+            margin-top: 5px;
+
+            span.opt
+            {
+                color: rgba(0,0,0,0.3);
+            }
+        }
+        #input-nom-comp,
+        #search_comp_uid,
+        textarea
+        {
+            border: 1px solid rgba(0,0,0,0.3);
+            background-color: transparent;
+            border-radius: 3px;
+            width: 100%;
+            min-width: 80%;
+        }
+
+        #ms-input-0
+        {
+            min-width: 20% !important;
+            min-height: 26px;
+            border: none;
+        }
+    }
+}
 div[data-role="form-container"] 
 {
     form
@@ -702,7 +781,7 @@ div[data-role="form-container"]
                 color: #D95B43;
             }
 
-            
+
 
             div.radio,
             a.clear-all {
@@ -710,7 +789,7 @@ div[data-role="form-container"]
                 height: 20px;
                 display: inline-block;
             }
-            
+
             input[type="checkbox"]
             {
                 &+label.want-to-learn:before{
@@ -734,11 +813,11 @@ div[data-role="form-container"]
                     top: 50px;
                     right: 10px;
                 }
-                
+
                 & + label.want-to-learn:hover:before{
                     color: #887D72;
                 }
-                
+
                 &:checked + label.want-to-learn:before{
                     color: @muffin-orange-dark;
                 }
@@ -764,11 +843,11 @@ div[data-role="form-container"]
                     top: 70px;
                     right: 10px;
                 }
-                
+
                 & + label.want-to-teach:hover:before{
                     color: @muffin-red;
                 }
-                
+
                 &:checked + label.want-to-teach:before{
                     content: "\ec02";
                     color: @muffin-red;

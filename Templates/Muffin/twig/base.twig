@@ -54,15 +54,13 @@
             {% block header %}
             <header class="wrapper clearfix">
                 <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>chocolat triples pépites</span></i></h1>
-                <!-- // Pas besoin de navigation pour ce site...
-                <nav>
-                    <ul>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                    </ul>
-                </nav>
-                -->
+
+{% block header_after %}
+            {% if webdata.session.muffin_id %}
+            <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-spoon"></span></a>
+            <a class="btn" role="indicator">À jour</a>
+            {% endif %}
+{% endblock %}
             </header>
             {% endblock %}
         </div>

@@ -3,14 +3,10 @@
 $(document).ready(function()
 {
 	initalizeForm();
-	$("input").change(function() {
-		console.log("change !");
+	reloadHandlers();
+	$.bind("ajaxComplete", function() {
+		reloadHandlers();
 	});
-	NProgress.configure({showSpinner: false});
-	$("a").smoothScroll();
-
-	treatResize();
-	$(window).resize(treatResize);
 
 	/**
 	 * Json calls to Github Api

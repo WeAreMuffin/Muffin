@@ -124,6 +124,7 @@
 						data.addClass("loading");
 						$("div[data-role='container']").children().slideUp();
 						$("div[data-role='container']").html(data);
+						reloadHandlers();
 						setTimeout(function() {
 							NProgress.done();
 							data.addClass("complete");

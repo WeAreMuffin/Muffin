@@ -25,6 +25,29 @@
 	}
 }());
 
+function bindAjaxEvents()
+{
+	$('[data-load-target]').each(function()
+	{
+		var urlToGo = $(this).attr("data-load-target");
+		$(this).click(function()
+		{
+			$.get(urlToGo,
+					function(data) {
+						data = $(data);
+						data.addClass("loading");
+						$("div[data-role='form-container']").children().slideUp();
+						$("div[data-role='form-container']").html(data);
+						setTimeout(function() {
+							NProgress.done();
+							data.addClass("complete");
+							reloadHandlers();
+						}, 200);
+					});
+		})
+	});
+}
+
 function addCheckHandler(toCheck)
 {
 	$("div[data-role='form-container'] form .radio input, div[data-role='form-container'] form input[type='checkbox']").change(function() {
@@ -209,6 +232,16 @@ var treatResize = function()
 	{
 		$(".footer-container").removeClass("nofix");
 	}
+};
+
+var reloadHandlers = function()
+{
+	NProgress.configure({showSpinner: false});
+	$("a").smoothScroll();
+
+	treatResize();
+	$(window).resize(treatResize);
+	bindAjaxEvents();
 };
 
 window.createFormCompetences = createFormCompetences;
