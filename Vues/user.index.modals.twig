@@ -1,71 +1,133 @@
-<!-- Modal -->
-<div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="Informations" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><span class="icon-th-small"></span>Quelques explications ?</h4>
-      </div>
-      <div class="modal-body">
-        <h3><span class="icon-th-small"></span> Légende</h3>
-            <table>
-                <tr>
-                    <td>
-                        <span style="color: rgb(255, 173, 0);" class='icon-star3'></span>
-                        <span class='icon-star'></span>
-                        <span class='icon-star'></span>
-                    </td>
-                    <td> ─  </td>
-                    <td> Débutant </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class='icon-star'></span>
-                        <span style="color: #D95B43;" class='icon-star3'></span>
-                        <span class='icon-star'></span>
-                    </td>
-                    <td> ─  </td>
-                    <td> Intermédiaire </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class='icon-star'></span>
-                        <span class='icon-star'></span>
-                        <span style="color: #542437;" class='icon-star3'></span>
-                    </td>
-                    <td> ─  </td>
-                    <td> Avancé </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="icon-multiply"></span>
-                    </td>
-                    <td> ─  </td>
-                    <td> Supprimer le niveau attribué. </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span style="color: #9e4838;" class='icon-student'></span>
-                    </td>
-                    <td> ─  </td>
-                    <td> Je veux apprendre cette compétence !</td>
-                </tr>
-                <tr>
-                    <td>
-                        <span style="color: #c02942;" class='icon-loved'></span>
-                    </td>
-                    <td> ─  </td>
-                    <td> J'aime cette compétence et je veux l'apprendre aux autres ! </td>
-                </tr>
-            </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+<!-- Modal d'aide -->
+<div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="MInformations" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MInformations"><span class="icon-support3"></span> Quelques explications ?</h4>
+            </div>
+            <div class="modal-body">
+                <h3><span class="icon-th-small"></span> Légende</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <span style="color: rgb(255, 173, 0);" class='icon-star3'></span>
+                            <span class='icon-star'></span>
+                            <span class='icon-star'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> J'ai un niveau débutant. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class='icon-star'></span>
+                            <span style="color: #D95B43;" class='icon-star3'></span>
+                            <span class='icon-star'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> J'ai un niveau intermédiaire. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class='icon-star'></span>
+                            <span class='icon-star'></span>
+                            <span style="color: #542437;" class='icon-star3'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> Je maitrise cette compétence, j'ai un niveau avancé. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-multiply"></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> Supprimer le niveau attribué. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="color: #9e4838;" class='icon-student'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> Je veux apprendre cette compétence !</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="color: #c02942;" class='icon-loved'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> J'aime cette compétence et je veux l'apprendre aux autres ! </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modal d'ajout de compétence -->
+<div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="MAjouter" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MAjouter"><span class="icon-plus"></span> Ajouter une compétence</h4>
+            </div>
+            <div class="modal-body">
+                <h3><span class="icon-th-small"></span> Une compétence n'est pas encore là ?</h3>
+                <form id="form-add-competence">
+                    <label for='input-nom-comp'>Nom :</label>
+                    <input type="text" placeholder="Nom de la competence" id="input-nom-comp" name="nom_competence">
+                    <label for='desc-new-competence'>Description : <span class="opt">(optionel)</span></label>
+                    <textarea id="desc-new-competence" placeholder="Une petite description..." name='desc_competence'></textarea>
+                    <label for='modal-new-comp-tags'>Tags : <span class="opt">(optionel)</span></label>
+                    <div class='tags' id='modal-new-comp-tags'></div>
+                </form>
+                <script>
+                    $(document).ready(function() {
+                        $('#modal-new-comp-tags').magicSuggest({
+                            width: '100%',
+                            id: 'modal-new-comp-tags',
+                            name: 'modal-new-comp-tags',
+                            data: 'User/tagscompetence',
+                            displayField: 'nom',
+                            value: '',
+                            renderer: function(v) {
+                                return v.nom;
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" onclick="$('#form-add-competence').submit();" class="btn btn-primary" data-dismiss="modal">Ajouter <span class='icon-uniF488'></span> </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
 
-
+<!-- Modal d'exploration -->
+<div class="modal fade" id="modal-explore" tabindex="-1" role="dialog" aria-labelledby="MExplore" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MExplore"><span class="icon-search"></span> Explorer</h4>
+            </div>
+            <div class="modal-body">
+                <h3><span class="icon-th-small"></span> Recherchez les compétences d'un utilisateur</h3>
+                <form id="form-search-competence">
+                    <label for='search_comp_uid'>Uid :</label>
+                    <input type="text" placeholder="uid à rechercher..." id="search_comp_uid" name="search_comp_uid">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" onclick="$('#form-search-competence').submit();" class="btn btn-primary" data-dismiss="modal">Rechercher</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -17,24 +17,22 @@
 #}
 
 <aside class="side-menu">
-        <a class="btn" role="indicator">À jour</a>
     <ul role="side-menu">
         <li>
-            <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-info-sign"></span></a>
+            <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-support3"></span><span class='side-legend'> Aide</span></a>
+        </li>
+        <li>
+            <a class="btn" data-load-target="User/me"><span class="icon-chef"></span><span class='side-legend'> Moi</span></a>
+        </li>
+        <li>
+            <a class="btn" data-toggle="modal" data-target="#modal-add"><span class="icon-plus"></span><span class='side-legend'> Ajouter</span></a>
+        </li>
+        <li>
+            <a class="btn" data-toggle="modal" data-target="#modal-explore"><span class="icon-search"></span><span class='side-legend'> Explorer</span></a>
         </li>
     </ul>
     <div role="description">
         
-    </div>
-    <div role="add-competence">
-        <h3 style="text-align: center;"><span class="icon-bulb"></span> <i>Ajouter</i></h3>
-        <p>Tu peux aussi ajouter de nouvelles compétences !</p>
-        <form id="form-add-competence">
-            <input type="text" placeholder="Competence" id="input-nom-comp" name="nom_competence">
-            <button type="submit"><span class='icon-chevron-sign-right'></span></button>
-            <input type="hidden" id="form-login" name="login" value="<?php echo $_GET['login']; ?>">
-            <input type="hidden" id="form-code" name="code" value="<?php echo $_GET['code']; ?>">
-        </form>
     </div>
     <!--
     <div role="show-stats">

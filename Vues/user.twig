@@ -31,37 +31,12 @@ include_once '../templates/side-menu.php';
     <section>
         <a href="#!"></a>
         <div data-role="form-container">
-        {{ formDataJson }}
+            {% include 'user.index.me.twig' %}
         </div>
         <div id="form-result"></div>
     </section>
 
-    <script>
-
-        window.toCheck = [{{ checkedRadios }}];
-    </script>
-    <script>
-
-        $(document).ready(function()
-        {
-            $(".footer-container").addClass("nofix");
-            NProgress.start();
-            createFormCompetences();
-
-            $("[data-submit]").each(function() {
-                $(this).click(function() {
-                    $('#' + $(this).attr("data-submit")).trigger('submit');
-                });
-            });
-
-            initalizeForm();
-            initalizeAddForm();
-            addCheckHandler(window.toCheck);
-            NProgress.done();
-            treatResize();
-
-        });
-    </script>
+    
 </article>
 
 
