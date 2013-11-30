@@ -25,96 +25,40 @@
  * @author lambda2
  */
 
-class User extends Controller
+class Search extends Controller
 {
 
     public function index ($params)
     {
-        $this->registerParams ($params);
-        $infos = Moon::get ('c_42_logins', 'login_eleve', $_SESSION['login']);
-        $formDataJson = $this->generateJsFormData ();
-        $checkedRadios = $this->getCheckedRadios ();
-        $this->addData ('nom', ucfirst(strtolower($infos->nom)));
-        $this->addData ('formDataJson', $formDataJson);
-        $this->addData ('checkedRadios', $checkedRadios);
-        $this->render ();
+        $this->rejectAccess();
     }
     
-    public function me ($params)
+    /**
+     * 
+     * @PathInfo('login')
+     */
+    public function user($params)
     {
-        $formDataJson = $this->generateJsFormData ();
-        $checkedRadios = $this->getCheckedRadios ();
-        $this->addData ('formDataJson', $formDataJson);
-        $this->addData ('checkedRadios', $checkedRadios);
-        $this->render ('user.index.me');
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('login');
+        $infos = new Entities('c_user[login="'.$login.'"][comp_public="1"]');
+        $render = "0";
+
+        if ( count($infos) == 1 )
+        {
+            $user = Moon::get ('c_42_logins', 'login_eleve', $login);
+            $login = $infos->current()->id;
+            $formDataJson = $this->generateJsFormData ($login);
+            $checkedRadios = $this->getCheckedRadios ($login);
+            $this->addData ('user', $user);
+            $this->addData ('formDataJson', $formDataJson);
+            $this->addData ('checkedRadios', $checkedRadios);
+            $this->render ();
+        }
+        echo $render;
     }
-
-    public function updatecompetence ($params)
-    {
-        $wtl = $this->filterPost ('want_to_learn');
-        $wtt = $this->filterPost ('want_to_teach');
-        $id = $this->filterPost ('id_competence');
-        $lvl = $this->filterPost ('niveau');
-
-        $assoc = new Entities ("c_user_competences[id_user=\"{$_SESSION['muffin_id']}\"][id_competence=\"{$id}\"]");
-
-        if ( count ($assoc) == 1 )
-        {
-            $u = array ("niveau" => $lvl,
-                "want_to_learn" => $wtl == null ? '0' : $wtl,
-                "want_to_teach" => $wtt == null ? '0' : $wtt);
-            $res = Core::getBdd ()->update (
-                    $u, 'c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
-        }
-        else
-        {
-            $i = array ("id_user" => $_SESSION['muffin_id'],
-                "id_competence" => $id, "niveau" => $lvl,
-                "want_to_learn" => $wtl == null ? '0' : $wtl,
-                "want_to_teach" => $wtt == null ? '0' : $wtt);
-            $res = Core::getBdd ()->insert ($i, 'c_user_competences');
-        }
-        ($res != 0) ? ($ret = "1") : ($ret = "0");
-        echo $ret;
-    }
-
-    public function deletecompetence ($params)
-    {
-        $id = $this->filterPost ('id_competence');
-        $res = Core::getBdd ()->delete ('c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
-        ($res != 0) ? ($ret = "1") : ($ret = "0");
-        echo $ret;
-    }
-
-    public function addcompetence ($params)
-    {
-        $id = false;
-        $icone = "sale";
-        $nom_joli = strtolower ($this->filterPost ('nom_competence'));
-        $desc = strtolower ($this->filterPost ('desc_competence'));
-        $nom_brut = '_' . htmlentities (str_replace (
-                                array (' ', '+', '#'), array ('_', 'plus', 'diese'), $nom_joli
-        ));
-        $cmp = new Entities ("c_competences[nom_competence=\"{$nom_brut}\"]");
-        if ( preg_match ('/[<>?"\']+/', $nom_joli) > 0 || count ($cmp) > 0 )
-        {
-            echo "-1";
-        }
-        else if ( $id = Core::getBdd ()->insert (
-                array ("nom_competence" => $nom_brut,
-            "nom_usuel" => $nom_joli, "icone" => $icone), 'c_competences') )
-        {
-            $this->addOrUpdateTags ($id, json_decode ($_POST["modal-new-comp-tags"]));
-            $nom_joli = ucfirst (htmlentities ($nom_joli));
-            $new = Moon::get ("c_competences", "id_competence", $id);
-            echo $this->getJsonCodeForElement ($new);
-        }
-        else
-        {
-            echo "0";
-        }
-    }
-
+    
+    
     /*   =======================================================================
      *                      Surcharge pour l'accès membre
      *   =======================================================================
@@ -127,19 +71,10 @@ class User extends Controller
         else
             return false;
     }
-
-    /*   =======================================================================
-     *        Toutes les fonctions concernant les données de formulaire
-     *   =======================================================================
-     */
-
-    /**
-     * Va retourner le bout de code Json compatible [MakeForms] pour la compétence
-     * décrite en parametre
-     * @param Entity $elt l'objet de l'élément, généré par Moon::getAllHeavy
-     * @return string le code Json
-     * 
-     * @see Moon#getAllHeavy
+    
+    
+    /*
+     * Specifique aux formulaires
      */
     protected function getJsonCodeForElement ($elt)
     {
@@ -150,7 +85,7 @@ class User extends Controller
         $this->addData ('name', $name);
         $this->addData ('icon', $icone);
         $this->addData ('id_competence', $elt->id_competence);
-        $tpl = $this->getRenderedHtml ("user.form.element");
+        $tpl = $this->getRenderedHtml ("search.form.element");
         return $tpl;
     }
 
@@ -159,10 +94,12 @@ class User extends Controller
      * à la variable "window.items".
      * @return string le code Json
      */
-    protected function generateJsFormData ()
+    protected function generateJsFormData ($user)
     {
         $datas = array ();
-        foreach (Moon::getAllHeavy ("c_competences") as $key => $competence)
+        $elts = new Entities (
+                'c_user_competences[id_user='.$user.'].c_competences');
+        foreach ( $elts as $key => $competence)
         {
             $datas[] = $this->getJsonCodeForElement ($competence);
         }
@@ -173,11 +110,10 @@ class User extends Controller
      * Va retourner la liste des radios checkées
      * @return string la liste (json)
      */
-    protected function getCheckedRadios ()
+    protected function getCheckedRadios ($login)
     {
         $datas = array ();
-        $id_user = $_SESSION['muffin_id'];
-        $competences = new Entities ("c_user_competences[id_user=$id_user]");
+        $competences = new Entities ("c_user_competences[id_user=$login]");
         foreach ($competences as $key => $competence)
         {
             $nom = $competence->c_competences->nom_competence;
@@ -188,55 +124,6 @@ class User extends Controller
             $datas[] = '"' . $nom . "_" . $competence->niveau . '"';
         }
         return implode (",", $datas);
-    }
-
-    /*   =======================================================================
-     *        Toutes les fonctions concernant les tags de compétences
-     *   =======================================================================
-     */
-
-    public function tagscompetence ($params)
-    {
-        $comp = Moon::getAll ('c_categories');
-        $tab = array ();
-        foreach ($comp as $key => $value)
-        {
-            $tab[] = '"' . $value["nom"] . '"';
-        }
-        echo ("[" . implode (",", $tab) . "]");
-    }
-
-    protected function addCategorie ($name)
-    {
-        $i = array ("nom" => $name, "description" => "");
-        $res = Core::getBdd ()->insert ($i, 'c_categories');
-        return ($res);
-    }
-
-    protected function addOrUpdateTags ($id, $tags)
-    {
-        foreach ($tags as $tag)
-        {
-            $cat = new Entities ("c_categories[nom=\"{$tag}\"]");
-
-            /** On crée si besoin, et on récupere l'id */
-            if ( count ($cat) == 0 )
-            {
-                $id_cat = $this->addCategorie ($tag);
-            }
-            else
-            {
-                $id_cat = $cat->current ()->id_categorie;
-            }
-
-            /* On insere le tag */
-            $assoc = new Entities ("c_tags[id_competence=\"{$id}\"][id_categorie=\"{$id_cat}\"]");
-            if ( count ($assoc) != 1 )
-            {
-                $i = array ("id_competence" => $id, "id_categorie" => $id_cat);
-                $res = Core::getBdd ()->insert ($i, 'c_tags');
-            }
-        }
     }
 
 }
