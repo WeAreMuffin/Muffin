@@ -1,29 +1,29 @@
 {# 
     Template pour les éléments du formulaire
  #}
-<form id="form_{{ name }}" target="#">
+<form id="read_form_{{ name }}" target="#">
     <fieldset>
         <h1><span class="icon-{{ icon }}"></span></h1>
         <h4>{{ bname }}</h4>
         <div class="radio">
-            <input type="radio" name="niveau" id="{{ name }}_low" value="low">
+            <input type="radio" name="niveau" id="{{ name }}_low" value="low" disabled>
             <label for="{{ name }}_low"></label>
         </div>
         <div class="radio">
-            <input type="radio" name="niveau" id="{{ name }}_med" value="med">
+            <input type="radio" name="niveau" id="{{ name }}_med" value="med" disabled>
             <label for="{{ name }}_med"></label>
         </div>
         <div class="radio">
-            <input type="radio" name="niveau" id="{{ name }}_high" value="high">
+            <input type="radio" name="niveau" id="{{ name }}_high" value="high" disabled>
             <label for="{{ name }}_high"></label>
         </div>
-        <input type="checkbox" name="want_to_teach" id="wtt_{{ name }}" value="1" {{ wtt_checked }}>
+        <input type="checkbox" name="want_to_teach" id="wtt_{{ name }}" value="1" {{ wtt_checked }} disabled>
             <label class="want-to-teach" for="wtt_{{ name }}"></label>
-        <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
+        <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }} disabled>
             <label class="want-to-learn" for="wtl_{{ name }}"></label>
         <a class="clear-all" data-items="{{ name }}">
             <span class="icon-multiply"></span>
         </a>
-            <input type="hidden" name="id_competence" value="{{ id_competence }}">
+            <input type="hidden" name="id_competence" value="{{ id_competence }}" disabled>
     </fieldset>
 </form>

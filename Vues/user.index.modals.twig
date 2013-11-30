@@ -1,4 +1,4 @@
-<!-- Modal d'aide -->
+<!-- Modale d'aide -->
 <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="MInformations" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -66,7 +66,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- Modal d'ajout de compétence -->
+<!-- Modale d'ajout de compétence -->
 <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="MAjouter" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -109,7 +109,7 @@
 </div><!-- /.modal -->
 
 
-<!-- Modal d'exploration -->
+<!-- Modale d'exploration -->
 <div class="modal fade" id="modal-explore" tabindex="-1" role="dialog" aria-labelledby="MExplore" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -118,7 +118,8 @@
                 <h4 class="modal-title" id="MExplore"><span class="icon-search"></span> Explorer</h4>
             </div>
             <div class="modal-body">
-                <h3><span class="icon-th-small"></span> Recherchez les compétences d'un utilisateur</h3>
+                <h3>Recherchez les compétences d'un utilisateur</h3>
+                <p id="status_search_comp_uid">Commencez par rentrer son uid.</p>
                 <form id="form-search-competence">
                     <label for='search_comp_uid'>Uid :</label>
                     <input type="text" placeholder="uid à rechercher..." id="search_comp_uid" name="search_comp_uid">
@@ -126,7 +127,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                <button type="button" onclick="$('#form-search-competence').submit();" class="btn btn-primary" data-dismiss="modal">Rechercher</button>
+                <button type="button" id="btn_search_comp_uid" onclick="window.muffin.searchUSerData();" class="btn btn-primary">
+                    Rechercher <span class='icon-uniF488'></span>
+                </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
