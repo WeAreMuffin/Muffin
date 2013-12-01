@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /*
  *
  * This file is part of the moon framework.
@@ -28,18 +29,29 @@
 class User extends Controller
 {
 
+    /*
+     * Va etre apellée par défaut.
+     */
     public function index ($params)
     {
         $this->registerParams ($params);
         $infos = Moon::get ('c_42_logins', 'login_eleve', $_SESSION['login']);
+        $user = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
+	$checkpublic = "";
+	if ( $user->comp_public == 1 )
+	    $checkpublic = "checked='checked'";
         $formDataJson = $this->generateJsFormData ();
         $checkedRadios = $this->getCheckedRadios ();
         $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
         $this->addData ('formDataJson', $formDataJson);
         $this->addData ('checkedRadios', $checkedRadios);
+        $this->addData ('check_public', $checkpublic);
         $this->render ();
     }
 
+    /**
+     * @Ajax
+     */
     public function me ($params)
     {
         $formDataJson = $this->generateJsFormData ();
