@@ -34,12 +34,12 @@ class User extends Controller
         $infos = Moon::get ('c_42_logins', 'login_eleve', $_SESSION['login']);
         $formDataJson = $this->generateJsFormData ();
         $checkedRadios = $this->getCheckedRadios ();
-        $this->addData ('nom', ucfirst(strtolower($infos->nom)));
+        $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
         $this->addData ('formDataJson', $formDataJson);
         $this->addData ('checkedRadios', $checkedRadios);
         $this->render ();
     }
-    
+
     public function me ($params)
     {
         $formDataJson = $this->generateJsFormData ();
@@ -47,6 +47,47 @@ class User extends Controller
         $this->addData ('formDataJson', $formDataJson);
         $this->addData ('checkedRadios', $checkedRadios);
         $this->render ('user.index.me');
+    }
+
+    public function update ($params)
+    {
+        $old_pass = $this->filterPost ('o_pass_uid');
+        $new_pass = $this->filterPost ('n_pass_uid');
+        $new_pass_c = $this->filterPost ('c_pass_uid');
+        $public = $this->filterPost ('c_public_uid');
+        $this->updatePublic (!isNull ($public));
+        if ( !isNull ($old_pass) and !isNull ($new_pass) and !isNull ($new_pass_c) )
+        {
+            $user = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
+            if ( $user->pass == sha1 ($old_pass) )
+            {
+                if ( $new_pass == $new_pass_c )
+                {
+                    Core::getBdd ()->update (
+                            array ("pass" => sha1 ($new_pass)), 'c_user', array ("id" => $_SESSION['muffin_id']));
+                        echo "1";
+                }
+                else
+                    echo "Les deux mots de passe doivent correspondre";
+            }
+            else
+                echo "Ancien mot de passe incorrect";
+        }
+        else if ( !isNull ($old_pass) or !isNull ($new_pass) or !isNull ($new_pass_c) )
+        {
+            echo "Les champs sont incomplets";
+        }
+        else
+        {
+            echo "1";
+        }
+    }
+
+    protected function updatePublic ($public)
+    {
+        $ret = Core::getBdd ()->update (
+                array ("comp_public" => ($public ? "1" : "0")), 'c_user', array ("id" => $_SESSION['muffin_id']));
+        return ($ret);
     }
 
     public function updatecompetence ($params)
