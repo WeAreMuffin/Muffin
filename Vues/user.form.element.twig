@@ -18,11 +18,11 @@
             <label for="{{ name }}_high"></label>
         </div>
         <input type="checkbox" name="want_to_teach" id="wtt_{{ name }}" value="1" {{ wtt_checked }}>
-            <label class="want-to-teach" for="wtt_{{ name }}"></label>
+            <label data-toggle="tooltip" title="J'aimerais enseigner cette compétence" class="want-to-teach" for="wtt_{{ name }}"></label>
         <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
-            <label class="want-to-learn" for="wtl_{{ name }}"></label>
+            <label data-toggle="tooltip" title="J'aimerais apprendre cette compétence" class="want-to-learn" for="wtl_{{ name }}"></label>
         <a class="clear-all" data-items="{{ name }}">
-            <span class="icon-multiply"></span>
+            <span data-toggle="tooltip" title="Supprimer ma note" class="icon-multiply"></span>
         </a>
             <input type="hidden" name="id_competence" value="{{ id_competence }}">
     </fieldset>
