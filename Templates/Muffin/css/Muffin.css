@@ -166,10 +166,10 @@
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
-  color: #ffffff;
+  color: #413e4a;
   text-align: center;
   text-decoration: none;
-  background-color: #000000;
+  background-color: #e4d0a7;
   border-radius: 4px;
 }
 .tooltip-arrow {
@@ -184,52 +184,52 @@
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: #000000;
+  border-top-color: #e4d0a7;
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
   left: 5px;
   border-width: 5px 5px 0;
-  border-top-color: #000000;
+  border-top-color: #e4d0a7;
 }
 .tooltip.top-right .tooltip-arrow {
   bottom: 0;
   right: 5px;
   border-width: 5px 5px 0;
-  border-top-color: #000000;
+  border-top-color: #e4d0a7;
 }
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
-  border-right-color: #000000;
+  border-right-color: #e4d0a7;
 }
 .tooltip.left .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
-  border-left-color: #000000;
+  border-left-color: #e4d0a7;
 }
 .tooltip.bottom .tooltip-arrow {
   top: 0;
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000000;
+  border-bottom-color: #e4d0a7;
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
   left: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000000;
+  border-bottom-color: #e4d0a7;
 }
 .tooltip.bottom-right .tooltip-arrow {
   top: 0;
   right: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000000;
+  border-bottom-color: #e4d0a7;
 }
 .popover {
   position: absolute;
@@ -9212,8 +9212,8 @@ input + button > span[class^="icon-"] {
   font-size: 2em;
 }
 .btn {
-  border: 2px solid #53777A;
-  background-color: #53777A;
+  border: 2px solid #53777a;
+  background-color: #53777a;
   color: #F7E4BE;
   border-radius: 3px;
   height: 30px;
@@ -9335,6 +9335,13 @@ aside.side-menu ul[role="side-menu"] {
   margin: 40px 20px 0px 0px;
   border-right: 1px solid #CABA9C;
 }
+aside.side-menu ul[role="side-menu"] li a.btn {
+  transition: all 0.1s;
+  border-color: transparent;
+}
+aside.side-menu ul[role="side-menu"] li a.btn:hover {
+  border-color: #53777a;
+}
 div[role="add-competence"],
 div[role="show-stats"] {
   padding-top: 20px;
@@ -9405,19 +9412,35 @@ p {
 .modal-body form label span.opt {
   color: rgba(0, 0, 0, 0.3);
 }
+.modal-body form label.inline {
+  display: inline-block;
+}
+.modal-body form label + input[type="checkbox"] {
+  display: inline-block;
+}
 .modal-body form #input-nom-comp,
 .modal-body form #search_comp_uid,
-.modal-body form textarea {
+.modal-body form textarea,
+.modal-body form input[type="password"] {
   border: 1px solid rgba(0, 0, 0, 0.3);
   background-color: transparent;
   border-radius: 3px;
   width: 100%;
   min-width: 80%;
+  padding: 4px;
 }
 .modal-body form #ms-input-0 {
   min-width: 20% !important;
   min-height: 26px;
   border: none;
+}
+.modal-body #input-nom-comp,
+.modal-body #search_comp_uid {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  border-radius: 3px;
+  width: 100%;
+  min-width: 80%;
 }
 div[data-role="form-container"] form {
   display: inline-block;

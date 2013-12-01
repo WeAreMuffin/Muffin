@@ -181,7 +181,7 @@
 		var modal = ("#modal-explore");
 		if (login)
 		{
-			span.removeClass("icon-uniF488").addClass("icon-time");
+			span.removeClass("icon-uniF488").addClass("icon-clock3");
 			$.ajax({
 				type: "GET",
 				url: "Search/user/" + login
@@ -191,10 +191,12 @@
 				NProgress.done();
 				if (e.toString()[0] === "0")
 				{
+					span.removeClass("icon-clock3").addClass("icon-multiply");
 					status.html("Il semblerait que l'uid n'existe pas, ou que ses compétences ne soient pas publiques.");
 				}
 				else
 				{
+					span.removeClass("icon-clock3").addClass("icon-uniF488");
 					$(modal).modal('hide');
 					e = $(e);
 						e.addClass("loading");

@@ -434,8 +434,8 @@ input + button > span[class^="icon-"] {
 }
 
 .btn {
-    border: 2px solid #53777A;
-    background-color: #53777A;
+    border: 2px solid @muffin-green;
+    background-color: @muffin-green;
     color: #F7E4BE;
     border-radius: 3px;
     height: 30px;
@@ -605,7 +605,16 @@ aside.side-menu
 
 
         li {
-
+            a.btn
+            {
+                transition: all 0.1s;
+                border-color: transparent;
+                
+                &:hover
+                {
+                    border-color: @muffin-green;
+                }
+            }
         }
     }
 }
@@ -716,16 +725,26 @@ p {
             {
                 color: rgba(0,0,0,0.3);
             }
+            &.inline
+            {
+                display: inline-block;
+            }
+            &+input[type="checkbox"]
+            {
+                display: inline-block;
+            }
         }
         #input-nom-comp,
         #search_comp_uid,
-        textarea
+        textarea,
+        input[type="password"]
         {
             border: 1px solid rgba(0,0,0,0.3);
             background-color: transparent;
             border-radius: 3px;
             width: 100%;
             min-width: 80%;
+            padding: 4px;
         }
 
         #ms-input-0
@@ -735,6 +754,15 @@ p {
             border: none;
         }
     }
+        #input-nom-comp,
+        #search_comp_uid
+        {
+            border: 1px solid rgba(0,0,0,0.3);
+            background-color: transparent;
+            border-radius: 3px;
+            width: 100%;
+            min-width: 80%;
+        }
 }
 div[data-role="form-container"] 
 {

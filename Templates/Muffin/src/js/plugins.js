@@ -33,17 +33,17 @@ function bindAjaxEvents()
 		$(this).click(function()
 		{
 			$.get(urlToGo,
-					function(data) {
-						data = $(data);
-						data.addClass("loading");
-						$("div[data-role='form-container']").children().slideUp();
-						$("div[data-role='form-container']").html(data);
-						setTimeout(function() {
-							NProgress.done();
-							data.addClass("complete");
-							reloadHandlers();
-						}, 200);
-					});
+				function(data) {
+					data = $(data);
+					data.addClass("loading");
+					$("div[data-role='form-container']").children().slideUp();
+					$("div[data-role='form-container']").html(data);
+					setTimeout(function() {
+						NProgress.done();
+						data.addClass("complete");
+						reloadHandlers();
+					}, 200);
+				});
 		});
 	});
 }
@@ -118,10 +118,13 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	a.addClass("preparing");
 	$("div[data-role='form-container']").append(a);
 	addCheckHandler(window.toCheck);
-	a.submit(function() {$(this).ajaxSubmit(window.ioptions);return false;});
+	a.submit(function() {
+		$(this).ajaxSubmit(window.ioptions);
+		return false;
+	});
 	addClearItems();
 	setTimeout(function() {
-		$.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: a });
+		$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
 		NProgress.done();
 		a.addClass("complete").removeClass("preparing");
 	}, 1000);
@@ -163,7 +166,7 @@ var addClearItems = function()
 				+ "'><span class='icon-multiply'></span></a>");
 		}
 	});
-	
+
 	/**
 	 * On bind le clic sur les boutons de supression à une requete ajax
 	 * pour supprimer le niveau
@@ -234,6 +237,51 @@ var treatResize = function()
 	}
 };
 
+var afterUserUpdate = function(responseText, statusText, xhr, $form) {
+	console.log("after");
+	if (responseText[0] == "1")
+	{
+		$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Paramètres mis à jour");
+		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-checkmark2");
+		$('#modal-params').modal('hide');
+	}
+	else
+	{
+		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-multiply");
+		$("#status_update_uid").html(responseText);
+	}
+}
+
+var initFormComportement = function()
+{
+	$('#form_search_uid').submit(function(e) {
+		e.stopImmediatePropagation();
+		window.muffin.searchUSerData();
+		return false;
+	});
+
+	$('#form_params').submit(function() {
+
+		var options = {
+			target: '#form-result', // target element(s) to be updated with server response 
+			beforeSubmit: function() {
+				$("#status_public_icon").removeClass("icon-uniF488")
+					.removeClass("icon-multiply")
+					.removeClass("icon-checkmark2")
+					.addClass("icon-clock3");
+			}, // pre-submit callback 
+			success: afterUserUpdate, // post-submit callback 
+			url: "User/update",
+			type: "post"        // 'get' or 'post', override for form's 'method' attribute 
+		};
+
+		console.log("update");
+		$(this).ajaxSubmit(options);
+
+		return false;
+	});
+};
+
 var reloadHandlers = function()
 {
 	NProgress.configure({showSpinner: false});
@@ -242,6 +290,8 @@ var reloadHandlers = function()
 	treatResize();
 	$(window).resize(treatResize);
 	bindAjaxEvents();
+	initFormComportement();
+	$("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
 };
 
 window.createFormCompetences = createFormCompetences;
