@@ -572,6 +572,11 @@ article[role="header"]
 
 aside.side-menu
 {
+    ul.affix{
+        position: fixed;
+        top: 100px;
+        width: 200px;
+    }
     a.btn
     {
         width: 90%;
@@ -609,9 +614,9 @@ aside.side-menu
             {
                 transition: all 0.1s;
                 border-color: transparent;
-                
+
                 &:hover
-                {
+                    {
                     border-color: @muffin-green;
                 }
             }
@@ -754,15 +759,15 @@ p {
             border: none;
         }
     }
-        #input-nom-comp,
-        #search_comp_uid
-        {
-            border: 1px solid rgba(0,0,0,0.3);
-            background-color: transparent;
-            border-radius: 3px;
-            width: 100%;
-            min-width: 80%;
-        }
+    #input-nom-comp,
+    #search_comp_uid
+    {
+        border: 1px solid rgba(0,0,0,0.3);
+        background-color: transparent;
+        border-radius: 3px;
+        width: 100%;
+        min-width: 80%;
+    }
 }
 div[data-role="form-container"] 
 {

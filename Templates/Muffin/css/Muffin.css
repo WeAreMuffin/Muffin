@@ -9311,6 +9311,11 @@ article[role="header"] > header > div[role="title"] {
         Description latérale
     ------------------------------------------------------------------------                            
 */
+aside.side-menu ul.affix {
+  position: fixed;
+  top: 100px;
+  width: 200px;
+}
 aside.side-menu a.btn {
   width: 90%;
   text-align: center;

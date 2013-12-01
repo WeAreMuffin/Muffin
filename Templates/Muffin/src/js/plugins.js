@@ -292,6 +292,14 @@ var reloadHandlers = function()
 	bindAjaxEvents();
 	initFormComportement();
 	$("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
+	$('aside.side-menu > ul').affix({
+    offset: {
+      top: 100
+    , bottom: function () {
+        return (this.bottom = $('.footer-container').outerHeight(true))
+      }
+    }
+  })
 };
 
 window.createFormCompetences = createFormCompetences;
