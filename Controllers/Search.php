@@ -57,6 +57,22 @@ class Search extends Controller
         }
         echo $render;
     }
+
+    /**
+     * 
+     * @PathInfo('login')
+     */
+    public function users($params)
+    {
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam('login');
+        $q = "SELECT login FROM c_user WHERE login LIKE :login AND comp_public = 1";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("login" => '%'.$login.'%'));
+        $res = $r->fetchAll(PDO::FETCH_COLUMN);
+        echo(json_encode($res));
+    }
     
     
     /*   =======================================================================

@@ -16,8 +16,9 @@
  */
 #}
 
-<aside data-spy="affix" data-offset-top="200" class="side-menu">
+<aside data-spy="affix" data-offset-top="400" class="side-menu">
     <ul role="side-menu">
+        {% if webdata.session.muffin_id %}
         <li>
             <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-support3"></span><span class='side-legend'> Aide</span></a>
         </li>
@@ -29,6 +30,13 @@
         </li>
         <li>
             <a class="btn" data-toggle="modal" data-target="#modal-explore"><span class="icon-search"></span><span class='side-legend'> Explorer</span></a>
+        </li>
+        <li>
+            <a class="btn" data-load-target="Echanges/index"><span class="icon-repeat"></span><span class='side-legend'> Echanges</span></a>
+        </li>
+        {% endif %}
+        <li>
+            <a class="btn" data-load-target="Drafts/index"><span class="icon-news"></span><span class='side-legend'> Drafts</span></a>
         </li>
     </ul>
     <div role="description">

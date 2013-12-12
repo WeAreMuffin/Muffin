@@ -9587,6 +9587,37 @@ div[data-role="form-container"] .breaker {
 }
 /* 
     ------------------------------------------------------------------------
+        Liste de la recherche user
+    ------------------------------------------------------------------------                            
+*/
+#search_user_results {
+  padding: 10px;
+}
+#search_user_results li {
+  display: block;
+  list-style: none;
+  width: 100%;
+  margin: auto;
+  padding: 1px;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+#search_user_results li a {
+  transition: 0.2s all;
+}
+#search_user_results li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+#search_user_results li:hover {
+  border-left: 1px solid #53777a;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+#search_user_results li:hover a {
+  transition: 0.2s all;
+  padding-left: 5px;
+}
+/* 
+    ------------------------------------------------------------------------
         Transitions & fading
     ------------------------------------------------------------------------                            
 */
@@ -9786,6 +9817,21 @@ div[data-role="form-container"] .breaker {
 }
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
+  .header-container {
+    border-bottom: 30px solid #9E4838;
+  }
+  aside.side-menu ul.affix {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    color: #f7e4be;
+    z-index: 1009;
+    width: 100%;
+  }
+  aside.side-menu ul.affix li a.btn {
+    color: #f7e4be;
+    border: none;
+  }
   div[role="home-title"] h3 {
     font-size: 1.5rem;
     line-height: 1.1em;
@@ -9814,6 +9860,28 @@ div[data-role="form-container"] .breaker {
   .visible-desktop {
     display: none !important;
   }
+  div[data-role="container"] > aside {
+    display: block;
+    width: 100%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] {
+    margin: 0px auto;
+    border-color: transparent;
+    border-left: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    display: inline-block;
+    width: auto;
+    border: none;
+    border-color: transparent;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn {
+    padding: 0px 10px;
+    width: 100%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
+    left: 0px;
+  }
   div[data-role="container"] > aside + article[data-role="grid"] {
     display: block;
     width: 100%;
@@ -9826,8 +9894,36 @@ div[data-role="form-container"] .breaker {
 }
 /* petit [tablette paysage] */
 @media only screen and (max-width: 768px) {
+  .loading,
+  .complete,
+  .preparing {
+    transition: none !important;
+  }
+  .main {
+    padding: 0px;
+  }
+  .main article h1 {
+    font-size: 1.8em;
+  }
+  header.wrapper.clearfix h1 + a.btn {
+    float: none;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
+  header.wrapper.clearfix h1 + a.btn + a.btn {
+    float: none;
+    position: absolute;
+    right: 65px;
+    top: 15px;
+  }
   .header-container {
-    height: 115px;
+    height: 130px;
+    border-bottom: 45px solid #9E4838;
+    position: static;
+  }
+  div[role="title"] h1 {
+    font-size: 1.6em;
   }
   #nprogress .bar {
     top: 95px;
@@ -9885,35 +9981,90 @@ div[data-role="form-container"] .breaker {
   .footer-container footer div[role="git-info"] {
     text-align: center;
   }
-  .main article h1 {
-    font-size: 1.8em;
-  }
   form > label,
   form > input[type="text"] {
     margin: 5px;
     padding: 2%;
     min-width: 60%;
   }
+  div[data-role="container"] > aside {
+    display: block;
+    width: 100%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] {
+    margin: 0 auto;
+    padding: 0px 5px;
+    text-align: center;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] * {
+    transition: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    margin: 0 auto;
+    padding: 0px 5px;
+    font-size: 2em;
+    display: inline-block;
+    text-align: center;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn {
+    margin: 0 auto;
+    line-height: auto;
+    padding: 0px 5px;
+    display: block;
+    border: none;
+    height: auto;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn:hover {
+    border: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
+    margin: 0 auto;
+    position: static;
+    padding: 5px;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span.side-legend {
+    display: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"].affix {
+    height: 45px;
+    background-color: #9e4838;
+    top: 0px;
+  }
 }
 /* plus petit [tablette portrait] */
 @media only screen and (max-width: 480px) {
+  header.wrapper.clearfix h1 + a.btn {
+    display: none;
+  }
+  header.wrapper.clearfix h1 + a.btn + a.btn {
+    display: none;
+  }
   div[role="home-title"] h3 {
     text-align: center;
   }
   .main article h1 {
     font-size: 1.5em;
   }
+  div[data-role="container"] > aside {
+    display: block;
+    margin: auto;
+    vertical-align: top;
+    padding: 0px;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    font-size: 1.6em;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
+    padding: 10px 0;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"].affix {
+    top: 0px;
+  }
   div[data-role="container"] > aside + article {
     display: block;
     width: 100%;
     margin: auto;
     text-align: center;
-  }
-  div[data-role="container"] > aside {
-    display: block;
-    width: 20%;
-    margin: auto;
-    vertical-align: top;
   }
   div[data-role="container"] > aside > div[role="icon"] {
     float: none;
@@ -9969,5 +10120,12 @@ div[data-role="form-container"] .breaker {
   }
   input + button {
     width: 15%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    font-size: 1.2em;
+    padding: 0px 3px;
+  }
+  article[role="header"] > header > div[role="icon-container"] > div[role="icon"] {
+    display: none;
   }
 }

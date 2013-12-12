@@ -282,6 +282,7 @@ var initFormComportement = function()
 	});
 };
 
+
 var reloadHandlers = function()
 {
 	NProgress.configure({showSpinner: false});
@@ -294,7 +295,7 @@ var reloadHandlers = function()
 	$("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
 	$('aside.side-menu > ul').affix({
     offset: {
-      top: 100
+      top: 231
     , bottom: function () {
         return (this.bottom = $('.footer-container').outerHeight(true))
       }

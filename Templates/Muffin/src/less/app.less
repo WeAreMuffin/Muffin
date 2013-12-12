@@ -949,6 +949,48 @@ div[data-role="form-container"]
     }
 }
 
+/* 
+    ------------------------------------------------------------------------
+        Liste de la recherche user
+    ------------------------------------------------------------------------                            
+*/
+#search_user_results
+{
+    padding: 10px;
+
+    li
+    {
+        display: block;
+        list-style: none;
+        width: 100%;
+        margin: auto;
+        padding: 1px;
+        cursor: pointer;
+        transition: 0.2s all;
+        
+        a
+        {
+            transition: 0.2s all;
+        }
+
+        &+li
+        {
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        &:hover
+        {
+            border-left: 1px solid @muffin-green;
+            background-color: rgba(255,255,255,0.3);
+            a
+            {
+                transition: 0.2s all;
+                padding-left: 5px;
+            }
+        }
+    }
+}
+
 
 /* 
     ------------------------------------------------------------------------

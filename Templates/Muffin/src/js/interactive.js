@@ -172,6 +172,39 @@
 	 * ============================================================================
 	 */
 
+	 muffin.autoSearchUser = function(name)
+	{
+		var max_results = 5;
+		var container = $("#search_user_results");
+		var field = $("#search_comp_uid");
+		if(name != "" && name != undefined)
+		{
+			$.getJSON("Search/users/" + name, function(data)
+			{
+				var a, i;
+				container.parent().show();
+				container.empty();
+			  	for (i in data) {
+			  		if ( i < max_results)
+			  		{
+			  			console.log(i);
+				  		a = $("<li><a>" + data[i] + "</a></li>");
+				  		a.click(function() {
+				  			field.val($(this).text());
+				  			muffin.searchUSerData();
+				  		});
+						container.append(a);
+					}
+				}
+			});
+		}
+		else
+		{
+			container.parent().hide();
+			container.empty();
+		}
+	}
+
 	muffin.searchUSerData = function()
 	{
 		var login = $("#search_comp_uid").val();
@@ -198,6 +231,8 @@
 				{
 					span.removeClass("icon-clock3").addClass("icon-uniF488");
 					$(modal).modal('hide');
+		  			$("#search_comp_uid").val("");
+		  			muffin.autoSearchUser();
 					e = $(e);
 						e.addClass("loading");
 						$("div[data-role='form-container']").children().slideUp();

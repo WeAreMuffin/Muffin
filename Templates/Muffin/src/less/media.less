@@ -14,6 +14,25 @@
 
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
+    
+    .header-container {
+        border-bottom: 30px solid #9E4838;
+    }
+
+    aside.side-menu ul.affix {
+        position: fixed;
+        top: 55px;
+        left: 0;
+        color: @muffin-yellow;
+        z-index: 1009;
+        width: 100%;
+
+        li a.btn
+        {
+            color: @muffin-yellow;
+            border: none;
+        }
+    }
 
     div[role="home-title"] h3
     {
@@ -50,12 +69,43 @@
     .visible-desktop {
         display: none !important;
     }
-
-    div[data-role="container"] > aside + article[data-role="grid"] {
+    div[data-role="container"] > aside {
         display: block;
         width: 100%;
-        margin: auto;
-        text-align: center;
+
+        ul[role="side-menu"]
+        {
+            margin: 0px auto;
+            border-color: transparent;
+            border-left: none;
+
+
+            li
+            {
+                display: inline-block;
+                width: auto;
+                border: none;
+                border-color: transparent;
+
+                a.btn
+                {
+                    padding: 0px 10px;
+                    width: 100%;
+
+                    span[class^="icon-"]
+                    {
+                        left: 0px;
+                    }
+                }
+            }
+        }
+
+        &+ article[data-role="grid"] {
+            display: block;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
     }
 
     article[data-role="grid"] div[role="title"] h1
@@ -67,13 +117,58 @@
 /* petit [tablette paysage] */
 @media only screen and (max-width: 768px) {
 
-    .header-container {
-        height: 115px;
+    .loading, .complete, .preparing {
+        transition: none !important;
     }
 
-#nprogress .bar {
-  top: 95px;
-}
+    .main {
+        padding: 0px;
+
+        article h1 {
+            font-size: 1.8em;
+        }
+    }
+
+    header.wrapper.clearfix
+    {
+        h1
+        {
+            &+a.btn
+            {
+                float: none;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+
+                &+a.btn
+                {
+                    float: none;
+                    position: absolute;
+                    right: 65px;
+                    top: 15px;
+                }
+            }
+        }
+    }
+
+    .header-container {
+        height: 130px;
+        border-bottom: 45px solid #9E4838;
+        position: static;
+    }
+
+
+    div[role="title"]
+    {
+        h1
+        {
+            font-size: 1.6em;
+        }
+    }
+
+    #nprogress .bar {
+      top: 95px;
+    }
     div[role="description-tablette"] > div {
         display: block;
         width: 100%;
@@ -141,19 +236,94 @@
         text-align: center;
     }
 
-    .main article h1 {
-        font-size: 1.8em;
-    }
-
     form > label, form > input[type="text"] {
         margin: 5px;
         padding: 2%;
         min-width: 60%;
     }
+
+    div[data-role="container"] > aside {
+        display: block;
+        width: 100%;
+
+        ul[role="side-menu"]
+        {
+            margin: 0 auto;
+            padding: 0px 5px;
+            text-align: center;
+
+            *
+            {
+                transition: none;
+            }
+            
+            li
+            {
+                margin: 0 auto;
+                padding: 0px 5px;
+                font-size: 2em;
+                display: inline-block;
+                text-align: center;
+
+                a.btn
+                {
+                    margin: 0 auto;
+                    line-height: auto;
+                    padding: 0px 5px;
+                    display: block;
+                    border: none;
+                    height: auto;
+
+                    &:hover
+                    {
+                        border: none;
+                    }
+
+                    span[class^="icon-"]
+                    {
+                        margin: 0 auto;
+                        position: static;
+                        padding: 5px;
+                    }
+
+                    span.side-legend
+                    {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        ul[role="side-menu"].affix
+        {
+            height: 45px;
+            background-color: @muffin-orange-dark;
+            top: 0px;
+        }
+
+    }
 }
 
 /* plus petit [tablette portrait] */
 @media only screen and (max-width: 480px) {
+
+
+
+    header.wrapper.clearfix
+    {
+        h1
+        {
+            &+a.btn
+            {
+                display: none;
+
+                &+a.btn
+                {
+                    display: none;
+                }
+            }
+        }
+    }
 
     div[role="home-title"] h3
     {
@@ -164,22 +334,40 @@
         font-size: 1.5em;
     }
 
-    div[data-role="container"] > aside + article {
-        display: block;
-        width: 100%;
-        margin: auto;
-        text-align: center;
-    }
-
     div[data-role="container"] > aside {
         display: block;
-        width: 20%;
         margin: auto;
         vertical-align: top;
-    }
+        padding: 0px;
 
-    div[data-role="container"] > aside > div[role="icon"] {
-        float: none;
+
+        ul[role="side-menu"]
+        {
+            li
+            {
+                font-size: 1.6em;
+
+                a.btn span[class^="icon-"] {
+                    padding: 10px 0;
+                }
+            }
+        }
+
+        ul[role="side-menu"].affix
+        {
+            top: 0px;
+        }
+
+        &+ article {
+            display: block;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+        &> div[role="icon"] {
+            float: none;
+        }
     }
 
     form > label, form > input[type="text"] {
@@ -243,5 +431,20 @@
 
     input + button {
         width: 15%;
+    }
+
+    div[data-role="container"] > aside {
+
+        ul[role="side-menu"]
+        {
+            li
+            {
+                font-size: 1.2em;
+                padding: 0px 3px;
+            }
+        }
+    }
+    article[role="header"] > header > div[role="icon-container"] > div[role="icon"] {
+        display: none;
     }
 }
