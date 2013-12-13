@@ -889,18 +889,18 @@ div[data-role="form-container"]
 
             div.radio input {
 
-                &:checked + label[for$="low"]:before,
-                    & + label[for$="low"]:hover:before {
+                &:checked + label[for$="1"]:before,
+                    & + label[for$="1"]:hover:before {
                     color: rgb(255, 173, 0);
                 }
 
-                &:checked + label[for$="med"]:before,
-                    & + label[for$="med"]:hover:before {
+                &:checked + label[for$="2"]:before,
+                    & + label[for$="2"]:hover:before {
                     color: #D95B43;
                 }
 
-                &:checked + label[for$="high"]:before,
-                    & + label[for$="high"]:hover:before {
+                &:checked + label[for$="3"]:before,
+                    & + label[for$="3"]:hover:before {
                     color: #542437;
                 }
 
@@ -991,6 +991,44 @@ div[data-role="form-container"]
     }
 }
 
+/* 
+    ------------------------------------------------------------------------
+        Echanges de competences
+    ------------------------------------------------------------------------                            
+*/
+
+ul[data-role="liste-competences"]
+{
+    li
+    {
+        padding: 10px 0px;
+        font-size: 1.2em;
+        clear: both;
+        list-style: none;
+
+        div.competence-icon
+        {
+            display: inline-block;
+            width: auto;
+            padding-right: 10px;
+        }
+        div.competence-name
+        {
+            display: inline-block;
+            width: auto;
+        }
+
+        p
+        {
+            margin: 2px;
+        }
+
+        &+li
+        {
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+    }
+}
 
 /* 
     ------------------------------------------------------------------------

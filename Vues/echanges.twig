@@ -1,0 +1,30 @@
+
+{% if not want_to_learn|length %}
+
+	<h1>Vous ne semblez pas avoir grand chose à apprendre !</h1>
+
+{% else %}
+
+	<h1>Vous voulez apprendre :</h1>
+	<ul data-role="liste-competences">
+	{% for comp in want_to_learn %}
+		<li>
+		<div class="competence-icon"><span class="icon-{{ comp.c_competences.icone }}"></span></div>
+		<div class="competence-name">{{ comp.c_competences.nom_usuel }}</div>
+		</li>
+	{% endfor %}
+	</ul>
+
+{% endif %}
+
+
+	<h1>Des gens ont besoin de vous :</h1>
+	<ul data-role="liste-competences">
+	{% for comp in users %}
+		<li>
+		<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+		<div class="competence-name"><p>Vous pouvez apprendre <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b></p></div>
+		<div class="competence-name"><p> à <b>{{ comp.login }}</b></p></div>
+		</li>
+	{% endfor %}
+	</ul>

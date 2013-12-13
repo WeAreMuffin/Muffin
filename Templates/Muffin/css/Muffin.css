@@ -9542,16 +9542,16 @@ div[data-role="form-container"] form fieldset input[type="checkbox"]:checked + l
   content: "\ec02";
   color: #c02942;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="low"]:before,
-div[data-role="form-container"] form fieldset div.radio input + label[for$="low"]:hover:before {
+div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="1"]:before,
+div[data-role="form-container"] form fieldset div.radio input + label[for$="1"]:hover:before {
   color: #ffad00;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="med"]:before,
-div[data-role="form-container"] form fieldset div.radio input + label[for$="med"]:hover:before {
+div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="2"]:before,
+div[data-role="form-container"] form fieldset div.radio input + label[for$="2"]:hover:before {
   color: #D95B43;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="high"]:before,
-div[data-role="form-container"] form fieldset div.radio input + label[for$="high"]:hover:before {
+div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="3"]:before,
+div[data-role="form-container"] form fieldset div.radio input + label[for$="3"]:hover:before {
   color: #542437;
 }
 div[data-role="form-container"] form fieldset div.radio input:checked + label:before {
@@ -9615,6 +9615,32 @@ div[data-role="form-container"] .breaker {
 #search_user_results li:hover a {
   transition: 0.2s all;
   padding-left: 5px;
+}
+/* 
+    ------------------------------------------------------------------------
+        Echanges de competences
+    ------------------------------------------------------------------------                            
+*/
+ul[data-role="liste-competences"] li {
+  padding: 10px 0px;
+  font-size: 1.2em;
+  clear: both;
+  list-style: none;
+}
+ul[data-role="liste-competences"] li div.competence-icon {
+  display: inline-block;
+  width: auto;
+  padding-right: 10px;
+}
+ul[data-role="liste-competences"] li div.competence-name {
+  display: inline-block;
+  width: auto;
+}
+ul[data-role="liste-competences"] li p {
+  margin: 2px;
+}
+ul[data-role="liste-competences"] li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* 
     ------------------------------------------------------------------------
