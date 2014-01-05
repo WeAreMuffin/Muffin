@@ -25,6 +25,29 @@
 		<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
 		<div class="competence-name"><p>Vous pouvez apprendre <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b></p></div>
 		<div class="competence-name"><p> à <b>{{ comp.login }}</b></p></div>
+		<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>
 		</li>
 	{% endfor %}
 	</ul>
+
+	<script>
+	$("a.btn.proposer").click(function()
+	{
+		var btn = $(this);
+		btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+		$.get('{{ href("Echanges","proposer") }}/'
+			+ $(this).attr("data-user") +'/'
+			+ $(this).attr("data-competence"), function(d)
+			{
+				console.log("click");
+				if(d == "1")
+				{
+					btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+				}
+				else
+				{
+					btn.html("<span class='icon-warning'></span> Erreur");
+				}
+			});
+	})
+	</script>

@@ -65,6 +65,32 @@ class Echanges extends Controller
         $this->render ();
     }
 
+
+    /**
+     * @PathInfo('user/competence')
+     */
+    public function proposer ($params)
+    {
+
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('user');
+        $render = "0";
+        $competence = $this->getUrlParam ('competence');
+        if ($login and $competence)
+        {
+            $cpt = new Entities("c_user_competences[id_user=\"$login\"][id_competence=\"$competence\"]");
+            if ($cpt)
+            {
+                $cpt = $cpt->current();
+                $i = array ("id_propose" => $_SESSION['muffin_id'],
+                    "id_demande" => $login, "id_competence" => $competence, "prix" => $cpt->price);
+                $res = Core::getBdd ()->insert ($i, 'c_echanges');
+                $render = "1";
+            }
+        }
+        echo ($render);
+    }
+
     /*   =======================================================================
      *                      Surcharge pour l'accès membre
      *   =======================================================================

@@ -9636,6 +9636,25 @@ ul[data-role="liste-competences"] li div.competence-name {
   display: inline-block;
   width: auto;
 }
+ul[data-role="liste-competences"] li a.btn {
+  font-size: 0.6em;
+  float: right;
+  min-height: 30px;
+  padding: 4px 6px;
+  line-height: 15px;
+  background-color: #c02942;
+  border-color: #c02942;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+ul[data-role="liste-competences"] li a.btn:hover {
+  background-color: #d95b43;
+  border-color: #d95b43;
+}
+ul[data-role="liste-competences"] li a.btn:active {
+  background-color: #9e4838;
+  border-color: #9e4838;
+}
 ul[data-role="liste-competences"] li p {
   margin: 2px;
 }
