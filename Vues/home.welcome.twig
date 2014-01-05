@@ -1,0 +1,25 @@
+
+{% extends 'base.twig' %}
+
+
+
+{% block main %}
+    <header>
+        <h1>Chouette !</h1>
+    </header>
+	<nav>
+		<ul>
+			<li>{{ link('Home.logout','Se déconnecter') }}</li>
+			<li>{{ link('Profile.index','Profil') }}</li>
+		</ul>
+	</nav>
+    <section>
+        <article>
+        	<p>Vous etes sur votre profil.</p>    
+	</article>
+    </section>
+    <section>
+        <article>
+        </article>
+    </section>
+{% endblock %}

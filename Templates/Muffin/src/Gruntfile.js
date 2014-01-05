@@ -67,13 +67,26 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			src: {
-				src: ['Gruntfile.js', 'src/**/*.js',
+				src: ['Gruntfile.js', 'src/**/*.js', 'src/js/*.js',
 					'less/**/*.less', 'less/bootstrap/*.less']
 			}
 		},
 		watch: {
 			src: {
-				files: '<%= jshint.src.src %>',
+				files: ['Gruntfile.js','js/vendor/*.js',
+					'js/bootstrap/transition.js',
+					'js/bootstrap/alert.js',
+					'js/bootstrap/button.js',
+					'js/bootstrap/carousel.js',
+					'js/bootstrap/collapse.js',
+					'js/bootstrap/dropdown.js',
+					'js/bootstrap/modal.js',
+					'js/bootstrap/tooltip.js',
+					'js/bootstrap/popover.js',
+					'js/bootstrap/scrollspy.js',
+					'js/bootstrap/tab.js',
+					'js/bootstrap/affix.js',
+					'js/*.js', 'less/**/*.less', 'less/bootstrap/*.less'],
 				tasks: ['dev:src']
 			}
 		}

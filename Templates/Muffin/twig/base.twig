@@ -11,7 +11,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{% block page_title %}Muffin{% endblock %}</title>
         <meta name="description" content="Ce petit site a pour objectif de recueillir un maximum d'informations concernant les compétences de chacun, et de les mettre à disposition pour faciliter les échanges, le partage et les petits boulots.">
+<<<<<<< HEAD
         <meta name="viewport" content="width=device-width">
+=======
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
+>>>>>>> moon-integration
         <meta name="google" value="notranslate">
         <meta name="application-name" content="Muffin">
         <meta name="application-url" content="http://muffin.lambdaweb.fr/">
@@ -54,6 +58,7 @@
             {% block header %}
             <header class="wrapper clearfix">
                 <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>chocolat triples pépites</span></i></h1>
+<<<<<<< HEAD
                 <!-- // Pas besoin de navigation pour ce site...
                 <nav>
                     <ul>
@@ -63,6 +68,15 @@
                     </ul>
                 </nav>
                 -->
+=======
+
+{% block header_after %}
+            {% if webdata.session.muffin_id %}
+            <a class="btn" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a>
+            <a class="btn" role="indicator">À jour</a>
+            {% endif %}
+{% endblock %}
+>>>>>>> moon-integration
             </header>
             {% endblock %}
         </div>

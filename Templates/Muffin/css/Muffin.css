@@ -18,9 +18,12 @@
           ydd smmm sdds                    -  www.lambdaweb.fr   -
 
 *******************************************************************************/
+<<<<<<< HEAD
 .modal-open {
   overflow: hidden;
 }
+=======
+>>>>>>> moon-integration
 .modal {
   display: none;
   overflow: auto;
@@ -65,6 +68,10 @@
   outline: none;
 }
 .modal-backdrop {
+<<<<<<< HEAD
+=======
+  transition: all 0.4s;
+>>>>>>> moon-integration
   position: fixed;
   top: 0;
   right: 0;
@@ -84,7 +91,11 @@
 .modal-header {
   padding: 15px;
   background-color: #d95b43;
+<<<<<<< HEAD
   border-bottom: 1px solid #9e4838;
+=======
+  border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+>>>>>>> moon-integration
   min-height: 16.428571429px;
   color: #f7e4be;
 }
@@ -105,7 +116,11 @@
   margin-top: 15px;
   padding: 19px 20px 20px;
   text-align: right;
+<<<<<<< HEAD
   border-top: 1px solid #9e4838;
+=======
+  border-top: 1px solid rgba(0, 0, 0, 0.11);
+>>>>>>> moon-integration
   *zoom: 1;
 }
 .modal-footer:before,
@@ -168,10 +183,17 @@
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
+<<<<<<< HEAD
   color: #ffffff;
   text-align: center;
   text-decoration: none;
   background-color: #000000;
+=======
+  color: #413e4a;
+  text-align: center;
+  text-decoration: none;
+  background-color: #e4d0a7;
+>>>>>>> moon-integration
   border-radius: 4px;
 }
 .tooltip-arrow {
@@ -186,52 +208,84 @@
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
+<<<<<<< HEAD
   border-top-color: #000000;
+=======
+  border-top-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
   left: 5px;
   border-width: 5px 5px 0;
+<<<<<<< HEAD
   border-top-color: #000000;
+=======
+  border-top-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.top-right .tooltip-arrow {
   bottom: 0;
   right: 5px;
   border-width: 5px 5px 0;
+<<<<<<< HEAD
   border-top-color: #000000;
+=======
+  border-top-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
+<<<<<<< HEAD
   border-right-color: #000000;
+=======
+  border-right-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.left .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
+<<<<<<< HEAD
   border-left-color: #000000;
+=======
+  border-left-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.bottom .tooltip-arrow {
   top: 0;
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
+<<<<<<< HEAD
   border-bottom-color: #000000;
+=======
+  border-bottom-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
   left: 5px;
   border-width: 0 5px 5px;
+<<<<<<< HEAD
   border-bottom-color: #000000;
+=======
+  border-bottom-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .tooltip.bottom-right .tooltip-arrow {
   top: 0;
   right: 5px;
   border-width: 0 5px 5px;
+<<<<<<< HEAD
   border-bottom-color: #000000;
+=======
+  border-bottom-color: #e4d0a7;
+>>>>>>> moon-integration
 }
 .popover {
   position: absolute;
@@ -852,6 +906,219 @@ table {
     transform: rotate(360deg);
   }
 }
+<<<<<<< HEAD
+=======
+#modal-new-comp-tags {
+  height: 30px !important;
+}
+.ms-ctn {
+  position: relative;
+  height: 28px;
+  padding: 0;
+  margin-bottom: 0px;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  cursor: default;
+  display: block;
+}
+.ms-ctn-invalid {
+  border: 1px solid #CC0000;
+}
+.ms-ctn-readonly {
+  cursor: pointer;
+}
+.ms-ctn-disabled {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+.ms-ctn-bootstrap-focus,
+.ms-ctn-bootstrap-focus .ms-res-ctn {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+.ms-ctn input {
+  border: 0;
+  box-shadow: none;
+  -webkit-transition: none;
+  outline: none;
+  display: block;
+  padding: 4px 6px;
+  line-height: normal;
+  overflow: hidden;
+  height: auto;
+  border-radius: 0;
+  float: left;
+  margin: 2px 0 2px 2px;
+}
+.ms-ctn-disabled input {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+.ms-ctn .ms-input-readonly {
+  cursor: pointer;
+}
+.ms-ctn .ms-empty-text {
+  color: rgba(0, 0, 0, 0.3);
+}
+.ms-ctn input:focus {
+  border: 0;
+  box-shadow: none;
+  -webkit-transition: none;
+  background: transparent;
+}
+.ms-ctn .ms-trigger {
+  float: right;
+  width: 27px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+  background: #EEE;
+  cursor: pointer;
+}
+.ms-ctn .ms-trigger .ms-trigger-ico {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: top;
+  border-top: 4px solid gray;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  margin-left: 9px;
+  margin-top: 13px;
+}
+.ms-ctn .ms-trigger:hover {
+  background: -moz-linear-gradient(100% 100% 90deg, #e3e3e3, #f1f1f1);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1f1f1), to(#e3e3e3));
+}
+.ms-ctn .ms-trigger:hover .ms-trigger-ico {
+  background-position: 0 -4px;
+}
+.ms-ctn-disabled .ms-trigger {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+.ms-ctn-bootstrap-focus {
+  border-bottom: 1px solid #CCC;
+}
+.ms-res-ctn {
+  position: relative;
+  background: #FFF;
+  overflow-y: auto;
+  z-index: 9999;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  left: -1px;
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.ms-res-ctn .ms-res-group {
+  line-height: 23px;
+  text-align: left;
+  padding: 2px 5px;
+  font-weight: bold;
+  border-bottom: 1px dotted #CCC;
+  border-top: 1px solid #CCC;
+  background: #f3edff;
+  color: #333;
+}
+.ms-res-ctn .ms-res-item {
+  line-height: 25px;
+  text-align: left;
+  padding: 2px 5px;
+  color: #666;
+  cursor: pointer;
+}
+.ms-res-ctn .ms-res-item-grouped {
+  padding-left: 15px;
+}
+.ms-res-ctn .ms-res-odd {
+  background: #F3F3F3;
+}
+.ms-res-ctn .ms-res-item-active {
+  background-color: #d95b43;
+  color: #fff;
+}
+.ms-sel-ctn {
+  overflow: auto;
+  line-height: 22px;
+  padding-right: 27px;
+}
+.ms-sel-ctn .ms-sel-item {
+  background: #555;
+  color: #EEE;
+  float: left;
+  font-size: 12px;
+  padding: 0 5px;
+  border-radius: 3px;
+  margin-left: 5px;
+  margin-top: 4px;
+}
+.ms-sel-ctn .ms-sel-text {
+  background: #FFF;
+  color: #666;
+  padding-right: 0;
+  margin-left: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+.ms-res-ctn .ms-res-item em {
+  font-style: normal;
+  background: #565656;
+  color: #FFF;
+}
+.ms-sel-ctn .ms-sel-item:hover {
+  background: #565656;
+}
+.ms-sel-ctn .ms-sel-text:hover {
+  background: transparent;
+}
+.ms-sel-ctn .ms-sel-item-active {
+  border: 1px solid red;
+  background: #757575;
+}
+.ms-ctn .ms-sel-ctn .ms-sel-item {
+  margin-top: 3px;
+}
+.ms-stacked .ms-sel-item {
+  float: inherit;
+}
+.ms-sel-ctn .ms-sel-item .ms-close-btn {
+  width: 7px;
+  cursor: pointer;
+  height: 7px;
+  float: right;
+  margin: 8px 2px 0 10px;
+  background-image: url(data:image/png;base64,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);
+}
+.ms-sel-ctn .ms-sel-item .ms-close-btn:hover {
+  background-position: 0 -7px;
+}
+.ms-helper {
+  color: #AAA;
+  font-size: 10px;
+  position: absolute;
+  top: -17px;
+  right: 0;
+}
+>>>>>>> moon-integration
 @font-face {
   font-family: 'moon';
   src: url('../fonts/moon.eot');
@@ -8612,6 +8879,24 @@ table {
 .icon-IcoMoon:before {
   content: "\f013";
 }
+<<<<<<< HEAD
+=======
+/* 
+ * Copyright 2013 lambda2.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+>>>>>>> moon-integration
 /* Loading the fonts files from GWF */
 /* On fait les resets standards */
 html,
@@ -9004,12 +9289,20 @@ input + button > span[class^="icon-"] {
   font-size: 2em;
 }
 .btn {
+<<<<<<< HEAD
   border: 2px solid #53777A;
   background-color: #53777A;
   color: #F7E4BE;
   border-radius: 3px;
   height: 30px;
   padding: 4px 6px 6px 6px;
+=======
+  border: 2px solid #53777a;
+  background-color: #53777a;
+  color: #F7E4BE;
+  border-radius: 3px;
+  height: 30px;
+>>>>>>> moon-integration
   margin: 0px 5px;
   cursor: pointer;
 }
@@ -9069,6 +9362,40 @@ div[data-role="container"] > aside + article {
   display: inline-block;
   width: 79%;
 }
+<<<<<<< HEAD
+=======
+div[data-role="container"] ul.horizontal-list {
+  padding-left: 0px;
+}
+div[data-role="container"] ul.horizontal-list li {
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+  border: 0px;
+  cursor: pointer;
+  margin: 0px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+div[data-role="container"] ul.horizontal-list li:hover {
+  background-color: rgba(217, 91, 67, 0.05);
+}
+div[data-role="container"] ul.horizontal-list li.active {
+  border-bottom: 3px solid #c02942;
+}
+div[data-role="container"] ul.horizontal-list#exchange-menu > li {
+  width: 48%;
+}
+div[data-role="container"] ul.items-panels {
+  padding-left: 0px;
+}
+div[data-role="container"] ul.items-panels li {
+  display: block;
+}
+>>>>>>> moon-integration
 /* 
     ------------------------------------------------------------------------
         Header
@@ -9104,20 +9431,55 @@ article[role="header"] > header > div[role="title"] {
         Description latérale
     ------------------------------------------------------------------------                            
 */
+<<<<<<< HEAD
+=======
+aside.side-menu ul.affix {
+  position: fixed;
+  top: 100px;
+  width: 200px;
+}
+>>>>>>> moon-integration
 aside.side-menu a.btn {
   width: 90%;
   text-align: center;
   margin-top: 10px;
   display: block;
+<<<<<<< HEAD
   line-height: 15px;
+=======
+  line-height: 30px;
+>>>>>>> moon-integration
   color: #53777A;
   background: transparent;
   border-width: 1px;
 }
+<<<<<<< HEAD
+=======
+aside.side-menu a.btn span[class^="icon"] {
+  position: relative;
+  top: 7px;
+  left: 6px;
+  padding-left: 5px;
+  float: left;
+}
+aside.side-menu a.btn[role="indicator"] {
+  border-color: transparent;
+}
+>>>>>>> moon-integration
 aside.side-menu ul[role="side-menu"] {
   margin: 40px 20px 0px 0px;
   border-right: 1px solid #CABA9C;
 }
+<<<<<<< HEAD
+=======
+aside.side-menu ul[role="side-menu"] li a.btn {
+  transition: all 0.1s;
+  border-color: transparent;
+}
+aside.side-menu ul[role="side-menu"] li a.btn:hover {
+  border-color: #53777a;
+}
+>>>>>>> moon-integration
 div[role="add-competence"],
 div[role="show-stats"] {
   padding-top: 20px;
@@ -9155,13 +9517,80 @@ p {
 }
 /* 
     ------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+        icones du header
+    ------------------------------------------------------------------------                            
+*/
+.header-container header a.btn {
+  background-color: transparent;
+  border: none;
+  height: 95px;
+  float: right;
+  font-size: 2em;
+  line-height: 75px;
+  color: #9e4838;
+}
+.header-container header a.btn:hover {
+  color: #723B30;
+}
+.header-container header a.btn[role="indicator"] {
+  font-size: 1em;
+}
+/* 
+    ------------------------------------------------------------------------
+>>>>>>> moon-integration
         Labels en étoile
     ------------------------------------------------------------------------                            
 */
 #form-result {
   display: none;
 }
+<<<<<<< HEAD
 #form-competences fieldset {
+=======
+.modal-body form label {
+  display: block;
+  margin-top: 5px;
+}
+.modal-body form label span.opt {
+  color: rgba(0, 0, 0, 0.3);
+}
+.modal-body form label.inline {
+  display: inline-block;
+}
+.modal-body form label + input[type="checkbox"] {
+  display: inline-block;
+}
+.modal-body form #input-nom-comp,
+.modal-body form #search_comp_uid,
+.modal-body form textarea,
+.modal-body form input[type="password"] {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  border-radius: 3px;
+  width: 100%;
+  min-width: 80%;
+  padding: 4px;
+}
+.modal-body form #ms-input-0 {
+  min-width: 20% !important;
+  min-height: 26px;
+  border: none;
+}
+.modal-body #input-nom-comp,
+.modal-body #search_comp_uid {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  border-radius: 3px;
+  width: 100%;
+  min-width: 80%;
+}
+div[data-role="form-container"] form {
+  display: inline-block;
+}
+div[data-role="form-container"] form fieldset {
+>>>>>>> moon-integration
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -9169,21 +9598,33 @@ p {
   text-align: center;
   position: relative;
 }
+<<<<<<< HEAD
 #form-competences fieldset h1 {
+=======
+div[data-role="form-container"] form fieldset h1 {
+>>>>>>> moon-integration
   font-size: 3.6rem;
   line-height: 0px;
   vertical-align: top;
   max-height: 60px;
   margin-bottom: 5px;
 }
+<<<<<<< HEAD
 #form-competences fieldset h4 {
   line-height: 0px;
 }
 #form-competences fieldset a.clear-all {
+=======
+div[data-role="form-container"] form fieldset h4 {
+  line-height: 0px;
+}
+div[data-role="form-container"] form fieldset a.clear-all {
+>>>>>>> moon-integration
   color: #F7E4BE;
   position: relative;
   top: 2px;
 }
+<<<<<<< HEAD
 #form-competences fieldset:hover a.clear-all,
 #form-competences fieldset a.want-to-learn,
 #form-competences fieldset a.want-to-teach {
@@ -9229,6 +9670,94 @@ p {
   font-size: 1.2rem;
 }
 #form-competences fieldset div.radio input + label:before {
+=======
+div[data-role="form-container"] form fieldset:hover a.clear-all,
+div[data-role="form-container"] form fieldset a.want-to-learn,
+div[data-role="form-container"] form fieldset a.want-to-teach {
+  color: #887D72;
+}
+div[data-role="form-container"] form fieldset a.clear-all:hover,
+div[data-role="form-container"] form fieldset a.want-to-learn:hover,
+div[data-role="form-container"] form fieldset a.want-to-teach:hover {
+  color: #D95B43;
+}
+div[data-role="form-container"] form fieldset div.radio,
+div[data-role="form-container"] form fieldset a.clear-all {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-learn:before {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  content: "\ed5a";
+  font-family: 'moon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #CEB789;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+}
+div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-learn:hover:before {
+  color: #887D72;
+}
+div[data-role="form-container"] form fieldset input[type="checkbox"]:checked + label.want-to-learn:before {
+  color: #9e4838;
+}
+div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-teach:before {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  content: "\ec03";
+  font-family: 'moon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #CEB789;
+  position: absolute;
+  top: 70px;
+  right: 10px;
+}
+div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-teach:hover:before {
+  color: #c02942;
+}
+div[data-role="form-container"] form fieldset input[type="checkbox"]:checked + label.want-to-teach:before {
+  content: "\ec02";
+  color: #c02942;
+}
+div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="1"]:before,
+div[data-role="form-container"] form fieldset div.radio input + label[for$="1"]:hover:before {
+  color: #ffad00;
+}
+div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="2"]:before,
+div[data-role="form-container"] form fieldset div.radio input + label[for$="2"]:hover:before {
+  color: #D95B43;
+}
+div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="3"]:before,
+div[data-role="form-container"] form fieldset div.radio input + label[for$="3"]:hover:before {
+  color: #542437;
+}
+div[data-role="form-container"] form fieldset div.radio input:checked + label:before {
+  content: "\edb2";
+  font-size: 1.2rem;
+}
+div[data-role="form-container"] form fieldset div.radio input + label:before {
+>>>>>>> moon-integration
   width: 20px;
   height: 40px;
   display: inline-block;
@@ -9245,6 +9774,7 @@ p {
   -moz-osx-font-smoothing: grayscale;
   color: #CEB789;
 }
+<<<<<<< HEAD
 #form-competences fieldset:hover div.radio input + label:before {
   color: #413E4A;
 }
@@ -9254,6 +9784,158 @@ p {
 }
 #form-competences .breaker {
   display: block;
+=======
+div[data-role="form-container"] form fieldset:hover div.radio input + label:before {
+  color: #413E4A;
+}
+div[data-role="form-container"] form input {
+  display: none;
+  opacity: 0;
+}
+div[data-role="form-container"] .breaker {
+  display: block;
+}
+/* 
+    ------------------------------------------------------------------------
+        Liste de la recherche user
+    ------------------------------------------------------------------------                            
+*/
+#search_user_results {
+  padding: 10px;
+}
+#search_user_results li {
+  display: block;
+  list-style: none;
+  width: 100%;
+  margin: auto;
+  padding: 1px;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+#search_user_results li a {
+  transition: 0.2s all;
+}
+#search_user_results li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+#search_user_results li:hover {
+  border-left: 1px solid #53777a;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+#search_user_results li:hover a {
+  transition: 0.2s all;
+  padding-left: 5px;
+}
+/* 
+    ------------------------------------------------------------------------
+        Modale d'ajout de competence : Type de la competence
+    ------------------------------------------------------------------------                            
+*/
+#form-add-competence .radio-group {
+  text-align: center;
+}
+#form-add-competence .radio-group input[type="radio"] {
+  display: none;
+}
+#form-add-competence .radio-group input[type="radio"] + label {
+  border: 1px solid transparent;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  width: 30%;
+  max-width: 30%;
+  margin: auto;
+  padding: 0px;
+  text-align: center;
+}
+#form-add-competence .radio-group input[type="radio"] + label:first-of-type {
+  border-left: 1px solid transparent;
+}
+#form-add-competence .radio-group input[type="radio"] + label h2 {
+  font-size: 3em;
+  margin: 10px 0px 0px 0px;
+}
+#form-add-competence .radio-group input[type="radio"]:checked + label,
+#form-add-competence .radio-group input[type="radio"]:checked + label > p,
+#form-add-competence .radio-group input[type="radio"]:checked + label > h2 {
+  color: #c02942;
+}
+/* 
+    ------------------------------------------------------------------------
+        Echanges de competences
+    ------------------------------------------------------------------------                            
+*/
+.show-little {
+  display: none;
+}
+ul#exchange-panel p.intro > span {
+  padding-left: 5px;
+}
+ul#exchange-panel li {
+  display: block;
+}
+ul[data-role="liste-competences"] a.right {
+  text-decoration: none;
+  color: #413e4a;
+  background-color: transparent;
+  float: right;
+  line-height: 30px;
+  margin: 0px 5px;
+}
+ul[data-role="liste-competences"] a.right.online {
+  color: #53777a;
+}
+ul[data-role="liste-competences"] li {
+  padding: 10px 0px;
+  font-size: 1.2em;
+  clear: both;
+  list-style: none;
+}
+ul[data-role="liste-competences"] li div.competence-icon {
+  display: inline-block;
+  width: auto;
+  padding-right: 10px;
+}
+ul[data-role="liste-competences"] li div.competence-name {
+  display: inline-block;
+  width: auto;
+}
+ul[data-role="liste-competences"] li a.btn {
+  font-size: 0.6em;
+  float: right;
+  min-height: 30px;
+  padding: 4px 6px;
+  line-height: 17px;
+  background-color: #c02942;
+  border-color: #c02942;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+ul[data-role="liste-competences"] li a.btn:hover {
+  background-color: #d95b43;
+  border-color: #d95b43;
+}
+ul[data-role="liste-competences"] li a.btn:active {
+  background-color: #9e4838;
+  border-color: #9e4838;
+}
+ul[data-role="liste-competences"] li a.btn.offline {
+  background-color: transparent;
+  border: 1px solid #9e4838;
+  color: #413e4a;
+  line-height: 19px;
+}
+ul[data-role="liste-competences"] li a.btn.offline span[class^="icon-"] {
+  position: relative;
+  top: 1px;
+  left: -2px;
+  padding-left: 5px;
+}
+ul[data-role="liste-competences"] li p {
+  margin: 2px;
+}
+ul[data-role="liste-competences"] li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+>>>>>>> moon-integration
 }
 /* 
     ------------------------------------------------------------------------
@@ -9265,18 +9947,30 @@ p {
 .preparing {
   transition: all 0.4s;
 }
+<<<<<<< HEAD
 .loading {
+=======
+.loading:not(.modal) {
+>>>>>>> moon-integration
   visibility: hidden;
   position: relative;
   bottom: -50px;
 }
+<<<<<<< HEAD
 .preparing {
+=======
+.preparing:not(.modal) {
+>>>>>>> moon-integration
   transition: all 0.4s;
   opacity: 0;
   position: relative;
   bottom: -50px;
 }
+<<<<<<< HEAD
 .complete {
+=======
+.complete:not(.modal) {
+>>>>>>> moon-integration
   opacity: 1;
   visibility: visible;
   position: relative;
@@ -9456,6 +10150,24 @@ p {
 }
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
+<<<<<<< HEAD
+=======
+  .header-container {
+    border-bottom: 30px solid #9E4838;
+  }
+  aside.side-menu ul.affix {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    color: #f7e4be;
+    z-index: 1009;
+    width: 100%;
+  }
+  aside.side-menu ul.affix li a.btn {
+    color: #f7e4be;
+    border: none;
+  }
+>>>>>>> moon-integration
   div[role="home-title"] h3 {
     font-size: 1.5rem;
     line-height: 1.1em;
@@ -9484,6 +10196,31 @@ p {
   .visible-desktop {
     display: none !important;
   }
+<<<<<<< HEAD
+=======
+  div[data-role="container"] > aside {
+    display: block;
+    width: 100%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] {
+    margin: 0px auto;
+    border-color: transparent;
+    border-left: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    display: inline-block;
+    width: auto;
+    border: none;
+    border-color: transparent;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn {
+    padding: 0px 10px;
+    width: 100%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
+    left: 0px;
+  }
+>>>>>>> moon-integration
   div[data-role="container"] > aside + article[data-role="grid"] {
     display: block;
     width: 100%;
@@ -9496,8 +10233,41 @@ p {
 }
 /* petit [tablette paysage] */
 @media only screen and (max-width: 768px) {
+<<<<<<< HEAD
   .header-container {
     height: 115px;
+=======
+  .loading,
+  .complete,
+  .preparing {
+    transition: none !important;
+  }
+  .main {
+    padding: 0px;
+  }
+  .main article h1 {
+    font-size: 1.8em;
+  }
+  header.wrapper.clearfix h1 + a.btn {
+    float: none;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+  }
+  header.wrapper.clearfix h1 + a.btn + a.btn {
+    float: none;
+    position: absolute;
+    right: 65px;
+    top: 15px;
+  }
+  .header-container {
+    height: 130px;
+    border-bottom: 45px solid #9E4838;
+    position: static;
+  }
+  div[role="title"] h1 {
+    font-size: 1.6em;
+>>>>>>> moon-integration
   }
   #nprogress .bar {
     top: 95px;
@@ -9555,24 +10325,102 @@ p {
   .footer-container footer div[role="git-info"] {
     text-align: center;
   }
+<<<<<<< HEAD
   .main article h1 {
     font-size: 1.8em;
   }
+=======
+>>>>>>> moon-integration
   form > label,
   form > input[type="text"] {
     margin: 5px;
     padding: 2%;
     min-width: 60%;
   }
+<<<<<<< HEAD
 }
 /* plus petit [tablette portrait] */
 @media only screen and (max-width: 480px) {
+=======
+  div[data-role="container"] > aside {
+    display: block;
+    width: 100%;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] {
+    margin: 0 auto;
+    padding: 0px 5px;
+    text-align: center;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] * {
+    transition: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    margin: 0 auto;
+    padding: 0px 5px;
+    font-size: 2em;
+    display: inline-block;
+    text-align: center;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn {
+    margin: 0 auto;
+    line-height: auto;
+    padding: 0px 5px;
+    display: block;
+    border: none;
+    height: auto;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn:hover {
+    border: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
+    margin: 0 auto;
+    position: static;
+    padding: 5px;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span.side-legend {
+    display: none;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"].affix {
+    height: 45px;
+    background-color: #9e4838;
+    top: 0px;
+  }
+  .horizontal-list li > a {
+    font-size: 2em;
+    padding: 5px 0px;
+    display: block;
+  }
+  #exchange-panel {
+    padding-left: 0px;
+    text-align: left;
+  }
+  #exchange-panel ul[data-role="liste-competences"] {
+    padding-left: 0px;
+    text-align: left;
+  }
+  span.side-legend {
+    display: none;
+  }
+  span.show-little {
+    display: inline-block;
+  }
+}
+/* plus petit [tablette portrait] */
+@media only screen and (max-width: 480px) {
+  header.wrapper.clearfix h1 + a.btn {
+    display: none;
+  }
+  header.wrapper.clearfix h1 + a.btn + a.btn {
+    display: none;
+  }
+>>>>>>> moon-integration
   div[role="home-title"] h3 {
     text-align: center;
   }
   .main article h1 {
     font-size: 1.5em;
   }
+<<<<<<< HEAD
   div[data-role="container"] > aside + article {
     display: block;
     width: 100%;
@@ -9584,6 +10432,28 @@ p {
     width: 20%;
     margin: auto;
     vertical-align: top;
+=======
+  div[data-role="container"] > aside {
+    display: block;
+    margin: auto;
+    vertical-align: top;
+    padding: 0px;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    font-size: 1.6em;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
+    padding: 10px 0;
+  }
+  div[data-role="container"] > aside ul[role="side-menu"].affix {
+    top: 0px;
+  }
+  div[data-role="container"] > aside + article {
+    display: block;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+>>>>>>> moon-integration
   }
   div[data-role="container"] > aside > div[role="icon"] {
     float: none;
@@ -9640,4 +10510,14 @@ p {
   input + button {
     width: 15%;
   }
+<<<<<<< HEAD
+=======
+  div[data-role="container"] > aside ul[role="side-menu"] li {
+    font-size: 1.2em;
+    padding: 0px 3px;
+  }
+  article[role="header"] > header > div[role="icon-container"] > div[role="icon"] {
+    display: none;
+  }
+>>>>>>> moon-integration
 }

@@ -1,0 +1,43 @@
+
+
+
+
+{#
+<!--
+Si on a rentré un login non existant
+-->
+<?php 
+
+include_once '../modules/functions.php'; 
+
+// Les modales
+include_once './step-2-modals.php'; 
+
+// Header
+include_once '../templates/header.php';
+
+// Menu latéral
+include_once '../templates/side-menu.php'; 
+
+?>
+#}
+
+
+{% block container %}
+{% include 'user.index.modals.twig' %}
+{% include 'user.index.header.twig' %}
+{% include 'user.index.side-menu.twig' %}
+<article data-role="grid">
+    <section>
+        <a href="#!"></a>
+        <div data-role="form-container">
+            {% include 'user.index.me.twig' %}
+        </div>
+        <div id="form-result"></div>
+    </section>
+
+    
+</article>
+
+
+{% endblock %}

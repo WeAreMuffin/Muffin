@@ -1,0 +1,25 @@
+<h1>Voici les compétences de {{ user.prenom }}</h1>
+        {{ formDataJson }}
+<script>
+
+        window.toCheck = [{{ checkedRadios }}];
+    </script>
+    <script>
+
+        $(document).ready(function()
+        {
+            $(".footer-container").addClass("nofix");
+            NProgress.start();
+
+            $("[data-submit]").each(function() {
+                $(this).click(function() {
+                    $('#' + $(this).attr("data-submit")).trigger('submit');
+                });
+            });
+
+            addCheckHandler(window.toCheck);
+            NProgress.done();
+            treatResize();
+
+        });
+    </script>

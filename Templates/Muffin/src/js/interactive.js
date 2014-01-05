@@ -18,27 +18,6 @@
 
 	window.muffin = {};
 
-
-
-
-window.muffin.niveaux = function(enable) {
-	var n;
-	if (enable === null || enable === undefined
-		|| enable === "")
-	{
-		n = {low: {label: ""}, med: {label: ""}, high: {label: ""}};
-	}
-	else
-	{
-		n = {
-			low: {enable: enable, label: ""},
-			med: {enable: enable, label: ""},
-			high: {enable: enable, label: ""}
-		};
-	}
-	return n;
-};
-
 	/*
 	 * ============================================================================
 	 * Step-00 Connexion
@@ -133,19 +112,20 @@ window.muffin.niveaux = function(enable) {
 			{
 				{
 					$.get("User/index",
-					function(data) {
-						$("#input-code").attr("disabled", "disabled");
-						$("#input-code + button").attr("disabled", "disabled")
-							.html("<span class='icon-checkmark'></span>");
-						var data = $(data);
-						data.addClass("loading");
-						$("div[data-role='container']").children().slideUp();
-						$("div[data-role='container']").html(data);
-						setTimeout(function() {
-							NProgress.done();
-							data.addClass("complete");
-						}, 200);
-					});
+						function(data) {
+							$("#input-code").attr("disabled", "disabled");
+							$("#input-code + button").attr("disabled", "disabled")
+								.html("<span class='icon-checkmark'></span>");
+							data = $(data);
+							data.addClass("loading");
+							$("div[data-role='container']").children().slideUp();
+							$("div[data-role='container']").html(data);
+							reloadHandlers();
+							setTimeout(function() {
+								NProgress.done();
+								data.addClass("complete");
+							}, 200);
+						});
 				}
 			}
 			else
@@ -184,10 +164,89 @@ window.muffin.niveaux = function(enable) {
 
 	/*
 	 * ============================================================================
-	 * Step-01 new Passw
+	 * Search for user data
 	 * ============================================================================
 	 */
 
+	 muffin.autoSearchUser = function(name)
+	{
+		var max_results = 5;
+		var container = $("#search_user_results");
+		var field = $("#search_comp_uid");
+		if(name != "" && name != undefined)
+		{
+			$.getJSON("Search/users/" + name, function(data)
+			{
+				var a, i;
+				container.parent().show();
+				container.empty();
+			  	for (i in data) {
+			  		if ( i < max_results)
+			  		{
+			  			console.log(i);
+				  		a = $("<li><a>" + data[i] + "</a></li>");
+				  		a.click(function() {
+				  			field.val($(this).text());
+				  			muffin.searchUSerData();
+				  		});
+						container.append(a);
+					}
+				}
+			});
+		}
+		else
+		{
+			container.parent().hide();
+			container.empty();
+		}
+	}
+
+	muffin.searchUSerData = function()
+	{
+		var login = $("#search_comp_uid").val();
+		var button = $("#btn_search_comp_uid");
+		var span = button.find("span").first();
+		var status = $("#status_search_comp_uid");
+		var modal = ("#modal-explore");
+		if (login)
+		{
+			span.removeClass("icon-uniF488").addClass("icon-clock3");
+			$.ajax({
+				type: "GET",
+				url: "Search/user/" + login
+			}).done(function(e)
+			{
+
+				NProgress.done();
+				if (e.toString()[0] === "0")
+				{
+					span.removeClass("icon-clock3").addClass("icon-multiply");
+					status.html("Il semblerait que l'uid n'existe pas, ou que ses compétences ne soient pas publiques.");
+				}
+				else
+				{
+					span.removeClass("icon-clock3").addClass("icon-uniF488");
+					$(modal).modal('hide');
+		  			$("#search_comp_uid").val("");
+		  			muffin.autoSearchUser();
+					e = $(e);
+						e.addClass("loading");
+						$("div[data-role='form-container']").children().slideUp();
+						$("div[data-role='form-container']").html(e);
+						setTimeout(function() {
+							NProgress.done();
+							e.addClass("complete");
+							reloadHandlers();
+						}, 200);
+				}
+			});
+		}
+		else
+		{
+			status.html("Vous devez rentrer un uid");
+		}
+
+	};
 
 
 })(jQuery);

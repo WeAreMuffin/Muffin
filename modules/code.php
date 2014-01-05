@@ -33,8 +33,8 @@ $message = '
 $login = $_POST['login'];
 $fakeMail = false;
 
-$email = $login . '@student.42.fr';
 $pass = generatePassPhrase ();
+$email = $login . '@student.42.fr';
 $subject = "Muffin - Votre muffinpass";
 $message = "Voici votre muffinpass: [ $pass ]\n"
         . "Vous pouvez l'entrer dès maintenant sur http://muffin.lambdaweb.fr avec votre uid ($login).";

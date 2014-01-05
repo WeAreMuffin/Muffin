@@ -1,5 +1,18 @@
-
-
+/* 
+ * Copyright 2013 lambda2.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 // Avoid `console` errors in browsers that lack a console.
 (function() {
@@ -25,22 +38,34 @@
 	}
 }());
 
-window.formChanged = false;
-
-var saveToDatabase = function()
+function bindAjaxEvents()
 {
-	if (window.formChanged)
+	$('[data-load-target]').each(function()
 	{
-		$("#form-competences").trigger('submit');
-	}
-	window.formChanged = false;
-};
+		var urlToGo = $(this).attr("data-load-target");
+		$(this).click(function()
+		{
+			$.get(urlToGo,
+				function(data) {
+					data = $(data);
+					data.addClass("loading");
+					$("div[data-role='form-container']").children().slideUp();
+					$("div[data-role='form-container']").html(data);
+					setTimeout(function() {
+						NProgress.done();
+						data.addClass("complete");
+						reloadHandlers();
+					}, 200);
+				});
+		});
+	});
+}
 
 function addCheckHandler(toCheck)
 {
-	$(".radio input").change(function() {
-		console.log("change !");
-		window.formChanged = true;
+	$("div[data-role='form-container'] form .radio input, div[data-role='form-container'] form input[type='checkbox']").change(function() {
+		console.log("change");
+		$(this).parents("form").trigger("submit");
 	});
 
 	// Mise à jour des champs
@@ -66,7 +91,7 @@ function showResponse(responseText, statusText, xhr, $form) {
 }
 
 var initalizeForm = function() {
-	var options = {
+	window.ioptions = {
 		target: '#form-result', // target element(s) to be updated with server response 
 		beforeSubmit: showRequest, // pre-submit callback 
 		success: showResponse, // post-submit callback 
@@ -74,10 +99,10 @@ var initalizeForm = function() {
 		type: "post"       // 'get' or 'post', override for form's 'method' attribute 
 	};
 
-	$('#form-competences').submit(function() {
+	$('div[data-role="form-container"] form').submit(function() {
 		// inside event callbacks 'this' is the DOM element so we first 
 		// wrap it in a jQuery object and then invoke ajaxSubmit 
-		$(this).ajaxSubmit(options);
+		$(this).ajaxSubmit(window.ioptions);
 
 		// !!! Important !!! 
 		// always return false to prevent standard browser submit and page navigation 
@@ -85,8 +110,6 @@ var initalizeForm = function() {
 	});
 	addClearItems();
 
-	// La sauvegarde auto
-	setInterval(saveToDatabase, 5000);
 };
 
 // pre-submit callback 
@@ -106,10 +129,22 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	console.log("statusText:", statusText);
 	var a = $(responseText);
 	a.addClass("preparing");
-	$("#form-competences > div").first().append(a);
+	var ctn = $("div[data-role='form-container'] > ul.items-panels");
+	var type = $("#form-add-competence .radio-group input:checked").val();
+	if (type == "1")
+		type = "3";
+	else if (type == "3")
+		type = "1";
+	console.log("type = " + type);
+	ctn.find("li[data-index='"+type+"']").append(a);
 	addCheckHandler(window.toCheck);
+	a.submit(function() {
+		$(this).ajaxSubmit(window.ioptions);
+		return false;
+	});
+	addClearItems();
 	setTimeout(function() {
-		$.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: a });
+		$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
 		NProgress.done();
 		a.addClass("complete").removeClass("preparing");
 	}, 1000);
@@ -128,47 +163,89 @@ var initalizeAddForm = function() {
 		// inside event callbacks 'this' is the DOM element so we first 
 		// wrap it in a jQuery object and then invoke ajaxSubmit 
 		console.log("initialized");
-		$(this).ajaxSubmit(options);
-
+		var e = document.getElementById('form-add-competence');
+		if (e.checkValidity())
+		{
+			$(this).ajaxSubmit(options);
+		}
+		else
+		{
+		
+		}
 		// !!! Important !!! 
 		// always return false to prevent standard browser submit and page navigation 
 		return false;
 	});
 };
 
+var initializePanelMenu = function()
+{
+	$("#panel-menu > li[data-index-toggle]").click(function()
+	{
+		var index = $(this).attr("data-index-toggle");
+		$("#panel-menu > li[data-index-toggle]").removeClass("active");
+		$(this).addClass("active");
+		$(".items-panels > li[data-index!='" + index + "']").hide();
+		$(".items-panels > li[data-index='" + index + "']").show();
+	});
+};
+
+var initializeHelpMenu = function()
+{
+	$("#exchange-panel > li[data-index]").hide();
+	$("#exchange-panel > li[data-index='1']").show();
+	$("#exchange-menu > li[data-index-toggle]").click(function()
+	{
+		var index = $(this).attr("data-index-toggle");
+		$("#exchange-menu > li[data-index-toggle]").removeClass("active");
+		$(this).addClass("active");
+		$("#exchange-panel > li[data-index!='" + index + "']").hide();
+		$("#exchange-panel > li[data-index='" + index + "']").show();
+	});
+};
+
+var queryUserStatus = function()
+{
+	$("[data-locate]").each(function()
+	{
+		var login = $(this).attr("data-login");
+		$.ajax({
+			url: "https://dashboard.42.fr/crawler/pull/" + login + "/",
+			dataType: "json",
+			success: function(e){$(this).addClass("online").html(e.last_host.replace(".42.fr", ""));},
+			error: function(){$(this).removeClass("online");}
+		});
+	});
+}
+
 var addClearItems = function()
 {
-	$('#form-competences fieldset').each(function() {
+	/**
+	 * On met les icones de supression, teach & learn
+	 */
+	$('div[data-role="form-container"] fieldset').each(function() {
 		var fieldset = $(this);
 		var radioElt = fieldset.find(".radio input").first();
-		if (fieldset.find(".clear-all").length == 0)
+		if (fieldset.find(".clear-all").length === 0)
 		{
 			fieldset.append("<a class='clear-all' data-items='"
 				+ radioElt.attr("name")
-				+ "'><span class='icon-remove-circle'></span></a>");
-		}
-		if (fieldset.find(".want-to-learn").length == 0)
-		{
-			fieldset.append("<a class='want-to-learn' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-student'></span></a>");
-		}
-		if (fieldset.find(".want-to-teach").length == 0)
-		{
-			fieldset.append("<a class='want-to-teach' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-love'></span></a>");
+				+ "'><span class='icon-multiply'></span></a>");
 		}
 	});
-	$("#form-competences fieldset a.clear-all").click(function() {
+
+	/**
+	 * On bind le clic sur les boutons de supression à une requete ajax
+	 * pour supprimer le niveau
+	 */
+	$("div[data-role='form-container'] form fieldset a.clear-all").click(function() {
 		var item = $(this);
-		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
+		var concerned = item.parent().find(".radio input[name='niveau']");
 		$.ajax({
 			url: "User/deletecompetence",
 			type: 'POST',
 			data: {
-				login: $("#form-login").val(),
-				code: $("#form-code").val(),
+				id_competence: item.parent().parent().find("input[name='id_competence']").val(),
 				comp: item.attr("data-items")
 			}
 		}).done(function(data) {
@@ -180,39 +257,6 @@ var addClearItems = function()
 			});
 		});
 	});
-};
-
-var createFormCompetences = function()
-{
-	console.log("form competences");
-	$("#form-competences div").makeForms({
-		components: window.items,
-		groupSize: 1,
-		templates:
-			{
-				title: "<h4>{{title}}</h4>",
-				group: '<fieldset>{{group}}</fieldset>',
-				label: '<label for="{{id}}">{{label}}</label>',
-				radio: '<div class="radio"><input type="radio" name="{{name}}"\
-	id="{{id}}" value="{{value}}">{{label}}<label for="{{id}}"></label></div>',
-				input: '<input class="form-control" type="{{type}}" name="{{name}}"\
-	id="{{id}}" value="{{value}}">',
-				text: '<input class="form-control" type="text" name="{{name}}"\
-	id="{{id}}" value="{{value}}">',
-				select: '<select class="form-control" id="{{id}}" name="{{name}}">\n\
-	<option id="{{id}}" value="">Aucun</option>{{options}}</select>',
-				option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
-			}
-	});
-	/*$("div.radio input + label").click(function()
-	 {
-	 console.log("ok");
-	 var elt = $(this).parent().children("input");
-	 if(elt.is(":checked"))
-	 {
-	 elt.prop('checked', false);
-	 }
-	 });*/
 };
 
 var treatResize = function()
@@ -227,5 +271,80 @@ var treatResize = function()
 	}
 };
 
-window.createFormCompetences = createFormCompetences;
+var afterUserUpdate = function(responseText, statusText, xhr, $form) {
+	console.log("after");
+	if (responseText[0] == "1")
+	{
+		$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Paramètres mis à jour");
+		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-checkmark2");
+		$('#modal-params').modal('hide');
+	}
+	else
+	{
+		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-multiply");
+		$("#status_update_uid").html(responseText);
+	}
+};
+
+var initFormComportement = function()
+{
+	$('#form_search_uid').submit(function(e) {
+		e.stopImmediatePropagation();
+		window.muffin.searchUSerData();
+		return false;
+	});
+
+	$('#form_params').submit(function() {
+
+		var options = {
+			target: '#form-result', // target element(s) to be updated with server response 
+			beforeSubmit: function() {
+				$("#status_public_icon").removeClass("icon-uniF488")
+					.removeClass("icon-multiply")
+					.removeClass("icon-checkmark2")
+					.addClass("icon-clock3");
+			}, // pre-submit callback 
+			success: afterUserUpdate, // post-submit callback 
+			url: "User/update",
+			type: "post"        // 'get' or 'post', override for form's 'method' attribute 
+		};
+
+		console.log("update");
+		$(this).ajaxSubmit(options);
+
+		return false;
+	});
+};
+
+
+var reloadHandlers = function()
+{
+	NProgress.configure({showSpinner: false});
+	$("a").smoothScroll();
+
+	treatResize();
+	$(window).resize(treatResize);
+	bindAjaxEvents();
+	initFormComportement();
+	initializePanelMenu();
+	initializeHelpMenu();
+	try
+	{
+		queryUserStatus();
+	}
+	catch(e)
+	{
+		;
+	}
+	$("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
+	$('aside.side-menu > ul').affix({
+		offset: {
+			top: 231
+			, bottom: function() {
+				return (this.bottom = $('.footer-container').outerHeight(true));
+			}
+		}
+	});
+};
+
 
