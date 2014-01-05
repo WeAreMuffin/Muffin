@@ -211,15 +211,25 @@ class User extends Controller
      * Va retourner le code json de l'ensemble des compétences, et l'assigner
      * à la variable "window.items".
      * @return string le code Json
+     * @deprecated since 1.5
      */
     protected function generateJsFormData ()
     {
-        $datas = array ();
-        foreach (Moon::getAllHeavy ("c_competences") as $key => $competence)
+        $f = array();
+
+        for ($i = 3, $c = 0; $i > 0; $i--, $c++)
         {
-            $datas[] = $this->getJsonCodeForElement ($competence);
+            $datas = array ();
+            $e = new Entities('c_competences[type_competence="'.$i.'"]');
+            $e->loadFromDatabase();
+            foreach ($e->getEntities() as $competence)
+            {
+                $datas[] = $this->getJsonCodeForElement ($competence);
+            }
+            $f[$c] = '<li data-index="'. ($c + 1) .'">' . implode ('', $datas) . "</li>";
         }
-        return (implode ('', $datas));
+        $final = implode ('', $f);
+        return ($final);
     }
 
     /**

@@ -7,9 +7,9 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2013-12-15
+   mNymdhy          shddmy hNd       Sorti du four le 2014-01-05
    sdNNNNNmsssssssssmNNNNNNNh             
-     syyhddddddddddddddhhyss         Copyright (c) 2013 André Aubin
+     syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
      dNNssNNN yNNN sNNN hNNy         Code source sous licence Apache 2      
      sNNy NNN yNNN sNNm dNN                    
@@ -4119,6 +4119,18 @@ var initalizeAddForm = function() {
 	});
 };
 
+var initializePanelMenu = function()
+{
+	$("#panel-menu > li[data-index-toggle]").click(function()
+	{
+		var index = $(this).attr("data-index-toggle");
+		$("#panel-menu > li[data-index-toggle]").removeClass("active");
+		$(this).addClass("active");
+		$(".items-panels > li[data-index!='" + index + "']").hide();
+		$(".items-panels > li[data-index='" + index + "']").show();
+	});
+};
+
 var addClearItems = function()
 {
 	/**
@@ -4160,39 +4172,6 @@ var addClearItems = function()
 	});
 };
 
-var createFormCompetences = function()
-{
-	console.log("form competences");
-	$("#form-competences div").makeForms({
-		components: window.items,
-		groupSize: 1,
-		templates:
-			{
-				title: "<h4>{{title}}</h4>",
-				group: '<fieldset>{{group}}</fieldset>',
-				label: '<label for="{{id}}">{{label}}</label>',
-				radio: '<div class="radio"><input type="radio" name="{{name}}"\
-	id="{{id}}" value="{{value}}">{{label}}<label for="{{id}}"></label></div>',
-				input: '<input class="form-control" type="{{type}}" name="{{name}}"\
-	id="{{id}}" value="{{value}}">',
-				text: '<input class="form-control" type="text" name="{{name}}"\
-	id="{{id}}" value="{{value}}">',
-				select: '<select class="form-control" id="{{id}}" name="{{name}}">\n\
-	<option id="{{id}}" value="">Aucun</option>{{options}}</select>',
-				option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
-			}
-	});
-	/*$("div.radio input + label").click(function()
-	 {
-	 console.log("ok");
-	 var elt = $(this).parent().children("input");
-	 if(elt.is(":checked"))
-	 {
-	 elt.prop('checked', false);
-	 }
-	 });*/
-};
-
 var treatResize = function()
 {
 	if ($("div[data-role='container']").height() >= $(window).height())
@@ -4218,7 +4197,7 @@ var afterUserUpdate = function(responseText, statusText, xhr, $form) {
 		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-multiply");
 		$("#status_update_uid").html(responseText);
 	}
-}
+};
 
 var initFormComportement = function()
 {
@@ -4260,16 +4239,16 @@ var reloadHandlers = function()
 	$(window).resize(treatResize);
 	bindAjaxEvents();
 	initFormComportement();
+	initializePanelMenu();
 	$("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
 	$('aside.side-menu > ul').affix({
-    offset: {
-      top: 231
-    , bottom: function () {
-        return (this.bottom = $('.footer-container').outerHeight(true))
-      }
-    }
-  })
+		offset: {
+			top: 231
+			, bottom: function() {
+				return (this.bottom = $('.footer-container').outerHeight(true));
+			}
+		}
+	});
 };
 
-window.createFormCompetences = createFormCompetences;
 

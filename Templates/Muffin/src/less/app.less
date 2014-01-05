@@ -517,6 +517,42 @@ div[data-role="container"]
             width: 79%;
         }
     }
+
+    ul.horizontal-list
+    {
+        padding-left: 0px;
+
+        li
+        {
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            border: 0px;
+            margin: 0px;
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+
+            &:hover
+                {
+                background-color: rgba(217, 91, 67, 0.05);
+            }
+            &.active
+            {
+                border-bottom: 3px solid @muffin-red;
+            }
+        }
+    }
+ 
+    ul.items-panels
+    {
+        padding-left: 0px;
+        li
+        {
+            display: block;
+        }
+    }
 }
 
 /* 
@@ -967,7 +1003,7 @@ div[data-role="form-container"]
         padding: 1px;
         cursor: pointer;
         transition: 0.2s all;
-        
+
         a
         {
             transition: 0.2s all;
@@ -979,7 +1015,7 @@ div[data-role="form-container"]
         }
 
         &:hover
-        {
+            {
             border-left: 1px solid @muffin-green;
             background-color: rgba(255,255,255,0.3);
             a
@@ -1031,13 +1067,13 @@ ul[data-role="liste-competences"]
             font-weight: 900;
 
             &:hover
-            {
+                {
                 background-color: @muffin-orange;
                 border-color: @muffin-orange;
             }
 
             &:active
-            {
+                {
                 background-color: @muffin-orange-dark;
                 border-color: @muffin-orange-dark;
             }

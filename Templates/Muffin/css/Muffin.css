@@ -9276,6 +9276,32 @@ div[data-role="container"] > aside + article {
   display: inline-block;
   width: 79%;
 }
+div[data-role="container"] ul.horizontal-list {
+  padding-left: 0px;
+}
+div[data-role="container"] ul.horizontal-list li {
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+  border: 0px;
+  margin: 0px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+}
+div[data-role="container"] ul.horizontal-list li:hover {
+  background-color: rgba(217, 91, 67, 0.05);
+}
+div[data-role="container"] ul.horizontal-list li.active {
+  border-bottom: 3px solid #c02942;
+}
+div[data-role="container"] ul.items-panels {
+  padding-left: 0px;
+}
+div[data-role="container"] ul.items-panels li {
+  display: block;
+}
 /* 
     ------------------------------------------------------------------------
         Header
