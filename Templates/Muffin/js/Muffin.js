@@ -4084,7 +4084,14 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	console.log("statusText:", statusText);
 	var a = $(responseText);
 	a.addClass("preparing");
-	$("div[data-role='form-container']").append(a);
+	var ctn = $("div[data-role='form-container'] > ul.items-panels");
+	var type = $("#form-add-competence .radio-group input:checked").val();
+	if (type == "1")
+		type = "3";
+	else if (type == "3")
+		type = "1";
+	console.log("type = " + type);
+	ctn.find("li[data-index='"+type+"']").append(a);
 	addCheckHandler(window.toCheck);
 	a.submit(function() {
 		$(this).ajaxSubmit(window.ioptions);

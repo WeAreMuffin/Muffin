@@ -145,6 +145,7 @@ class User extends Controller
         $icone = "sale";
         $nom_joli = strtolower ($this->filterPost ('nom_competence'));
         $desc = strtolower ($this->filterPost ('desc_competence'));
+        $type = strtolower ($this->filterPost ('type_competence'));
         $nom_brut = '_' . htmlentities (str_replace (
                                 array (' ', '+', '#'), array ('_', 'plus', 'diese'), $nom_joli
         ));
@@ -155,7 +156,8 @@ class User extends Controller
         }
         else if ( $id = Core::getBdd ()->insert (
                 array ("nom_competence" => $nom_brut,
-            "nom_usuel" => $nom_joli, "icone" => $icone), 'c_competences') )
+                    "nom_usuel" => $nom_joli, "description" => $description,
+                    "type_competence" => $type, "icone" => $icone), 'c_competences') )
         {
             $this->addOrUpdateTags ($id, json_decode ($_POST["modal-new-comp-tags"]));
             $nom_joli = ucfirst (htmlentities ($nom_joli));

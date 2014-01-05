@@ -9644,6 +9644,39 @@ div[data-role="form-container"] .breaker {
 }
 /* 
     ------------------------------------------------------------------------
+        Modale d'ajout de competence : Type de la competence
+    ------------------------------------------------------------------------                            
+*/
+#form-add-competence .radio-group {
+  text-align: center;
+}
+#form-add-competence .radio-group input[type="radio"] {
+  display: none;
+}
+#form-add-competence .radio-group input[type="radio"] + label {
+  border: 1px solid transparent;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  width: 30%;
+  max-width: 30%;
+  margin: auto;
+  padding: 0px;
+  text-align: center;
+}
+#form-add-competence .radio-group input[type="radio"] + label:first-of-type {
+  border-left: 1px solid transparent;
+}
+#form-add-competence .radio-group input[type="radio"] + label h2 {
+  font-size: 3em;
+  margin: 10px 0px 0px 0px;
+}
+#form-add-competence .radio-group input[type="radio"]:checked + label,
+#form-add-competence .radio-group input[type="radio"]:checked + label > p,
+#form-add-competence .radio-group input[type="radio"]:checked + label > h2 {
+  color: #c02942;
+}
+/* 
+    ------------------------------------------------------------------------
         Echanges de competences
     ------------------------------------------------------------------------                            
 */
