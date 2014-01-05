@@ -1,0 +1,29 @@
+{# 
+    Template pour les éléments du formulaire
+ #}
+<form id="form_{{ name }}" target="#">
+    <fieldset>
+        <h1><span class="icon-{{ icon }}"></span></h1>
+        <h4>{{ bname }}</h4>
+        <div class="radio">
+            <input type="radio" name="niveau" id="{{ name }}_1" value="1">
+            <label for="{{ name }}_1"></label>
+        </div>
+        <div class="radio">
+            <input type="radio" name="niveau" id="{{ name }}_2" value="2">
+            <label for="{{ name }}_2"></label>
+        </div>
+        <div class="radio">
+            <input type="radio" name="niveau" id="{{ name }}_3" value="3">
+            <label for="{{ name }}_3"></label>
+        </div>
+        <input type="checkbox" name="want_to_teach" id="wtt_{{ name }}" value="1" {{ wtt_checked }}>
+            <label data-toggle="tooltip" title="Je peux aider !" class="want-to-teach" for="wtt_{{ name }}"></label>
+        <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
+            <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
+        <a class="clear-all" data-items="{{ name }}">
+            <span data-toggle="tooltip" title="Supprimer ma note" class="icon-multiply"></span>
+        </a>
+            <input type="hidden" name="id_competence" value="{{ id_competence }}">
+    </fieldset>
+</form>

@@ -1,0 +1,13 @@
+twig_path: "twig/"
+
+stylesheets_path: "css/"
+
+js_path: "js/"
+
+img_path: "img/"
+
+css_includes:
+    - "Muffin.css"
+
+js_includes:
+    - "Muffin.js"

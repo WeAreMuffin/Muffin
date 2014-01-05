@@ -2,3 +2,7 @@
 nbproject/project.xml
 nbproject
 config/
+assets/node_modules/*
+assets/node_modules
+Config/*
+*.*~

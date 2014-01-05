@@ -1,0 +1,204 @@
+<!-- Modale d'aide -->
+<div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="MInformations" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MInformations"><span class="icon-support3"></span> Quelques explications ?</h4>
+            </div>
+            <div class="modal-body">
+                <h3><span class="icon-th-small"></span> Légende</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <span style="color: rgb(255, 173, 0);" class='icon-star3'></span>
+                            <span class='icon-star'></span>
+                            <span class='icon-star'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> J'ai un niveau débutant. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class='icon-star'></span>
+                            <span style="color: #D95B43;" class='icon-star3'></span>
+                            <span class='icon-star'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> J'ai un niveau intermédiaire. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class='icon-star'></span>
+                            <span class='icon-star'></span>
+                            <span style="color: #542437;" class='icon-star3'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> Je maitrise cette compétence, j'ai un niveau avancé. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-multiply"></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> Supprimer le niveau attribué. </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="color: #9e4838;" class='icon-student'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> Je veux apprendre cette compétence !</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="color: #c02942;" class='icon-loved'></span>
+                        </td>
+                        <td> ─  </td>
+                        <td> J'aime cette compétence et je veux l'apprendre aux autres ! </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Modale d'ajout de compétence -->
+<div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="MAjouter" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MAjouter"><span class="icon-plus"></span> Ajouter une compétence</h4>
+            </div>
+            <div class="modal-body">
+                <h3><span class="icon-th-small"></span> Une compétence n'est pas encore là ?</h3>
+                <form id="form-add-competence">
+                    <label>Type :</label>
+                    <div class="radio-group">
+                        <input type="radio" id="radio-type--projet" name="type_competence" value="3" required>
+                        <label for='radio-type--projet' title="Un projet donné dans le cadre de la formation 42">
+                            <h2><span class="icon-marvin"></span></h2>
+                            <p>Projet</p>
+                        </label>
+                        
+                        <input type="radio" id="radio-type--precis" name="type_competence" value="2" required>
+                        <label for='radio-type--precis' title="Un domaine tres précis (ex: pointeur sur fonction, matrice etc.)">
+                            <h2><span class="icon-uniF6EC"></span></h2>
+                            <p>Domaine précis</p>
+                        </label>
+                        
+                        <input type="radio" id="radio-type--domaine" name="type_competence" value="1" required>
+                        <label for='radio-type--domaine' title="Une compétence générale (ex: Anglais, Html, C etc.)">
+                            <h2><span class="icon-certificate"></span></h2>
+                            <p>Domaine général</p>
+                        </label>
+                    </div>
+                    <label for='input-nom-comp'>Nom :</label>
+                    <input type="text" placeholder="Nom de la competence" id="input-nom-comp" name="nom_competence" required>
+                    <label for='desc-new-competence'>Description : <span class="opt">(optionel)</span></label>
+                    <textarea id="desc-new-competence" placeholder="Une petite description..." name='desc_competence'></textarea>
+                    <label for='modal-new-comp-tags'>Tags : <span class="opt">(optionel)</span></label>
+                    <div class='tags' id='modal-new-comp-tags'></div>
+                </form>
+                <script>
+                    $(document).ready(function() {
+                        $('#modal-new-comp-tags').magicSuggest({
+                            width: '100%',
+                            id: 'modal-new-comp-tags',
+                            name: 'modal-new-comp-tags',
+                            data: 'User/tagscompetence',
+                            displayField: 'nom',
+                            value: '',
+                            renderer: function(v) {
+                                return v.nom;
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" onclick="$('#form-add-competence').submit();" class="btn btn-primary" data-dismiss="modal">Ajouter <span class='icon-uniF488'></span> </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- Modale d'exploration -->
+<div class="modal fade" id="modal-explore" tabindex="-1" role="dialog" aria-labelledby="MExplore" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MExplore"><span class="icon-search"></span> Explorer</h4>
+            </div>
+            <div class="modal-body">
+                <form target="#" id='form_search_uid'>
+                    <h3>Recherchez les compétences d'un utilisateur</h3>
+                    <p id="status_search_comp_uid">Commencez par rentrer son uid.</p>
+                    <label for='search_comp_uid'>Uid :</label>
+                    <input type="text" placeholder="uid à rechercher..." id="search_comp_uid" name="search_comp_uid">
+                    <div style="display:none;">
+                        <p>Peut être pensez vous à :</p>
+                        <ul id="search_user_results">
+                            
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" id="btn_search_comp_uid" onclick="window.muffin.searchUSerData();" class="btn btn-primary">
+                    Rechercher <span class='icon-uniF488'></span>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    $("#search_comp_uid").keyup(function()
+    {
+        muffin.autoSearchUser($(this).val());
+        console.log("keypress");
+    })
+</script>
+
+
+
+<!-- Modale de configuration -->
+<div class="modal fade" id="modal-params" tabindex="-1" role="dialog" aria-labelledby="MParams" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MParams"><span class="icon-nut"></span> Paramètres de votre compte</h4>
+            </div>
+            <div class="modal-body">
+                <form target="User/update" id="form_params">
+                    <h4 id="status_pass_uid">Changer mon mot de passe.</h4>
+                    <p id="status_update_uid"></p>
+                    <label for='o_pass_uid'>Entrez votre ancien mot de passe</label>
+                    <input type="password" placeholder="Ancien mot de passe" id="o_pass_uid" name="o_pass_uid">
+                    <label for='n_pass_uid'>Entrez votre nouveau mot de passe</label>
+                    <input type="password" placeholder="Nouveau mot de passe" id="n_pass_uid" name="n_pass_uid">
+                    <label for='c_pass_uid'>Confirmez votre nouveau mot de passe</label>
+                    <input type="password" placeholder="Confirmation" id="c_pass_uid" name="c_pass_uid">
+                    <h4 id="status_public_uid">Mes compétences sont-elles publiques ?</h4>
+                    <label class='inline' for='c_public_uid'>Compétences publiques</label>
+                    <input type="checkbox" id="c_public_uid" name="c_public_uid" {{check_public}}>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" id="btn_search_comp_uid" onclick="$('#form_params').submit();" class="btn btn-primary">
+                    Enregistrer <span id="status_public_icon" class='icon-uniF488'></span>
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

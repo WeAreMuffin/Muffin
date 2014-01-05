@@ -1,0 +1,19 @@
+
+/*******************************************************************************    
+                                                      
+        sssyhddmmmddhys                        
+      dNNNNNmss  sssyhmNddms                   
+     dNNNNmhs         dNNNNNs           
+   sNd sy     mNNmdy   sdNNNNs        <%= pkg.name %> - v<%= pkg.version %>     
+   Nd        dNNNNNy      ysNm        ---------------
+  sNh           ssy         mN                        
+   mNymdhy          shddmy hNd       Sorti du four le <%= grunt.template.today("yyyy-mm-dd") %>
+   sdNNNNNmsssssssssmNNNNNNNh             
+     syyhddddddddddddddhhyss         Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>
+    sNNm shhh shhh shhd smNN                    
+     dNNssNNN yNNN sNNN hNNy         Code source sous licence Apache 2      
+     sNNy NNN yNNN sNNm dNN                    
+      hNh mNN yNNN sNNd mNy             
+          ydd smmm sdds                 
+
+*******************************************************************************/

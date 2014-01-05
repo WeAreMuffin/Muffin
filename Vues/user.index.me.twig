@@ -1,0 +1,34 @@
+<ul class="horizontal-list" id="panel-menu">
+    <li data-index-toggle="1" class="active"><a><span class="icon-marvin"></span> <span class="side-legend"> Projets</span></a></li>
+    <li data-index-toggle="2"><a><span class="icon-uniF6EC"></span> <span class="side-legend"> Points particuliers</span></a></li>
+    <li data-index-toggle="3"><a><span class="icon-certificate"></span> <span class="side-legend"> Général</span></a></li>
+</ul>
+<ul class="items-panels">
+    {{ formDataJson }}
+</ul>
+<script>
+
+        window.toCheck = [{{ checkedRadios }}];
+    </script>
+    <script>
+
+        $(document).ready(function()
+        {
+            $(".footer-container").addClass("nofix");
+            NProgress.start();
+
+            $("[data-submit]").each(function() {
+                $(this).click(function() {
+                    $('#' + $(this).attr("data-submit")).trigger('submit');
+                });
+            });
+            $('li[data-index]').hide();
+            $('li[data-index="1"]').show();
+            initalizeForm();
+            initalizeAddForm();
+            addCheckHandler(window.toCheck);
+            NProgress.done();
+            treatResize();
+
+        });
+    </script>
