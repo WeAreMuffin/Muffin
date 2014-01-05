@@ -1,5 +1,4 @@
 <?php
-
 // Pour vérifier a tout moment qu'on est dans l'index.php
 $INDEX = true;
 

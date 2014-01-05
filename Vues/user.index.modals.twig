@@ -77,6 +77,7 @@
             <div class="modal-body">
                 <h3><span class="icon-th-small"></span> Une compétence n'est pas encore là ?</h3>
                 <form id="form-add-competence">
+                    <label>Type :</label>
                     <div class="radio-group">
                         <input type="radio" id="radio-type--projet" name="type_competence" value="3" required>
                         <label for='radio-type--projet' title="Un projet donné dans le cadre de la formation 42">
@@ -97,7 +98,7 @@
                         </label>
                     </div>
                     <label for='input-nom-comp'>Nom :</label>
-                    <input type="text" placeholder="Nom de la competence" id="input-nom-comp" name="nom_competence">
+                    <input type="text" placeholder="Nom de la competence" id="input-nom-comp" name="nom_competence" required>
                     <label for='desc-new-competence'>Description : <span class="opt">(optionel)</span></label>
                     <textarea id="desc-new-competence" placeholder="Une petite description..." name='desc_competence'></textarea>
                     <label for='modal-new-comp-tags'>Tags : <span class="opt">(optionel)</span></label>

@@ -1,5 +1,18 @@
-
-
+/* 
+ * Copyright 2013 lambda2.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 // Avoid `console` errors in browsers that lack a console.
 (function() {
@@ -150,8 +163,15 @@ var initalizeAddForm = function() {
 		// inside event callbacks 'this' is the DOM element so we first 
 		// wrap it in a jQuery object and then invoke ajaxSubmit 
 		console.log("initialized");
-		$(this).ajaxSubmit(options);
-
+		var e = document.getElementById('form-add-competence');
+		if (e.checkValidity())
+		{
+			$(this).ajaxSubmit(options);
+		}
+		else
+		{
+		
+		}
 		// !!! Important !!! 
 		// always return false to prevent standard browser submit and page navigation 
 		return false;
@@ -169,6 +189,34 @@ var initializePanelMenu = function()
 		$(".items-panels > li[data-index='" + index + "']").show();
 	});
 };
+
+var initializeHelpMenu = function()
+{
+	$("#exchange-panel > li[data-index]").hide();
+	$("#exchange-panel > li[data-index='1']").show();
+	$("#exchange-menu > li[data-index-toggle]").click(function()
+	{
+		var index = $(this).attr("data-index-toggle");
+		$("#exchange-menu > li[data-index-toggle]").removeClass("active");
+		$(this).addClass("active");
+		$("#exchange-panel > li[data-index!='" + index + "']").hide();
+		$("#exchange-panel > li[data-index='" + index + "']").show();
+	});
+};
+
+var queryUserStatus = function()
+{
+	$("[data-locate]").each(function()
+	{
+		var login = $(this).attr("data-login");
+		$.ajax({
+			url: "https://dashboard.42.fr/crawler/pull/" + login + "/",
+			dataType: "json",
+			success: function(e){$(this).addClass("online").html(e.last_host.replace(".42.fr", ""));},
+			error: function(){$(this).removeClass("online");}
+		});
+	});
+}
 
 var addClearItems = function()
 {
@@ -279,6 +327,15 @@ var reloadHandlers = function()
 	bindAjaxEvents();
 	initFormComportement();
 	initializePanelMenu();
+	initializeHelpMenu();
+	try
+	{
+		queryUserStatus();
+	}
+	catch(e)
+	{
+		;
+	}
 	$("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
 	$('aside.side-menu > ul').affix({
 		offset: {

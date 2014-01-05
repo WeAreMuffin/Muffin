@@ -53,15 +53,34 @@ class Echanges extends Controller
                         ON ucb.id_competence = cb.id_competence 
                         WHERE id_user = :idu AND ucb.want_to_teach = 1);
             ";
+        $q_2 = "  SELECT * 
+                FROM c_user_competences uc 
+                    INNER JOIN c_competences c 
+                    ON uc.id_competence = c.id_competence 
+                    INNER JOIN c_user u
+                    ON uc.id_user = u.id
+                WHERE id_user != :id 
+                    AND want_to_teach = 1 
+                    AND c.nom_competence IN (
+                        SELECT nom_competence 
+                        FROM c_user_competences ucb 
+                        INNER JOIN c_competences cb 
+                        ON ucb.id_competence = cb.id_competence 
+                        WHERE id_user = :idu AND ucb.want_to_learn = 1);
+            ";
 
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
         $r->execute(array("id" => $user,"idu" => $user));
         $res = $r->fetchAll(PDO::FETCH_CLASS);
 
+        $r_2 = $bd->prepare($q_2);
+        $r_2->execute(array("id" => $user,"idu" => $user));
+        $res_2 = $r_2->fetchAll(PDO::FETCH_CLASS);
 
         $this->addData("want_to_learn", $want_to_learn);
-        $this->addData("users", $res);
+        $this->addData("users_to_help", $res);
+        $this->addData("users_can_help", $res_2);
         $this->render ();
     }
 
