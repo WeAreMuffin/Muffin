@@ -18,12 +18,6 @@
           ydd smmm sdds                    -  www.lambdaweb.fr   -
 
 *******************************************************************************/
-<<<<<<< HEAD
-.modal-open {
-  overflow: hidden;
-}
-=======
->>>>>>> moon-integration
 .modal {
   display: none;
   overflow: auto;
@@ -68,10 +62,6 @@
   outline: none;
 }
 .modal-backdrop {
-<<<<<<< HEAD
-=======
-  transition: all 0.4s;
->>>>>>> moon-integration
   position: fixed;
   top: 0;
   right: 0;
@@ -91,11 +81,7 @@
 .modal-header {
   padding: 15px;
   background-color: #d95b43;
-<<<<<<< HEAD
-  border-bottom: 1px solid #9e4838;
-=======
   border-bottom: 1px solid rgba(0, 0, 0, 0.11);
->>>>>>> moon-integration
   min-height: 16.428571429px;
   color: #f7e4be;
 }
@@ -116,11 +102,7 @@
   margin-top: 15px;
   padding: 19px 20px 20px;
   text-align: right;
-<<<<<<< HEAD
-  border-top: 1px solid #9e4838;
-=======
   border-top: 1px solid rgba(0, 0, 0, 0.11);
->>>>>>> moon-integration
   *zoom: 1;
 }
 .modal-footer:before,
@@ -183,17 +165,10 @@
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
-<<<<<<< HEAD
-  color: #ffffff;
-  text-align: center;
-  text-decoration: none;
-  background-color: #000000;
-=======
   color: #413e4a;
   text-align: center;
   text-decoration: none;
   background-color: #e4d0a7;
->>>>>>> moon-integration
   border-radius: 4px;
 }
 .tooltip-arrow {
@@ -208,84 +183,52 @@
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-<<<<<<< HEAD
-  border-top-color: #000000;
-=======
   border-top-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
   left: 5px;
   border-width: 5px 5px 0;
-<<<<<<< HEAD
-  border-top-color: #000000;
-=======
   border-top-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.top-right .tooltip-arrow {
   bottom: 0;
   right: 5px;
   border-width: 5px 5px 0;
-<<<<<<< HEAD
-  border-top-color: #000000;
-=======
   border-top-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
-<<<<<<< HEAD
-  border-right-color: #000000;
-=======
   border-right-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.left .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
-<<<<<<< HEAD
-  border-left-color: #000000;
-=======
   border-left-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.bottom .tooltip-arrow {
   top: 0;
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-<<<<<<< HEAD
-  border-bottom-color: #000000;
-=======
   border-bottom-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
   left: 5px;
   border-width: 0 5px 5px;
-<<<<<<< HEAD
-  border-bottom-color: #000000;
-=======
   border-bottom-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .tooltip.bottom-right .tooltip-arrow {
   top: 0;
   right: 5px;
   border-width: 0 5px 5px;
-<<<<<<< HEAD
-  border-bottom-color: #000000;
-=======
   border-bottom-color: #e4d0a7;
->>>>>>> moon-integration
 }
 .popover {
   position: absolute;
@@ -906,8 +849,6 @@ table {
     transform: rotate(360deg);
   }
 }
-<<<<<<< HEAD
-=======
 #modal-new-comp-tags {
   height: 30px !important;
 }
@@ -1118,7 +1059,6 @@ table {
   top: -17px;
   right: 0;
 }
->>>>>>> moon-integration
 @font-face {
   font-family: 'moon';
   src: url('../fonts/moon.eot');
@@ -8879,8 +8819,6 @@ table {
 .icon-IcoMoon:before {
   content: "\f013";
 }
-<<<<<<< HEAD
-=======
 /* 
  * Copyright 2013 lambda2.
  *
@@ -8896,7 +8834,6 @@ table {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
->>>>>>> moon-integration
 /* Loading the fonts files from GWF */
 /* On fait les resets standards */
 html,
@@ -9289,20 +9226,11 @@ input + button > span[class^="icon-"] {
   font-size: 2em;
 }
 .btn {
-<<<<<<< HEAD
-  border: 2px solid #53777A;
-  background-color: #53777A;
-  color: #F7E4BE;
-  border-radius: 3px;
-  height: 30px;
-  padding: 4px 6px 6px 6px;
-=======
   border: 2px solid #53777a;
   background-color: #53777a;
   color: #F7E4BE;
   border-radius: 3px;
   height: 30px;
->>>>>>> moon-integration
   margin: 0px 5px;
   cursor: pointer;
 }
@@ -9362,8 +9290,6 @@ div[data-role="container"] > aside + article {
   display: inline-block;
   width: 79%;
 }
-<<<<<<< HEAD
-=======
 div[data-role="container"] ul.horizontal-list {
   padding-left: 0px;
 }
@@ -9395,7 +9321,6 @@ div[data-role="container"] ul.items-panels {
 div[data-role="container"] ul.items-panels li {
   display: block;
 }
->>>>>>> moon-integration
 /* 
     ------------------------------------------------------------------------
         Header
@@ -9431,30 +9356,21 @@ article[role="header"] > header > div[role="title"] {
         Description latérale
     ------------------------------------------------------------------------                            
 */
-<<<<<<< HEAD
-=======
 aside.side-menu ul.affix {
   position: fixed;
   top: 100px;
   width: 200px;
 }
->>>>>>> moon-integration
 aside.side-menu a.btn {
   width: 90%;
   text-align: center;
   margin-top: 10px;
   display: block;
-<<<<<<< HEAD
-  line-height: 15px;
-=======
   line-height: 30px;
->>>>>>> moon-integration
   color: #53777A;
   background: transparent;
   border-width: 1px;
 }
-<<<<<<< HEAD
-=======
 aside.side-menu a.btn span[class^="icon"] {
   position: relative;
   top: 7px;
@@ -9465,13 +9381,10 @@ aside.side-menu a.btn span[class^="icon"] {
 aside.side-menu a.btn[role="indicator"] {
   border-color: transparent;
 }
->>>>>>> moon-integration
 aside.side-menu ul[role="side-menu"] {
   margin: 40px 20px 0px 0px;
   border-right: 1px solid #CABA9C;
 }
-<<<<<<< HEAD
-=======
 aside.side-menu ul[role="side-menu"] li a.btn {
   transition: all 0.1s;
   border-color: transparent;
@@ -9479,7 +9392,6 @@ aside.side-menu ul[role="side-menu"] li a.btn {
 aside.side-menu ul[role="side-menu"] li a.btn:hover {
   border-color: #53777a;
 }
->>>>>>> moon-integration
 div[role="add-competence"],
 div[role="show-stats"] {
   padding-top: 20px;
@@ -9517,8 +9429,6 @@ p {
 }
 /* 
     ------------------------------------------------------------------------
-<<<<<<< HEAD
-=======
         icones du header
     ------------------------------------------------------------------------                            
 */
@@ -9539,16 +9449,12 @@ p {
 }
 /* 
     ------------------------------------------------------------------------
->>>>>>> moon-integration
         Labels en étoile
     ------------------------------------------------------------------------                            
 */
 #form-result {
   display: none;
 }
-<<<<<<< HEAD
-#form-competences fieldset {
-=======
 .modal-body form label {
   display: block;
   margin-top: 5px;
@@ -9590,7 +9496,6 @@ div[data-role="form-container"] form {
   display: inline-block;
 }
 div[data-role="form-container"] form fieldset {
->>>>>>> moon-integration
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -9598,79 +9503,21 @@ div[data-role="form-container"] form fieldset {
   text-align: center;
   position: relative;
 }
-<<<<<<< HEAD
-#form-competences fieldset h1 {
-=======
 div[data-role="form-container"] form fieldset h1 {
->>>>>>> moon-integration
   font-size: 3.6rem;
   line-height: 0px;
   vertical-align: top;
   max-height: 60px;
   margin-bottom: 5px;
 }
-<<<<<<< HEAD
-#form-competences fieldset h4 {
-  line-height: 0px;
-}
-#form-competences fieldset a.clear-all {
-=======
 div[data-role="form-container"] form fieldset h4 {
   line-height: 0px;
 }
 div[data-role="form-container"] form fieldset a.clear-all {
->>>>>>> moon-integration
   color: #F7E4BE;
   position: relative;
   top: 2px;
 }
-<<<<<<< HEAD
-#form-competences fieldset:hover a.clear-all,
-#form-competences fieldset a.want-to-learn,
-#form-competences fieldset a.want-to-teach {
-  color: #887D72;
-}
-#form-competences fieldset a.clear-all:hover,
-#form-competences fieldset a.want-to-learn:hover,
-#form-competences fieldset a.want-to-teach:hover {
-  color: #D95B43;
-}
-#form-competences fieldset a.want-to-learn {
-  position: absolute;
-  top: 50px;
-  right: 0px;
-}
-#form-competences fieldset a.want-to-teach {
-  position: absolute;
-  top: 70px;
-  right: 0px;
-}
-#form-competences fieldset div.radio,
-#form-competences fieldset a.clear-all,
-#form-competences fieldset a.want-to-learn,
-#form-competences fieldset a.want-to-teach {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-}
-#form-competences fieldset div.radio input:checked + label[for$="low"]:before,
-#form-competences fieldset div.radio input + label[for$="low"]:hover:before {
-  color: #ffad00;
-}
-#form-competences fieldset div.radio input:checked + label[for$="med"]:before,
-#form-competences fieldset div.radio input + label[for$="med"]:hover:before {
-  color: #D95B43;
-}
-#form-competences fieldset div.radio input:checked + label[for$="high"]:before,
-#form-competences fieldset div.radio input + label[for$="high"]:hover:before {
-  color: #542437;
-}
-#form-competences fieldset div.radio input:checked + label:before {
-  content: "\edb2";
-  font-size: 1.2rem;
-}
-#form-competences fieldset div.radio input + label:before {
-=======
 div[data-role="form-container"] form fieldset:hover a.clear-all,
 div[data-role="form-container"] form fieldset a.want-to-learn,
 div[data-role="form-container"] form fieldset a.want-to-teach {
@@ -9757,7 +9604,6 @@ div[data-role="form-container"] form fieldset div.radio input:checked + label:be
   font-size: 1.2rem;
 }
 div[data-role="form-container"] form fieldset div.radio input + label:before {
->>>>>>> moon-integration
   width: 20px;
   height: 40px;
   display: inline-block;
@@ -9774,17 +9620,6 @@ div[data-role="form-container"] form fieldset div.radio input + label:before {
   -moz-osx-font-smoothing: grayscale;
   color: #CEB789;
 }
-<<<<<<< HEAD
-#form-competences fieldset:hover div.radio input + label:before {
-  color: #413E4A;
-}
-#form-competences input {
-  display: none;
-  opacity: 0;
-}
-#form-competences .breaker {
-  display: block;
-=======
 div[data-role="form-container"] form fieldset:hover div.radio input + label:before {
   color: #413E4A;
 }
@@ -9935,7 +9770,6 @@ ul[data-role="liste-competences"] li p {
 }
 ul[data-role="liste-competences"] li + li {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
->>>>>>> moon-integration
 }
 /* 
     ------------------------------------------------------------------------
@@ -9947,30 +9781,18 @@ ul[data-role="liste-competences"] li + li {
 .preparing {
   transition: all 0.4s;
 }
-<<<<<<< HEAD
-.loading {
-=======
 .loading:not(.modal) {
->>>>>>> moon-integration
   visibility: hidden;
   position: relative;
   bottom: -50px;
 }
-<<<<<<< HEAD
-.preparing {
-=======
 .preparing:not(.modal) {
->>>>>>> moon-integration
   transition: all 0.4s;
   opacity: 0;
   position: relative;
   bottom: -50px;
 }
-<<<<<<< HEAD
-.complete {
-=======
 .complete:not(.modal) {
->>>>>>> moon-integration
   opacity: 1;
   visibility: visible;
   position: relative;
@@ -10150,8 +9972,6 @@ ul[data-role="liste-competences"] li + li {
 }
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
-<<<<<<< HEAD
-=======
   .header-container {
     border-bottom: 30px solid #9E4838;
   }
@@ -10167,7 +9987,6 @@ ul[data-role="liste-competences"] li + li {
     color: #f7e4be;
     border: none;
   }
->>>>>>> moon-integration
   div[role="home-title"] h3 {
     font-size: 1.5rem;
     line-height: 1.1em;
@@ -10196,8 +10015,6 @@ ul[data-role="liste-competences"] li + li {
   .visible-desktop {
     display: none !important;
   }
-<<<<<<< HEAD
-=======
   div[data-role="container"] > aside {
     display: block;
     width: 100%;
@@ -10220,7 +10037,6 @@ ul[data-role="liste-competences"] li + li {
   div[data-role="container"] > aside ul[role="side-menu"] li a.btn span[class^="icon-"] {
     left: 0px;
   }
->>>>>>> moon-integration
   div[data-role="container"] > aside + article[data-role="grid"] {
     display: block;
     width: 100%;
@@ -10233,10 +10049,6 @@ ul[data-role="liste-competences"] li + li {
 }
 /* petit [tablette paysage] */
 @media only screen and (max-width: 768px) {
-<<<<<<< HEAD
-  .header-container {
-    height: 115px;
-=======
   .loading,
   .complete,
   .preparing {
@@ -10267,7 +10079,6 @@ ul[data-role="liste-competences"] li + li {
   }
   div[role="title"] h1 {
     font-size: 1.6em;
->>>>>>> moon-integration
   }
   #nprogress .bar {
     top: 95px;
@@ -10325,23 +10136,12 @@ ul[data-role="liste-competences"] li + li {
   .footer-container footer div[role="git-info"] {
     text-align: center;
   }
-<<<<<<< HEAD
-  .main article h1 {
-    font-size: 1.8em;
-  }
-=======
->>>>>>> moon-integration
   form > label,
   form > input[type="text"] {
     margin: 5px;
     padding: 2%;
     min-width: 60%;
   }
-<<<<<<< HEAD
-}
-/* plus petit [tablette portrait] */
-@media only screen and (max-width: 480px) {
-=======
   div[data-role="container"] > aside {
     display: block;
     width: 100%;
@@ -10413,26 +10213,12 @@ ul[data-role="liste-competences"] li + li {
   header.wrapper.clearfix h1 + a.btn + a.btn {
     display: none;
   }
->>>>>>> moon-integration
   div[role="home-title"] h3 {
     text-align: center;
   }
   .main article h1 {
     font-size: 1.5em;
   }
-<<<<<<< HEAD
-  div[data-role="container"] > aside + article {
-    display: block;
-    width: 100%;
-    margin: auto;
-    text-align: center;
-  }
-  div[data-role="container"] > aside {
-    display: block;
-    width: 20%;
-    margin: auto;
-    vertical-align: top;
-=======
   div[data-role="container"] > aside {
     display: block;
     margin: auto;
@@ -10453,7 +10239,6 @@ ul[data-role="liste-competences"] li + li {
     width: 100%;
     margin: auto;
     text-align: center;
->>>>>>> moon-integration
   }
   div[data-role="container"] > aside > div[role="icon"] {
     float: none;
@@ -10510,8 +10295,6 @@ ul[data-role="liste-competences"] li + li {
   input + button {
     width: 15%;
   }
-<<<<<<< HEAD
-=======
   div[data-role="container"] > aside ul[role="side-menu"] li {
     font-size: 1.2em;
     padding: 0px 3px;
@@ -10519,5 +10302,4 @@ ul[data-role="liste-competences"] li + li {
   article[role="header"] > header > div[role="icon-container"] > div[role="icon"] {
     display: none;
   }
->>>>>>> moon-integration
 }

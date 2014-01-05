@@ -7,15 +7,9 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-<<<<<<< HEAD
-   mNymdhy          shddmy hNd       Sorti du four le 2013-11-26
-   sdNNNNNmsssssssssmNNNNNNNh             
-     syyhddddddddddddddhhyss         Copyright (c) 2013 André Aubin
-=======
    mNymdhy          shddmy hNd       Sorti du four le 2014-01-05
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
->>>>>>> moon-integration
     sNNm shhh shhh shhd smNN                    
      dNNssNNN yNNN sNNN hNNy         Code source sous licence Apache 2      
      sNNy NNN yNNN sNNm dNN                    
@@ -152,8 +146,6 @@
   window.log.l = _log;
 }).call(this);
 
-<<<<<<< HEAD
-=======
 (function($)
 {
     "use strict";
@@ -1626,7 +1618,6 @@
 
 //    $.fn.magicSuggest.defaults = {};
 })(jQuery);
->>>>>>> moon-integration
 /*! NProgress (c) 2013, Rico Sta. Cruz
  *  http://ricostacruz.com/nprogress */
 
@@ -3702,38 +3693,11 @@
 
 }(jQuery);
 
-<<<<<<< HEAD
 
-=======
->>>>>>> moon-integration
 (function($) {
 
 	window.muffin = {};
 
-<<<<<<< HEAD
-
-
-
-window.muffin.niveaux = function(enable) {
-	var n;
-	if (enable === null || enable === undefined
-		|| enable === "")
-	{
-		n = {low: {label: ""}, med: {label: ""}, high: {label: ""}};
-	}
-	else
-	{
-		n = {
-			low: {enable: enable, label: ""},
-			med: {enable: enable, label: ""},
-			high: {enable: enable, label: ""}
-		};
-	}
-	return n;
-};
-
-=======
->>>>>>> moon-integration
 	/*
 	 * ============================================================================
 	 * Step-00 Connexion
@@ -3828,21 +3792,6 @@ window.muffin.niveaux = function(enable) {
 			{
 				{
 					$.get("User/index",
-<<<<<<< HEAD
-					function(data) {
-						$("#input-code").attr("disabled", "disabled");
-						$("#input-code + button").attr("disabled", "disabled")
-							.html("<span class='icon-checkmark'></span>");
-						var data = $(data);
-						data.addClass("loading");
-						$("div[data-role='container']").children().slideUp();
-						$("div[data-role='container']").html(data);
-						setTimeout(function() {
-							NProgress.done();
-							data.addClass("complete");
-						}, 200);
-					});
-=======
 						function(data) {
 							$("#input-code").attr("disabled", "disabled");
 							$("#input-code + button").attr("disabled", "disabled")
@@ -3857,7 +3806,6 @@ window.muffin.niveaux = function(enable) {
 								data.addClass("complete");
 							}, 200);
 						});
->>>>>>> moon-integration
 				}
 			}
 			else
@@ -3896,17 +3844,6 @@ window.muffin.niveaux = function(enable) {
 
 	/*
 	 * ============================================================================
-<<<<<<< HEAD
-	 * Step-01 new Passw
-	 * ============================================================================
-	 */
-
-
-
-})(jQuery);
-
-
-=======
 	 * Search for user data
 	 * ============================================================================
 	 */
@@ -3993,26 +3930,14 @@ window.muffin.niveaux = function(enable) {
 
 
 })(jQuery);
->>>>>>> moon-integration
 
 $(document).ready(function()
 {
 	initalizeForm();
-<<<<<<< HEAD
-	$("input").change(function() {
-		console.log("change !");
-	});
-	NProgress.configure({showSpinner: false});
-	$("a").smoothScroll();
-
-	treatResize();
-	$(window).resize(treatResize);
-=======
 	reloadHandlers();
 	$.bind("ajaxComplete", function() {
 		reloadHandlers();
 	});
->>>>>>> moon-integration
 
 	/**
 	 * Json calls to Github Api
@@ -4020,10 +3945,6 @@ $(document).ready(function()
 	 */
 	$.getJSON("https://api.github.com/repos/lambda2/Muffin/tags", function(dataT)
 	{
-<<<<<<< HEAD
-		console.log(dataT);
-=======
->>>>>>> moon-integration
 		var lastSha = dataT[0].commit.sha;
 		$.getJSON("https://api.github.com/repos/lambda2/Muffin/commits/" + lastSha, function(dataC)
 		{
@@ -4031,28 +3952,14 @@ $(document).ready(function()
 			var cDate = lastCommit.commit.committer.date.slice(0, 10);
 			var cAdd = lastCommit.stats.additions;
 			var cDel = lastCommit.stats.deletions;
-<<<<<<< HEAD
-			var cTot = lastCommit.stats.additions;
-			var cStats = "<span class='icon-flow-tree'></span> <span class='git-add'>+" + cAdd + "</span>  <span class='git-del'>-" + cDel + "</span>";
-			$("div[role='git-info']").html("<p>\n\
-				<a href='https://github.com/lambda2/Muffin'><span class='icon-github'></span>\n\
-				v" + dataT[0].name + " datant du " + cDate + "  ─  " + cStats + "</a> </p>")
-=======
 			var cStats = "<span class='icon-flow-tree'></span> <span class='git-add'>+" + cAdd + "</span>  <span class='git-del'>-" + cDel + "</span>";
 			$("div[role='git-info']").html("<p>\n\
 				<a href='https://github.com/lambda2/Muffin'><span class='icon-github'></span>\n\
 				v" + dataT[0].name + " datant du " + cDate + "  ─  " + cStats + "</a> </p>");
->>>>>>> moon-integration
 		});
 	});
 });
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> moon-integration
 // Avoid `console` errors in browsers that lack a console.
 (function() {
 	var method;
@@ -4077,24 +3984,6 @@ $(document).ready(function()
 	}
 }());
 
-<<<<<<< HEAD
-window.formChanged = false;
-
-var saveToDatabase = function()
-{
-	if (window.formChanged)
-	{
-		$("#form-competences").trigger('submit');
-	}
-	window.formChanged = false;
-};
-
-function addCheckHandler(toCheck)
-{
-	$(".radio input").change(function() {
-		console.log("change !");
-		window.formChanged = true;
-=======
 function bindAjaxEvents()
 {
 	$('[data-load-target]').each(function()
@@ -4123,7 +4012,6 @@ function addCheckHandler(toCheck)
 	$("div[data-role='form-container'] form .radio input, div[data-role='form-container'] form input[type='checkbox']").change(function() {
 		console.log("change");
 		$(this).parents("form").trigger("submit");
->>>>>>> moon-integration
 	});
 
 	// Mise à jour des champs
@@ -4149,11 +4037,7 @@ function showResponse(responseText, statusText, xhr, $form) {
 }
 
 var initalizeForm = function() {
-<<<<<<< HEAD
-	var options = {
-=======
 	window.ioptions = {
->>>>>>> moon-integration
 		target: '#form-result', // target element(s) to be updated with server response 
 		beforeSubmit: showRequest, // pre-submit callback 
 		success: showResponse, // post-submit callback 
@@ -4161,17 +4045,10 @@ var initalizeForm = function() {
 		type: "post"       // 'get' or 'post', override for form's 'method' attribute 
 	};
 
-<<<<<<< HEAD
-	$('#form-competences').submit(function() {
-		// inside event callbacks 'this' is the DOM element so we first 
-		// wrap it in a jQuery object and then invoke ajaxSubmit 
-		$(this).ajaxSubmit(options);
-=======
 	$('div[data-role="form-container"] form').submit(function() {
 		// inside event callbacks 'this' is the DOM element so we first 
 		// wrap it in a jQuery object and then invoke ajaxSubmit 
 		$(this).ajaxSubmit(window.ioptions);
->>>>>>> moon-integration
 
 		// !!! Important !!! 
 		// always return false to prevent standard browser submit and page navigation 
@@ -4179,11 +4056,6 @@ var initalizeForm = function() {
 	});
 	addClearItems();
 
-<<<<<<< HEAD
-	// La sauvegarde auto
-	setInterval(saveToDatabase, 5000);
-=======
->>>>>>> moon-integration
 };
 
 // pre-submit callback 
@@ -4203,12 +4075,6 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	console.log("statusText:", statusText);
 	var a = $(responseText);
 	a.addClass("preparing");
-<<<<<<< HEAD
-	$("#form-competences > div").first().append(a);
-	addCheckHandler(window.toCheck);
-	setTimeout(function() {
-		$.smoothScroll({ offset: ($(window).height()/2), scrollElement: null, scrollTarget: a });
-=======
 	var ctn = $("div[data-role='form-container'] > ul.items-panels");
 	var type = $("#form-add-competence .radio-group input:checked").val();
 	if (type == "1")
@@ -4225,7 +4091,6 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 	addClearItems();
 	setTimeout(function() {
 		$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
->>>>>>> moon-integration
 		NProgress.done();
 		a.addClass("complete").removeClass("preparing");
 	}, 1000);
@@ -4244,10 +4109,6 @@ var initalizeAddForm = function() {
 		// inside event callbacks 'this' is the DOM element so we first 
 		// wrap it in a jQuery object and then invoke ajaxSubmit 
 		console.log("initialized");
-<<<<<<< HEAD
-		$(this).ajaxSubmit(options);
-
-=======
 		var e = document.getElementById('form-add-competence');
 		if (e.checkValidity())
 		{
@@ -4257,42 +4118,12 @@ var initalizeAddForm = function() {
 		{
 		
 		}
->>>>>>> moon-integration
 		// !!! Important !!! 
 		// always return false to prevent standard browser submit and page navigation 
 		return false;
 	});
 };
 
-<<<<<<< HEAD
-var addClearItems = function()
-{
-	$('#form-competences fieldset').each(function() {
-		var fieldset = $(this);
-		var radioElt = fieldset.find(".radio input").first();
-		if (fieldset.find(".clear-all").length == 0)
-		{
-			fieldset.append("<a class='clear-all' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-remove-circle'></span></a>");
-		}
-		if (fieldset.find(".want-to-learn").length == 0)
-		{
-			fieldset.append("<a class='want-to-learn' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-student'></span></a>");
-		}
-		if (fieldset.find(".want-to-teach").length == 0)
-		{
-			fieldset.append("<a class='want-to-teach' data-items='"
-				+ radioElt.attr("name")
-				+ "'><span class='icon-love'></span></a>");
-		}
-	});
-	$("#form-competences fieldset a.clear-all").click(function() {
-		var item = $(this);
-		var concerned = item.parent().find("input[name='" + item.attr("data-items") + "']");
-=======
 var initializePanelMenu = function()
 {
 	$("#panel-menu > li[data-index-toggle]").click(function()
@@ -4356,17 +4187,11 @@ var addClearItems = function()
 	$("div[data-role='form-container'] form fieldset a.clear-all").click(function() {
 		var item = $(this);
 		var concerned = item.parent().find(".radio input[name='niveau']");
->>>>>>> moon-integration
 		$.ajax({
 			url: "User/deletecompetence",
 			type: 'POST',
 			data: {
-<<<<<<< HEAD
-				login: $("#form-login").val(),
-				code: $("#form-code").val(),
-=======
 				id_competence: item.parent().parent().find("input[name='id_competence']").val(),
->>>>>>> moon-integration
 				comp: item.attr("data-items")
 			}
 		}).done(function(data) {
@@ -4380,42 +4205,6 @@ var addClearItems = function()
 	});
 };
 
-<<<<<<< HEAD
-var createFormCompetences = function()
-{
-	console.log("form competences");
-	$("#form-competences div").makeForms({
-		components: window.items,
-		groupSize: 1,
-		templates:
-			{
-				title: "<h4>{{title}}</h4>",
-				group: '<fieldset>{{group}}</fieldset>',
-				label: '<label for="{{id}}">{{label}}</label>',
-				radio: '<div class="radio"><input type="radio" name="{{name}}"\
-	id="{{id}}" value="{{value}}">{{label}}<label for="{{id}}"></label></div>',
-				input: '<input class="form-control" type="{{type}}" name="{{name}}"\
-	id="{{id}}" value="{{value}}">',
-				text: '<input class="form-control" type="text" name="{{name}}"\
-	id="{{id}}" value="{{value}}">',
-				select: '<select class="form-control" id="{{id}}" name="{{name}}">\n\
-	<option id="{{id}}" value="">Aucun</option>{{options}}</select>',
-				option: '<option id="{{id}}" value="{{value}}">{{label}}</option>'
-			}
-	});
-	/*$("div.radio input + label").click(function()
-	 {
-	 console.log("ok");
-	 var elt = $(this).parent().children("input");
-	 if(elt.is(":checked"))
-	 {
-	 elt.prop('checked', false);
-	 }
-	 });*/
-};
-
-=======
->>>>>>> moon-integration
 var treatResize = function()
 {
 	if ($("div[data-role='container']").height() >= $(window).height())
@@ -4428,9 +4217,6 @@ var treatResize = function()
 	}
 };
 
-<<<<<<< HEAD
-window.createFormCompetences = createFormCompetences;
-=======
 var afterUserUpdate = function(responseText, statusText, xhr, $form) {
 	console.log("after");
 	if (responseText[0] == "1")
@@ -4507,5 +4293,4 @@ var reloadHandlers = function()
 	});
 };
 
->>>>>>> moon-integration
 
