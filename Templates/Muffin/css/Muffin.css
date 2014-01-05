@@ -9010,12 +9010,17 @@ nav a:hover {
 #modal-info table tr td {
   padding: 5px;
 }
+#modal-info table tr td:nth-child(1) {
+  min-width: 15%;
+  width: 15%;
+  color: rgba(0, 0, 0, 0.2);
+}
 #modal-info table tr td:nth-child(2) {
   max-width: 20%;
   color: rgba(0, 0, 0, 0.2);
 }
 #modal-info table tr td:nth-child(3) {
-  min-width: 60%;
+  min-width: 50%;
 }
 /* ==========================================================================
                              Footer

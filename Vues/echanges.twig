@@ -6,66 +6,74 @@
 <ul id="exchange-panel">
 
 	<li data-index="1"> <!-- Help the world ! -->
-		<h1>Des gens ont besoin de vous :</h1>
-		<ul data-role="liste-competences">
-		{% for comp in users_to_help %}
-			<li>
-			<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-			<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
-			<div class="competence-name">
-				<p>
-					<span class="side-legend">
-					{% if comp.type_competence == 1 %}
-						à progresser en 
-					{% elseif comp.type_competence == 2 %}
-						à comprendre le concept de 
-					{% else %}
-						sur le projet 
-					{% endif %}
-					</span>
-					<span class="show-little"><span class="icon-arrow-right2"></span> </span>
-					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
-				</p>
-			</div>
-			<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
-			<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>-->
-			<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
-			</li>
-		{% endfor %}
-		</ul>
+		{% if users_to_help|length %}
+			<h1>Des gens ont besoin de vous :</h1>
+			<ul data-role="liste-competences">
+			{% for comp in users_to_help %}
+				<li>
+				<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+				<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
+				<div class="competence-name">
+					<p>
+						<span class="side-legend">
+						{% if comp.type_competence == 1 %}
+							à progresser en 
+						{% elseif comp.type_competence == 2 %}
+							à comprendre le concept de 
+						{% else %}
+							sur le projet 
+						{% endif %}
+						</span>
+						<span class="show-little"><span class="icon-arrow-right2"></span> </span>
+						<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
+					</p>
+				</div>
+				<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
+				<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>-->
+				<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+				</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune demande pour le moment...</h1>
+		{% endif %}
 	</li>
 
 	<li data-index="2"> <!-- Need some help -->
-		{% if want_to_learn|length %}
-			<p class="intro">Competences / projets demandés :
-			{% for w in want_to_learn %}
-			<span> <span class="icon-{{w.c_competences.icone}}"></span> {{w.c_competences.nom_usuel|default(w.c_competences.nom_competence)}} </span>
-			{% endfor %}
-			</p>
-		{% endif %}
-		<ul data-role="liste-competences">
-		{% for comp in users_can_help %}
-			<li>
-			<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-			<div class="competence-name"><p><b>{{ comp.login }}</b> peut aider </p></div>
-			<div class="competence-name">
-				<p>
-					{% if comp.type_competence == 1 %}
-						à progresser en 
-					{% elseif comp.type_competence == 2 %}
-						à comprendre le concept de 
-					{% else %}
-						sur le projet 
-					{% endif %}
-					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
+		{% if users_can_help|length %}
+			{% if want_to_learn|length %}
+				<p class="intro">Competences / projets demandés :
+				{% for w in want_to_learn %}
+				<span> <span class="icon-{{w.c_competences.icone}}"></span> {{w.c_competences.nom_usuel|default(w.c_competences.nom_competence)}} </span>
+				{% endfor %}
 				</p>
-			</div>
-			<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
-			<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">demander</a>-->
-			<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
-			</li>
-		{% endfor %}
-		</ul>
+			{% endif %}
+			<ul data-role="liste-competences">
+			{% for comp in users_can_help %}
+				<li>
+				<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+				<div class="competence-name"><p><b>{{ comp.login }}</b> peut aider </p></div>
+				<div class="competence-name">
+					<p>
+						{% if comp.type_competence == 1 %}
+							à progresser en 
+						{% elseif comp.type_competence == 2 %}
+							à comprendre le concept de 
+						{% else %}
+							sur le projet 
+						{% endif %}
+						<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
+					</p>
+				</div>
+				<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
+				<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">demander</a>-->
+				<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+				</li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
+		{% endif %}
 	</li>
 </ul> <!-- End of exchange panel -->
 

@@ -4133,6 +4133,7 @@ var initializePanelMenu = function()
 		$(this).addClass("active");
 		$(".items-panels > li[data-index!='" + index + "']").hide();
 		$(".items-panels > li[data-index='" + index + "']").show();
+        treatResize();
 	});
 };
 
@@ -4147,6 +4148,7 @@ var initializeHelpMenu = function()
 		$(this).addClass("active");
 		$("#exchange-panel > li[data-index!='" + index + "']").hide();
 		$("#exchange-panel > li[data-index='" + index + "']").show();
+        treatResize();
 	});
 };
 
