@@ -11,9 +11,10 @@
 		{% for comp in users_to_help %}
 			<li>
 			<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-			<div class="competence-name"><p>Aider <b>{{ comp.login }}</b></p></div>
+			<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
 			<div class="competence-name">
 				<p>
+					<span class="side-legend">
 					{% if comp.type_competence == 1 %}
 						à progresser en 
 					{% elseif comp.type_competence == 2 %}
@@ -21,6 +22,8 @@
 					{% else %}
 						sur le projet 
 					{% endif %}
+					</span>
+					<span class="show-little"><span class="icon-arrow-right2"></span> </span>
 					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
 				</p>
 			</div>
@@ -33,10 +36,13 @@
 	</li>
 
 	<li data-index="2"> <!-- Need some help -->
-		{% if not want_to_learn|length %}
-			<h1>Vous ne semblez pas avoir grand chose à apprendre !</h1>
-		{% else %}
-			<h1>Vous voulez apprendre :</h1>
+		{% if want_to_learn|length %}
+			<p class="intro">Competences / projets demandés :
+			{% for w in want_to_learn %}
+			<span> <span class="icon-{{w.c_competences.icone}}"></span> {{w.c_competences.nom_usuel|default(w.c_competences.nom_competence)}} </span>
+			{% endfor %}
+			</p>
+		{% endif %}
 		<ul data-role="liste-competences">
 		{% for comp in users_can_help %}
 			<li>
@@ -60,7 +66,6 @@
 			</li>
 		{% endfor %}
 		</ul>
-		{% endif %}
 	</li>
 </ul> <!-- End of exchange panel -->
 

@@ -9700,6 +9700,12 @@ div[data-role="form-container"] .breaker {
         Echanges de competences
     ------------------------------------------------------------------------                            
 */
+.show-little {
+  display: none;
+}
+ul#exchange-panel p.intro > span {
+  padding-left: 5px;
+}
 ul#exchange-panel li {
   display: block;
 }
@@ -10185,8 +10191,19 @@ ul[data-role="liste-competences"] li + li {
     padding: 5px 0px;
     display: block;
   }
+  #exchange-panel {
+    padding-left: 0px;
+    text-align: left;
+  }
+  #exchange-panel ul[data-role="liste-competences"] {
+    padding-left: 0px;
+    text-align: left;
+  }
   span.side-legend {
     display: none;
+  }
+  span.show-little {
+    display: inline-block;
   }
 }
 /* plus petit [tablette portrait] */
