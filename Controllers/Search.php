@@ -113,9 +113,14 @@ class Search extends Controller
     protected function generateJsFormData ($user)
     {
         $datas = array ();
-        $elts = new Entities (
-                'c_user_competences[id_user='.$user.'].c_competences');
-        foreach ( $elts as $key => $competence)
+	$q = "SELECT * FROM c_competences WHERE c_competences.id_competence IN ( 
+		SELECT id_competence FROM c_user_competences 
+		WHERE `c_user_competences`.`id_user` = :id )";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("id" => $user));
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        foreach ( $res as $key => $competence)
         {
             $datas[] = $this->getJsonCodeForElement ($competence);
         }
