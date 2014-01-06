@@ -9713,6 +9713,28 @@ ul#exchange-panel p.intro > span {
 ul#exchange-panel li {
   display: block;
 }
+[data-align="center"] {
+  text-align: center;
+}
+.bbtn.center {
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+  border: 0px;
+  cursor: pointer;
+  margin: 0px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+.bbtn.center:hover {
+  background-color: rgba(217, 91, 67, 0.05);
+}
+.bbtn.center.active {
+  border-bottom: 3px solid #c02942;
+}
 ul[data-role="liste-competences"] a.right {
   text-decoration: none;
   color: #413e4a;

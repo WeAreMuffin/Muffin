@@ -51,7 +51,7 @@ class Echanges extends Controller
                         FROM c_user_competences ucb 
                         INNER JOIN c_competences cb 
                         ON ucb.id_competence = cb.id_competence 
-                        WHERE id_user = :idu AND ucb.want_to_teach = 1);
+                        WHERE id_user = :idu AND ucb.want_to_teach = 1 AND cb.expired = 0);
             ";
         $q_2 = "  SELECT * 
                 FROM c_user_competences uc 
@@ -66,7 +66,7 @@ class Echanges extends Controller
                         FROM c_user_competences ucb 
                         INNER JOIN c_competences cb 
                         ON ucb.id_competence = cb.id_competence 
-                        WHERE id_user = :idu AND ucb.want_to_learn = 1);
+                        WHERE id_user = :idu AND ucb.want_to_learn = 1 AND cb.expired = 0);
             ";
 
         $bd = Core::getBdd()->getDb();
@@ -108,6 +108,63 @@ class Echanges extends Controller
             }
         }
         echo ($render);
+    }
+
+    public function oldhelp ($params)
+    {
+        $this->registerParams ($params);
+        $user = $_SESSION['muffin_id'];
+
+        $q = "  SELECT * 
+                FROM c_user_competences uc 
+                    INNER JOIN c_competences c 
+                    ON uc.id_competence = c.id_competence 
+                    INNER JOIN c_user u
+                    ON uc.id_user = u.id
+                WHERE id_user != :id 
+                    AND want_to_learn = 1 
+                    AND c.nom_competence IN (
+                        SELECT nom_competence 
+                        FROM c_user_competences ucb 
+                        INNER JOIN c_competences cb 
+                        ON ucb.id_competence = cb.id_competence 
+                        WHERE id_user = :idu AND ucb.want_to_teach = 1 AND cb.expired = 1);
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("id" => $user,"idu" => $user));
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        $this->addData("users_to_help", $res);
+        $this->render ();
+    }
+
+ 
+    public function oldneed ($params)
+    {
+        $this->registerParams ($params);
+        $user = $_SESSION['muffin_id'];
+        $want_to_learn = new Entities ("c_user_competences[id_user=$user][want_to_learn=1]");
+        $q_2 = "  SELECT * 
+                FROM c_user_competences uc 
+                    INNER JOIN c_competences c 
+                    ON uc.id_competence = c.id_competence 
+                    INNER JOIN c_user u
+                    ON uc.id_user = u.id
+                WHERE id_user != :id 
+                    AND want_to_teach = 1 
+                    AND c.nom_competence IN (
+                        SELECT nom_competence 
+                        FROM c_user_competences ucb 
+                        INNER JOIN c_competences cb 
+                        ON ucb.id_competence = cb.id_competence 
+                        WHERE id_user = :idu AND ucb.want_to_learn = 1 AND cb.expired = 1);
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r_2 = $bd->prepare($q_2);
+        $r_2->execute(array("id" => $user,"idu" => $user));
+        $res_2 = $r_2->fetchAll(PDO::FETCH_CLASS);
+        $this->addData("users_can_help", $res_2);
+        $this->render ();
     }
 
     /*   =======================================================================

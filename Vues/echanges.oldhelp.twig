@@ -1,0 +1,24 @@
+			{% for comp in users_to_help %}
+				<li>
+				<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+				<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
+				<div class="competence-name">
+					<p>
+						<span class="side-legend">
+						{% if comp.type_competence == 1 %}
+							à progresser en 
+						{% elseif comp.type_competence == 2 %}
+							à comprendre le concept de 
+						{% else %}
+							sur le projet 
+						{% endif %}
+						</span>
+						<span class="show-little"><span class="icon-arrow-right2"></span> </span>
+						<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
+					</p>
+				</div>
+				<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
+				<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>-->
+				<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+				</li>
+			{% endfor %}

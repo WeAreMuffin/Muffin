@@ -29,11 +29,12 @@
 					</p>
 				</div>
 				<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
-				<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>-->
+				<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>
 				<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
 				</li>
 			{% endfor %}
 			</ul>
+			<div data-align="center"><a class="bbtn center" id="load-expired-help--button">Projets plus anciens</a></div>
 		{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune demande pour le moment...</h1>
 		{% endif %}
@@ -66,11 +67,12 @@
 					</p>
 				</div>
 				<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
-				<!--<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">demander</a>-->
+				<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">demander</a>
 				<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
 				</li>
 			{% endfor %}
 			</ul>
+			<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
 		{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
 		{% endif %}

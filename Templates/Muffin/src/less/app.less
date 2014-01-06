@@ -1126,6 +1126,35 @@ ul#exchange-panel
 	}
 }
 
+[data-align="center"]
+{
+    text-align: center;
+}
+
+.bbtn.center
+{
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    border: 0px;
+    cursor: pointer;
+    margin: 0px;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    &:hover
+    {
+	background-color: rgba(217, 91, 67, 0.05);
+    }
+    &.active
+    {
+	border-bottom: 3px solid @muffin-red;
+    }
+
+}
+
 ul[data-role="liste-competences"]
 {
 
