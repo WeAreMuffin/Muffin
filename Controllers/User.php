@@ -52,6 +52,21 @@ class User extends Controller
     /**
      * @Ajax
      */
+    public function getstatus ($params)
+    {
+	$login = $this->filterPost('login');
+	if ($login)
+	{
+	    $r = shell_exec("curl -k https://dashboard.42.fr/crawler/pull/". $login . "/");
+	    echo($r);
+	}
+	else
+	    echo("{}");
+    }
+
+    /**
+     * @Ajax
+     */
     public function me ($params)
     {
         $formDataJson = $this->generateJsFormData ();

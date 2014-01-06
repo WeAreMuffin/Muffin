@@ -210,13 +210,28 @@ var queryUserStatus = function()
 {
 	$("[data-locate]").each(function()
 	{
+	    var ct = $(this);
 		var login = $(this).attr("data-login");
 		$.ajax({
-			url: "https://dashboard.42.fr/crawler/pull/" + login + "/",
-			dataType: "json",
-			success: function(e){$(this).addClass("online").html(e.last_host.replace(".42.fr", ""));},
-			error: function(){$(this).removeClass("online");}
-		});
+			url: "User/getstatus",
+			type: 'POST',
+			data: { login : login },
+			dataType: "json"
+		    }).done(function(e)
+		    {
+			    if (e.error == undefined)
+			    {
+				ct.attr("style", "");
+				ct.addClass("online");
+				ct.html(e.last_host.replace(".42.fr", ""));
+			    }
+			    else
+			    {
+				ct.removeClass("online");
+				ct.addClass("offline");
+				ct.attr("style", "color: #D95B43;");
+			    }
+		    });
 	});
 }
 
