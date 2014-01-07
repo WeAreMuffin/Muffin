@@ -19,13 +19,26 @@
 				    </li>
 				{% endif %}
 				<li class="competence-tabbed" data-ct="{{ section }}">
-				    <div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
+				    {% if comp.resume == "accepte" %}
+					<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
+				    {% else %}
+					<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
+				    {% endif %}
 
 				    <a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 				    <a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
-
-				    <a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">proposer</a>
-				    <a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+				    {% if comp.id_propose == NULL %}
+					<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>
+				    {% elseif comp.resume == "attente" %}
+					<a class="btn right attente" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+					    En attente
+					</a>
+				    {% elseif comp.resume == "accepte" %}
+					<a class="btn right accepte" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+					    A accepté votre aide
+					</a>
+				    {% endif %}
+				    <a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
 				</li>
 			{% endfor %}
 			</ul>
@@ -44,27 +57,39 @@
 				{% endfor %}
 				</p>
 			{% endif %}
+			{% set section = "" %}
 			<ul data-role="liste-competences">
 			{% for comp in users_can_help %}
-				<li>
-				<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-				<div class="competence-name"><p><b>{{ comp.login }}</b> peut aider </p></div>
-				<div class="competence-name">
-					<p>
-						{% if comp.type_competence == 1 %}
-							à progresser en 
-						{% elseif comp.type_competence == 2 %}
-							à comprendre le concept de 
-						{% else %}
-							sur le projet 
-						{% endif %}
-						<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> 
-					</p>
-				</div>
-				<a class="icon-email2 right" href="mailto:{{ comp.login }}@student.42.fr"></a>
-				<a class="btn proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">demander</a>
-				<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
-				</li>
+				{% if section != comp.nom_competence %}
+				    {% set section = comp.nom_competence %}
+				    <li class="competence-summary">
+					<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+				    </li>
+				{% endif %}
+
+				<li class="competence-tabbed" data-ct="{{ section }}">
+		            <div class="competence-name"><p><b>{{ comp.login }}</b></p></div>
+		            {% if comp.id_propose == NULL %}
+		                <span class="side-legend"> peut vous aider</span>
+		            {% elseif comp.resume == "attente" %}
+				 veut vous aider
+		                <a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+		                    accepter
+		                </a>
+			     {% elseif comp.resume == "accepte" %}
+				ne devrait pas tarder !
+		                <a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+		                    <span class="icon-uniF7D9"></span>
+		                </a>
+		                <a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+		                    <span class="icon-uniF7E0"></span>
+		                </a>
+		            {% endif %}
+		            <a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
+		            <a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+		            <a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+		        </li>
 			{% endfor %}
 			</ul>
 			<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
@@ -93,5 +118,26 @@
 					btn.html("<span class='icon-warning'></span> Erreur");
 				}
 			});
+	});
+
+	$("a.btn.accepter-aide").click(function()
+	{
+		var btn = $(this);
+		$.get('{{ href("Echanges","accepter") }}/'
+			+ $(this).attr("data-user") +'/'
+			+ $(this).attr("data-competence"), function(d)
+			{
+				console.log("click");
+				if(d == "1")
+				{
+					btn.after("<a class='aide-nice'><span class='icon-uniF7D9'></span></a>");
+					btn.remove();
+				}
+				else
+				{
+					btn.html("<span class='icon-warning'></span> Erreur");
+				}
+			});
 	})
+
 	</script>

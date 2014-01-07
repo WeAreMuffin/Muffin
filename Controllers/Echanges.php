@@ -44,6 +44,8 @@ class Echanges extends Controller
                     ON uc.id_competence = c.id_competence 
                     INNER JOIN c_user u
                     ON uc.id_user = u.id
+		    LEFT JOIN c_echanges e
+		    ON e.id_demande = u.id AND e.competence = c.id_competence
                 WHERE id_user != :id 
                     AND want_to_learn = 1 
                     AND c.nom_competence IN (
@@ -59,6 +61,8 @@ class Echanges extends Controller
                     ON uc.id_competence = c.id_competence 
                     INNER JOIN c_user u
                     ON uc.id_user = u.id
+		    LEFT JOIN c_echanges e
+		    ON e.id_propose = u.id AND e.competence = c.id_competence
                 WHERE id_user != :id 
                     AND want_to_teach = 1 
                     AND c.nom_competence IN (
@@ -103,9 +107,37 @@ class Echanges extends Controller
             if ($cpt)
             {
                 $i = array ("id_propose" => $_SESSION['muffin_id'],
-                    "id_demande" => $login, "id_competence" => $competence);
+                    "id_demande" => $login, "competence" => $competence);
                 $res = Core::getBdd ()->insert ($i, 'c_echanges');
 		$this->notifier($_SESSION["login"]." voudrait vous aider sur le projet / la notion ".$c, $login);
+                $render = "1";
+            }
+        }
+        echo ($render);
+    }
+
+
+    /**
+     * @PathInfo('user/competence')
+     */
+    public function accepter($params)
+    {
+
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('user');
+        $render = "0";
+        $competence = $this->getUrlParam ('competence');
+        if ($login and $competence)
+	{
+	    $c = Moon::get('c_competences', 'id_competence', $competence);
+	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
+            $cpt = new Entities("c_echanges[id_propose=\"$login\"][competence=\"$competence\"]");
+            if ($cpt)
+            {
+                $i = array ("id_demande" => $_SESSION['muffin_id'],
+                    "id_propose" => $login, "competence" => $competence);
+                $res = Core::getBdd ()->update (array("resume" => "accepte"), 'c_echanges', $i);
+		$this->notifier($_SESSION["login"]." a accepte votre aide sur le projet / la notion ".$c, $login);
                 $render = "1";
             }
         }

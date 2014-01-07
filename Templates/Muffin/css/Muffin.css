@@ -9815,9 +9815,29 @@ ul[data-role="liste-competences"] li div.competence-name {
   display: inline-block;
   width: auto;
 }
+ul[data-role="liste-competences"] li a.aide-nice,
+ul[data-role="liste-competences"] li a.aide-not-nice {
+  padding: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  margin: 0px;
+  text-align: center;
+}
+ul[data-role="liste-competences"] li a.aide-not-nice {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #9e4838;
+}
+ul[data-role="liste-competences"] li a.aide-nice {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #699b3b;
+}
 ul[data-role="liste-competences"] li a.btn {
   font-size: 0.6em;
-  float: right;
   min-height: 30px;
   padding: 4px 6px;
   line-height: 17px;
@@ -9845,6 +9865,21 @@ ul[data-role="liste-competences"] li a.btn.offline span[class^="icon-"] {
   top: 1px;
   left: -2px;
   padding-left: 5px;
+}
+ul[data-role="liste-competences"] li a.btn.accepter-aide {
+  background-color: #699b3b;
+  border-color: #699b3b;
+}
+ul[data-role="liste-competences"] li a.btn.attente {
+  background-color: transparent;
+  color: #c02942;
+  border: 1px solid #c02942;
+  line-height: 20px;
+}
+ul[data-role="liste-competences"] li a.btn.attente:hover,
+ul[data-role="liste-competences"] li a.btn.attente:active {
+  background-color: transparent;
+  color: #c02942;
 }
 ul[data-role="liste-competences"] li p {
   margin: 2px;

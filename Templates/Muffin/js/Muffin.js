@@ -4176,31 +4176,38 @@ var initializeHelpMenu = function()
 
 var queryUserStatus = function()
 {
-    $("[data-locate]").each(function()
+    $("[data-locate].loading").each(function()
+	{
+	    var ct = $(this);
+	    if (ct.hasClass("loading"))
 	    {
-		var ct = $(this);
-		var login = $(this).attr("data-login");
-		$.ajax({
-		    url: "User/getstatus",
-		    type: 'POST',
-		    data: { login : login },
-		    dataType: "json"
-		}).done(function(e)
-		    {
-			if (e.error == undefined)
-		{
-		    ct.attr("style", "");
-		    ct.addClass("online");
-		    ct.html(e.last_host.replace(".42.fr", ""));
-		}
-			else
-		{
-		    ct.removeClass("online");
-		    ct.addClass("offline");
-		    ct.attr("style", "color: #D95B43;");
-		}
-		    });
-	    });
+			var login = $(this).attr("data-login");
+			$.ajax({
+			    url: "User/getstatus",
+			    type: 'POST',
+			    data: { login : login },
+			    dataType: "json"
+			}).done(function(e)
+			    {
+				$("[data-login='" + login + "']").each(function()
+				{
+				    ct.removeClass("loading");
+				    if (e.error == undefined)
+				    {
+					ct.attr("style", "");
+					ct.addClass("online");
+					ct.html(e.last_host.replace(".42.fr", ""));
+				    }
+				    else
+				    {
+					ct.removeClass("online");
+					ct.addClass("offline");
+					ct.attr("style", "color: #D95B43;");
+				    }
+				});
+			    });
+	    }
+	});
 }
 
 var checkNotifications = function()
