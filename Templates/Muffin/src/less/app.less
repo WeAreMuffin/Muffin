@@ -766,7 +766,38 @@ p {
             {
                 font-size: 1em;
             }
+
+	    &#notif-aera
+	    {
+		padding: 0px 10px;
+		&.new
+		{
+		    color: @muffin-yellow;
+		}
+		.not-num
+		{
+		    position: relative;
+		    font-size: 0.7em;
+		    left: -22px;
+		    top: -3px;
+		}
+	    }
         }
+    }
+}
+
+
+/* notifications dans les modales */
+ul#list-notification
+{
+    li
+    {
+	display: block;
+
+	&+li
+	{
+	    border-top: 1px solid rgba(50, 50, 50, 0.1);
+	}
     }
 }
 
@@ -1155,8 +1186,14 @@ ul#exchange-panel
 
 }
 
+ul#exchange-panel
+{
+    padding-left: 0px;
+}
+
 ul[data-role="liste-competences"]
 {
+    padding-left: 0px;
 
 	a.right
 	{
@@ -1178,6 +1215,27 @@ ul[data-role="liste-competences"]
         font-size: 1.2em;
         clear: both;
         list-style: none;
+
+	&.competence-summary
+	{
+	    padding-top: 5px;
+	    padding-left: 10px;
+	    font-size: 1.5em;
+	    border-bottom: 2px solid @muffin-orange;
+	}
+
+	&.competence-tabbed
+	{
+	    padding-left: 30px;
+	    margin-left: 20px;
+	    border-left: 3px solid rgba(0, 0, 0, 0.1);
+
+	    &+li.competence-tabbed
+	    {
+		border-top: 1px solid rgba(0,0,0,0.1);
+	    }
+
+	}
 
         div.competence-icon
         {
@@ -1233,11 +1291,6 @@ ul[data-role="liste-competences"]
         p
         {
             margin: 2px;
-        }
-
-        &+li
-        {
-            border-top: 1px solid rgba(0,0,0,0.1);
         }
     }
 }
