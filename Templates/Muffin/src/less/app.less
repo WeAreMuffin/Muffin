@@ -1195,12 +1195,15 @@ ul[data-role="liste-competences"]
 {
     padding-left: 0px;
 
-	a.right
+	.right
+	{
+		float: right;
+	}
+
+	a
 	{
 		text-decoration: none;
-		color: @muffin-black;
 		background-color: transparent;
-        float: right;
 		line-height: 30px;
 		margin: 0px 5px;
     	&.online
@@ -1212,7 +1215,7 @@ ul[data-role="liste-competences"]
     li
     {
         padding: 10px 0px;
-        font-size: 1.2em;
+        font-size: 1.1em;
         clear: both;
         list-style: none;
 
@@ -1226,13 +1229,33 @@ ul[data-role="liste-competences"]
 
 	&.competence-tabbed
 	{
+	    border-left: 3px solid rgba(0, 0, 0, 0.0);
+	    transition: all 0.3s;
 	    padding-left: 30px;
-	    margin-left: 20px;
-	    border-left: 3px solid rgba(0, 0, 0, 0.1);
 
 	    &+li.competence-tabbed
 	    {
 		border-top: 1px solid rgba(0,0,0,0.1);
+	    }
+
+	    &:hover
+	    {
+		background-color: rgba(255, 255, 255, 0.05);
+		border-left: 3px solid @muffin-red;
+
+		.inside
+		{
+		    display: inline-block;
+		    visibility: visible;
+		}
+	    }
+
+	    .inside
+	    {
+		color: rgba(0, 0, 0, 0.4);
+		font-size: 0.8em;
+		margin-left: 10px;
+		visibility: hidden;
 	    }
 
 	}

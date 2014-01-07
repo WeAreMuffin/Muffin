@@ -9760,20 +9760,21 @@ ul#exchange-panel {
 ul[data-role="liste-competences"] {
   padding-left: 0px;
 }
-ul[data-role="liste-competences"] a.right {
-  text-decoration: none;
-  color: #413e4a;
-  background-color: transparent;
+ul[data-role="liste-competences"] .right {
   float: right;
+}
+ul[data-role="liste-competences"] a {
+  text-decoration: none;
+  background-color: transparent;
   line-height: 30px;
   margin: 0px 5px;
 }
-ul[data-role="liste-competences"] a.right.online {
+ul[data-role="liste-competences"] a.online {
   color: #53777a;
 }
 ul[data-role="liste-competences"] li {
   padding: 10px 0px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   clear: both;
   list-style: none;
 }
@@ -9784,12 +9785,26 @@ ul[data-role="liste-competences"] li.competence-summary {
   border-bottom: 2px solid #d95b43;
 }
 ul[data-role="liste-competences"] li.competence-tabbed {
+  border-left: 3px solid rgba(0, 0, 0, 0);
+  transition: all 0.3s;
   padding-left: 30px;
-  margin-left: 20px;
-  border-left: 3px solid rgba(0, 0, 0, 0.1);
 }
 ul[data-role="liste-competences"] li.competence-tabbed + li.competence-tabbed {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+ul[data-role="liste-competences"] li.competence-tabbed:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #c02942;
+}
+ul[data-role="liste-competences"] li.competence-tabbed:hover .inside {
+  display: inline-block;
+  visibility: visible;
+}
+ul[data-role="liste-competences"] li.competence-tabbed .inside {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.8em;
+  margin-left: 10px;
+  visibility: hidden;
 }
 ul[data-role="liste-competences"] li div.competence-icon {
   display: inline-block;
