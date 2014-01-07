@@ -96,18 +96,27 @@ class Echanges extends Controller
         $render = "0";
         $competence = $this->getUrlParam ('competence');
         if ($login and $competence)
-        {
+	{
+	    $c = Moon::get('c_competences', 'id_competence', $competence);
+	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
             $cpt = new Entities("c_user_competences[id_user=\"$login\"][id_competence=\"$competence\"]");
             if ($cpt)
             {
-                $cpt = $cpt->current();
                 $i = array ("id_propose" => $_SESSION['muffin_id'],
-                    "id_demande" => $login, "id_competence" => $competence, "prix" => $cpt->price);
+                    "id_demande" => $login, "id_competence" => $competence);
                 $res = Core::getBdd ()->insert ($i, 'c_echanges');
+		$this->notifier($_SESSION["login"]." voudrait vous aider sur le projet / la notion ".$c, $login);
                 $render = "1";
             }
         }
         echo ($render);
+    }
+
+    protected function notifier($message, $id)
+    {
+	$i = array ("id_user" => $id, "message" => $message);
+	$res = Core::getBdd()->insert($i, 'c_notifications');
+	return ($res);
     }
 
     public function oldhelp ($params)

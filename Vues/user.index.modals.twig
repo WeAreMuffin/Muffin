@@ -202,3 +202,34 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+<!-- Modale de notification -->
+<div class="modal fade" id="modal-notifications" tabindex="-1" role="dialog"
+    aria-labelledby="MNotification" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MNotification"><span
+			class="icon-uniF768"></span> Notifications</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary">
+                   Fermer 
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    $("#search_comp_uid").keyup(function()
+    {
+        muffin.autoSearchUser($(this).val());
+        console.log("keypress");
+    })
+</script>
+
+
