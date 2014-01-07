@@ -1,0 +1,10 @@
+
+<ul id="list-notification">
+    {% if notifications|length == 0 %}
+	<li><p class="light">Aucune notification</p></li>
+    {% else %}
+	{% for notif in notifications %}
+	    <li>{{ notif.message }}</li>
+	{% endfor %}
+    {% endif %}
+</ul>
