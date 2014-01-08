@@ -1,0 +1,37 @@
+v2.1 - 2014-01-08 - "Zeste d'agrume & chair de fraise"
+======================================================
+
+Changements majeurs:
+---------------------
+
+- Ajout d'un systeme d'echange entre les personnes qui proposent et qui
+demandent : bouton "proposer" sur la page des echanges.
+- Regroupement des projets par nom.
+- Masquage des projets depasses (un bouton "voir les anciens projets" sera
+ajoute ulterieurement).
+- Ajout de notifications utilisateur.
+- Ajout d'un lien vers les profils utilisateurs sur l'intranet.
+- Ajout d'un petit ecran de chargement.
+- Amelioration de l'algo de selection.
+
+Details mineurs : log git
+-----------------------
+799d6bb Modif title, as the tradition
+53df87f Adding password type on passphrase input. (https://github.com/lambda2/Muffin/issues/4)
+8b6284d Fixing the tag input overflow issue (https://github.com/lambda2/Muffin/issues/2)
+2e2768a Adding comments on old projects
+3cad307 Fixing a bug on resume
+215c507 Adding nice extensions, title event styles (cursor -> pointer) and improved notification styles
+a796bc1 Adding first draft of interaction callback
+5d2107c Adding sexy loader :)
+d454a07 Adding interaction and application of Entities filters when loading from database (such as limit and order)
+0f2f32a Adding better order for skill display. time date for projects and precise skills, inv time date for general skills
+147df86 Adding better exchange system.
+2888e03 Adding styles for inside buttons
+43b449b Adding inside buttons : maito & 42 user profile on intra
+3bc9e32 Adding notification modals and categorized exchange page
+8e61336 Adding new styles for notifications and a better display for excange page
+f6b3f6a Adding notifications template and Controller
+1b9b983 Adding separation between [old] projects and current projects. We can suppose that no a lot of people is interested about getting help on an old project...
+d8c35ee [FIX] Fixing a bug on the research (https://github.com/lambda2/Muffin/issues/3)
+
