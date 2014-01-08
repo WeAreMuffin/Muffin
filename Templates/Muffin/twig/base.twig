@@ -66,34 +66,38 @@
         </div>
 
             {% block main %}
-        <div class="main-container">
-            <div data-role="container" class="main wrapper clearfix">
-            {% block container %}
-                <?php
-                if ( isset ($_SESSION['login']) and isset ($_SESSION['code']) )
-                {
-                ?>
-                <script>
-                    $(document).ready(function()
-                    {
-                        $.get("steps/step-2.php", {code: "<?= $_SESSION['code'] ?>", login: "<?= $_SESSION['login'] ?>"},
-                        function(data) {
-                            $("div[data-role='container']").html($(data));
-                        }
-                        );
-                    });
-                </script>
-                <?php
-                }
-                else
-                {
-                include_once 'steps/step-0.php';
-                }
-                ?>
+		<div class="main-container">
+		    <div data-role="container" class="main wrapper clearfix">
+			{% block container %}
+			<?php
+			if ( isset ($_SESSION['login']) and isset ($_SESSION['code']) )
+			{
+			?>
+			 <div class="big-loader">
+			    <h1><span class="icon-foodtray"></span></h1>
+			    <h2>Préparation du menu...</h2> 
+			</div>
+			<script>
+			    $(document).ready(function()
+			    {
+				$.get("steps/step-2.php", {code: "<?= $_SESSION['code'] ?>", login: "<?= $_SESSION['login'] ?>"},
+				function(data) {
+				    $("div[data-role='container']").html($(data));
+				}
+				);
+			    });
+			</script>
+			<?php
+			}
+			else
+			{
+			    include_once 'steps/step-0.php';
+			}
+			?>
 
-    {% endblock %}
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
+		    {% endblock %}
+		</div> <!-- #main -->
+	    </div> <!-- #main-container -->
     {% endblock %}
 
 

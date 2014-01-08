@@ -9912,6 +9912,17 @@ ul[data-role="liste-competences"] li p {
   position: relative;
   bottom: 0px;
 }
+.big-loader {
+  text-align: center;
+}
+.big-loader span[class^="icon-"] {
+  font-size: 5em;
+  color: rgba(0, 0, 0, 0.2);
+}
+.big-loader h2 {
+  font-size: 3em;
+  color: rgba(0, 0, 0, 0.4);
+}
 /* ==========================================================================
    Media Queries
    ========================================================================== */

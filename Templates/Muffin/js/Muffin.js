@@ -4176,9 +4176,9 @@ var initializeHelpMenu = function()
 
 var queryUserStatus = function()
 {
-    $("[role='indicator']").html("Recuperation des postes...");
-    $("[data-locate].loading").each(function()
+    var load = $("[data-locate].loading").each(function()
 	{
+	    $("[role='indicator']").html("Recuperation des postes...");
 	    var ct = $(this);
 	    if (ct.hasClass("loading"))
 	    {
@@ -4208,6 +4208,9 @@ var queryUserStatus = function()
 				});
 			    });
 	    }
+	    $("[role='indicator']").html("A jour");
+	});
+    load.done(function() {$("[role='indicator']").html("A jour");});
 
 }
 
