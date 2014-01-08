@@ -46,7 +46,12 @@
 				</li>
 			{% endfor %}
 			</ul>
+			{# 
+			
+			@Todo : mettre les templates et les styles a jour pour les prohjets passes.
 			<div data-align="center"><a class="bbtn center" id="load-expired-help--button">Projets plus anciens</a></div>
+			
+			#}
 		{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune demande pour le moment...</h1>
 		{% endif %}
@@ -98,7 +103,12 @@
 		        </li>
 			{% endfor %}
 			</ul>
+			{# 
+			
+			@Todo : mettre les templates et les styles a jour pour les prohjets passes. 
 			<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
+			
+			#}
 		{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
 		{% endif %}
@@ -106,73 +116,82 @@
 </ul> <!-- End of exchange panel -->
 
 	<script>
-	$("a.btn.proposer").click(function()
+	var echangeRefresh = function()
 	{
-		var btn = $(this);
-		btn.html("<span class='icon-multiply'></span> Ne plus proposer");
-		$.get('{{ href("Echanges","proposer") }}/'
-			+ $(this).attr("data-user") +'/'
-			+ $(this).attr("data-competence"), function(d)
-			{
-				console.log("click");
-				if(d == "1")
+	
+		$("a.btn.proposer").click(function()
+		{
+			var btn = $(this);
+			btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+			$.get('{{ href("Echanges","proposer") }}/'
+				+ $(this).attr("data-user") +'/'
+				+ $(this).attr("data-competence"), function(d)
 				{
-					btn.html("<span class='icon-multiply'></span> Ne plus proposer");
-				}
-				else
+					console.log("click");
+					if(d == "1")
+					{
+						btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+					}
+					else
+					{
+						btn.html("<span class='icon-warning'></span> Erreur");
+					}
+				});
+		});
+
+		$("a.btn.accepter-aide").click(function()
+		{
+			var btn = $(this);
+			$.get('{{ href("Echanges","accepter") }}/'
+				+ $(this).attr("data-user") +'/'
+				+ $(this).attr("data-competence"), function(d)
 				{
-					btn.html("<span class='icon-warning'></span> Erreur");
-				}
-			});
-	});
+					console.log("click");
+					if(d == "1")
+					{
+						btn.after('<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="'
+							+ btn.attr("data-competence") + '" data-user="'
+							+ btn.attr("data-user") + '"><span class="icon-uniF7D9"></span></a>'
+						+'<a data-toggle="tooltip" title="C\'est toujours un peu flou !" class="aide-not-nice" data-competence="'
+							+ btn.attr("data-competence") + '" data-user="'
+							+ btn.attr("data-user") + '"><span class="icon-uniF7E0"></span></a>');
+						btn.remove();
+						echangeRefresh();
+					}
+					else
+					{
+						btn.html("<span class='icon-warning'></span> Erreur");
+					}
+				});
+		});
 
-	$("a.btn.accepter-aide").click(function()
-	{
-		var btn = $(this);
-		$.get('{{ href("Echanges","accepter") }}/'
-			+ $(this).attr("data-user") +'/'
-			+ $(this).attr("data-competence"), function(d)
-			{
-				console.log("click");
-				if(d == "1")
+
+		$("a.aide-nice").click(function()
+		{
+			var btn = $(this);
+			btn.html("...");
+			$.get('{{ href("Echanges","bien") }}/'
+				+ $(this).attr("data-user") +'/'
+				+ $(this).attr("data-competence"), function(d)
 				{
-					btn.after("<a class='aide-nice'><span class='icon-uniF7D9'></span></a>");
-					btn.remove();
-				}
-				else
+						btn.parent().html("Génial ! Bonne continuation !");
+						$(".tooltip").remove();
+				});
+		});
+
+		$("a.aide-not-nice").click(function()
+		{
+			var btn = $(this);
+			btn.html("...");
+			$.get('{{ href("Echanges","pasbien") }}/'
+				+ $(this).attr("data-user") +'/'
+				+ $(this).attr("data-competence"), function(d)
 				{
-					btn.html("<span class='icon-warning'></span> Erreur");
-				}
-			});
-	})
-
-
-	$("a.aide-nice").click(function()
-	{
-		var btn = $(this);
-		btn.html("...");
-		$.get('{{ href("Echanges","bien") }}/'
-			+ $(this).attr("data-user") +'/'
-			+ $(this).attr("data-competence"), function(d)
-			{
-					btn.after("Génial ! Bonne continuation !");
-					btn.remove();
-					btn.next("a.aide-not-nice").remove();
-			});
-	})
-
-	$("a.aide-not-nice").click(function()
-	{
-		var btn = $(this);
-		btn.html("...");
-		$.get('{{ href("Echanges","pasbien") }}/'
-			+ $(this).attr("data-user") +'/'
-			+ $(this).attr("data-competence"), function(d)
-			{
-					btn.after("Arf ! On va essayer de trouver quelqu'un d'autre !");
-					btn.remove();
-					btn.prev("a.aide-nice").remove();
-			});
-	})
+						btn.parent().html("Arf ! On va essayer de trouver quelqu'un d'autre !");
+						$(".tooltip").remove();
+				});
+		});
+	}
+	echangeRefresh();
 
 	</script>
