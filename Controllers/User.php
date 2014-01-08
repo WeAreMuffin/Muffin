@@ -245,6 +245,8 @@ class User extends Controller
             {
                 $datas[] = $this->getJsonCodeForElement ($competence);
             }
+	    if ($i == 3 || $i == 2)
+		$datas = array_reverse($datas);
             $f[$c] = '<li data-index="'. ($c + 1) .'">' . implode ('', $datas) . "</li>";
         }
         $final = implode ('', $f);

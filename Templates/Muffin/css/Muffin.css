@@ -9825,6 +9825,7 @@ ul[data-role="liste-competences"] li a.aide-not-nice {
   display: inline-block;
   margin: 0px;
   text-align: center;
+  cursor: pointer;
 }
 ul[data-role="liste-competences"] li a.aide-not-nice {
   padding-left: 5px;

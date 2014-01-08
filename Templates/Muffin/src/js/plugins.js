@@ -230,6 +230,7 @@ var initializeHelpMenu = function()
 
 var queryUserStatus = function()
 {
+    $("[role='indicator']").html("Recuperation des postes...");
     $("[data-locate].loading").each(function()
 	{
 	    var ct = $(this);
@@ -261,7 +262,7 @@ var queryUserStatus = function()
 				});
 			    });
 	    }
-	});
+
 }
 
 var checkNotifications = function()
@@ -391,7 +392,6 @@ var reloadHandlers = function()
 {
     NProgress.configure({showSpinner: false});
     $("a").smoothScroll();
-
     treatResize();
     $(window).resize(treatResize);
     bindAjaxEvents();
