@@ -9203,6 +9203,7 @@ input[disabled] + button {
     ------------------------------------------------------------------------                            
 */
 input[type="text"],
+input[type="password"],
 button {
   border: 2px solid transparent;
   box-shadow: none;
@@ -9212,7 +9213,8 @@ button {
 label {
   margin-right: 5px;
 }
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   border: 2px solid #413E4A;
   background-color: transparent;
   color: #413E4A;
@@ -9225,7 +9227,8 @@ button {
   vertical-align: sub;
 }
 form > label,
-form > input[type="text"] {
+form > input[type="text"],
+form > input[type="password"] {
   min-height: 30px;
   margin: 0px;
   min-width: 50%;
