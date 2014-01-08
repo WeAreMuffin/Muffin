@@ -37,6 +37,10 @@
 					<a class="btn right accepte" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
 					    A accepté votre aide
 					</a>
+				    {% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
+					<a class="btn right deja-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+					    déja aidé
+					</a>
 				    {% endif %}
 				    <a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
 				</li>
@@ -85,6 +89,8 @@
 		                <a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
 		                    <span class="icon-uniF7E0"></span>
 		                </a>
+			     {% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
+				vous a déja aidé
 		            {% endif %}
 		            <a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 		            <a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>

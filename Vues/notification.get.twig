@@ -5,9 +5,9 @@
     {% else %}
 	{% for notif in notifications %}
 	    {% if notif.vu %}
-		<li>{{ notif.message }}</li>
+	    <li><span class="icon-uniF767"></span> {{ notif.message }}</li>
 	    {% else %}
-		<li class="notification-new"><span class="icon-info"></span> {{ notif.message }}</li>
+		<li class="notification-new"><span class="icon-uniF766"></span> {{ notif.message }}</li>
 	    {% endif %}
 	{% endfor %}
     {% endif %}

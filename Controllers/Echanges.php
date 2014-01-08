@@ -194,7 +194,7 @@ class Echanges extends Controller
             {
                 $i = array ("id_demande" => $_SESSION['muffin_id'],
                     "id_propose" => $login, "competence" => $competence);
-                $res = Core::getBdd ()->update (array("resume" => "i=pasbien"), 'c_echanges', $i);
+                $res = Core::getBdd ()->update (array("resume" => "pasbien"), 'c_echanges', $i);
 		$this->notifier($_SESSION["login"]." vous remercie de l'avoir aidé sur le projet / la notion ".$c, $login);
                 $render = "1";
             }
