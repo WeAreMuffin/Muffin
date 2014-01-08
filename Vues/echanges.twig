@@ -140,4 +140,33 @@
 			});
 	})
 
+
+	$("a.aide-nice").click(function()
+	{
+		var btn = $(this);
+		btn.html("...");
+		$.get('{{ href("Echanges","bien") }}/'
+			+ $(this).attr("data-user") +'/'
+			+ $(this).attr("data-competence"), function(d)
+			{
+					btn.after("Génial ! Bonne continuation !");
+					btn.remove();
+					btn.next("a.aide-not-nice").remove();
+			});
+	})
+
+	$("a.aide-not-nice").click(function()
+	{
+		var btn = $(this);
+		btn.html("...");
+		$.get('{{ href("Echanges","pasbien") }}/'
+			+ $(this).attr("data-user") +'/'
+			+ $(this).attr("data-competence"), function(d)
+			{
+					btn.after("Arf ! On va essayer de trouver quelqu'un d'autre !");
+					btn.remove();
+					btn.prev("a.aide-nice").remove();
+			});
+	})
+
 	</script>

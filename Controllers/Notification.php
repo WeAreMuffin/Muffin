@@ -45,10 +45,22 @@ class Notification extends Controller
 	echo (count($cpt));
     }
 
-    public function get($params)
+    public function getNew($params)
     {
         // On récupère le login fourni dans l'url
 	$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
+	$cpt->loadFromDatabase();
+	$this->addData("notifications", $cpt);
+	Core::getBdd()->update (array("vu" => 1), 'c_notifications', array ("id_user" => $_SESSION['muffin_id']));
+	$this->render();
+    }
+
+    public function get($params)
+    {
+        // On récupère le login fourni dans l'url
+	$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"]');
+	$cpt->setOrder("date");
+	$cpt->setOrderSort("desc");
 	$cpt->loadFromDatabase();
 	$this->addData("notifications", $cpt);
 	Core::getBdd()->update (array("vu" => 1), 'c_notifications', array ("id_user" => $_SESSION['muffin_id']));

@@ -4,7 +4,11 @@
 	<li><p class="light">Aucune notification</p></li>
     {% else %}
 	{% for notif in notifications %}
-	    <li>{{ notif.message }}</li>
+	    {% if notif.vu %}
+		<li>{{ notif.message }}</li>
+	    {% else %}
+		<li class="notification-new"><span class="icon-info"></span> {{ notif.message }}</li>
+	    {% endif %}
 	{% endfor %}
     {% endif %}
 </ul>

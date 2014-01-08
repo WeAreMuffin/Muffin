@@ -137,12 +137,71 @@ class Echanges extends Controller
                 $i = array ("id_demande" => $_SESSION['muffin_id'],
                     "id_propose" => $login, "competence" => $competence);
                 $res = Core::getBdd ()->update (array("resume" => "accepte"), 'c_echanges', $i);
-		$this->notifier($_SESSION["login"]." a accepte votre aide sur le projet / la notion ".$c, $login);
+		$this->notifier($_SESSION["login"]." a accepté votre aide sur le projet / la notion ".$c, $login);
                 $render = "1";
             }
         }
         echo ($render);
     }
+
+    /**
+     * @PathInfo('user/competence')
+     */
+    public function bien($params)
+    {
+
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('user');
+        $render = "0";
+        $competence = $this->getUrlParam ('competence');
+        if ($login and $competence)
+	{
+	    $c = Moon::get('c_competences', 'id_competence', $competence);
+	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
+            $cpt = new Entities("c_echanges[id_propose=\"$login\"][competence=\"$competence\"][resume=\"accepte\"]");
+            if ($cpt)
+            {
+                $i = array ("id_demande" => $_SESSION['muffin_id'],
+                    "id_propose" => $login, "competence" => $competence);
+                $res = Core::getBdd ()->update (array("resume" => "bien"), 'c_echanges', $i);
+
+		/* This user doesn't need help anymore ! Mission complete ! :D */
+		$res = Core::getBdd ()->update (array("want_to_learn" => 0), 'c_user_competences',
+		    array("id_user" => $_SESSION['muffin_id'], "id_competence" => $competence));
+		$this->notifier($_SESSION["login"]." vous remercie de l'avoir aidé sur le projet / la notion ".$c, $login);
+                $render = "1";
+            }
+        }
+        echo ($render);
+    }
+
+    /**
+     * @PathInfo('user/competence')
+     */
+    public function pasbien($params)
+    {
+
+        // On récupère le login fourni dans l'url
+        $login = $this->getUrlParam ('user');
+        $render = "0";
+        $competence = $this->getUrlParam ('competence');
+        if ($login and $competence)
+	{
+	    $c = Moon::get('c_competences', 'id_competence', $competence);
+	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
+            $cpt = new Entities("c_echanges[id_propose=\"$login\"][competence=\"$competence\"][resume=\"accepte\"]");
+            if ($cpt)
+            {
+                $i = array ("id_demande" => $_SESSION['muffin_id'],
+                    "id_propose" => $login, "competence" => $competence);
+                $res = Core::getBdd ()->update (array("resume" => "i=pasbien"), 'c_echanges', $i);
+		$this->notifier($_SESSION["login"]." vous remercie de l'avoir aidé sur le projet / la notion ".$c, $login);
+                $render = "1";
+            }
+        }
+        echo ($render);
+    }
+
 
     protected function notifier($message, $id)
     {
