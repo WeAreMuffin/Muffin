@@ -274,13 +274,44 @@ var queryUserStatus = function()
 
 }
 
+var markLastNotificationAsRead = function()
+{
+	$.get("Notification/readLastNew", function(e)
+    {
+		if(e !== "0")
+			console.log("Notification lue.");
+		else
+			console.log("Aucune nouvelle notification a lire...");
+		window.intervalHandler = setInterval(notifications,5000);
+    });
+}
+
 var checkNotifications = function()
 {
     var n = $("#notif-aera");
-    $.get("Notification/getCount", function(e){
-	if(e !== "0")
-	    n.addClass("new");
-	n.html("<span class='icon-elipse'></span><span class='not-num'>" + e + "</span>");
+    $.get("Notification/getCount", function(e)
+    {
+		if(e !== "0")
+		{
+			n.addClass("new");
+    		$.get("Notification/getLastNew", function(k)
+    		{
+    		
+				window.clearInterval(window.intervalHandler);
+				var not = new Notify('Muffin', {
+					body: k,
+        			tag: k,
+					notifyClose: markLastNotificationAsRead,
+					notifyClick: markLastNotificationAsRead
+				});
+				if (not.needsPermission())
+				{
+				    not.requestPermission();
+				}
+				not.show();
+			});
+		}
+		n.html("<span class='icon-elipse'></span><span class='not-num'>" + e + "</span>");
     });
 }
 
@@ -289,13 +320,13 @@ var notifications = function()
     checkNotifications(); 
     var n = $("#notif-aera");
     n.click(function()
-	    {
+	{
 		$.get("Notification/get", function(e){
 		    $("#modal-notifications .modal-body")
 			.html(e);
 		    n.removeClass("new");
 		});
-	    });
+	});
 }
 
 var addClearItems = function()
@@ -304,14 +335,14 @@ var addClearItems = function()
      * On met les icones de supression, teach & learn
      */
     $('div[data-role="form-container"] fieldset').each(function() {
-	var fieldset = $(this);
-	var radioElt = fieldset.find(".radio input").first();
-	if (fieldset.find(".clear-all").length === 0)
-    {
-	fieldset.append("<a class='clear-all' data-items='"
-	    + radioElt.attr("name")
-	    + "'><span class='icon-multiply'></span></a>");
-    }
+		var fieldset = $(this);
+		var radioElt = fieldset.find(".radio input").first();
+		if (fieldset.find(".clear-all").length === 0)
+		{
+			fieldset.append("<a class='clear-all' data-items='"
+				+ radioElt.attr("name")
+				+ "'><span class='icon-multiply'></span></a>");
+		}
     });
 
     /**
@@ -319,23 +350,23 @@ var addClearItems = function()
      * pour supprimer le niveau
      */
     $("div[data-role='form-container'] form fieldset a.clear-all").click(function() {
-	var item = $(this);
-	var concerned = item.parent().find(".radio input[name='niveau']");
-	$.ajax({
-	    url: "User/deletecompetence",
-	    type: 'POST',
-	    data: {
-		id_competence: item.parent().parent().find("input[name='id_competence']").val(),
-	    comp: item.attr("data-items")
-	    }
-	}).done(function(data) {
-	    concerned.each(function() {
-		if ($(this).is(":checked"))
-	    {
-		$(this).removeAttr("checked");
-	    }
-	    });
-	});
+		var item = $(this);
+		var concerned = item.parent().find(".radio input[name='niveau']");
+		$.ajax({
+			url: "User/deletecompetence",
+			type: 'POST',
+			data: {
+			id_competence: item.parent().parent().find("input[name='id_competence']").val(),
+			comp: item.attr("data-items")
+			}
+		}).done(function(data) {
+			concerned.each(function() {
+				if ($(this).is(":checked"))
+				{
+					$(this).removeAttr("checked");
+				}
+			});
+		});
     });
 };
 
@@ -343,11 +374,11 @@ var treatResize = function()
 {
     if ($("div[data-role='container']").height() >= $(window).height())
     {
-	$(".footer-container").addClass("nofix");
+		$(".footer-container").addClass("nofix");
     }
     else
     {
-	$(".footer-container").removeClass("nofix");
+		$(".footer-container").removeClass("nofix");
     }
 };
 
@@ -399,10 +430,12 @@ var initFormComportement = function()
 var mainHeadLink = function()
 {
     $("header > h1.title").click(function()
-	    {
+	{
 		goToUrl("User/me");
-	    });
+	});
 }
+
+
 
 var reloadHandlers = function()
 {
@@ -416,22 +449,42 @@ var reloadHandlers = function()
     initializeHelpMenu();
     notifications();
     mainHeadLink();
+
+	window.clearInterval(window.intervalHandler);
+	window.intervalHandler = setInterval(notifications,5000);
+
     try
     {
-	queryUserStatus();
+		queryUserStatus();
     }
     catch(e)
     {
-	;
+		;
     }
-    $("[data-toggle='tooltip']").tooltip({container: "body", placement: "auto bottom"});
-    $('aside.side-menu > ul').affix({
-	offset: {
-	    top: 231
-	, bottom: function() {
-	    return (this.bottom = $('.footer-container').outerHeight(true));
+
+	var notInit = new Notify('Muffin', {
+		body: 'initialisation',
+        tag: 'initialisation'
+	});
+	if (notInit.needsPermission() || webkitNotifications.checkPermission())
+	{
+		webkitNotifications.requestPermission();
 	}
-	}
+
+    $("[data-toggle='tooltip']").tooltip(
+    {
+		container: "body",
+		placement: "auto bottom"
+    });
+
+    $('aside.side-menu > ul').affix(
+    {
+		offset: {
+			top: 231,
+			bottom: function() {
+				return (this.bottom = $('.footer-container').outerHeight(true));
+			}
+		}
     });
 };
 

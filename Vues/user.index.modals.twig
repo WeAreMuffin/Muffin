@@ -192,6 +192,10 @@
                     <label class='inline' for='c_public_uid'>Compétences publiques</label>
                     <input type="checkbox" id="c_public_uid" name="c_public_uid" {{check_public}}>
                 </form>
+                <hr>
+                <p>
+                <a class="btn" id="enableNotifications"></a>
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
@@ -225,11 +229,62 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script type="text/javascript">
+
+	function bSupNot()
+	{
+		if (window.webkitNotifications) {
+		  return true;
+		}
+		else {
+		  return false;
+		}
+	}
+
+	function check_permission() 
+	{
+  	  switch(window.webkitNotifications.checkPermission()) {
+        case 0:
+          // Continue
+          $("#enableNotifications").removeClass("warn").addClass("ok").html("<span class='icon-checkmark'></span> Notifications actives");
+          return true;
+          break;
+
+        case 2:
+          $("#enableNotifications").addClass("ask").html("Activer les notifications");
+        break;
+        
+        default:
+          $("#enableNotifications").addClass("warn").html("Notifications refusees");
+          return false;
+          break;
+      }
+    }
+
+	function request_permission()
+	{
+		// 0 means we have permission to display notifications
+		if (window.webkitNotifications.checkPermission() != 0) {
+			window.webkitNotifications.requestPermission(check_permission);
+		  }
+	}
+
     $("#search_comp_uid").keyup(function()
     {
         muffin.autoSearchUser($(this).val());
         console.log("keypress");
-    })
+    });
+
+	check_permission();
+    if (window.webkitNotifications.checkPermission() != 0 && bSupNot())
+    {
+    	$("#enableNotifications").html("Activer les notifications");
+    	$("#enableNotifications").click(function()
+    	{
+    		request_permission();
+    		console.log("permission requested...");
+    	});
+    }
+  
 </script>
 
 
