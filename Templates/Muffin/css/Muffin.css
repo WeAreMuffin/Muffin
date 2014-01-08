@@ -849,9 +849,11 @@ table {
     transform: rotate(360deg);
   }
 }
-#modal-new-comp-tags {
-  height: 30px !important;
+/*
+#modal-new-comp-tags{
+    height: 30px !important;
 }
+*/
 .ms-ctn {
   position: relative;
   height: 28px;
