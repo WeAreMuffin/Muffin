@@ -134,6 +134,11 @@ body {
     background: #D95B43;
 }
 
+header > h1.title
+{
+    cursor: pointer;
+}
+
 .title {
     color: #F7E4BE;
 }
@@ -787,12 +792,29 @@ p {
 }
 
 
+
 /* notifications dans les modales */
 ul#list-notification
 {
+    padding-left: 0px;
     li
     {
+	padding: 4px 0px;
+	color: rgba(0, 0, 0, 0.5);
 	display: block;
+
+	& > span[class^="icon-"]
+	{
+	    position: relative;
+	    left: -5px;
+	    color: rgba(0, 0, 0, 0.3);
+	}
+
+	&.notification-new
+	{
+	    font-weight: bold;
+	    color: rgba(0, 0, 0, 0.8);
+	}
 
 	&+li
 	{
@@ -1344,7 +1366,8 @@ ul[data-role="liste-competences"]
 		border-color: @muffin-forest;
 	    }
 
-	    &.attente
+	    &.attente,
+	    &.deja-aide
 	    {
 		background-color: transparent;
 		color: @muffin-red;
@@ -1358,6 +1381,11 @@ ul[data-role="liste-competences"]
 		    color: @muffin-red;
 		}
 
+	    }
+
+	    &.deja-aide
+	    {
+		border-color: transparent;
 	    }
         }
 

@@ -8929,6 +8929,9 @@ body {
 .footer-container {
   background: #D95B43;
 }
+header > h1.title {
+  cursor: pointer;
+}
 .title {
   color: #F7E4BE;
 }
@@ -9465,8 +9468,22 @@ p {
   top: -3px;
 }
 /* notifications dans les modales */
+ul#list-notification {
+  padding-left: 0px;
+}
 ul#list-notification li {
+  padding: 4px 0px;
+  color: rgba(0, 0, 0, 0.5);
   display: block;
+}
+ul#list-notification li > span[class^="icon-"] {
+  position: relative;
+  left: -5px;
+  color: rgba(0, 0, 0, 0.3);
+}
+ul#list-notification li.notification-new {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
 }
 ul#list-notification li + li {
   border-top: 1px solid rgba(50, 50, 50, 0.1);
@@ -9871,16 +9888,22 @@ ul[data-role="liste-competences"] li a.btn.accepter-aide {
   background-color: #699b3b;
   border-color: #699b3b;
 }
-ul[data-role="liste-competences"] li a.btn.attente {
+ul[data-role="liste-competences"] li a.btn.attente,
+ul[data-role="liste-competences"] li a.btn.deja-aide {
   background-color: transparent;
   color: #c02942;
   border: 1px solid #c02942;
   line-height: 20px;
 }
 ul[data-role="liste-competences"] li a.btn.attente:hover,
-ul[data-role="liste-competences"] li a.btn.attente:active {
+ul[data-role="liste-competences"] li a.btn.deja-aide:hover,
+ul[data-role="liste-competences"] li a.btn.attente:active,
+ul[data-role="liste-competences"] li a.btn.deja-aide:active {
   background-color: transparent;
   color: #c02942;
+}
+ul[data-role="liste-competences"] li a.btn.deja-aide {
+  border-color: transparent;
 }
 ul[data-role="liste-competences"] li p {
   margin: 2px;

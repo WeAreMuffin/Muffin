@@ -38,14 +38,9 @@ while (length--) {
 }
 }());
 
-function bindAjaxEvents()
+function goToUrl(url)
 {
-    $('[data-load-target]').each(function()
-	    {
-		var urlToGo = $(this).attr("data-load-target");
-		$(this).click(function()
-		    {
-			$.get(urlToGo,
+		$.get(url,
 			    function(data) {
 				data = $(data);
 				data.addClass("loading");
@@ -57,6 +52,17 @@ function bindAjaxEvents()
 				    reloadHandlers();
 				}, 200);
 			    });
+
+}
+
+function bindAjaxEvents()
+{
+    $('[data-load-target]').each(function()
+	    {
+		var urlToGo = $(this).attr("data-load-target");
+		$(this).click(function()
+		    {
+			goToUrl(urlToGo);
 		    });
 	    });
 }
@@ -236,6 +242,7 @@ var queryUserStatus = function()
 	    var ct = $(this);
 	    if (ct.hasClass("loading"))
 	    {
+			ct.removeClass("loading");
 			var login = $(this).attr("data-login");
 			$.ajax({
 			    url: "User/getstatus",
@@ -246,7 +253,6 @@ var queryUserStatus = function()
 			    {
 				$("[data-login='" + login + "']").each(function()
 				{
-				    ct.removeClass("loading");
 				    if (e.error == undefined)
 				    {
 					ct.attr("style", "");
@@ -390,6 +396,13 @@ var initFormComportement = function()
     });
 };
 
+var mainHeadLink = function()
+{
+    $("header > h1.title").click(function()
+	    {
+		goToUrl("User/me");
+	    });
+}
 
 var reloadHandlers = function()
 {
@@ -402,6 +415,7 @@ var reloadHandlers = function()
     initializePanelMenu();
     initializeHelpMenu();
     notifications();
+    mainHeadLink();
     try
     {
 	queryUserStatus();
