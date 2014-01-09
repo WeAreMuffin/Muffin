@@ -21,9 +21,9 @@
 			<li class="competence-tabbed" data-ct="{{ section }}">
 
 				{% if comp.resume == "accepte" %}
-				<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
+					<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
 				{% else %}
-				<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
+					<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
 				{% endif %}
 
 				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
@@ -31,23 +31,23 @@
 
 				{# Gestion des status en cours #}
 				{% if comp.id_propose == NULL %}
-				<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>
+					<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>
 				{% elseif comp.resume == "attente" %}
-				<a class="btn right attente" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-					En attente
-				</a>
+					<a class="btn right attente" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+						En attente
+					</a>
 				{% elseif comp.resume == "accepte" %}
-				<a class="btn right accepte" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-					A accepté votre aide
-				</a>
+					<a class="btn right accepte" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+						A accepté votre aide
+					</a>
 				{% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
-				<a class="btn right deja-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-					déja aidé
-				</a>
+					<a class="btn right deja-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+						déja aidé
+					</a>
 				{% endif %}
 
 				{# Gestion des postes #}
-				{% if comp.poste %}
+				{% if comp.poste and comp.poste != "" %}
 					<a class="right online" data-locate data-login="{{ comp.login }}">{{ comp.poste }}</a>
 				{% else %}
 					<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
@@ -115,7 +115,7 @@
 
 
 						{# Gestion des postes #}
-						{% if comp.poste %}
+						{% if comp.poste and comp.poste != "" %}
 							<a class="right online" data-locate data-login="{{ comp.login }}">{{ comp.poste }}</a>
 						{% else %}
 							<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
@@ -143,15 +143,15 @@
 			$("a.btn.proposer").click(function()
 			{
 				var btn = $(this);
-				btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+				btn.addClass("sleep");
 				$.get('{{ href("Echanges","proposer") }}/'
 					+ $(this).attr("data-user") +'/'
 					+ $(this).attr("data-competence"), function(d)
 					{
-						console.log("click");
+						btn.removeClass("sleep");
 						if(d == "1")
 						{
-							btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+							btn.addClass("attente").html(" En attente ");
 						}
 						else
 						{
@@ -163,11 +163,12 @@
 			$("a.btn.accepter-aide").click(function()
 			{
 				var btn = $(this);
+				btn.addClass("sleep");
 				$.get('{{ href("Echanges","accepter") }}/'
 					+ $(this).attr("data-user") +'/'
 					+ $(this).attr("data-competence"), function(d)
 					{
-						console.log("click");
+						btn.removeClass("sleep");
 						if(d == "1")
 						{
 							btn.after('<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="'
@@ -190,11 +191,13 @@
 			$("a.aide-nice").click(function()
 			{
 				var btn = $(this);
+				btn.addClass("sleep");
 				btn.html("...");
 				$.get('{{ href("Echanges","bien") }}/'
 					+ $(this).attr("data-user") +'/'
 					+ $(this).attr("data-competence"), function(d)
 					{
+						btn.removeClass("sleep");
 						btn.parent().html("Génial ! Bonne continuation !");
 						$(".tooltip").remove();
 					});
@@ -203,11 +206,13 @@
 			$("a.aide-not-nice").click(function()
 			{
 				var btn = $(this);
+				btn.addClass("sleep");
 				btn.html("...");
 				$.get('{{ href("Echanges","pasbien") }}/'
 					+ $(this).attr("data-user") +'/'
 					+ $(this).attr("data-competence"), function(d)
 					{
+						btn.removeClass("sleep");
 						btn.parent().html("Arf ! On va essayer de trouver quelqu'un d'autre !");
 						$(".tooltip").remove();
 					});

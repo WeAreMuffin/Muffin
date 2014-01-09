@@ -1244,46 +1244,46 @@ ul[data-role="liste-competences"]
         clear: both;
         list-style: none;
 
-	&.competence-summary
-	{
-	    padding-top: 5px;
-	    padding-left: 10px;
-	    font-size: 1.5em;
-	    border-bottom: 2px solid @muffin-orange;
-	}
+    	&.competence-summary
+    	{
+    	    padding-top: 5px;
+    	    padding-left: 10px;
+    	    font-size: 1.5em;
+    	    border-bottom: 2px solid @muffin-orange;
+    	}
 
-	&.competence-tabbed
-	{
-	    border-left: 3px solid rgba(0, 0, 0, 0.0);
-	    transition: all 0.3s;
-	    padding-left: 30px;
+    	&.competence-tabbed
+    	{
+    	    border-left: 3px solid rgba(0, 0, 0, 0.0);
+    	    transition: all 0.3s;
+    	    padding-left: 30px;
 
-	    &+li.competence-tabbed
-	    {
-		border-top: 1px solid rgba(0,0,0,0.1);
-	    }
+    	    &+li.competence-tabbed
+    	    {
+    		  border-top: 1px solid rgba(0,0,0,0.1);
+    	    }
 
-	    &:hover
-	    {
-		background-color: rgba(255, 255, 255, 0.05);
-		border-left: 3px solid @muffin-red;
+    	    &:hover
+    	    {
+        		background-color: rgba(255, 255, 255, 0.05);
+        		border-left: 3px solid @muffin-red;
 
-		.inside
-		{
-		    display: inline-block;
-		    visibility: visible;
-		}
-	    }
+        		.inside
+        		{
+        		    display: inline-block;
+        		    visibility: visible;
+        		}
+    	    }
 
-	    .inside
-	    {
-		color: rgba(0, 0, 0, 0.4);
-		font-size: 0.8em;
-		margin-left: 10px;
-		visibility: hidden;
-	    }
+    	    .inside
+    	    {
+        		color: rgba(0, 0, 0, 0.4);
+        		font-size: 0.8em;
+        		margin-left: 10px;
+        		visibility: hidden;
+    	    }
 
-	}
+    	}
 
         div.competence-icon
         {
@@ -1297,34 +1297,34 @@ ul[data-role="liste-competences"]
             width: auto;
         }
 
-	a.aide-nice,
-	a.aide-not-nice
-	{
-	    padding: 0px;
-	    padding-left: 15px;
-	    padding-right: 15px;
-	    height: 30px;
-	    width: 30px;
-	    display: inline-block;
-	    margin: 0px;
-	    text-align: center;
-	    cursor: pointer;
-	}
+    	a.aide-nice,
+    	a.aide-not-nice
+    	{
+    	    padding: 0px;
+    	    padding-left: 15px;
+    	    padding-right: 15px;
+    	    height: 30px;
+    	    width: 30px;
+    	    display: inline-block;
+    	    margin: 0px;
+    	    text-align: center;
+    	    cursor: pointer;
+    	}
 
-	a.aide-not-nice
-	{
-	    padding-left: 5px;
-	    padding-right: 5px;
-	    color: @muffin-orange-dark;
-	}
+    	a.aide-not-nice
+    	{
+    	    padding-left: 5px;
+    	    padding-right: 5px;
+    	    color: @muffin-orange-dark;
+    	}
 
 
-	a.aide-nice
-	{
-	    padding-left: 5px;
-	    padding-right: 5px;
-	    color: @muffin-forest;
-	}
+    	a.aide-nice
+    	{
+    	    padding-left: 5px;
+    	    padding-right: 5px;
+    	    color: @muffin-forest;
+    	}
 
         a.btn
         {
@@ -1336,6 +1336,12 @@ ul[data-role="liste-competences"]
             border-color: @muffin-red;
             text-transform: uppercase;
             font-weight: 900;
+
+            &.sleep
+            {
+                background-color: lighten(@muffin-red, 10%);
+                border-color: lighten(@muffin-red, 10%);
+            }
 
             &:hover
                 {
@@ -1356,40 +1362,40 @@ ul[data-role="liste-competences"]
             	line-height: 19px;
             	span[class^="icon-"]
             	{
-		    position: relative;
-		    top: 1px;
-		    left: -2px;
-		    padding-left: 5px;
-		}
+        		    position: relative;
+        		    top: 1px;
+        		    left: -2px;
+        		    padding-left: 5px;
+        		}
             }
 
-	    &.accepter-aide
-	    {
-		background-color: @muffin-forest;
-		border-color: @muffin-forest;
-	    }
+    	    &.accepter-aide
+    	    {
+        		background-color: @muffin-forest;
+        		border-color: @muffin-forest;
+    	    }
 
-	    &.attente,
-	    &.deja-aide
-	    {
-		background-color: transparent;
-		color: @muffin-red;
-		border: 1px solid @muffin-red;
-		line-height: 20px;	
+    	    &.attente,
+    	    &.deja-aide
+    	    {
+        		background-color: transparent;
+        		color: @muffin-red;
+        		border: 1px solid @muffin-red;
+        		line-height: 20px;	
 
-		&:hover,
-		&:active
-		{
-		    background-color: transparent;
-		    color: @muffin-red;
-		}
+        		&:hover,
+        		&:active
+        		{
+        		    background-color: transparent;
+        		    color: @muffin-red;
+        		}
 
-	    }
+    	    }
 
-	    &.deja-aide
-	    {
-		border-color: transparent;
-	    }
+    	    &.deja-aide
+    	    {
+    		  border-color: transparent;
+    	    }
         }
 
         p
