@@ -47,7 +47,7 @@ class Echanges extends Controller
                     INNER JOIN c_42_logins cl
                     ON u.login = cl.login_eleve
 		    LEFT JOIN c_echanges e
-		    ON e.id_demande = u.id AND e.competence = c.id_competence
+		    ON e.id_demande = u.id AND e.competence = c.id_competence AND (e.id_propose = :id or e.id_propose = NULL)
                 WHERE id_user != :id 
                     AND want_to_learn = 1 
                     AND c.nom_competence IN (
@@ -55,7 +55,7 @@ class Echanges extends Controller
                         FROM c_user_competences ucb 
                         INNER JOIN c_competences cb 
                         ON ucb.id_competence = cb.id_competence 
-                        WHERE id_user = :idu AND ucb.want_to_teach = 1 AND cb.expired = 0);
+                        WHERE id_user = :id AND ucb.want_to_teach = 1 AND cb.expired = 0);
             ";
         $q_2 = "  SELECT * 
                 FROM c_user_competences uc 
@@ -66,7 +66,7 @@ class Echanges extends Controller
                     INNER JOIN c_42_logins cl
                     ON u.login = cl.login_eleve
 		    LEFT JOIN c_echanges e
-		    ON e.id_propose = u.id AND e.competence = c.id_competence
+            ON e.id_propose = u.id AND e.competence = c.id_competence AND (e.id_demande = :id or e.id_demande = NULL)
                 WHERE id_user != :id 
                     AND want_to_teach = 1 
                     AND c.nom_competence IN (
