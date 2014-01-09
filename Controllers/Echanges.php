@@ -44,6 +44,8 @@ class Echanges extends Controller
                     ON uc.id_competence = c.id_competence 
                     INNER JOIN c_user u
                     ON uc.id_user = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
 		    LEFT JOIN c_echanges e
 		    ON e.id_demande = u.id AND e.competence = c.id_competence
                 WHERE id_user != :id 
@@ -61,6 +63,8 @@ class Echanges extends Controller
                     ON uc.id_competence = c.id_competence 
                     INNER JOIN c_user u
                     ON uc.id_user = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
 		    LEFT JOIN c_echanges e
 		    ON e.id_propose = u.id AND e.competence = c.id_competence
                 WHERE id_user != :id 

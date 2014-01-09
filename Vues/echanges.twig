@@ -1,107 +1,107 @@
 <ul class="horizontal-list" id="exchange-menu">
-    <li data-index-toggle="1" class="active"><a><span class="icon-aid"></span> <span class="side-legend">Aider</span></a></li>
-    <li data-index-toggle="2"><a><span class="icon-friends"></span> <span class="side-legend">Demander de l'aide</span></a></li>
+	<li data-index-toggle="1" class="active"><a><span class="icon-aid"></span> <span class="side-legend">Aider</span></a></li>
+	<li data-index-toggle="2"><a><span class="icon-friends"></span> <span class="side-legend">Demander de l'aide</span></a></li>
 </ul>
 
 <ul id="exchange-panel">
 
 	<li data-index="1"> <!-- Help the world ! -->
 		{% if users_to_help|length %}
-			<h1>Des gens ont besoin de vous :</h1>
-			{% set section = "" %}
-			<ul data-role="liste-competences">
+		<h1>Des gens ont besoin de vous :</h1>
+		{% set section = "" %}
+		<ul data-role="liste-competences">
 			{% for comp in users_to_help %}
-				{% if section != comp.nom_competence %}
-				    {% set section = comp.nom_competence %}
-				    <li class="competence-summary">
-					<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
-				    </li>
+			{% if section != comp.nom_competence %}
+			{% set section = comp.nom_competence %}
+			<li class="competence-summary">
+				<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+				<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+			</li>
+			{% endif %}
+			<li class="competence-tabbed" data-ct="{{ section }}">
+				{% if comp.resume == "accepte" %}
+				<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
+				{% else %}
+				<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
 				{% endif %}
-				<li class="competence-tabbed" data-ct="{{ section }}">
-				    {% if comp.resume == "accepte" %}
-					<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
-				    {% else %}
-					<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
-				    {% endif %}
 
-				    <a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
-				    <a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
-				    {% if comp.id_propose == NULL %}
-					<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>
-				    {% elseif comp.resume == "attente" %}
-					<a class="btn right attente" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-					    En attente
-					</a>
-				    {% elseif comp.resume == "accepte" %}
-					<a class="btn right accepte" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-					    A accepté votre aide
-					</a>
-				    {% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
-					<a class="btn right deja-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-					    déja aidé
-					</a>
-				    {% endif %}
-				    <a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
-				</li>
+				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
+				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+				{% if comp.id_propose == NULL %}
+				<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>
+				{% elseif comp.resume == "attente" %}
+				<a class="btn right attente" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+					En attente
+				</a>
+				{% elseif comp.resume == "accepte" %}
+				<a class="btn right accepte" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+					A accepté votre aide
+				</a>
+				{% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
+				<a class="btn right deja-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+					déja aidé
+				</a>
+				{% endif %}
+				<a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+			</li>
 			{% endfor %}
-			</ul>
+		</ul>
 			{# 
 			
 			@Todo : mettre les templates et les styles a jour pour les prohjets passes.
 			<div data-align="center"><a class="bbtn center" id="load-expired-help--button">Projets plus anciens</a></div>
 			
 			#}
-		{% else %}
+			{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune demande pour le moment...</h1>
-		{% endif %}
-	</li>
+			{% endif %}
+		</li>
 
-	<li data-index="2"> <!-- Need some help -->
-		{% if users_can_help|length %}
+		<li data-index="2"> <!-- Need some help -->
+			{% if users_can_help|length %}
 			{% if want_to_learn|length %}
-				<p class="intro">Competences / projets demandés :
+			<p class="intro">Competences / projets demandés :
 				{% for w in want_to_learn %}
 				<span> <span class="icon-{{w.c_competences.icone}}"></span> {{w.c_competences.nom_usuel|default(w.c_competences.nom_competence)}} </span>
 				{% endfor %}
-				</p>
+			</p>
 			{% endif %}
 			{% set section = "" %}
 			<ul data-role="liste-competences">
-			{% for comp in users_can_help %}
+				{% for comp in users_can_help %}
 				{% if section != comp.nom_competence %}
-				    {% set section = comp.nom_competence %}
-				    <li class="competence-summary">
+				{% set section = comp.nom_competence %}
+				<li class="competence-summary">
 					<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
 					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
-				    </li>
+				</li>
 				{% endif %}
 
 				<li class="competence-tabbed" data-ct="{{ section }}">
-		            <div class="competence-name"><p><b>{{ comp.login }}</b></p></div>
-		            {% if comp.id_propose == NULL %}
-		                <span class="side-legend"> peut vous aider</span>
-		            {% elseif comp.resume == "attente" %}
-				 veut vous aider
-		                <a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-		                    accepter
-		                </a>
-			     {% elseif comp.resume == "accepte" %}
-				ne devrait pas tarder !
-		                <a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-		                    <span class="icon-uniF7D9"></span>
-		                </a>
-		                <a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-		                    <span class="icon-uniF7E0"></span>
-		                </a>
-			     {% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
-				vous a déja aidé
-		            {% endif %}
-		            <a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
-		            <a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
-		            <a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
-		        </li>
-			{% endfor %}
+					<div class="competence-name"><p><b>{{ comp.login }}</b></p></div>
+					{% if comp.id_propose == NULL %}
+					<span class="side-legend"> peut vous aider</span>
+					{% elseif comp.resume == "attente" %}
+					veut vous aider
+					<a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+						accepter
+					</a>
+					{% elseif comp.resume == "accepte" %}
+					ne devrait pas tarder !
+					<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+						<span class="icon-uniF7D9"></span>
+					</a>
+					<a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+						<span class="icon-uniF7E0"></span>
+					</a>
+					{% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
+					vous a déja aidé
+					{% endif %}
+					<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
+					<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+					<a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+				</li>
+				{% endfor %}
 			</ul>
 			{# 
 			
@@ -109,89 +109,89 @@
 			<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
 			
 			#}
-		{% else %}
+			{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
-		{% endif %}
-	</li>
-</ul> <!-- End of exchange panel -->
+			{% endif %}
+		</li>
+	</ul> <!-- End of exchange panel -->
 
 	<script>
-	var echangeRefresh = function()
-	{
-	
-		$("a.btn.proposer").click(function()
+		var echangeRefresh = function()
 		{
-			var btn = $(this);
-			btn.html("<span class='icon-multiply'></span> Ne plus proposer");
-			$.get('{{ href("Echanges","proposer") }}/'
-				+ $(this).attr("data-user") +'/'
-				+ $(this).attr("data-competence"), function(d)
-				{
-					console.log("click");
-					if(d == "1")
+			
+			$("a.btn.proposer").click(function()
+			{
+				var btn = $(this);
+				btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+				$.get('{{ href("Echanges","proposer") }}/'
+					+ $(this).attr("data-user") +'/'
+					+ $(this).attr("data-competence"), function(d)
 					{
-						btn.html("<span class='icon-multiply'></span> Ne plus proposer");
-					}
-					else
-					{
-						btn.html("<span class='icon-warning'></span> Erreur");
-					}
-				});
-		});
+						console.log("click");
+						if(d == "1")
+						{
+							btn.html("<span class='icon-multiply'></span> Ne plus proposer");
+						}
+						else
+						{
+							btn.html("<span class='icon-warning'></span> Erreur");
+						}
+					});
+			});
 
-		$("a.btn.accepter-aide").click(function()
-		{
-			var btn = $(this);
-			$.get('{{ href("Echanges","accepter") }}/'
-				+ $(this).attr("data-user") +'/'
-				+ $(this).attr("data-competence"), function(d)
-				{
-					console.log("click");
-					if(d == "1")
+			$("a.btn.accepter-aide").click(function()
+			{
+				var btn = $(this);
+				$.get('{{ href("Echanges","accepter") }}/'
+					+ $(this).attr("data-user") +'/'
+					+ $(this).attr("data-competence"), function(d)
 					{
-						btn.after('<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="'
-							+ btn.attr("data-competence") + '" data-user="'
-							+ btn.attr("data-user") + '"><span class="icon-uniF7D9"></span></a>'
-						+'<a data-toggle="tooltip" title="C\'est toujours un peu flou !" class="aide-not-nice" data-competence="'
-							+ btn.attr("data-competence") + '" data-user="'
-							+ btn.attr("data-user") + '"><span class="icon-uniF7E0"></span></a>');
-						btn.remove();
-						echangeRefresh();
-					}
-					else
-					{
-						btn.html("<span class='icon-warning'></span> Erreur");
-					}
-				});
-		});
+						console.log("click");
+						if(d == "1")
+						{
+							btn.after('<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="'
+								+ btn.attr("data-competence") + '" data-user="'
+								+ btn.attr("data-user") + '"><span class="icon-uniF7D9"></span></a>'
+								+'<a data-toggle="tooltip" title="C\'est toujours un peu flou !" class="aide-not-nice" data-competence="'
+								+ btn.attr("data-competence") + '" data-user="'
+								+ btn.attr("data-user") + '"><span class="icon-uniF7E0"></span></a>');
+							btn.remove();
+							echangeRefresh();
+						}
+						else
+						{
+							btn.html("<span class='icon-warning'></span> Erreur");
+						}
+					});
+			});
 
 
-		$("a.aide-nice").click(function()
-		{
-			var btn = $(this);
-			btn.html("...");
-			$.get('{{ href("Echanges","bien") }}/'
-				+ $(this).attr("data-user") +'/'
-				+ $(this).attr("data-competence"), function(d)
-				{
+			$("a.aide-nice").click(function()
+			{
+				var btn = $(this);
+				btn.html("...");
+				$.get('{{ href("Echanges","bien") }}/'
+					+ $(this).attr("data-user") +'/'
+					+ $(this).attr("data-competence"), function(d)
+					{
 						btn.parent().html("Génial ! Bonne continuation !");
 						$(".tooltip").remove();
-				});
-		});
+					});
+			});
 
-		$("a.aide-not-nice").click(function()
-		{
-			var btn = $(this);
-			btn.html("...");
-			$.get('{{ href("Echanges","pasbien") }}/'
-				+ $(this).attr("data-user") +'/'
-				+ $(this).attr("data-competence"), function(d)
-				{
+			$("a.aide-not-nice").click(function()
+			{
+				var btn = $(this);
+				btn.html("...");
+				$.get('{{ href("Echanges","pasbien") }}/'
+					+ $(this).attr("data-user") +'/'
+					+ $(this).attr("data-competence"), function(d)
+					{
 						btn.parent().html("Arf ! On va essayer de trouver quelqu'un d'autre !");
 						$(".tooltip").remove();
-				});
-		});
-	}
-	echangeRefresh();
+					});
+			});
+		}
+		echangeRefresh();
 
 	</script>
