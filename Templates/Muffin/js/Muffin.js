@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-01-08
+   mNymdhy          shddmy hNd       Sorti du four le 2014-01-09
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -4362,7 +4362,7 @@ var initializeHelpMenu = function()
 		    {
 			$("#exchange-panel li[data-index='2'] ul[data-role='liste-competences']").append(e);
 			b.hide();
-			queryUserStatus();
+			/* queryUserStatus(); */
 		    });
 	    });
     $("#load-expired-help--button").click(function()
@@ -4373,7 +4373,7 @@ var initializeHelpMenu = function()
 		    {
 			$("#exchange-panel li[data-index='1'] ul[data-role='liste-competences']").append(e);
 			b.hide();
-			queryUserStatus();
+			/* queryUserStatus(); */
 		    });
 	    });
 };
@@ -4426,7 +4426,7 @@ var markLastNotificationAsRead = function()
 			console.log("Notification lue.");
 		else
 			console.log("Aucune nouvelle notification a lire...");
-		window.intervalHandler = setInterval(notifications,5000);
+		window.intervalHandler = setInterval(notifications,10000);
     });
 }
 
@@ -4605,15 +4605,6 @@ var reloadHandlers = function()
     {
 		;
     }
-
-	var notInit = new Notify('Muffin', {
-		body: 'initialisation',
-        tag: 'initialisation'
-	});
-	if (notInit.needsPermission() || webkitNotifications.checkPermission())
-	{
-		webkitNotifications.requestPermission();
-	}
 
     $("[data-toggle='tooltip']").tooltip(
     {

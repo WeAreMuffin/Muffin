@@ -19,6 +19,7 @@
 			</li>
 			{% endif %}
 			<li class="competence-tabbed" data-ct="{{ section }}">
+
 				{% if comp.resume == "accepte" %}
 				<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
 				{% else %}
@@ -27,6 +28,8 @@
 
 				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+
+				{# Gestion des status en cours #}
 				{% if comp.id_propose == NULL %}
 				<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>
 				{% elseif comp.resume == "attente" %}
@@ -42,10 +45,17 @@
 					déja aidé
 				</a>
 				{% endif %}
-				<a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+
+				{# Gestion des postes #}
+				{% if comp.poste %}
+					<a class="right online" data-locate data-login="{{ comp.login }}">{{ comp.poste }}</a>
+				{% else %}
+					<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+				{% endif %}
 			</li>
 			{% endfor %}
 		</ul>
+
 			{# 
 			
 			@Todo : mettre les templates et les styles a jour pour les prohjets passes.
@@ -59,58 +69,69 @@
 
 		<li data-index="2"> <!-- Need some help -->
 			{% if users_can_help|length %}
-			{% if want_to_learn|length %}
-			<p class="intro">Competences / projets demandés :
-				{% for w in want_to_learn %}
-				<span> <span class="icon-{{w.c_competences.icone}}"></span> {{w.c_competences.nom_usuel|default(w.c_competences.nom_competence)}} </span>
-				{% endfor %}
-			</p>
-			{% endif %}
-			{% set section = "" %}
-			<ul data-role="liste-competences">
-				{% for comp in users_can_help %}
-				{% if section != comp.nom_competence %}
-				{% set section = comp.nom_competence %}
-				<li class="competence-summary">
-					<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-					<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
-				</li>
+				{% if want_to_learn|length %}
+				<p class="intro">Competences / projets demandés :
+					{% for w in want_to_learn %}
+					<span> <span class="icon-{{w.c_competences.icone}}"></span> {{w.c_competences.nom_usuel|default(w.c_competences.nom_competence)}} </span>
+					{% endfor %}
+				</p>
 				{% endif %}
-
-				<li class="competence-tabbed" data-ct="{{ section }}">
-					<div class="competence-name"><p><b>{{ comp.login }}</b></p></div>
-					{% if comp.id_propose == NULL %}
-					<span class="side-legend"> peut vous aider</span>
-					{% elseif comp.resume == "attente" %}
-					veut vous aider
-					<a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-						accepter
-					</a>
-					{% elseif comp.resume == "accepte" %}
-					ne devrait pas tarder !
-					<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-						<span class="icon-uniF7D9"></span>
-					</a>
-					<a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
-						<span class="icon-uniF7E0"></span>
-					</a>
-					{% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
-					vous a déja aidé
+				{% set section = "" %}
+				<ul data-role="liste-competences">
+					{% for comp in users_can_help %}
+					{% if section != comp.nom_competence %}
+					{% set section = comp.nom_competence %}
+					<li class="competence-summary">
+						<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+						<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+					</li>
 					{% endif %}
-					<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
-					<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
-					<a class="right offline loading" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
-				</li>
-				{% endfor %}
-			</ul>
-			{# 
-			
-			@Todo : mettre les templates et les styles a jour pour les prohjets passes. 
-			<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
-			
-			#}
+
+					<li class="competence-tabbed" data-ct="{{ section }}">
+						<div class="competence-name"><p><b>{{ comp.login }}</b></p></div>
+
+						{# Gestion des status en cours #}
+						{% if comp.id_propose == NULL %}
+							<span class="side-legend"> peut vous aider</span>
+						{% elseif comp.resume == "attente" %}
+							veut vous aider
+							<a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+								accepter
+							</a>
+						{% elseif comp.resume == "accepte" %}
+							ne devrait pas tarder !
+							<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+								<span class="icon-uniF7D9"></span>
+							</a>
+							<a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+								<span class="icon-uniF7E0"></span>
+							</a>
+						{% elseif comp.resume == "bien" or comp.resume == "pasbien" %}
+							vous a déja aidé
+						{% endif %}
+
+						<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
+						<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+
+
+						{# Gestion des postes #}
+						{% if comp.poste %}
+							<a class="right online" data-locate data-login="{{ comp.login }}">{{ comp.poste }}</a>
+						{% else %}
+							<a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+						{% endif %}
+
+					</li>
+					{% endfor %}
+				</ul>
+				{# 
+				
+				@Todo : mettre les templates et les styles a jour pour les prohjets passes. 
+				<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
+				
+				#}
 			{% else %}
-			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
+				<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
 			{% endif %}
 		</li>
 	</ul> <!-- End of exchange panel -->
@@ -118,7 +139,7 @@
 	<script>
 		var echangeRefresh = function()
 		{
-			
+
 			$("a.btn.proposer").click(function()
 			{
 				var btn = $(this);

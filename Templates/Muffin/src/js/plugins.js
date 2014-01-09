@@ -218,7 +218,7 @@ var initializeHelpMenu = function()
 		    {
 			$("#exchange-panel li[data-index='2'] ul[data-role='liste-competences']").append(e);
 			b.hide();
-			queryUserStatus();
+			/* queryUserStatus(); */
 		    });
 	    });
     $("#load-expired-help--button").click(function()
@@ -229,7 +229,7 @@ var initializeHelpMenu = function()
 		    {
 			$("#exchange-panel li[data-index='1'] ul[data-role='liste-competences']").append(e);
 			b.hide();
-			queryUserStatus();
+			/* queryUserStatus(); */
 		    });
 	    });
 };
@@ -282,7 +282,7 @@ var markLastNotificationAsRead = function()
 			console.log("Notification lue.");
 		else
 			console.log("Aucune nouvelle notification a lire...");
-		window.intervalHandler = setInterval(notifications,5000);
+		window.intervalHandler = setInterval(notifications,10000);
     });
 }
 
@@ -461,15 +461,6 @@ var reloadHandlers = function()
     {
 		;
     }
-
-	var notInit = new Notify('Muffin', {
-		body: 'initialisation',
-        tag: 'initialisation'
-	});
-	if (notInit.needsPermission() || webkitNotifications.checkPermission())
-	{
-		webkitNotifications.requestPermission();
-	}
 
     $("[data-toggle='tooltip']").tooltip(
     {
