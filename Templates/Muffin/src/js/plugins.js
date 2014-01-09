@@ -479,23 +479,22 @@ return false;
  	  |                           CHARTS SPECIFIC FUNCTIONS                               |
  	   ----------------------------------------------------------------------------------- */
 
+var prepareLegend = function(leg, gdata)
+{
+	leg.html("");
+	for (var i = 0; i < gdata.length; i++)
+	{
+		leg.append(
+			'<p><span style="color: ' 
+				+ gdata[i].color + ';" class="icon-uniF52F"></span> <b>' 
+				+ gdata[i].value + ' </b> ' + gdata[i].legend + '</p>');
+	};
+};
+
 var drawCharts = function(data)
 {
 	var gdata = data;
 
-	var prepareLegend = function()
-	{
-		var leg = $(".stats-inscrits-legend");
-		leg.html("");
-		console.log("after");
-		for (var i = 0; i < gdata.length; i++)
-		{
-			leg.append(
-				'<p><span style="color: ' 
-					+ gdata[i].color + ';" class="icon-uniF52F"></span> <b>' 
-					+ gdata[i].value + '</b> ' + gdata[i].legend + '</p>');
-		};
-	};
 
 	var showLegend = function()
 	{
@@ -503,7 +502,7 @@ var drawCharts = function(data)
 		leg.addClass("complete").removeClass("loading");
 	};
 
-	prepareLegend();
+	prepareLegend($(".stats-inscrits-legend"), gdata);
 	var ctx = $("#chart-inscrits").get(0).getContext("2d");
 	
 	new Chart(ctx).Doughnut(data,
