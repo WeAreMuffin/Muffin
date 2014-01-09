@@ -34,85 +34,85 @@ class Notification extends Controller
      */
     public function index ($params)
     {
-		echo "0";
-		return (false);
+    	echo "0";
+    	return (false);
     }
 
     public function getCount($params)
     {
     	if (isset ($_SESSION['login']))
     	{
-			$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
-			echo (count($cpt));
-		}
-		else
-			echo "0";
+    		$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
+    		echo (count($cpt));
+    	}
+    	else
+    		echo "0";
     }
 
     public function readLastNew($params)
     {
     	if (isset ($_SESSION['login']))
     	{
-			$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
-			if ($cpt)
-			{
-				Core::getBdd()->update (array("vu" => 1), 'c_notifications',
-					array ("id_notification" => $cpt->current()->id_notification));
-				echo "1";
-			}
-			else
-				echo "0";
-		}
-		else
-			echo "0";
+    		$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
+    		if ($cpt)
+    		{
+    			Core::getBdd()->update (array("vu" => 1), 'c_notifications',
+    				array ("id_notification" => $cpt->current()->id_notification));
+    			echo "1";
+    		}
+    		else
+    			echo "0";
+    	}
+    	else
+    		echo "0";
     }
 
     public function getLastNew($params)
     {
     	if (isset ($_SESSION['login']))
     	{
-			$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
-			if ($cpt)
-			{
-				echo ($cpt->current()->message);
-			}
-			else
-			{
-				echo "Pas de nouvelle notification.";
-			}
-		}
-		else
-			echo "0";
+    		$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
+    		if ($cpt)
+    		{
+    			echo ($cpt->current()->message);
+    		}
+    		else
+    		{
+    			echo "Pas de nouvelle notification.";
+    		}
+    	}
+    	else
+    		echo "0";
     }
 
     public function getNew($params)
     {
     	if (isset ($_SESSION['login']))
     	{
-			$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
-			$cpt->loadFromDatabase();
-			$this->addData("notifications", $cpt);
-			Core::getBdd()->update (array("vu" => 1), 'c_notifications', array ("id_user" => $_SESSION['muffin_id']));
-			$this->render();
-		}
-		else
-			echo "0";
+    		$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"][vu=0]');
+    		$cpt->loadFromDatabase();
+    		$this->addData("notifications", $cpt);
+    		Core::getBdd()->update (array("vu" => 1), 'c_notifications', array ("id_user" => $_SESSION['muffin_id']));
+    		$this->render();
+    	}
+    	else
+    		echo "0";
     }
 
     public function get($params)
     {
     	if (isset ($_SESSION['login']))
     	{
-			$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"]');
-			$cpt->setOrder("date");
-			$cpt->setOrderSort("desc");
-			$cpt->loadFromDatabase();
-			$this->addData("notifications", $cpt);
-			Core::getBdd()->update (array("vu" => 1), 'c_notifications', array ("id_user" => $_SESSION['muffin_id']));
-			$this->render();
-		}
-		else
-			echo "0";
+    		$cpt = new Entities('c_notifications[id_user="'.$_SESSION["muffin_id"].'"]');
+    		$cpt->setOrder("date");
+    		$cpt->setOrderSort("desc");
+    		$cpt->loadFromDatabase();
+    		$this->addData("notifications", $cpt);
+    		Core::getBdd()->update (array("vu" => 1), 'c_notifications', array ("id_user" => $_SESSION['muffin_id']));
+    		$this->render();
+    	}
+    	else
+    		echo "0";
     }
 
     /*   =======================================================================
@@ -122,7 +122,7 @@ class Notification extends Controller
 
     public function grantAccess ()
     {
-        return true;
+    	return true;
     }
 }
 
