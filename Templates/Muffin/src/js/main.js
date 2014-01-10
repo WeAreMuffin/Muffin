@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 lambda2.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +18,12 @@ $(document).ready(function()
 {
 	initalizeForm();
 	reloadHandlers();
-	$.bind("ajaxComplete", function() {
+	/*$.bind("ajaxComplete", function() {
 		reloadHandlers();
-	});
+	});*/
 
+	window.clearInterval(window.intervalHandler);
+	window.intervalHandler = setInterval(notifications,5000);
 	/**
 	 * Json calls to Github Api
 	 * @type @exp;$@call;getJSON
