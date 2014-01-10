@@ -9,26 +9,21 @@
 <script>
 
         window.toCheck = [{{ checkedRadios }}];
-    </script>
-    <script>
+        $(".footer-container").addClass("nofix");
+        NProgress.start();
 
-        $(document).ready(function()
-        {
-            $(".footer-container").addClass("nofix");
-            NProgress.start();
-
-            $("[data-submit]").each(function() {
-                $(this).click(function() {
-                    $('#' + $(this).attr("data-submit")).trigger('submit');
-                });
+        $("[data-submit]").each(function() {
+            $(this).click(function() {
+                $('#' + $(this).attr("data-submit")).trigger('submit');
             });
-            $('li[data-index]').hide();
-            $('li[data-index="1"]').show();
-            initalizeForm();
-            initalizeAddForm();
-            addCheckHandler(window.toCheck);
-            NProgress.done();
-            treatResize();
-
         });
+        $('li[data-index]').hide();
+        $('li[data-index="1"]').show();
+        initializePanelMenu();
+        initalizeForm();
+        initalizeAddForm();
+        addCheckHandler(window.toCheck);
+        NProgress.done();
+        treatResize();
+        console.log("ouh !");
     </script>
