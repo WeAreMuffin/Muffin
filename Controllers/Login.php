@@ -45,19 +45,24 @@ class Login extends Controller
     public function register ($params = array ())
     {
         // Si à true, alors aucun mail ne sera envoyé.
-        $fakeMail = true;
+        $fakeMail = true; 
 
         // On récupère le login fourni dans l'url
         $login = $this->getUrlParam ('login');
+        $type = "student";
+
+        // Liste des élèves 42 avec ce login
+        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
 
         // On génère le mot de passe
         $pass = $this->generatePassPhrase ();
 
+        if ($student->current() && $student->current()->type == "staff")
+        {
+            $type = "staff";
+        }
         // Le hash qui sera dans la bdd
         $shapass = sha1 (trim (strtolower ($pass)));
-
-        // Liste des élèves 42 avec ce login
-        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
 
         // Liste des élèves inscrits avec le même login
         $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
@@ -69,7 +74,11 @@ class Login extends Controller
             echo "-2";
         else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
         {
-			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass));
+            if ($type == "staff")
+                $m = "\&m\=".urlencode($student->current()->mail);
+            else
+                $m = "";
+			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass).$m);
             /*
             // Si on arrive à envoyer le mail, alors on affiche 1
             if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
