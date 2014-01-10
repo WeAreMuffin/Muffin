@@ -115,6 +115,7 @@ class Login extends Controller
         // Liste des élèves inscrits avec le même login
         $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
 
+        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
 
         if ($student->current() && $student->current()->type == "staff")
         {
