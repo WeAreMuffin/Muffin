@@ -67,9 +67,6 @@ class Login extends Controller
         // Liste des élèves inscrits avec le même login
         $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
 
-        // On récupère le template du message
-        $m = $this->getInscriptionEmailTemplate ($login, $pass);
-
         if ( !count ($student) )
             echo "-2";
         else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
@@ -107,6 +104,7 @@ class Login extends Controller
 
         // On récupère le login fourni dans l'url
         $login = $this->getUrlParam ('login');
+        $type = "student";
 
         // On génère le mot de passe
         $pass = $this->generatePassPhrase ();
@@ -117,13 +115,20 @@ class Login extends Controller
         // Liste des élèves inscrits avec le même login
         $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
 
-        // On récupère le template du message
-        $m = $this->getUpdateEmailTemplate ($login, $pass);
+
+        if ($student->current() && $student->current()->type == "staff")
+        {
+            $type = "staff";
+        }
 
         if ( count ($loginsExists) and Core::getBdd ()->update (
                         array ("pass" => $shapass), 'c_user', array ("login" => $login)) )
         {
-			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass));
+            if ($type == "staff")
+                $m = "\&m\=".urlencode($student->current()->mail);
+            else
+                $m = "";
+            shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass).$m);
             /*
             // Si on arrive à envoyer le mail, alors on affiche 1
             if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
