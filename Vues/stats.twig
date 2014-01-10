@@ -9,25 +9,33 @@
 		<div class="stats-inscrits-legend loading">
 		</div>
 	</div>
+	<div class="stats-container">
+		<h3>Fréquentation</h3>
+		<div class="stats-inscrits-graph">
+			<canvas id="chart-inscrits" width="200" height="200"></canvas>
+		</div>
+		<div class="stats-inscrits-legend loading">
+		</div>
+	</div>
 </div>
 
 <script>
 var data = [
-		{
-			value: {{ actif }},
-			color:"#C02942",
-			legend: "Cadets actifs"
-		},
-		{
-			value: {{ inactif }},
-			color : "#9E4838",
-			legend: "Cadets inactifs"
-		},
-		{
-			value: {{ noninscrit }},
-			color : "#D95B43",
-			legend: "Cadets non inscrits"
-		}
-	];
-drawCharts(data);
+	{
+		value: {{ actif }},
+		color:"#C02942",
+		legend: "Cadets actifs"
+	},
+	{
+		value: {{ inactif }},
+		color : "#9E4838",
+		legend: "Cadets inactifs"
+	},
+	{
+		value: {{ noninscrit }},
+		color : "#D95B43",
+		legend: "Cadets non inscrits"
+	}
+];
+Muffin.charts.drawCharts(data);
 </script>
