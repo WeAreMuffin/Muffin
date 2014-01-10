@@ -2,25 +2,46 @@
 <div class="stats-charts">
 
 	<div class="stats-container">
-		<h3>Fréquentation</h3>
+		<h3><span class="icon-uniF497"></span> Cadets les plus actifs</h3>
+		<div class="stats-top-users-graph">
+			<canvas id="chart-top-users" width="800" height="150"></canvas>
+		</div>
+		<div class="stats-top-users-legend loading">
+			{{ dump(top_ten) }}
+		</div>
+	</div>
+
+	<div class="stats-container">
+		<h3><span class="icon-intersection"></span> Fréquentation du site</h3>
 		<div class="stats-inscrits-graph">
 			<canvas id="chart-inscrits" width="200" height="200"></canvas>
 		</div>
 		<div class="stats-inscrits-legend loading">
 		</div>
 	</div>
+
 	<div class="stats-container">
-		<h3>Fréquentation</h3>
-		<div class="stats-inscrits-graph">
-			<canvas id="chart-inscrits" width="200" height="200"></canvas>
-		</div>
-		<div class="stats-inscrits-legend loading">
+		<h3>Ou plus simplement...</h3>
+		<div class="stats-big-number loading">
+			<h1>{{ ((insc * 100)/all)|number_format(2, '.') }} %</h1>
+			<p>Des cadets sont inscrits</p>
 		</div>
 	</div>
 </div>
 
 <script>
-var data = [
+var dataTT = {
+	labels : {{ top_ten_logins }},
+	datasets : [
+		{
+			fillColor : "#D95B43",
+			strokeColor : "#C02942",
+			data : {{ top_ten_data }}
+		}
+	]
+}
+
+var dataInscrits = [
 	{
 		value: {{ actif }},
 		color:"#C02942",
@@ -37,5 +58,8 @@ var data = [
 		legend: "Cadets non inscrits"
 	}
 ];
-Muffin.charts.drawCharts(data);
+
+Muffin.charts.drawTopTen(dataTT, {{ top_ten_max }});
+Muffin.charts.drawInscrits(dataInscrits);
+
 </script>
