@@ -1,17 +1,20 @@
-![logo](http://www.lambdaweb.fr/muffin/muffin-logo.png)
+![logo](http://www.lambdaweb.fr/muffin/muffin.png)
 
 Muffin
 =========================
 
 Un petit site web pour **partager** son **savoir** faire et **recueillir** les **compétences** de chacun.
 
-
 1. Prérequis
 -----------
 
-- **PHP 5.5**
-- **MySql > 15.x** ou **MariaDB > 5.x**
-- Module **Apache-APC**
+- PHP 5.5
+- MySql > 15.x ou MariaDB > 5.x
+- Module Apache-APC
+
+`sudo yum install httpd php mariadb php-apc` pour Fedora.
+
+> Pour Ubuntu / Debian based, les packages devraient sensiblement etre les memes, remplacer `yum` par `apt-get`.
 
 2. Installation
 --------------
