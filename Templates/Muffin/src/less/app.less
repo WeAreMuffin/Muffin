@@ -1434,9 +1434,36 @@ a.btn.ask
     ------------------------------------------------------------------------
 */
 
+h1.title-remain,
+.stats-charts h1.title-remain
+{
+    color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 1.5em;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.stats-charts
+{
+    text-align: center;
+}
+
 .stats-container
 {
     display: inline-block;
+}
+
+.stats-container-full
+{
+    display: block;
+    width: 100%;
+}
+
+.stats-container,
+.stats-container-full
+{
     vertical-align: top;
     text-align: center;
     transition: all 0.4s;
@@ -1452,6 +1479,56 @@ a.btn.ask
     canvas
     {
         max-width: 100% !important;
+    }
+}
+
+.icone-compute
+{
+    margin: 0px;
+    padding: 0px 2px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+
+    b
+    {
+        position: relative;
+        bottom: -3px;
+    }
+}
+
+.stats-best-podium
+{
+    display: inline-block;
+    max-width: 32%;
+    vertical-align: top;
+
+    h1 span[class^="icon-"]
+    {
+        font-size: 2.5em;
+        color: @muffin-red;
+    }
+    blockquote
+    {
+        font-style: italic;
+        font-size: 0.8em;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        color: rgba(0, 0, 0, 0.4);
+        min-height: 60px;
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
+        padding: 15px;
+        .cite-author
+        {
+            font-style: normal;
+            padding: 0px;
+            text-align: right;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 1em;
+            display: block;
+            vertical-align: bottom;
+        }
     }
 }
 
