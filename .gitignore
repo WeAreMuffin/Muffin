@@ -8,3 +8,5 @@ Config/*
 *.*~
 *.swp
 *.*~
+*.swo
+.*.swo
