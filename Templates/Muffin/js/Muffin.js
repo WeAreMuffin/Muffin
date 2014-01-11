@@ -4172,10 +4172,12 @@ $(document).ready(function()
 {
 	initalizeForm();
 	reloadHandlers();
-	$.bind("ajaxComplete", function() {
+	/*$.bind("ajaxComplete", function() {
 		reloadHandlers();
-	});
+	});*/
 
+	window.clearInterval(window.intervalHandler);
+	window.intervalHandler = setInterval(notifications,5000);
 	/**
 	 * Json calls to Github Api
 	 * @type @exp;$@call;getJSON
@@ -4234,11 +4236,9 @@ function goToUrl(url)
 			data.addClass("loading");
 			$("div[data-role='form-container']").children().slideUp();
 			$("div[data-role='form-container']").html(data);
-			setTimeout(function() {
-				NProgress.done();
-				data.addClass("complete");
-				reloadHandlers();
-			}, 200);
+			NProgress.done();
+			data.addClass("complete");
+			//reloadHandlers();
 		});
 
 }
@@ -4272,7 +4272,7 @@ function addCheckHandler(toCheck)
 }
 Muffin.addCheckHandler = addCheckHandler;
 
-// pre-submit callback 
+// pre-submit callback
 function showRequest(formData, jqForm, options) {
 	NProgress.start();
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Enregistrement...");
@@ -4280,7 +4280,7 @@ function showRequest(formData, jqForm, options) {
     return true;
 }
 
-// post-submit callback 
+// post-submit callback
 function showResponse(responseText, statusText, xhr, $form) {
 	NProgress.done();
 	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Enregistré.");
@@ -4288,20 +4288,17 @@ function showResponse(responseText, statusText, xhr, $form) {
 
 var initalizeForm = function() {
 	window.ioptions = {
-		target: '#form-result', // target element(s) to be updated with server response 
-		beforeSubmit: showRequest, // pre-submit callback 
-		success: showResponse, // post-submit callback 
+		target: '#form-result', // target element(s) to be updated with server response
+		beforeSubmit: showRequest, // pre-submit callback
+		success: showResponse, // post-submit callback
 		url: "User/updatecompetence",
-		type: "post"       // 'get' or 'post', override for form's 'method' attribute 
+		type: "post"       // 'get' or 'post', override for form's 'method' attribute
 	};
 
 	$('div[data-role="form-container"] form').submit(function() {
-		// inside event callbacks 'this' is the DOM element so we first 
-		// wrap it in a jQuery object and then invoke ajaxSubmit 
+		// inside event callbacks 'this' is the DOM element so we first
+		// wrap it in a jQuery object and then invoke ajaxSubmit
 		$(this).ajaxSubmit(window.ioptions);
-
-		// !!! Important !!! 
-		// always return false to prevent standard browser submit and page navigation 
 		return false;
 	});
 	addClearItems();
@@ -4309,7 +4306,7 @@ var initalizeForm = function() {
 };
 Muffin.initalizeForm = initalizeForm;
 
-// pre-submit callback 
+// pre-submit callback
 function showAddRequest(formData, jqForm, options) {
 	NProgress.start();
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Ajout...");
@@ -4318,7 +4315,7 @@ function showAddRequest(formData, jqForm, options) {
     return true;
 }
 
-// post-submit callback 
+// post-submit callback
 function showAddResponse(responseText, statusText, xhr, $form) {
 	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Ajouté.");
 	$("#input-nom-comp + button").html("<span class='icon-chevron-right'></span>");
@@ -4340,33 +4337,31 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 		return false;
 	});
 	addClearItems();
-	setTimeout(function() {
-		$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
-		NProgress.done();
-		a.addClass("complete").removeClass("preparing");
-	}, 1000);
+	$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
+	NProgress.done();
+	a.addClass("complete").removeClass("preparing");
 }
 
 var initalizeAddForm = function() {
 	var options = {
-		target: '#form-result', // target element(s) to be updated with server response 
-		beforeSubmit: showAddRequest, // pre-submit callback 
-		success: showAddResponse, // post-submit callback 
+		target: '#form-result', // target element(s) to be updated with server response
+		beforeSubmit: showAddRequest, // pre-submit callback
+		success: showAddResponse, // post-submit callback
 		url: "User/addcompetence",
-		type: "post"        // 'get' or 'post', override for form's 'method' attribute 
+		type: "post"        // 'get' or 'post', override for form's 'method' attribute
 	};
 
 	$('#form-add-competence').submit(function() {
-		// inside event callbacks 'this' is the DOM element so we first 
-		// wrap it in a jQuery object and then invoke ajaxSubmit 
+		// inside event callbacks 'this' is the DOM element so we first
+		// wrap it in a jQuery object and then invoke ajaxSubmit
 		console.log("initialized");
 		var e = document.getElementById('form-add-competence');
 		if (e.checkValidity())
 		{
 			$(this).ajaxSubmit(options);
 		}
-	    // !!! Important !!! 
-	    // always return false to prevent standard browser submit and page navigation 
+	    // !!! Important !!!
+	    // always return false to prevent standard browser submit and page navigation
 	    return false;
 	});
 };
@@ -4505,7 +4500,7 @@ Muffin.checkNotifications = checkNotifications;
 
 var notifications = function()
 {
-	checkNotifications(); 
+	checkNotifications();
 	var n = $("#notif-aera");
 	n.click(function()
 	{
@@ -4586,8 +4581,11 @@ Muffin.treatResize = treatResize;
  		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-multiply");
  		$("#status_update_uid").html(responseText);
  	}
+ 	Muffin.updateSemaphore = false
  };
 Muffin.afterUserUpdate = afterUserUpdate;
+
+Muffin.updateSemaphore = false;
 
 var initFormComportement = function()
 {
@@ -4597,24 +4595,28 @@ var initFormComportement = function()
  		return false;
  	});
 
- 	$('#form_params').submit(function() {
+ 	$('#form_params').submit(function(e) {
 
- 		var options = {
-		    target: '#form-result', // target element(s) to be updated with server response 
-		    beforeSubmit: function() {
-		    	$("#status_public_icon").removeClass("icon-uniF488")
-		    	.removeClass("icon-multiply")
-		    	.removeClass("icon-checkmark2")
-		    	.addClass("icon-clock3");
-			}, // pre-submit callback 
-			success: afterUserUpdate, // post-submit callback 
-			url: "User/update",
-			type: "post"        // 'get' or 'post', override for form's 'method' attribute 
-		};
+ 		e.stopImmediatePropagation();
+ 		if (Muffin.updateSemaphore == false)
+ 		{
+ 			Muffin.updateSemaphore = true;
+	 		var options = {
+			    target: '#form-result', // target element(s) to be updated with server response
+			    beforeSubmit: function() {
+			    	$("#status_public_icon").removeClass("icon-uniF488")
+			    	.removeClass("icon-multiply")
+			    	.removeClass("icon-checkmark2")
+			    	.addClass("icon-clock3");
+				}, // pre-submit callback
+				success: afterUserUpdate, // post-submit callback
+				url: "User/update",
+				type: "post"        // 'get' or 'post', override for form's 'method' attribute
+			};
 
-		console.log("update");
-		$(this).ajaxSubmit(options);
-
+			console.log("update");
+			$(this).ajaxSubmit(options);
+		}
 		return false;
 	});
 };
@@ -4638,14 +4640,13 @@ var reloadHandlers = function()
 	treatResize();
 	$(window).resize(treatResize);
 	bindAjaxEvents();
+    initalizeAddForm();
 	initFormComportement();
 	initializePanelMenu();
 	initializeHelpMenu();
 	notifications();
 	mainHeadLink();
 
-	window.clearInterval(window.intervalHandler);
-	window.intervalHandler = setInterval(notifications,5000);
 
 	try
 	{
@@ -4686,13 +4687,37 @@ Muffin.charts.prepareLegend = function(leg, gdata)
 	for (var i = 0; i < gdata.length; i++)
 	{
 		leg.append(
-			'<p><span style="color: ' 
-				+ gdata[i].color + ';" class="icon-uniF52F"></span> <b>' 
+			'<p><span style="color: '
+				+ gdata[i].color + ';" class="icon-uniF52F"></span> <b>'
 				+ gdata[i].value + ' </b> ' + gdata[i].legend + '</p>');
 	};
 };
 
-Muffin.charts.drawCharts = function(data)
+Muffin.charts.drawTopTen = function(data, max)
+{
+	var gdata = data;
+
+	max = max + 5 - (max % 5)
+
+	var ctx = $("#chart-top-users").get(0).getContext("2d");
+
+	new Chart(ctx).Bar(data, {
+	 	scaleOverlay : true,
+
+		//Boolean - If we want to override with a hard coded scale
+		scaleOverride : true,
+
+		//** Required if scaleOverride is true **
+		//Number - The number of steps in a hard coded scale
+		scaleSteps : 5,
+		//Number - The value jump in the hard coded scale
+		scaleStepWidth : max / 5,
+		//Number - The scale starting value
+		scaleStartValue : 0,
+	});
+}
+
+Muffin.charts.drawInscrits = function(data)
 {
 	var gdata = data;
 
@@ -4700,17 +4725,18 @@ Muffin.charts.drawCharts = function(data)
 	{
 		var leg = $(".stats-inscrits-legend");
 		leg.addClass("complete").removeClass("loading");
+		$(".stats-big-number.loading").addClass("complete").removeClass("loading");
 	};
 
 	Muffin.charts.prepareLegend($(".stats-inscrits-legend"), gdata);
 	var ctx = $("#chart-inscrits").get(0).getContext("2d");
-	
+
 	new Chart(ctx).Doughnut(data,
 		{
 			segmentStrokeColor: "#F7E4BE",
-			animationEasing : "easeOutBounce",
-			onAnimationComplete: showLegend
+			animationEasing : "easeOutBounce"
 		});
+	showLegend();
 }
 
 

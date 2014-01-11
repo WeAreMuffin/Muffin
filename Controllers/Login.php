@@ -22,7 +22,7 @@
  *
  * (c) 2013 Lambdaweb - www.lambdaweb.fr
  *
- * 
+ *
  * @author lambda2
  */
 
@@ -36,16 +36,16 @@ class Login extends Controller
 
     /**
      * Va enregistrer l'utilisateur en parametre de l'url.
-     * 
+     *
      * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
-     * 
+     *
      * @PathInfo('login')
      * @Ajax
      */
     public function register ($params = array ())
     {
         // Si à true, alors aucun mail ne sera envoyé.
-        $fakeMail = true; 
+        $fakeMail = true;
 
         // On récupère le login fourni dans l'url
         $login = $this->getUrlParam ('login');
@@ -57,9 +57,18 @@ class Login extends Controller
         // On génère le mot de passe
         $pass = $this->generatePassPhrase ();
 
-        if ($student->current() && $student->current()->type == "staff")
+        if ($student->current())
         {
-            $type = "staff";
+            if ($student->current()->type == "staff")
+            {
+                $type = "staff";
+            }
+        }
+        else
+        {
+            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 0);
+            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 3, "/home/lambda2/logs/muffin.unknown_users");
+            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 3, "/var/log/httpd/muffin.unknown_users");
         }
         // Le hash qui sera dans la bdd
         $shapass = sha1 (trim (strtolower ($pass)));
@@ -91,9 +100,9 @@ class Login extends Controller
 
     /**
      * Va update le pass de l'utilisateur en parametre de l'url.
-     * 
+     *
      * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
-     * 
+     *
      * @PathInfo('login')
      * @Ajax
      */
@@ -146,9 +155,9 @@ class Login extends Controller
     /**
      * Va afficher une représentation json de l'utilisateur,
      * comprenant le nom et le prénom.
-     * 
+     *
      * @return un json {nom : -, prenom: -}
-     * 
+     *
      * @PathInfo('login')
      * @Ajax
      */
