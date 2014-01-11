@@ -4699,7 +4699,10 @@ Muffin.charts.drawTopTen = function(data, max)
 {
 	var gdata = data;
 
-	max = max + 5 - (max % 5)
+	if (max % 5 != 0)
+	{
+		max = max + 5 - (max % 5);
+	}
 
 	var ctx = $("#chart-top-users").get(0).getContext("2d");
 
