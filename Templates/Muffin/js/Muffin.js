@@ -4031,7 +4031,8 @@ b.moveTo(g,p);b.lineTo(g,p-d*v(a.datasets[e].data[f],j,k)+c.barStrokeWidth/2);b.
 			{
 				{
 					$.get("User/index",
-						function(data) {
+						function(data)
+						{
 							$("#input-code").attr("disabled", "disabled");
 							$("#input-code + button").attr("disabled", "disabled")
 								.html("<span class='icon-checkmark'></span>");
@@ -4039,11 +4040,15 @@ b.moveTo(g,p);b.lineTo(g,p-d*v(a.datasets[e].data[f],j,k)+c.barStrokeWidth/2);b.
 							data.addClass("loading");
 							$("div[data-role='container']").children().slideUp();
 							$("div[data-role='container']").html(data);
+							var headerToolbar = $("#main-head-toolbar");
+							if (headerToolbar.children().length == 0)
+							{
+								headerToolbar.html('<a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera"></a><a class="btn" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a><a class="btn" role="indicator">À jour</a>');
+					            console.log("Toolbar updated !");
+							}
 							reloadHandlers();
-							setTimeout(function() {
-								NProgress.done();
-								data.addClass("complete");
-							}, 200);
+							NProgress.done();
+							data.addClass("complete");
 						});
 				}
 			}
