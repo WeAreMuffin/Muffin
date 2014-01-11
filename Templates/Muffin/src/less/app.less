@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 lambda2.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -409,10 +409,10 @@ input[disabled] + button {
     90% {transform:rotate(0deg); opacity: 0}
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
                             Boutons et formulaires
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 input[type="text"],
@@ -480,10 +480,10 @@ input + button > span[class^="icon-"] {
 }
 
 
-/* 
+/*
     ------------------------------------------------------------------------
         Titre [home]
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 div[role="home-title"]
@@ -526,10 +526,10 @@ div[role="home-title"]
 }
 
 
-/* 
+/*
     ------------------------------------------------------------------------
         Container principal
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 div[data-role="container"]
@@ -579,7 +579,7 @@ div[data-role="container"]
         	width: 48%;
         }
     }
- 
+
     ul.items-panels
     {
         padding-left: 0px;
@@ -590,10 +590,10 @@ div[data-role="container"]
     }
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
         Header
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 
@@ -634,10 +634,10 @@ article[role="header"]
     }
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
         Description latérale
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 
@@ -718,7 +718,7 @@ div[role="show-stats"]
     }
 }
 
-div[role="add-competence"] 
+div[role="add-competence"]
 {
     #input-nom-comp
     {
@@ -745,10 +745,10 @@ p {
 }
 
 
-/* 
+/*
     ------------------------------------------------------------------------
         icones du header
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 .header-container
@@ -826,10 +826,10 @@ ul#list-notification
     }
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
         Labels en étoile
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 #form-result {
@@ -888,7 +888,7 @@ ul#list-notification
         min-width: 80%;
     }
 }
-div[data-role="form-container"] 
+div[data-role="form-container"]
 {
     form
     {
@@ -1068,10 +1068,10 @@ div[data-role="form-container"]
     }
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
         Liste de la recherche user
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 #search_user_results
 {
@@ -1109,10 +1109,10 @@ div[data-role="form-container"]
         }
     }
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Modale d'ajout de competence : Type de la competence
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 #form-add-competence
 {
@@ -1122,7 +1122,7 @@ div[data-role="form-container"]
         input[type="radio"]
         {
             display: none;
-            
+
             &+label
             {
                 border: 1px solid transparent;
@@ -1143,7 +1143,7 @@ div[data-role="form-container"]
                     margin: 10px 0px 0px 0px;
                 }
             }
-            
+
             &:checked+label,
             &:checked+label > p,
             &:checked+label > h2,
@@ -1154,10 +1154,10 @@ div[data-role="form-container"]
     }
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
         Echanges de competences
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 .show-little
@@ -1381,7 +1381,7 @@ ul[data-role="liste-competences"]
         		background-color: transparent;
         		color: @muffin-red;
         		border: 1px solid @muffin-red;
-        		line-height: 20px;	
+        		line-height: 20px;
 
         		&:hover,
         		&:active
@@ -1428,31 +1428,50 @@ a.btn.ask
 	color: @muffin-green;
 }
 
-/* 
+/*
     ------------------------------------------------------------------------
        Statistiques
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 .stats-container
 {
     display: inline-block;
+    vertical-align: top;
     text-align: center;
     transition: all 0.4s;
+    margin: 0px 15px;
 
     h3
     {
         text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 1.4em;
+        /*border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+    }
+
+    canvas
+    {
+        max-width: 100% !important;
     }
 }
 
 .stats-inscrits-graph
 {
     display: inline-block;
-    max-width: 205px;
+    max-width: 225px;
     width: 200px;
     margin: 0px;
+    height: 220px;
+    padding-top: 8px;
+}
+
+.stats-big-number
+{
+    width: auto;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    padding: 30px 20px 20px 20px;
 }
 
 .stats-inscrits-legend
@@ -1461,7 +1480,7 @@ a.btn.ask
     vertical-align: top;
     display: inline-block;
     text-align: left;
-    padding: 20px;
+    padding: 30px 20px 20px 20px;
 
     p
     {
@@ -1477,10 +1496,10 @@ a.btn.ask
 }
 
 
-/* 
+/*
     ------------------------------------------------------------------------
         Transitions & fading
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 
 
@@ -1540,7 +1559,7 @@ a.btn.ask
         INTERMEDIATE: Menu
        ==================== */
 
-    nav 
+    nav
     {
         a {
             float: left;
