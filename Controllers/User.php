@@ -43,6 +43,7 @@ class User extends Controller
         $formDataJson = $this->generateJsFormData ();
         $checkedRadios = $this->getCheckedRadios ();
         $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
+        $this->addData ('infos', $infos);
         $this->addData ('formDataJson', $formDataJson);
         $this->addData ('checkedRadios', $checkedRadios);
         $this->addData ('check_public', $checkpublic);
