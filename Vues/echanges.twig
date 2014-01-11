@@ -56,11 +56,11 @@
 			{% endfor %}
 		</ul>
 
-			{# 
-			
+			{#
+
 			@Todo : mettre les templates et les styles a jour pour les prohjets passes.
 			<div data-align="center"><a class="bbtn center" id="load-expired-help--button">Projets plus anciens</a></div>
-			
+
 			#}
 			{% else %}
 			<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune demande pour le moment...</h1>
@@ -124,11 +124,11 @@
 					</li>
 					{% endfor %}
 				</ul>
-				{# 
-				
-				@Todo : mettre les templates et les styles a jour pour les prohjets passes. 
+				{#
+
+				@Todo : mettre les templates et les styles a jour pour les prohjets passes.
 				<div data-align="center"><a class="bbtn center" id="load-expired-nhelp--button">Projets plus anciens</a></div>
-				
+
 				#}
 			{% else %}
 				<h1 style="color: rgba(0, 0, 0, 0.2);">Aucune aide pour le moment...</h1>
@@ -137,6 +137,7 @@
 	</ul> <!-- End of exchange panel -->
 
 	<script>
+		Muffin.initializeHelpMenu();
 		var echangeRefresh = function()
 		{
 
