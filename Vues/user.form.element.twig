@@ -21,15 +21,13 @@
             <label data-toggle="tooltip" title="Je peux aider !" class="want-to-teach" for="wtt_{{ name }}"></label>
         <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
             <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
-
 				<div>
-				<input type="text" class="visible" name="Help box" size ="20" placeholder="Decrivez rapidement votre probleme" 
-					notSelected="notSelected(this)" selected="slected(this)" maxlength="35">
-				</div>
-
-				<div>
-				<>
-				</div>
+					<input type="text" class="visible" name="Help box" size ="20" placeholder="Decrivez rapidement votre probleme" 
+						notSelected="notSelected(this)" selected="slected(this)" maxlength="35">
+					<div class="compteur-caractere">
+						35
+					</div>
+				</div>	
         <a class="clear-all" data-items="{{ name }}">
             <span data-toggle="tooltip" title="Supprimer ma note" class="icon-multiply"></span>
         </a>
