@@ -27,19 +27,13 @@
 						35
 					</div>
 					<script>
-						var env = $("div.visible")
-						var	count = $("div.compteur-caractere")
+						var env = $("div.visible");
+						var	count = $("div.compteur-caractere");
 						function counter()
 						{
-							var idx = 35 - jQuery('.visible')val().length;
-							jQuery('.compteur-caractere').text(idx);
-						}
-						jQuery(document).ready(function($)
-						{
-						    counter();
-						    $('.visible').change(counter);
-						    $('.visible').keyup(counter);
-						});
+							var idx = 35 - jQuery('.visible').val().length;
+							env.text(idx);
+						};
 					</script>
 				</div>	
         <a class="clear-all" data-items="{{ name }}">
