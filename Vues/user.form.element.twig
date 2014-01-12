@@ -37,11 +37,8 @@
 							var idx = 35 - env.length;
 							count.text(idx);
 						};
-						count.change(function()
-						{
-							console.log("change");
-						});
-						count.keyup(counter);
+						env.change(counter);
+						env.keyup(counter);
 					</script>
 				</div>	
         <a class="clear-all" data-items="{{ name }}">
