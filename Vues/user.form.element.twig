@@ -28,13 +28,13 @@
 					</div>
 					<script>
 						console.log("SCRIPT");
-						var env = $("input.helpbox").val();
+						var env = $("input.helpbox");
 						var	count = $("div.compteur-caractere");
 						count.click(function(){ console.log("clik"); });
 						function counter()
 						{
 							console.log("counter !");
-							var idx = 35 - env.length;
+							var idx = 35 - env.val().length;
 							count.text(idx);
 						};
 						env.change(counter);
