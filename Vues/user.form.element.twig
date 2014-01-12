@@ -42,10 +42,10 @@
 								}
 							});
 						});
+
 						$(".keywords-{{name}}").keyup(function()
 						{
-							var idx = $(this).val().length;
-							$(this).next().text(35 - idx);
+							$(this).next().text(35 - $(this).val().length);
 						});
 					</script>
 				</div>	
