@@ -27,18 +27,15 @@
 						35
 					</div>
 					<script>
-						console.log("SCRIPT");
 						var env = $("input.helpbox");
-						var	count = $("div.compteur-caractere");
-						count.click(function(){ console.log("clik"); });
-						function counter()
+
+						env.keyup(function()
 						{
-							console.log("counter !");
-							var idx = 35 - env.val().length;
+							var champ = $(this);
+							var	count = $("compteur-caractere").next();
+							var idx = 35 - champ.val().length;
 							count.text(idx);
-						};
-						env.change(counter);
-						env.keyup(counter);
+						});
 					</script>
 				</div>	
         <a class="clear-all" data-items="{{ name }}">
