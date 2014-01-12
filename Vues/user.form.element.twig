@@ -32,12 +32,16 @@
 						console.log("test");
 						function counter()
 						{
-							var idx = 35 - jQuery('.visible').val().length;
-							count.change(function()
-							{
-								count.text(idx);
-							});
+							var idx = 35 - jQuery(env).val().length;
+							jQuery(count).text(idx);
 						};
+
+						jQuery(document).ready(function($)
+						{
+							counter();
+							count.change(counter);
+							count.keyup(counter);
+						});
 					</script>
 				</div>	
         <a class="clear-all" data-items="{{ name }}">
