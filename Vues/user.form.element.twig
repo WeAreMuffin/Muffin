@@ -27,8 +27,10 @@
 						35
 					</div>
 					<script>
+						console.log("SCRIPT");
 						var env = $("input.helpbox").val();
 						var	count = $("div.compteur-caractere");
+						count.click(function(){ console.log("clik"); });
 						function counter()
 						{
 							console.log("counter !");
