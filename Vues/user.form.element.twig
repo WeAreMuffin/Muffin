@@ -31,9 +31,8 @@
 
 						env.keyup(function()
 						{
-							var champ = $(this);
-							var	count = $("compteur-caractere").next();
-							var idx = 35 - champ.val().length;
+							var	count = $(this).next();
+							var idx = 35 - $(this).val().length;
 							count.text(idx);
 						});
 					</script>
