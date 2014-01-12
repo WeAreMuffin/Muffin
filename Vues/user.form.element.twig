@@ -23,11 +23,17 @@
             <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
 				<div>
 					<input type="text" class="visible" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
-					<script>
-					</script>
 					<div class="compteur-caractere">
 						35
 					</div>
+					<script>
+						var env = $(visible);
+						var idx = $(compteur-caractere);
+						env.change(function(
+						{
+							console.log("test");
+						}))
+					</script>
 				</div>	
         <a class="clear-all" data-items="{{ name }}">
             <span data-toggle="tooltip" title="Supprimer ma note" class="icon-multiply"></span>
