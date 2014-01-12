@@ -308,7 +308,7 @@ class User extends Controller
 
 	public function addkeyword($params)
 	{
-		$this->render();
+		echo "0 ou 1";
 	}
 
     /*   =======================================================================
