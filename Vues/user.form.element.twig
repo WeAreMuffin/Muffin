@@ -34,7 +34,15 @@
 						{
 							var keywords = $("input.keywords-{{name}}").val();
 							var id_comp = "{{id_competence}}";
-							console.log("Button has been clicked !", keywords, id_comp);
+							$.ajax({
+								type: "POST",
+								url: "User/addkeyword",
+								data: {"id_competence" : id_comp, "keyword" : keyword},
+								success: function(ret)
+								{
+									console.log("Succes !", ret);
+								}
+							});
 						});
 						env.keyup(function()
 						{
