@@ -312,6 +312,8 @@ class User extends Controller
 		$keywords = $this->filterPost("keywords");
 		if ($id_competence)
 		{
+			if ($keywords == NULL)
+				$keywords = "general";
 			if (Core::getBdd()->update(
 					array("wtl_keyword" => $keywords),
 					"c_user_competences",

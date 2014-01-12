@@ -28,8 +28,6 @@
 						<a class="button" name="Ok">Ok</a>
 					</div>
 					<script>
-						var env = $("input.helpbox");
-						
 						$("div.submit-button-{{name}}").click(function()
 						{
 							var keywords = $("input.keywords-{{name}}").val();
@@ -44,11 +42,9 @@
 								}
 							});
 						});
-						env.keyup(function()
+						$(keywords-{{name}}).keyup(function()
 						{
-							var	count = $(this).next();
-							var idx = 35 - $(this).val().length;
-							count.text(idx);
+							$(this).next().text(35 - $(this).val().length);
 						});
 					</script>
 				</div>	
