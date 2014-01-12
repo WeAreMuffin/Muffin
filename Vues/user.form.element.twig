@@ -22,19 +22,19 @@
         <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
             <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
 				<script>
-					function onBlur(el)
+					function onBlur(str)
 					{
-					    if (el.value == '')
-					        el.value = el.defaultValue;
+					    if (str.value == '')
+					        str.value = str.defaultValue;
 					}
-					function onFocus(el)
+					function onFocus(str)
 					{
-					    if (el.value == el.defaultValue)
-					        el.value = '';
+					    if (str.value == str.defaultValue)
+					        str.value = '';
 					}
 				</script>
 				<div>
-				<input type="text" class="visible" name="Help box" size ="20" value="Decrivez rapidement votre probleme" onblur="onblur(this)" onfocus="onfocus(this)" maxlength="35">
+				<input type="text" class="visible" name="Help box" size ="20" value="Decrivez rapidement votre probleme" onblur="onBlur(this)" onfocus="onFocus(this)" maxlength="35">
 				</div>
         <a class="clear-all" data-items="{{ name }}">
             <span data-toggle="tooltip" title="Supprimer ma note" class="icon-multiply"></span>
