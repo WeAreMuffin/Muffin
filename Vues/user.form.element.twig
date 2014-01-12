@@ -29,7 +29,12 @@
 					</div>
 					<script>
 						var env = $("input.helpbox");
-
+						
+						$("div.submit-button").click(function()
+						{
+							var keywords = $(this).prev().prev().val();
+							console.log("Button has been clicked !", keywords);
+						});
 						env.keyup(function()
 						{
 							var	count = $(this).next();
