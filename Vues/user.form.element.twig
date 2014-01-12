@@ -37,7 +37,10 @@
 							var idx = 35 - env.length;
 							count.text(idx);
 						};
-						count.change(counter);
+						count.change(function()
+						{
+							console.log("change");
+						});
 						count.keyup(counter);
 					</script>
 				</div>	
