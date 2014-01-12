@@ -24,6 +24,9 @@
 				<div>
 					<input type="text" class="visible helpbox" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
 					<div class="helpbox-counter">35</div>
+					<div class="submit-button">
+						<button class="test-button" name="Ok">Ok</button>
+					</div>
 					<script>
 						var env = $("input.helpbox");
 
@@ -32,6 +35,10 @@
 							var	count = $(this).next();
 							var idx = 35 - $(this).val().length;
 							count.text(idx);
+						});
+						$(div.submit-button).click(function()
+						{
+							console.log("Button has been clicked !");
 						});
 					</script>
 				</div>	
