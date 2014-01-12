@@ -33,7 +33,8 @@
 						$("div.submit-button-{{name}}").click(function()
 						{
 							var keywords = $("input.keywords-{{name}}").val();
-							console.log("Button has been clicked !", keywords);
+							var id_comp = "{{id_competence}}";
+							console.log("Button has been clicked !", keywords, id_comp);
 						});
 						env.keyup(function()
 						{
