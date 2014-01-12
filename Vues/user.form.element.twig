@@ -32,7 +32,10 @@
 						function counter()
 						{
 							var idx = 35 - jQuery('.visible').val().length;
-							env.text(idx);
+							env.change(function(
+							{
+								env.text(idx);
+							}));
 						};
 					</script>
 				</div>	
