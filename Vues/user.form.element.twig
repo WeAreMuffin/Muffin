@@ -27,11 +27,18 @@
 						35
 					</div>
 					<script>
-						var env = $("div.visible");
-						var idx = $("div.compteur-caractere");
-						env.click(function()
+						var env = $("div.visible")
+						var	count = $("div.compteur-caractere")
+						function counter()
 						{
-							console.log("test");
+							var idx = 35 - env.val().length;
+							count.text(idx);
+						}
+						env.ready(function($)
+						{
+						    counter();
+						    count.change(counter);
+						    count.keyup(counter);
 						});
 					</script>
 				</div>	
