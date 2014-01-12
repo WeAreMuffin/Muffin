@@ -308,7 +308,22 @@ class User extends Controller
 
 	public function addkeyword($params)
 	{
-		echo "0 ou 1";
+		$id_competence = $this->filterPost("id_competence");
+		$keywords = $this->filterPost("keywords");
+		if ($id_competence and $keywords)
+		{
+			if (Core::getBdd()->update(
+					array("wtl_keyword" => $keywords),
+					"c_user_competences",
+					array("id_user" => $_SESSION['muffin_id'], "id_competence" => $id_competence)))
+			{
+				echo "1";
+			}
+			else
+				echo "0";
+		}
+		else
+			echo "0";
 	}
 
     /*   =======================================================================
