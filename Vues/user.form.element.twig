@@ -22,12 +22,12 @@
         <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
             <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
 				<div>
-					<input type="text" class="visible" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
+					<input type="text" class="visible helpbox" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
 					<div class="compteur-caractere">
 						35
 					</div>
 					<script>
-						var env = $("div.visible").val();
+						var env = $("input.helpbox").val();
 						var	count = $("div.compteur-caractere");
 						function counter()
 						{
