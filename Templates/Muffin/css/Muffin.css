@@ -797,6 +797,120 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  position: relative;
+}
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+  *display: inline;
+}
+.odometer.odometer-auto-theme .odometer-digit,
+.odometer.odometer-theme-default .odometer-digit {
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  position: relative;
+}
+.odometer.odometer-auto-theme .odometer-digit,
+.odometer.odometer-theme-default .odometer-digit {
+  *display: inline;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  visibility: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
+  *display: inline;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
+  text-align: left;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
+.odometer.odometer-theme-default .odometer-digit .odometer-ribbon {
+  display: block;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,
+.odometer.odometer-theme-default .odometer-digit .odometer-ribbon-inner {
+  display: block;
+  -webkit-backface-visibility: hidden;
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,
+.odometer.odometer-theme-default .odometer-digit .odometer-value {
+  display: block;
+  -webkit-transform: translateZ(0);
+}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,
+.odometer.odometer-theme-default .odometer-digit .odometer-value.odometer-last-value {
+  position: absolute;
+}
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-up .odometer-ribbon-inner {
+  -webkit-transition: -webkit-transform 2s;
+  -moz-transition: -moz-transform 2s;
+  -ms-transition: -ms-transform 2s;
+  -o-transition: -o-transform 2s;
+  transition: transform 2s;
+}
+.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-up.odometer-animating .odometer-ribbon-inner {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-down .odometer-ribbon-inner {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+  -webkit-transition: -webkit-transform 2s;
+  -moz-transition: -moz-transform 2s;
+  -ms-transition: -ms-transform 2s;
+  -o-transition: -o-transform 2s;
+  transition: transform 2s;
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+  font-family: "Helvetica Neue", sans-serif;
+  line-height: 1.1em;
+}
+.odometer.odometer-auto-theme .odometer-value,
+.odometer.odometer-theme-default .odometer-value {
+  text-align: center;
+}
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
@@ -8821,7 +8935,7 @@ table {
 .icon-IcoMoon:before {
   content: "\f013";
 }
-/* 
+/*
  * Copyright 2013 lambda2.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -9197,10 +9311,10 @@ input[disabled] + button {
     opacity: 0;
   }
 }
-/* 
+/*
     ------------------------------------------------------------------------
                             Boutons et formulaires
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 input[type="text"],
 input[type="password"],
@@ -9252,10 +9366,10 @@ input + button > span[class^="icon-"] {
   top: 3px;
   padding-left: 5px;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Titre [home]
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 div[role="home-title"] {
   width: 100%;
@@ -9289,10 +9403,10 @@ div[role="home-title"] h3 span {
   color: #8D7562;
   color: #8d7562;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Container principal
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 div[data-role="container"] > aside {
   display: inline-block;
@@ -9334,10 +9448,10 @@ div[data-role="container"] ul.items-panels {
 div[data-role="container"] ul.items-panels li {
   display: block;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Header
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 article[role="header"] > header > div[role="icon-container"] {
   display: inline-block;
@@ -9364,10 +9478,10 @@ article[role="header"] > header > div[role="title"] {
   display: inline-block;
   width: 79%;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Description latérale
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 aside.side-menu ul.affix {
   position: fixed;
@@ -9440,10 +9554,10 @@ div[role="add-competence"] #input-nom-comp + button > span {
 p {
   color: #887D72;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         icones du header
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 .header-container header a.btn {
   background-color: transparent;
@@ -9493,10 +9607,10 @@ ul#list-notification li.notification-new {
 ul#list-notification li + li {
   border-top: 1px solid rgba(50, 50, 50, 0.1);
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Labels en étoile
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 #form-result {
   display: none;
@@ -9676,10 +9790,10 @@ div[data-role="form-container"] form input {
 div[data-role="form-container"] .breaker {
   display: block;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Liste de la recherche user
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 #search_user_results {
   padding: 10px;
@@ -9707,10 +9821,10 @@ div[data-role="form-container"] .breaker {
   transition: 0.2s all;
   padding-left: 5px;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Modale d'ajout de competence : Type de la competence
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 #form-add-competence .radio-group {
   text-align: center;
@@ -9740,10 +9854,10 @@ div[data-role="form-container"] .breaker {
 #form-add-competence .radio-group input[type="radio"]:checked + label > h2 {
   color: #c02942;
 }
-/* 
+/*
     ------------------------------------------------------------------------
         Echanges de competences
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 .show-little {
   display: none;
@@ -9933,10 +10047,121 @@ a.btn.ask {
   border-color: #53777a;
   color: #53777a;
 }
-/* 
+/*
+    ------------------------------------------------------------------------
+       Statistiques
+    ------------------------------------------------------------------------
+*/
+h1.title-remain,
+.stats-charts h1.title-remain {
+  color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 1.5em;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.stats-charts {
+  text-align: center;
+}
+.stats-container {
+  display: inline-block;
+}
+.stats-container-full {
+  display: block;
+  width: 100%;
+}
+.stats-container,
+.stats-container-full {
+  vertical-align: top;
+  text-align: center;
+  transition: all 0.4s;
+  margin: 0px 15px;
+}
+.stats-container h3,
+.stats-container-full h3 {
+  text-align: center;
+  font-size: 1.4em;
+  /*border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+}
+.stats-container canvas,
+.stats-container-full canvas {
+  max-width: 100% !important;
+}
+.icone-compute {
+  margin: 0px;
+  padding: 0px 2px;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+}
+.icone-compute b {
+  position: relative;
+  bottom: -3px;
+}
+.stats-best-podium {
+  display: inline-block;
+  max-width: 32%;
+  vertical-align: top;
+}
+.stats-best-podium h1 span[class^="icon-"] {
+  font-size: 2.5em;
+  color: #c02942;
+}
+.stats-best-podium blockquote {
+  font-style: italic;
+  font-size: 0.8em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: rgba(0, 0, 0, 0.4);
+  min-height: 60px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 15px;
+}
+.stats-best-podium blockquote .cite-author {
+  font-style: normal;
+  padding: 0px;
+  text-align: right;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 1em;
+  display: block;
+  vertical-align: bottom;
+}
+.stats-inscrits-graph {
+  display: inline-block;
+  max-width: 225px;
+  width: 200px;
+  margin: 0px;
+  height: 220px;
+  padding-top: 8px;
+}
+.stats-big-number {
+  width: auto;
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  padding: 30px 20px 20px 20px;
+}
+.stats-inscrits-legend {
+  width: auto;
+  vertical-align: top;
+  display: inline-block;
+  text-align: left;
+  padding: 30px 20px 20px 20px;
+}
+.stats-inscrits-legend p {
+  font-size: 1em;
+  line-height: 10px;
+  text-transform: uppercase;
+}
+.stats-inscrits-legend p span {
+  padding-right: 5px;
+}
+/*
     ------------------------------------------------------------------------
         Transitions & fading
-    ------------------------------------------------------------------------                            
+    ------------------------------------------------------------------------
 */
 .loading,
 .complete,

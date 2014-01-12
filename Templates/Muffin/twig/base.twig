@@ -53,14 +53,16 @@
             <div class="header-container">
                 {% block header %}
                 <header class="wrapper clearfix">
-                    <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>Couscous on the beach</span></i></h1>
-                    {% block header_after %}
-                    {% if webdata.session.muffin_id %}
-                    <a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera"></a>
-                    <a class="btn" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a>
-                    <a class="btn" role="indicator">À jour</a>
-                    {% endif %}
-                    {% endblock %}
+                    <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>Citron & Meringue</span></i></h1>
+                    <div id="main-head-toolbar" class="main-head-toolbar">
+                        {% block header_after %}
+                            {% if webdata.session.muffin_id %}
+                            <a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera"></a>
+                            <a class="btn" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a>
+                            <a class="btn" role="indicator">À jour</a>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
                 </header>
                 {% endblock %}
             </div>
@@ -131,7 +133,7 @@
         {{ webdata.debug }}
         {% endblock %}
 
-        {% endblock %} 
+        {% endblock %}
         {% endblock %}
     </body>
     </html>

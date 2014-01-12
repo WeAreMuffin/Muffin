@@ -1,0 +1,94 @@
+
+<div class="stats-charts">
+
+	{% if remarquable %}
+		<div class="stats-container-full">
+			<h3><span class="icon-medal"></span> Cadets remarquables</h3>
+			<div class="stats-best-podium">
+				<h1><span class="icon-store"></span></h1>
+				<h2>{{ best_proposer.prenom|capitalize }} {{ best_proposer.nom|capitalize }}</h2>
+				<blockquote>
+					Il a voulu m'apprendre a manger des carottes.
+				<span class="cite-author"><span class="icon-carrot"></span> - Bugs Bunny</span>
+				</blockquote>
+			</div>
+			<div class="stats-best-podium">
+				<h1><span class="icon-emergency"></span></h1>
+				<h2>{{ best_bien.prenom|capitalize }} {{ best_bien.nom|capitalize }}</h2>
+				<blockquote>
+					Il connait la grande question.
+				<span class="cite-author"> <span class="icone-compute"><b>—·</b></span> - Compute-Un</span>
+				</blockquote>
+			</div>
+			<div class="stats-best-podium">
+				<h1><span class="icon-uniF53B"></span></h1>
+				<h2>{{ best_accepte.prenom|capitalize }} {{ best_accepte.nom|capitalize }}</h2>
+				<blockquote>
+					L'homme transporté, c'est la seule explication.
+				<span class="cite-author"><span class="icon-tophat"></span> - Robert Angier</span>
+				</blockquote>
+			</div>
+		</div>
+	{% else %}
+		<h1 class="title-remain">Plus que <span class="odometer">{{ remain }}</span> échanges pour trouver des cadets remarquables...</h1>
+	{% endif %}
+
+	<div class="stats-container">
+		<h3><span class="icon-uniF497"></span> Cadets les plus actifs</h3>
+		<div class="stats-top-users-graph">
+			<canvas id="chart-top-users" width="760" height="300"></canvas>
+		</div>
+	</div>
+
+	<div class="stats-container">
+		<h3><span class="icon-intersection"></span> Fréquentation du site</h3>
+		<div class="stats-inscrits-graph">
+			<canvas id="chart-inscrits" width="200" height="200"></canvas>
+		</div>
+		<div class="stats-inscrits-legend loading">
+		</div>
+	</div>
+
+	<div class="stats-container">
+		<h3>Ou plus simplement...</h3>
+		<div class="stats-big-number loading">
+			<h1 class="odometer">{{ ((insc * 100)/all)|number_format(2, '.') }} %</h1>
+			<p>Des cadets sont inscrits</p>
+		</div>
+	</div>
+</div>
+
+<script>
+var dataTT = {
+	labels : {{ top_ten_logins }},
+	datasets : [
+		{
+			fillColor : "#D95B43",
+			strokeColor : "#C02942",
+			data : {{ top_ten_data }}
+		}
+	]
+}
+
+var dataInscrits = [
+	{
+		value: {{ actif }},
+		color:"#C02942",
+		legend: "Cadets actifs"
+	},
+	{
+		value: {{ inactif }},
+		color : "#9E4838",
+		legend: "Cadets inactifs"
+	},
+	{
+		value: {{ noninscrit }},
+		color : "#D95B43",
+		legend: "Cadets non inscrits"
+	}
+];
+
+Muffin.charts.drawTopTen(dataTT, {{ top_ten_max }});
+Muffin.charts.drawInscrits(dataInscrits);
+
+</script>

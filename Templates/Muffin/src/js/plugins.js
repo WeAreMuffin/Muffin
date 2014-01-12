@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 lambda2.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,6 +38,11 @@
 }
 }());
 
+
+
+window.Muffin = {};
+
+
 function goToUrl(url)
 {
 	$.get(url,
@@ -46,14 +51,13 @@ function goToUrl(url)
 			data.addClass("loading");
 			$("div[data-role='form-container']").children().slideUp();
 			$("div[data-role='form-container']").html(data);
-			setTimeout(function() {
-				NProgress.done();
-				data.addClass("complete");
-				reloadHandlers();
-			}, 200);
+			NProgress.done();
+			data.addClass("complete");
+			//reloadHandlers();
 		});
 
 }
+Muffin.goToUrl = goToUrl;
 
 function bindAjaxEvents()
 {
@@ -66,6 +70,7 @@ function bindAjaxEvents()
 		});
 	});
 }
+Muffin.bindAjaxEvents = bindAjaxEvents;
 
 function addCheckHandler(toCheck)
 {
@@ -80,9 +85,9 @@ function addCheckHandler(toCheck)
     	$("input#" + toCheck[elt]).attr("checked", "checked");
     }
 }
-;
+Muffin.addCheckHandler = addCheckHandler;
 
-// pre-submit callback 
+// pre-submit callback
 function showRequest(formData, jqForm, options) {
 	NProgress.start();
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Enregistrement...");
@@ -90,7 +95,7 @@ function showRequest(formData, jqForm, options) {
     return true;
 }
 
-// post-submit callback 
+// post-submit callback
 function showResponse(responseText, statusText, xhr, $form) {
 	NProgress.done();
 	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Enregistré.");
@@ -98,27 +103,25 @@ function showResponse(responseText, statusText, xhr, $form) {
 
 var initalizeForm = function() {
 	window.ioptions = {
-	target: '#form-result', // target element(s) to be updated with server response 
-	beforeSubmit: showRequest, // pre-submit callback 
-	success: showResponse, // post-submit callback 
-	url: "User/updatecompetence",
-	type: "post"       // 'get' or 'post', override for form's 'method' attribute 
-};
+		target: '#form-result', // target element(s) to be updated with server response
+		beforeSubmit: showRequest, // pre-submit callback
+		success: showResponse, // post-submit callback
+		url: "User/updatecompetence",
+		type: "post"       // 'get' or 'post', override for form's 'method' attribute
+	};
 
-$('div[data-role="form-container"] form').submit(function() {
-	// inside event callbacks 'this' is the DOM element so we first 
-	// wrap it in a jQuery object and then invoke ajaxSubmit 
-	$(this).ajaxSubmit(window.ioptions);
-
-	// !!! Important !!! 
-	// always return false to prevent standard browser submit and page navigation 
-	return false;
-});
-addClearItems();
+	$('div[data-role="form-container"] form').submit(function() {
+		// inside event callbacks 'this' is the DOM element so we first
+		// wrap it in a jQuery object and then invoke ajaxSubmit
+		$(this).ajaxSubmit(window.ioptions);
+		return false;
+	});
+	addClearItems();
 
 };
+Muffin.initalizeForm = initalizeForm;
 
-// pre-submit callback 
+// pre-submit callback
 function showAddRequest(formData, jqForm, options) {
 	NProgress.start();
 	$('a[role="indicator"]').html("<span class='icon-hourglass'></span> Ajout...");
@@ -127,7 +130,7 @@ function showAddRequest(formData, jqForm, options) {
     return true;
 }
 
-// post-submit callback 
+// post-submit callback
 function showAddResponse(responseText, statusText, xhr, $form) {
 	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Ajouté.");
 	$("#input-nom-comp + button").html("<span class='icon-chevron-right'></span>");
@@ -149,40 +152,35 @@ function showAddResponse(responseText, statusText, xhr, $form) {
 		return false;
 	});
 	addClearItems();
-	setTimeout(function() {
-		$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
-		NProgress.done();
-		a.addClass("complete").removeClass("preparing");
-	}, 1000);
+	$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: a});
+	NProgress.done();
+	a.addClass("complete").removeClass("preparing");
 }
 
 var initalizeAddForm = function() {
 	var options = {
-	target: '#form-result', // target element(s) to be updated with server response 
-	beforeSubmit: showAddRequest, // pre-submit callback 
-	success: showAddResponse, // post-submit callback 
-	url: "User/addcompetence",
-	type: "post"        // 'get' or 'post', override for form's 'method' attribute 
-};
+		target: '#form-result', // target element(s) to be updated with server response
+		beforeSubmit: showAddRequest, // pre-submit callback
+		success: showAddResponse, // post-submit callback
+		url: "User/addcompetence",
+		type: "post"        // 'get' or 'post', override for form's 'method' attribute
+	};
 
-$('#form-add-competence').submit(function() {
-	// inside event callbacks 'this' is the DOM element so we first 
-	// wrap it in a jQuery object and then invoke ajaxSubmit 
-	console.log("initialized");
-	var e = document.getElementById('form-add-competence');
-	if (e.checkValidity())
-	{
-		$(this).ajaxSubmit(options);
-	}
-	else
-	{
-
-	}
-    // !!! Important !!! 
-    // always return false to prevent standard browser submit and page navigation 
-    return false;
-});
+	$('#form-add-competence').submit(function() {
+		// inside event callbacks 'this' is the DOM element so we first
+		// wrap it in a jQuery object and then invoke ajaxSubmit
+		console.log("initialized");
+		var e = document.getElementById('form-add-competence');
+		if (e.checkValidity())
+		{
+			$(this).ajaxSubmit(options);
+		}
+	    // !!! Important !!!
+	    // always return false to prevent standard browser submit and page navigation
+	    return false;
+	});
 };
+Muffin.initalizeAddForm = initalizeAddForm;
 
 var initializePanelMenu = function()
 {
@@ -196,6 +194,7 @@ var initializePanelMenu = function()
 		treatResize();
 	});
 };
+Muffin.initializePanelMenu = initializePanelMenu;
 
 var initializeHelpMenu = function()
 {
@@ -233,6 +232,7 @@ var initializeHelpMenu = function()
 		});
 	});
 };
+Muffin.initializeHelpMenu = initializeHelpMenu;
 
 var queryUserStatus = function()
 {
@@ -265,7 +265,8 @@ var queryUserStatus = function()
 		ct.removeClass("loading");
 		$("[role='indicator']").html("A jour");
 	});
-}
+};
+Muffin.queryUserStatus = queryUserStatus;
 
 var markLastNotificationAsRead = function()
 {
@@ -278,6 +279,7 @@ var markLastNotificationAsRead = function()
 		window.intervalHandler = setInterval(notifications,10000);
 	});
 }
+Muffin.markLastNotificationAsRead = markLastNotificationAsRead;
 
 var checkNotifications = function()
 {
@@ -309,10 +311,11 @@ var checkNotifications = function()
 		n.html("<span class='icon-elipse'></span><span class='not-num'>" + e + "</span>");
 	});
 }
+Muffin.checkNotifications = checkNotifications;
 
 var notifications = function()
 {
-	checkNotifications(); 
+	checkNotifications();
 	var n = $("#notif-aera");
 	n.click(function()
 	{
@@ -323,6 +326,7 @@ var notifications = function()
 		});
 	});
 }
+Muffin.notifications = notifications;
 
 var addClearItems = function()
 {
@@ -364,6 +368,7 @@ var addClearItems = function()
      	});
      });
  };
+Muffin.addClearItems = addClearItems;
 
  var treatResize = function()
  {
@@ -376,6 +381,7 @@ var addClearItems = function()
  		$(".footer-container").removeClass("nofix");
  	}
  };
+Muffin.treatResize = treatResize;
 
  var afterUserUpdate = function(responseText, statusText, xhr, $form) {
  	console.log("after");
@@ -390,88 +396,165 @@ var addClearItems = function()
  		$("#status_public_icon").removeClass("icon-clock3").addClass("icon-multiply");
  		$("#status_update_uid").html(responseText);
  	}
+ 	Muffin.updateSemaphore = false
  };
+Muffin.afterUserUpdate = afterUserUpdate;
 
- var initFormComportement = function()
- {
+Muffin.updateSemaphore = false;
+
+var initFormComportement = function()
+{
  	$('#form_search_uid').submit(function(e) {
  		e.stopImmediatePropagation();
  		window.muffin.searchUSerData();
  		return false;
  	});
 
- 	$('#form_params').submit(function() {
+ 	$('#form_params').submit(function(e) {
 
- 		var options = {
-	    target: '#form-result', // target element(s) to be updated with server response 
-	    beforeSubmit: function() {
-	    	$("#status_public_icon").removeClass("icon-uniF488")
-	    	.removeClass("icon-multiply")
-	    	.removeClass("icon-checkmark2")
-	    	.addClass("icon-clock3");
-	}, // pre-submit callback 
-	success: afterUserUpdate, // post-submit callback 
-	url: "User/update",
-	type: "post"        // 'get' or 'post', override for form's 'method' attribute 
+ 		e.stopImmediatePropagation();
+ 		if (Muffin.updateSemaphore == false)
+ 		{
+ 			Muffin.updateSemaphore = true;
+	 		var options = {
+			    target: '#form-result', // target element(s) to be updated with server response
+			    beforeSubmit: function() {
+			    	$("#status_public_icon").removeClass("icon-uniF488")
+			    	.removeClass("icon-multiply")
+			    	.removeClass("icon-checkmark2")
+			    	.addClass("icon-clock3");
+				}, // pre-submit callback
+				success: afterUserUpdate, // post-submit callback
+				url: "User/update",
+				type: "post"        // 'get' or 'post', override for form's 'method' attribute
+			};
+
+			console.log("update");
+			$(this).ajaxSubmit(options);
+		}
+		return false;
+	});
+};
+Muffin.initFormComportement = initFormComportement;
+
+var mainHeadLink = function()
+{
+	$("header > h1.title").click(function()
+	{
+		goToUrl("User/me");
+	});
+}
+Muffin.mainHeadLink = mainHeadLink;
+
+
+
+var reloadHandlers = function()
+{
+	NProgress.configure({showSpinner: false});
+	$("a").smoothScroll();
+	treatResize();
+	$(window).resize(treatResize);
+	bindAjaxEvents();
+    initalizeAddForm();
+	initFormComportement();
+	initializePanelMenu();
+	initializeHelpMenu();
+	notifications();
+	mainHeadLink();
+
+
+	try
+	{
+		queryUserStatus();
+	}
+	catch(e)
+	{
+		;
+	}
+
+	$("[data-toggle='tooltip']").tooltip(
+	{
+		container: "body",
+		placement: "auto bottom"
+	});
+
+	$('aside.side-menu > ul').affix(
+	{
+		offset: {
+			top: 231,
+			bottom: function() {
+				return (this.bottom = $('.footer-container').outerHeight(true));
+			}
+		}
+	});
+
+};
+Muffin.reloadHandlers = reloadHandlers;
+
+ 	/* -----------------------------------------------------------------------------------
+ 	  |                           CHARTS SPECIFIC FUNCTIONS                               |
+ 	   ----------------------------------------------------------------------------------- */
+
+Muffin.charts = {};
+Muffin.charts.prepareLegend = function(leg, gdata)
+{
+	leg.html("");
+	for (var i = 0; i < gdata.length; i++)
+	{
+		leg.append(
+			'<p><span style="color: '
+				+ gdata[i].color + ';" class="icon-uniF52F"></span> <b>'
+				+ gdata[i].value + ' </b> ' + gdata[i].legend + '</p>');
+	};
 };
 
-console.log("update");
-$(this).ajaxSubmit(options);
+Muffin.charts.drawTopTen = function(data, max)
+{
+	var gdata = data;
 
-return false;
-});
- };
+	if (max % 5 != 0)
+	{
+		max = max + 5 - (max % 5);
+	}
 
- var mainHeadLink = function()
- {
- 	$("header > h1.title").click(function()
- 	{
- 		goToUrl("User/me");
- 	});
- }
+	var ctx = $("#chart-top-users").get(0).getContext("2d");
 
+	new Chart(ctx).Bar(data, {
+	 	scaleOverlay : true,
 
+		//Boolean - If we want to override with a hard coded scale
+		scaleOverride : true,
 
- var reloadHandlers = function()
- {
- 	NProgress.configure({showSpinner: false});
- 	$("a").smoothScroll();
- 	treatResize();
- 	$(window).resize(treatResize);
- 	bindAjaxEvents();
- 	initFormComportement();
- 	initializePanelMenu();
- 	initializeHelpMenu();
- 	notifications();
- 	mainHeadLink();
+		//** Required if scaleOverride is true **
+		//Number - The number of steps in a hard coded scale
+		scaleSteps : 5,
+		//Number - The value jump in the hard coded scale
+		scaleStepWidth : max / 5,
+		//Number - The scale starting value
+		scaleStartValue : 0,
+	});
+}
 
- 	window.clearInterval(window.intervalHandler);
- 	window.intervalHandler = setInterval(notifications,5000);
+Muffin.charts.drawInscrits = function(data)
+{
+	var gdata = data;
 
- 	try
- 	{
- 		queryUserStatus();
- 	}
- 	catch(e)
- 	{
- 		;
- 	}
+	var showLegend = function()
+	{
+		var leg = $(".stats-inscrits-legend");
+		leg.addClass("complete").removeClass("loading");
+		$(".stats-big-number.loading").addClass("complete").removeClass("loading");
+	};
 
- 	$("[data-toggle='tooltip']").tooltip(
- 	{
- 		container: "body",
- 		placement: "auto bottom"
- 	});
+	Muffin.charts.prepareLegend($(".stats-inscrits-legend"), gdata);
+	var ctx = $("#chart-inscrits").get(0).getContext("2d");
 
- 	$('aside.side-menu > ul').affix(
- 	{
- 		offset: {
- 			top: 231,
- 			bottom: function() {
- 				return (this.bottom = $('.footer-container').outerHeight(true));
- 			}
- 		}
- 	});
- };
+	new Chart(ctx).Doughnut(data,
+		{
+			segmentStrokeColor: "#F7E4BE",
+			animationEasing : "easeOutBounce"
+		});
+	showLegend();
+}
 
 

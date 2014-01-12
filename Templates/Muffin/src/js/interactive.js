@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 lambda2.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -112,7 +112,8 @@
 			{
 				{
 					$.get("User/index",
-						function(data) {
+						function(data)
+						{
 							$("#input-code").attr("disabled", "disabled");
 							$("#input-code + button").attr("disabled", "disabled")
 								.html("<span class='icon-checkmark'></span>");
@@ -120,11 +121,15 @@
 							data.addClass("loading");
 							$("div[data-role='container']").children().slideUp();
 							$("div[data-role='container']").html(data);
+							var headerToolbar = $("#main-head-toolbar");
+							if (headerToolbar.children().length == 0)
+							{
+								headerToolbar.html('<a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera"></a><a class="btn" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a><a class="btn" role="indicator">À jour</a>');
+					            console.log("Toolbar updated !");
+							}
 							reloadHandlers();
-							setTimeout(function() {
-								NProgress.done();
-								data.addClass("complete");
-							}, 200);
+							NProgress.done();
+							data.addClass("complete");
 						});
 				}
 			}

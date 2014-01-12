@@ -22,7 +22,7 @@
  *
  * (c) 2013 Lambdaweb - www.lambdaweb.fr
  *
- * 
+ *
  * @author lambda2
  */
 
@@ -64,16 +64,43 @@ class User extends Controller
 	    echo("{}");
     }
 
+    private function dataIsUpToDate()
+    {
+        Core::getBdd()->update (array("verifie" => 1), 'c_user', array ("id" => $_SESSION['muffin_id']));
+    }
+
+    private function dataIsNotUpToDate()
+    {
+        Core::getBdd()->update (array("verifie" => 0), 'c_user', array ("id" => $_SESSION['muffin_id']));
+    }
+
     /**
      * @Ajax
      */
     public function me ($params)
     {
-        $formDataJson = $this->generateJsFormData ();
-        $checkedRadios = $this->getCheckedRadios ();
-        $this->addData ('formDataJson', $formDataJson);
-        $this->addData ('checkedRadios', $checkedRadios);
-        $this->render ('user.index.me');
+        $is_cached_q = "SELECT verifie as v FROM c_user WHERE id = ".$_SESSION['muffin_id'].";";
+        $bd = Core::getBdd()->getDb();
+        $is_cached = 0 + $bd->query($is_cached_q)->fetchObject()->v;
+        $r = "";
+
+        if ($is_cached)
+        {
+            $s = false;
+            $r = apc_fetch($_SESSION['muffin_id']."_me", $s);
+        }
+        else
+        {
+            $formDataJson = $this->generateJsFormData ();
+            $checkedRadios = $this->getCheckedRadios ();
+            $this->addData ('formDataJson', $formDataJson);
+            $this->addData ('checkedRadios', $checkedRadios);
+            $r = $this->getRenderedHtml('user.index.me');
+            apc_store($_SESSION['muffin_id']."_me", $r);
+            $this->dataIsUpToDate();
+        }
+
+        echo ($r);
     }
 
     public function update ($params)
@@ -93,6 +120,7 @@ class User extends Controller
                     Core::getBdd ()->update (
                             array ("pass" => sha1 ($new_pass)), 'c_user', array ("id" => $_SESSION['muffin_id']));
                         echo "1";
+                    $this->dataIsNotUpToDate();
                 }
                 else
                     echo "Les deux mots de passe doivent correspondre";
@@ -133,6 +161,7 @@ class User extends Controller
                 "want_to_teach" => $wtt == null ? '0' : $wtt);
             $res = Core::getBdd ()->update (
                     $u, 'c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
+            $this->dataIsNotUpToDate();
         }
         else
         {
@@ -141,6 +170,7 @@ class User extends Controller
                 "want_to_learn" => $wtl == null ? '0' : $wtl,
                 "want_to_teach" => $wtt == null ? '0' : $wtt);
             $res = Core::getBdd ()->insert ($i, 'c_user_competences');
+            $this->dataIsNotUpToDate();
         }
         ($res != 0) ? ($ret = "1") : ($ret = "0");
         echo $ret;
@@ -151,6 +181,7 @@ class User extends Controller
         $id = $this->filterPost ('id_competence');
         $res = Core::getBdd ()->delete ('c_user_competences', array ("id_user" => $_SESSION['muffin_id'], "id_competence" => $id));
         ($res != 0) ? ($ret = "1") : ($ret = "0");
+        $this->dataIsNotUpToDate();
         echo $ret;
     }
 
@@ -174,6 +205,7 @@ class User extends Controller
                     "nom_usuel" => $nom_joli, "description" => $description,
                     "type_competence" => $type, "icone" => $icone), 'c_competences') )
         {
+            $this->dataIsNotUpToDate();
             $this->addOrUpdateTags ($id, json_decode ($_POST["modal-new-comp-tags"]));
             $nom_joli = ucfirst (htmlentities ($nom_joli));
             $new = Moon::get ("c_competences", "id_competence", $id);
@@ -210,7 +242,7 @@ class User extends Controller
      * décrite en parametre
      * @param Entity $elt l'objet de l'élément, généré par Moon::getAllHeavy
      * @return string le code Json
-     * 
+     *
      * @see Moon#getAllHeavy
      */
     protected function getJsonCodeForElement ($elt)

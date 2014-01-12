@@ -22,7 +22,7 @@
  *
  * (c) 2013 Lambdaweb - www.lambdaweb.fr
  *
- * 
+ *
  * @author lambda2
  */
 
@@ -36,9 +36,9 @@ class Login extends Controller
 
     /**
      * Va enregistrer l'utilisateur en parametre de l'url.
-     * 
+     *
      * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
-     * 
+     *
      * @PathInfo('login')
      * @Ajax
      */
@@ -49,27 +49,42 @@ class Login extends Controller
 
         // On récupère le login fourni dans l'url
         $login = $this->getUrlParam ('login');
-
-        // On génère le mot de passe
-        $pass = $this->generatePassPhrase ();
-
-        // Le hash qui sera dans la bdd
-        $shapass = sha1 (trim (strtolower ($pass)));
+        $type = "student";
 
         // Liste des élèves 42 avec ce login
         $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
 
+        // On génère le mot de passe
+        $pass = $this->generatePassPhrase ();
+
+        if ($student->current())
+        {
+            if ($student->current()->type == "staff")
+            {
+                $type = "staff";
+            }
+        }
+        else
+        {
+            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 0);
+            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 3, "/home/lambda2/logs/muffin.unknown_users");
+            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 3, "/var/log/httpd/muffin.unknown_users");
+        }
+        // Le hash qui sera dans la bdd
+        $shapass = sha1 (trim (strtolower ($pass)));
+
         // Liste des élèves inscrits avec le même login
         $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
-
-        // On récupère le template du message
-        $m = $this->getInscriptionEmailTemplate ($login, $pass);
 
         if ( !count ($student) )
             echo "-2";
         else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
         {
-			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass));
+            if ($type == "staff")
+                $m = "\&m\=".urlencode($student->current()->mail);
+            else
+                $m = "";
+			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass).$m);
             /*
             // Si on arrive à envoyer le mail, alors on affiche 1
             if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
@@ -85,9 +100,9 @@ class Login extends Controller
 
     /**
      * Va update le pass de l'utilisateur en parametre de l'url.
-     * 
+     *
      * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
-     * 
+     *
      * @PathInfo('login')
      * @Ajax
      */
@@ -98,6 +113,7 @@ class Login extends Controller
 
         // On récupère le login fourni dans l'url
         $login = $this->getUrlParam ('login');
+        $type = "student";
 
         // On génère le mot de passe
         $pass = $this->generatePassPhrase ();
@@ -108,13 +124,21 @@ class Login extends Controller
         // Liste des élèves inscrits avec le même login
         $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
 
-        // On récupère le template du message
-        $m = $this->getUpdateEmailTemplate ($login, $pass);
+        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
+
+        if ($student->current() && $student->current()->type == "staff")
+        {
+            $type = "staff";
+        }
 
         if ( count ($loginsExists) and Core::getBdd ()->update (
                         array ("pass" => $shapass), 'c_user', array ("login" => $login)) )
         {
-			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass));
+            if ($type == "staff")
+                $m = "\&m\=".urlencode($student->current()->mail);
+            else
+                $m = "";
+            shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass).$m);
             /*
             // Si on arrive à envoyer le mail, alors on affiche 1
             if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
@@ -131,9 +155,9 @@ class Login extends Controller
     /**
      * Va afficher une représentation json de l'utilisateur,
      * comprenant le nom et le prénom.
-     * 
+     *
      * @return un json {nom : -, prenom: -}
-     * 
+     *
      * @PathInfo('login')
      * @Ajax
      */
