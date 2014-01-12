@@ -306,6 +306,11 @@ class User extends Controller
         return implode (",", $datas);
     }
 
+	public function addkeyword($params)
+	{
+		$this->render();
+	}
+
     /*   =======================================================================
      *        Toutes les fonctions concernant les tags de compétences
      *   =======================================================================
