@@ -21,7 +21,7 @@
             <label data-toggle="tooltip" title="Je peux aider !" class="want-to-teach" for="wtt_{{ name }}"></label>
         <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
             <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
-				<div>
+				<div id="keywords-container-{{ name }}">
 					<input type="text" class="visible helpbox keywords-{{name}}" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
 					<div class="helpbox-counter">35</div>
 					<div class="submit-button-{{name}} helpbox-send">
@@ -43,11 +43,22 @@
 
 						$("#wtl_{{name}}").click(function()
 						{
-							if ($(this).value != "1")
+							console.log("click chapo");
+							if ($(this).is(":checked"))
 							{
+								console.log("le chapo est check");
+								$("#keywords-container-{{ name }}").show();
+							/*
 								$(this).next().next().css("display", "inline-block", "!important");
 								$(this).next().next().next().css("display", "inline-block");
 								$(this).next().next().next().next().css("display", "inline-block");
+
+								*/
+							}
+							else
+							{
+								console.log("le chapo est pas check");
+								$("#keywords-container-{{ name }}").hide();
 							}
 						});
 
