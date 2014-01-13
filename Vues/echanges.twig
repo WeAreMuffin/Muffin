@@ -29,9 +29,11 @@
 
 				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+
 				{% if comp.wtl_keyword != "general" %}
 					<div class="helpbox keywords">{{comp.wtl_keyword}}</div>
 				{% endif %}
+
 				{# Gestion des status en cours #}
 				{% if comp.id_propose == NULL %}
 					<a class="btn right proposer" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">Proposer</a>

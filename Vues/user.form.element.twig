@@ -24,18 +24,16 @@
 				<div>
 					<input type="text" class="visible helpbox keywords-{{name}}" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
 					<div class="helpbox-counter">35</div>
-					<div class="submit-button-{{name}}">
+					<div class="submit-button-{{name}} helpbox-send">
 						<a class="button" name="Ok">Ok</a>
 					</div>
 					<script>
 						$("div.submit-button-{{name}}").click(function()
 						{
-							var keywords = $("input.keywords-{{name}}").val();
-							var id_comp = "{{id_competence}}";
 							$.ajax({
 								type: "POST",
 								url: "User/addkeyword",
-								data: {"id_competence" : id_comp, "keywords" : keywords},
+								data: {"id_competence": {{id_competence}}, "keywords": $("input.keywords-{{name}}")},
 								success: function(ret)
 								{
 									console.log("Succes !", ret);
