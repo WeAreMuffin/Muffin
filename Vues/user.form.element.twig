@@ -47,11 +47,13 @@
 
 						$("body").click(function()
 						{
+							console.log("click sur body");
 							$(".keywords-container").hide();
 						});
 
 						$("#wtl_{{name}}").click(function()
 						{
+							console.log("click sur le chapeau");
 							if ($(this).is(":checked"))
 							{
 								$(".keywords-container").hide();
