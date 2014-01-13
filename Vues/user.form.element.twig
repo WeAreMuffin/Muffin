@@ -47,6 +47,7 @@
 
 						$("#wtl_{{name}}").click(function()
 						{
+							$(".keywords-container").hide();
 							if ($(this).is(":checked"))
 								$("#keywords-container-{{name}}").show();
 							else
