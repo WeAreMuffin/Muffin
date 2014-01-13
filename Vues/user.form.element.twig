@@ -43,9 +43,9 @@
 
 						$("#wtl_{{name}}").click(function()
 						{
-							$(".helpbox.keywords-{{name}}").css("display", "inline-block");
-							$("div.helpbox-counter").css("display", "inline-block");
-							$("div.submit-button-{{name}}").css("display", "inline-block");
+							$(this).next().next().css("display", "inline-block", "!important");
+							$(this).next().next().next().css("display", "inline-block");
+							$(this).next().next().next().next().css("display", "inline-block");
 						});
 
 						$("div.submit-button-{{name}}").click(function()
