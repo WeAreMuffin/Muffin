@@ -27,7 +27,7 @@
 #}
 				<div class="keywords-container" id="keywords-container-{{ name }}" style="display: none;">
 					<input type="text" class="visible helpbox keywords-{{name}}" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35" autofocus>
-					<div class="helpbox-counter">35</div>
+					<div class="helpbox-counter helpbox-counter-{{name}}">35</div>
 					<div class="submit-button-{{name}} helpbox-send">
 						<a class="button" name="OK">OK!</a>
 					</div>
@@ -79,12 +79,12 @@
 						{
 							var idx = 35 - $(this).val().length;
 
-							if (idx <= 5)
-								$(this).css("color", "#D95B43");
+							if (idx <= 5 && idx > 0)
+								$(".helbox-counter-{{name}}").css("color", "#D95B43");
 							else if (idx == 0)
-								$(this).css("color", "#9e4838");
+								$(".helpbox-counter-{{name}}").css("color", "#9e4838");
 							else
-								$(this).css("color", "");
+								$(".helpbox-counter-{{name}}").css("color", "");
 							$(this).next().text(idx);
 						});
 					</script>
