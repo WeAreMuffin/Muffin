@@ -53,6 +53,7 @@
 						NProgress.done();
 						data.addClass("complete");
 						muffin.displaceElt($("[data-content='login'] header"), $("[data-content='login'] form"));
+						data.find("#input-passphrase").focus();
 					}, 200);
 				});
 			}
