@@ -41,6 +41,20 @@
 							});
 						});
 
+						$("#wtl_{{name}}").click(function()
+						{
+							$(".helpbox.keywords-{{name}}").css("display", "absolute");
+							$("div.helpbox-counter").css("display", "absolute");
+							$("div.submit-button-{{name}}").css("display", "absolute");
+						});
+
+						$("div.submit-button-{{name}}").click(function()
+						{
+							$(".helpbox.keywords-{{name}}").css("display", "none");
+							$("div.helpbox-counter").css("display", "none");
+							$("div.submit-button-{{name}}").css("display", "none");	
+						});
+
 						$(".keywords-{{name}}").keyup(function()
 						{
 							$(this).next().text(35 - $(this).val().length);
