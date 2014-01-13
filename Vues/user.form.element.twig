@@ -43,30 +43,18 @@
 
 						$("#wtl_{{name}}").click(function()
 						{
-							console.log("click chapo");
 							if ($(this).is(":checked"))
-							{
-								console.log("le chapo est check");
-								$("#keywords-container-{{ name }}").show();
-							/*
-								$(this).next().next().css("display", "inline-block", "!important");
-								$(this).next().next().next().css("display", "inline-block");
-								$(this).next().next().next().next().css("display", "inline-block");
-
-								*/
-							}
+								$("#keywords-container-{{name}}").show();
 							else
-							{
-								console.log("le chapo est pas check");
-								$("#keywords-container-{{ name }}").hide();
-							}
+								$("#keywords-container-{{name}}").hide();
 						});
 
 						$("div.submit-button-{{name}}").click(function()
 						{
-							$(".helpbox.keywords-{{name}}").css("display", "none");
-							$("div.helpbox-counter").css("display", "none");
-							$("div.submit-button-{{name}}").css("display", "none");	
+							NProgress.start();
+							$("[role='indicator']").html("<span class'icon-checkmark2'></span> Enregistré.");
+							NProgress.done();
+							$("#keywords-container-{{name}}").hide();
 						});
 
 						$(".keywords-{{name}}").keyup(function()
