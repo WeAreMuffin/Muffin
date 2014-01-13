@@ -47,14 +47,12 @@
 
 						$("body").click(function()
 						{
-							console.log("click sur body");
 							$(".keywords-container").hide();
 						});
 
 						$("#wtl_{{name}}").click(function(e)
 						{
 							e.stopImmediatePropagation();
-							console.log("click sur le chapeau");
 							if ($(this).is(":checked"))
 							{
 								$(".keywords-container").hide();
@@ -70,6 +68,11 @@
 							$("[role='indicator']").html("<span class='icon-checkmark2'></span> Enregistré.");
 							NProgress.done();
 							$("#keywords-container-{{name}}").hide();
+						});
+
+						$(".keywords-{{name}}").click(function(e)
+						{
+							e.stopImmediatePropagation();
 						});
 
 						$(".keywords-{{name}}").keyup(function()
