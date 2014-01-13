@@ -21,7 +21,7 @@
             <label data-toggle="tooltip" title="Je peux aider !" class="want-to-teach" for="wtt_{{ name }}"></label>
         <input type="checkbox" name="want_to_learn" id="wtl_{{ name }}" value="1" {{ wtl_checked }}>
             <label data-toggle="tooltip" title="J'ai besoin d'aide !" class="want-to-learn" for="wtl_{{ name }}"></label>
-				<div id="keywords-container-{{ name }}" style="display: none;">
+				<div class="keywords-container" id="keywords-container-{{ name }}" style="display: none;">
 					<input type="text" class="visible helpbox keywords-{{name}}" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
 					<div class="helpbox-counter">35</div>
 					<div class="submit-button-{{name}} helpbox-send">
