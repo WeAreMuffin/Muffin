@@ -47,9 +47,11 @@
 
 						$("#wtl_{{name}}").click(function()
 						{
-							$(".keywords-container").hide();
 							if ($(this).is(":checked"))
+							{
+								$(".keywords-container").hide();
 								$("#keywords-container-{{name}}").show();
+							}
 							else
 								$("#keywords-container-{{name}}").hide();
 						});
