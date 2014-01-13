@@ -101,9 +101,21 @@
 			border-left: 1px solid #413E4A;
 			padding-right: 5px;
 		}
-
-		.keywords-container
+		.keywords-container.closed
 		{
+			border: 1px solid #413E4A;
+			opacity: 0;
+			display: block;
+			position: absolute;
+			background-color: #F7E4BE;
+			z-index: 997;
+			right: -365px;
+			top: 43px;
+		}
+
+		.keywords-container.opened
+		{
+			opacity: 1;
 			border: 1px solid #413E4A;
 			display: block;
 			position: absolute;

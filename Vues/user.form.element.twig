@@ -55,11 +55,11 @@
 							e.stopImmediatePropagation();
 							if ($(this).is(":checked"))
 							{
-								$(".keywords-container").hide();
-								$("#keywords-container-{{name}}").show();
+								$(".keywords-container").addClass("closed").removeClass("opened");
+								$("#keywords-container-{{name}}").removeClass("closed").addClass("opened");
 							}
 							else
-								$("#keywords-container-{{name}}").hide();
+								$("#keywords-container-{{name}}").addClass("closed").removeClass("opened");
 						});
 
 						$("div.submit-button-{{name}}").click(function()
@@ -67,7 +67,7 @@
 							NProgress.start();
 							$("[role='indicator']").html("<span class='icon-checkmark2'></span> Enregistré.");
 							NProgress.done();
-							$("#keywords-container-{{name}}").hide();
+							$("#keywords-container-{{name}}").addClass("closed").removeClass("opened");
 						});
 
 						$(".keywords-{{name}}").click(function(e)
