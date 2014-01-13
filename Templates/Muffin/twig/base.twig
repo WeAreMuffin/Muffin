@@ -40,38 +40,40 @@
 	<style>
 		.visible.helpbox
 		{
-			width: 288px;
 			display: inline-block;
+			width: 288px;
 			padding-right: 22px;
 			opacity: 1;
 		}
 
 		.helpbox-counter
 		{
-			width: 30px;
+			display: inline-block;
 			position: relative;
+			width: 30px;
 			left: -32px;
 			top: 0;
-			display: inline-block;
 		}
 
 		.helpbox-send
 		{
-			cursor: pointer;
-			position: relative;
-			left: -7px;
 			display: inline-block;
+			position: relative;
+			cursor: pointer;
+			left: -7px;
 			color: #D95B43;
 		}
 
 		.keywords-container
 		{
 			display: block;
-			background-color: #F7E4BE;
-			z-index: 1000;
 			position: absolute;
+			background-color: #F7E4BE;
+			-moz-border-radius: 25px 10px / 10px 25px;
+			border-radius: 25px 10px / 10px 25px;
+			z-index: 1000;
 			right: -350px;
-			top: 45px;
+			top: 35px;
 		}
 
 		.helpbox.keywords.to_print
