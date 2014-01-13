@@ -77,7 +77,15 @@
 
 						$(".keywords-{{name}}").keyup(function()
 						{
-							$(this).next().text(35 - $(this).val().length);
+							var idx = 35 - $(this).val().length;
+
+							if (idx <= 5)
+								$(this).css("color", "#D95B43");
+							else if (idx == 0)
+								$(this).css("color", "#9e4838");
+							else
+								$(this).css("color", "");
+							$(this).next().text(idx);
 						});
 					</script>
 				</div>
