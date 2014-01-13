@@ -51,8 +51,9 @@
 							$(".keywords-container").hide();
 						});
 
-						$("#wtl_{{name}}").click(function()
+						$("#wtl_{{name}}").click(function(e)
 						{
+							e.stopImmediatePropagation();
 							console.log("click sur le chapeau");
 							if ($(this).is(":checked"))
 							{
