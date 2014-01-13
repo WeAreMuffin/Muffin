@@ -26,7 +26,7 @@
 	Debut du conteneur pour les keywords
 #}
 				<div class="keywords-container closed" id="keywords-container-{{ name }}">
-					<input type="text" class="visible helpbox keywords-{{name}}" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35" autofocus>
+					<input type="text" class="visible helpbox keywords-{{name}}" name="HelpBox" size ="26" placeholder="Décrivez rapidement votre problème" maxlength="35">
 					<div class="helpbox-counter helpbox-counter-{{name}}">35</div>
 					<div class="submit-button-{{name}} helpbox-send">
 						<a class="button" name="OK">OK!</a>
@@ -55,6 +55,7 @@
 							e.stopImmediatePropagation();
 							if ($(this).is(":checked"))
 							{
+								$(.keywords-{{name}}).focus();
 								$(".keywords-container").addClass("closed").removeClass("opened");
 								$("#keywords-container-{{name}}").removeClass("closed").addClass("opened");
 							}
