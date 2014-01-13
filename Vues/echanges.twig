@@ -30,7 +30,7 @@
 				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
 
-				{% if comp.wtl_keyword != "general" %}
+				{% if comp.wtl_keyword != "general" and comp.resume != "bien" and comp.resume != "pasbien" %}
 					<div class="helpbox keywords to_print">{{comp.wtl_keyword}}</div>
 				{% endif %}
 
