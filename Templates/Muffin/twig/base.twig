@@ -31,9 +31,111 @@
 
     {% block css_includes %}
     <!-- Le styles -->
+
     {% for stylesheet in webdata.stylesheets %}
     <link href="{{ webdata.base }}{{ stylesheet }}" rel="stylesheet">
     {% endfor %}
+
+
+	<style>
+		.visible.helpbox
+		{
+			border: none;
+			display: inline-block;
+			width: 270px;
+			opacity: 1;
+		}
+
+		.helpbox-counter
+		{
+			display: inline-block;
+			position: relative;
+			width: 30px;
+			top: 0;
+		}
+
+		.helpbox-send:hover
+		{
+			background-color: rgba(217, 91, 67, 0.05);
+		}
+
+		.keywords-container {
+			position: relative;
+			background: #F7E4BE;
+			border: 1px solid #413E4A;
+		}
+
+		.keywords-container:after, .keywords-container:before {
+			right: 100%;
+			top: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		.keywords-container:after {
+			border-color: rgba(247, 228, 190, 0);
+			border-right-color: #F7E4BE;
+			border-width: 5px;
+			margin-top: -5px;
+		}
+
+		.keywords-container:before {
+			border-color: rgba(65, 62, 74, 0);
+			border-right-color: #413E4A;
+			border-width: 6px;
+			margin-top: -6px;
+		}
+
+		.helpbox-send
+		{
+			display: inline-block;
+			cursor: pointer;
+			padding-left: 5px;
+			color: #D95B43;
+			margin: auto;
+			text-align: center;
+			border-left: 1px solid #413E4A;
+			padding-right: 5px;
+		}
+		.keywords-container.closed
+		{
+			transition: all 0.4s;
+			border: 1px solid #413E4A;
+			opacity: 0;
+			position: absolute;
+			background-color: #F7E4BE;
+			z-index: -500;
+			right: -375px;
+			top: 43px;
+		}
+
+		.keywords-container.opened
+		{
+			transition: all 0.4s;
+			opacity: 1;
+			border: 1px solid #413E4A;
+			display: block;
+			position: absolute;
+			background-color: #F7E4BE;
+			z-index: 997;
+			right: -345px;
+			top: 43px;
+		}
+
+		.helpbox.keywords.to_print
+		{
+			display: inline-block;
+			text-align: center;
+			padding-left: 60px;
+			font-size: 16px;
+		}
+	</style>
+
+
 
     {% endblock %}
 

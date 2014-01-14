@@ -9787,6 +9787,10 @@ div[data-role="form-container"] form input {
   display: none;
   opacity: 0;
 }
+div[data-role="form-container"] form input .visible {
+  display: block;
+  opacity: 1;
+}
 div[data-role="form-container"] .breaker {
   display: block;
 }
@@ -10358,6 +10362,11 @@ h1.title-remain,
   h3 {
     page-break-after: avoid;
   }
+}
+div[data-role="form-container"] form input.visible,
+div[data-role="form-container"] form .visible > * {
+  display: inline-block;
+  opacity: 1;
 }
 /*
  * Pour les média queries délicates.

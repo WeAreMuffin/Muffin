@@ -306,6 +306,26 @@ class User extends Controller
         return implode (",", $datas);
     }
 
+	public function addkeyword($params)
+	{
+		$id_competence = $this->filterPost("id_competence");
+		$keywords = $this->filterPost("keywords");
+		if ($id_competence)
+		{
+			if ($keywords == NULL)
+				$keywords = "general";
+			if (Core::getBdd()->update(
+					array("wtl_keyword" => $keywords),
+					"c_user_competences",
+					array("id_user" => $_SESSION['muffin_id'], "id_competence" => $id_competence)))
+			{
+				echo "1";
+			}
+			else
+				echo "0";
+		}
+	}
+
     /*   =======================================================================
      *        Toutes les fonctions concernant les tags de compétences
      *   =======================================================================

@@ -11,14 +11,15 @@
 		{% set section = "" %}
 		<ul data-role="liste-competences">
 			{% for comp in users_to_help %}
-			{% if section != comp.nom_competence %}
-			{% set section = comp.nom_competence %}
-			<li class="competence-summary">
-				<div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
-				<b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
-			</li>
-			{% endif %}
-			<li class="competence-tabbed" data-ct="{{ section }}">
+
+				{% if section != comp.nom_competence %}
+				    {% set section = comp.nom_competence %}
+				    <li class="competence-summary">
+					    <div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
+					    <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+				    </li>
+				{% endif %}
+				<li class="competence-tabbed" data-ct="{{ section }}">
 
 				{% if comp.resume == "accepte" %}
 					<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
@@ -28,6 +29,10 @@
 
 				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
+
+				{% if comp.wtl_keyword != "general" and comp.resume != "bien" and comp.resume != "pasbien" %}
+					<div class="helpbox keywords to_print">{{comp.wtl_keyword}}</div>
+				{% endif %}
 
 				{# Gestion des status en cours #}
 				{% if comp.id_propose == NULL %}
