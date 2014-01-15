@@ -95,6 +95,17 @@ class User extends Controller
 
         $news = $bd->query("SELECT * FROM c_news c ORDER BY c.date DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
 
+        /* Premiere visite ? */
+        if ($user->first_visit == 1)
+        {
+            $this->addData ('take_a_tour', true);
+            $this->setVisited();
+        }
+        else
+        {
+            $this->addData ('take_a_tour', false);
+        }
+
         $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
         $this->addData ('user', $user);
         $this->addData ('infos', $infos);
@@ -161,6 +172,12 @@ class User extends Controller
 	    echo("{}");
     }
 
+    private function setVisited()
+    {
+        Core::getBdd()->update (array("first_visit" => 0), 'c_user', array ("id" => $_SESSION['muffin_id']));
+    }
+
+
     private function dataIsUpToDate()
     {
         Core::getBdd()->update (array("verifie" => 1), 'c_user', array ("id" => $_SESSION['muffin_id']));
@@ -169,6 +186,11 @@ class User extends Controller
     private function dataIsNotUpToDate()
     {
         Core::getBdd()->update (array("verifie" => 0), 'c_user', array ("id" => $_SESSION['muffin_id']));
+    }
+
+    private function dataIsNotUpToDateForAll()
+    {
+        Core::getBdd()->update (array("verifie" => 0), 'c_user', NULL);
     }
 
     /**
@@ -316,6 +338,7 @@ class User extends Controller
             $this->addOrUpdateTags ($id, json_decode ($_POST["modal-new-comp-tags"]));
             $nom_joli = ucfirst (htmlentities ($nom_joli));
             $new = Moon::get ("c_competences", "id_competence", $id);
+            $this->dataIsNotUpToDateForAll();
             echo $this->getJsonCodeForElement ($new);
         }
         else

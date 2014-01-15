@@ -274,7 +274,7 @@ div[role="simple-row"]
     .half
     {
         display: inline-block;
-        width: 49%;
+        width: 46%;
     }
     .three-quarter
     {
@@ -291,6 +291,69 @@ div[role="simple-row"]
         padding-left: 10px;
         font-size: 1em;
         text-transform: capitalize;
+    }
+
+    a
+    {
+        color: @muffin-black;
+        cursor: pointer;
+
+        &:hover
+        {
+            color: @muffin-orange-dark;
+        }
+    }
+
+    i
+    {
+        color: @muffin-orange-dark;
+        font-style: normal;
+    }
+
+    h4
+    {
+        text-align: center;
+        font-size: 1.3em;
+    }
+}
+
+#user-two
+{
+    .half
+    {
+        display: inline-block;
+        width: 45%;
+        padding: 0 10px;
+        margin: 0 2%;
+        text-align: justify;
+    }
+
+    .big-button
+    {
+        display: block;
+        padding: 2px 15px;
+        margin: 5px;
+        background-color: @muffin-red;
+        border: 1px solid #882737;
+        color: #FFF;
+        border-radius: 3px;
+        width: 200px;
+        text-transform: uppercase;
+        text-align: center;
+        cursor: pointer;
+        margin: auto;
+
+        &:hover
+        {
+            background-color: #CF4B61;
+        }
+    }
+
+    .panel-bottom
+    {
+        border-top: 3px solid rgba(0, 0, 0, 0.1);
+        padding-top: 20px;
+        margin-top: 5px;
     }
 }
 
@@ -318,6 +381,18 @@ div[role="simple-row"]
         color: rgba(0, 0, 0, 0.3);
         font-size: 0.8;
         text-transform: none;
+
+        span.right
+        {
+            float: right;
+            padding-top: 6px;
+            color: rgba(0, 0, 0, 0.3);
+
+            a > span
+            {
+                color: rgba(0, 0, 0, 0.3);
+            }
+        }
     }
 
     .top-one
@@ -346,6 +421,7 @@ ul[role="news"]
 {
     li
     {
+        text-align: justify;
         border-left: 5px solid rgba(0, 0, 0, 0.05);
         /* font-style: italic; */
         padding: 5px 5px 5px 10px;
@@ -698,6 +774,39 @@ div[data-role="container"]
         {
             display: inline-block;
             width: 79%;
+        }
+    }
+
+    ul.horizontal-buttons
+    {
+        padding-left: 0px;
+        border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+
+        li
+        {
+            display: inline-block;
+            text-align: center;
+            border: 0px;
+            margin: 5px;
+
+            a
+            {
+                background-color: transparent;
+                color: rgba(73, 48, 42, 0.8);
+                border: none;
+                padding: 0px 10px;
+                cursor: pointer;
+
+                &:hover
+                {
+                    color: @muffin-orange-dark;
+                }
+            }
+
+            &+li
+            {
+                border-left: 1px solid rgba(0, 0, 0, 0.1);
+            }
         }
     }
 

@@ -6,7 +6,7 @@
                             <li class="competence-tabbed" data-ct="{{ section }}">
                                 <div class="competence-name">
                                     <p><b><span class="icon-{{ comp.user_icone }}"></span> {{ comp.login }}</b></p>
-                                </div> attend votre aide en <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> ({{ comp.wtl_keyword }})
+                                </div> attend ton aide en <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> ({{ comp.wtl_keyword }})
 
                                 {# date #}
                                 <span class="raw-date" data-date="{{ comp.date }}"></span>
@@ -27,7 +27,7 @@
 
                                 {# Gestion des status en cours #}
                                 {% if comp.resume == "attente" %}
-                                     veut vous aider en <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+                                     veut t'aider en <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
                                     <a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
                                         accepter
                                     </a>
@@ -53,8 +53,35 @@
                             </li>
                         {% endfor %}
                     </ul>
+
                 {% else %}
-                    <h3><span class="icon-check"></span> Au chomage</h3>
-                    <p>Trouvez des personnes a aider, et contribuez a faire </p>
+
+                    <h3 class="section-title"><span class="icon-sunglasses"></span> Rien à faire <small>et tu as l'air de t'ennuyer !</small></h3>
+                    <h4>Trouve des personnes à aider, et contribue à faire avancer la communautée !</h4>
+
+                    {# Cocher de nouvelles competences #}
+                    <div class="half">
+                        <p><b>Mets à jour ce que tu aimerait enseigner, ce que tu aimerais apprendre et/ou comprendre, et échange à nouveau !</b></p>
+                        <p>
+                        Va dans <a data-load-target="User/me"><span class="icon-chef"></span> les projets</a>
+                        et clique respectivement sur les icones <span class="icon-student"></span> pour demander de l'aide et <span class="icon-loved"></span> pour aider sur un projet ou un domaine particulier.
+                        </p>
+                        <div class="panel-bottom">
+                            <a class="big-button" data-load-target="User/me">Mettre à jour</a>
+                        </div>
+                    </div>
+
+                    {# Proposer son aide a de nouvelles personnes #}
+                    <div class="half">
+                        <p><b>Propose ton aide à de nouvelles personnes, donne un coup de pouce à leur projet, et mets fin à leur détresse</b></p>
+                        <p>
+                        Consulte la liste des <a data-load-target="Echanges/index"><span class="icon-repeat"></span> échanges</a>
+                        et propose ton aide aux autres cadets sur un projet ou un domaine particulier.
+                        </p>
+                        <div class="panel-bottom">
+                            <a class="big-button" data-load-target="Echanges/index">proposer de l'aide</a>
+                        </div>
+                    </div>
+
                 {% endif %}
         </div>

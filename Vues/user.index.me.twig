@@ -1,17 +1,31 @@
+<ul class="horizontal-buttons">
+    <li id="me-button-add">
+        <a class="btn" data-toggle="modal" data-target="#modal-add"><span class="icon-plus"></span><span class='side-legend'> Ajouter</span></a>
+    </li>
+    <li id="me-button-explore">
+        <a class="btn" data-toggle="modal" data-target="#modal-explore"><span class="icon-search"></span><span class='side-legend'> Explorer</span></a>
+    </li>
+    <li id="me-button-info">
+        <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-support3"></span><span class='side-legend'> Légende</span></a>
+    </li>
+</ul>
+
 <ul class="horizontal-list" id="panel-menu">
     <li data-index-toggle="1" class="active"><a><span class="icon-marvin"></span> <span class="side-legend"> Projets</span></a></li>
     <li data-index-toggle="2"><a><span class="icon-uniF6EC"></span> <span class="side-legend"> Points particuliers</span></a></li>
     <li data-index-toggle="3"><a><span class="icon-certificate"></span> <span class="side-legend"> Général</span></a></li>
 </ul>
+
 <ul class="items-panels">
     {{ formDataJson }}
 </ul>
+
 <script>
 
         window.toCheck = [{{ checkedRadios }}];
         $(".footer-container").addClass("nofix");
         NProgress.start();
-
+        $("[data-submit]").unbind();
         $("[data-submit]").each(function() {
             $(this).click(function() {
                 $('#' + $(this).attr("data-submit")).trigger('submit');

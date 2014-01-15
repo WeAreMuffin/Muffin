@@ -4,6 +4,9 @@
                     <span class="icon-{{ infos.user_icone }}"></span> {{ infos.prenom|lower }} {{ infos.nom|lower }}
                     <small>
                           - {{ rank }} sur {{ count }}
+                        {% if not take_a_tour %}
+                          <span class="right"><a onclick="javascipt:Muffin.tour.home()"><span class="icon-supportrequest"></span></a></span>
+                        {% endif %}
                     </small>
                 </h1>
             </div>

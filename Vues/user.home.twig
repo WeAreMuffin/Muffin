@@ -1,4 +1,4 @@
-<div>
+<div class="main-homepage">
 	{# L'entete avec le nom et le rang #}
 	{% include 'user.card.twig' %}
 
@@ -7,6 +7,43 @@
 
 	{# le recap des affaires en cours #}
 	{% include 'user.affairs.twig' %}
+
+
+	<!-- Tip Content -->
+    <ol id="home-tour-content">
+      <li data-class="main-homepage" data-text="Commencer" data-options="tipLocation:right">
+        <h2>Hey !</h2>
+        <p>Vous voici sur votre page d'accueil !</p>
+        <p>Cette page vous récapitule les dernieres actualitées, les choses que vous vevez faire, ou encore votre classement dans la communautée.</p>
+      </li>
+      <li data-id="button-open-params" data-button="Suivant" data-options="tipLocation:bottom">
+        <h2>Parametres</h2>
+        <p>Cliquer sur la cuillere ouvre les parametres de votre compte. Vous pouvez, entre autres, y changer votre mot de passe.</p>
+      </li>
+      <li data-id="notif-aera" data-button="Suivant" data-options="tipLocation:bottom">
+        <h2>Notifications</h2>
+        <p>Les notifications que vous recevrez apparaitront ici.</p>
+      </li>
+      <li data-id="user-one" data-button="Suivant" data-options="tipLocation:top">
+        <h2>Vous voila !</h2>
+        <p>Vous pouvez ici voir, de gauche à droite, votre icone, votre nom et votre classement</p>
+      </li>
+      <li data-id="user-news" data-button="Suivant" data-options="tipLocation:right">
+        <h2>Les dernières nouvelles</h2>
+        <p>Ici sont affichées les dernières nouvelles, comme par exemple les changements de la dernière mise à jour, ou un évenement particulier.</p>
+      </li>
+      {% if demandes|length or propositions|length %}
+      <li data-id="user-two" data-button="Renseigner ses compétences" data-options="tipLocation:right">
+        <h2>Les Todo's</h2>
+        <p>Ici sont affichées les affaires en cours, autrement dit les personnes que vous devez aider, ou qui veulent vous aider.</p>
+      </li>
+      {% else %}
+      <li data-id="user-two" data-button="Terminé" data-options="tipLocation:right">
+        <h2>Les Todo's</h2>
+        <p>Evidemment, vous n'avez rien à faire pour le moment, parce que vous venez d'arriver. Il faut tout d'abord que vous renseignez vos compétences.</p>
+      </li>
+      {% endif %}
+    </ol>
 
 	<script>
 	$(document).ready(function()
@@ -22,8 +59,15 @@
 
 	    $(".raw-date").each(function()
 	    {
-	    	$(this).html( moment( $(this).attr("data-date") ).fromNow() );
+	    	if ( $(this).html() == "")
+	    		$(this).html( moment( $(this).attr("data-date") ).fromNow() );
 	    });
+
+	    Muffin.bindAjaxEvents();
+
+	    {% if take_a_tour %}
+	    	Muffin.tour.home();
+	    {% endif %}
 	});
 	</script>
 

@@ -3,7 +3,7 @@
             <ul role="news">
                 {% for new in news %}
                     <li>
-                        {{ new.text }} - {# date #} <span class="raw-date" data-date="{{ comp.date }}"></span>
+                        {{ new.text }} - {# date #} <span class="raw-date" data-date="{{ new.date }}"></span>
                     </li>
                 {% endfor %}
             </ul>

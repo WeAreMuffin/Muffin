@@ -61,6 +61,7 @@ Muffin.goToUrl = goToUrl;
 
 function bindAjaxEvents()
 {
+	$('[data-load-target]').unbind("click");
 	$('[data-load-target]').each(function()
 	{
 		var urlToGo = $(this).attr("data-load-target");
@@ -578,4 +579,29 @@ Muffin.charts.drawInscrits = function(data)
 	showLegend();
 }
 
+ 	/* -----------------------------------------------------------------------------------
+ 	  |                           TAKE A TOUR FUNCTIONS                                  |
+ 	   ----------------------------------------------------------------------------------- */
 
+Muffin.tour = {};
+
+
+Muffin.tour.me = function()
+{
+    $('#me-tour-content').joyride(
+    {
+		autoStart : true,
+		modal:true,
+		expose: true
+    });
+};
+
+Muffin.tour.home = function()
+{
+    $('#home-tour-content').joyride(
+    {
+		autoStart : true,
+		modal:true,
+		expose: true
+    });
+};
