@@ -9,7 +9,6 @@ require_once(__DIR__.'/Moon/loader.php');
  * Enfin, on démarre notre moteur
  */
 
-
 Core::startEngine();
 
 Core::route();
