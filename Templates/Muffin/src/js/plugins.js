@@ -441,7 +441,7 @@ var mainHeadLink = function()
 {
 	$("header > h1.title").click(function()
 	{
-		goToUrl("User/me");
+		goToUrl("User/home");
 	});
 }
 Muffin.mainHeadLink = mainHeadLink;
@@ -490,6 +490,27 @@ var reloadHandlers = function()
 
 };
 Muffin.reloadHandlers = reloadHandlers;
+
+ 	/* -----------------------------------------------------------------------------------
+ 	  |                           ANIMATIONS FOR POPPING PIES !                           |
+ 	   ----------------------------------------------------------------------------------- */
+
+Muffin.drawPop = function(arrhey)
+{
+	var e = arrhey;
+
+	var unpop = function()
+	{
+		elt = e.pop();
+		if (elt != undefined)
+		{
+			elt = $(elt).get(0);
+			$(elt).addClass("complete");
+			setTimeout(unpop, 100);
+		}
+	}
+	setTimeout(unpop, 400);
+}
 
  	/* -----------------------------------------------------------------------------------
  	  |                           CHARTS SPECIFIC FUNCTIONS                               |

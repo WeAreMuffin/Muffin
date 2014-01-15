@@ -9142,6 +9142,120 @@ nav a:hover {
   min-width: 50%;
 }
 /* ==========================================================================
+                             Fiche profil et accueil
+   ========================================================================== */
+div[role="simple-row"] {
+  display: block;
+}
+div[role="simple-row"] .quarter {
+  display: inline-block;
+  width: 24%;
+}
+div[role="simple-row"] .half {
+  display: inline-block;
+  width: 49%;
+}
+div[role="simple-row"] .three-quarter {
+  display: inline-block;
+  width: 74%;
+}
+div[role="simple-row"] div[role="icon"] {
+  font-size: 2em;
+}
+div[role="simple-row"] div[role="user-name"] {
+  padding-left: 10px;
+  font-size: 1em;
+  text-transform: capitalize;
+}
+.user-card-title {
+  background-color: transparent;
+  position: relative;
+  padding: 20px;
+  box-shadow: 0px 0px rgba(0, 0, 0, 0.2);
+  margin: 0px;
+  transition: all 0.5s;
+  border-radius: 5px;
+}
+.user-card-title.elevated {
+  box-shadow: 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.05);
+  left: -2px;
+  top: -5px;
+}
+.user-card-title small {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.8;
+  text-transform: none;
+}
+.user-card-title .top-one {
+  color: #CAA34E;
+}
+.user-card-title .top-two {
+  color: #C0C0C0;
+}
+.user-card-title .top-three {
+  color: #9B7348;
+}
+.user-card-title .top-ten {
+  color: #E22D00;
+}
+.user-card-title .top-cinquante {
+  color: #C06D6D;
+}
+ul[role="news"] li {
+  border-left: 5px solid rgba(0, 0, 0, 0.05);
+  /* font-style: italic; */
+  padding: 5px 5px 5px 10px;
+  margin-bottom: 5px;
+  display: block;
+  color: rgba(0, 0, 0, 0.6);
+}
+ul[role="news"] li .raw-date {
+  padding-right: 5px;
+}
+.section-title {
+  text-align: left;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+  padding-left: 20px;
+  margin-bottom: 0px;
+}
+.section-title small {
+  padding-left: 5px;
+  color: rgba(0, 0, 0, 0.25);
+}
+.section-title span[class^="icon-"] {
+  color: rgba(0, 0, 0, 0.4);
+}
+.raw-date {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 0.9em;
+}
+ul.oneline {
+  padding: 2px;
+}
+ul.oneline li,
+ul.oneline li:hover,
+ul.oneline li.competence-tabbed,
+ul.oneline li.competence-tabbed + li.competence-tabbed,
+ul.oneline li.competence-tabbed:hover {
+  padding: 2px !important;
+  border: none !important;
+}
+ul.oneline li .raw-date,
+ul.oneline li:hover .raw-date,
+ul.oneline li.competence-tabbed .raw-date,
+ul.oneline li.competence-tabbed + li.competence-tabbed .raw-date,
+ul.oneline li.competence-tabbed:hover .raw-date {
+  padding-left: 5px;
+}
+ul.oneline li .competence-name span,
+ul.oneline li:hover .competence-name span,
+ul.oneline li.competence-tabbed .competence-name span,
+ul.oneline li.competence-tabbed + li.competence-tabbed .competence-name span,
+ul.oneline li.competence-tabbed:hover .competence-name span {
+  padding-right: 5px;
+}
+/* ==========================================================================
                              Footer
    ========================================================================== */
 .footer-container footer div {
