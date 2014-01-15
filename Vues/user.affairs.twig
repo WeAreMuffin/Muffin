@@ -1,0 +1,60 @@
+        <div role="simple-row" id="user-two" class="loading">
+                {% if demandes|length or propositions|length %}
+                    <h3 class="section-title"><span class="icon-search"></span> Affaires en cours <small>élémentaire, mon cher {{ infos.nom|lower }} !</small></h3>
+                    <ul data-role="liste-competences" class="oneline">
+                        {% for comp in propositions %}
+                            <li class="competence-tabbed" data-ct="{{ section }}">
+                                <div class="competence-name">
+                                    <p><b><span class="icon-{{ comp.user_icone }}"></span> {{ comp.login }}</b></p>
+                                </div> attend votre aide en <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b> ({{ comp.wtl_keyword }})
+
+                                {# date #}
+                                <span class="raw-date" data-date="{{ comp.date }}"></span>
+
+                                {# Gestion des postes #}
+                                {% if comp.poste and comp.poste != "" %}
+                                    <a class="right online" data-locate data-login="{{ comp.login }}">{{ comp.poste }}</a>
+                                {% else %}
+                                    <a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                        {% for comp in demandes %}
+                            <li class="competence-tabbed" data-ct="{{ section }}">
+                                <div class="competence-name"><p>
+                                    <b><span class="icon-{{ comp.user_icone }}"></span> {{ comp.login }}</b>
+                                </p></div>
+
+                                {# Gestion des status en cours #}
+                                {% if comp.resume == "attente" %}
+                                     veut vous aider en <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+                                    <a class="btn accepter-aide" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+                                        accepter
+                                    </a>
+                                {% elseif comp.resume == "accepte" %}
+                                    ne devrait pas tarder !
+                                    <a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+                                        <span class="icon-uniF7D9"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" title="C'est toujours un peu flou !" class="aide-not-nice" data-competence="{{comp.id_competence}}" data-user="{{comp.id_user}}">
+                                        <span class="icon-uniF7E0"></span>
+                                    </a>
+                                {% endif %}
+
+                                {# date #}
+                                <span class="raw-date" data-date="{{ comp.date }}"></span>
+
+                                {# Gestion des postes #}
+                                {% if comp.poste and comp.poste != "" %}
+                                    <a class="right online" data-locate data-login="{{ comp.login }}">{{ comp.poste }}</a>
+                                {% else %}
+                                    <a class="right offline" data-locate data-login="{{ comp.login }}"><span class="icon-plug"></span></a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <h3><span class="icon-check"></span> Au chomage</h3>
+                    <p>Trouvez des personnes a aider, et contribuez a faire </p>
+                {% endif %}
+        </div>

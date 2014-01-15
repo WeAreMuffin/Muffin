@@ -1,0 +1,10 @@
+        <div role="simple-row" id="user-news" class="loading">
+            <h3 class="section-title"><span class="icon-sc"></span> Dernières nouvelles <small>pas forcément utiles</small></h3>
+            <ul role="news">
+                {% for new in news %}
+                    <li>
+                        {{ new.text }} - {# date #} <span class="raw-date" data-date="{{ comp.date }}"></span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>

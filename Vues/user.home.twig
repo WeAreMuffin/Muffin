@@ -1,0 +1,30 @@
+<div>
+	{# L'entete avec le nom et le rang #}
+	{% include 'user.card.twig' %}
+
+	{# Les dernieres nouveautees #}
+	{% include 'user.news.twig' %}
+
+	{# le recap des affaires en cours #}
+	{% include 'user.affairs.twig' %}
+
+	<script>
+	$(document).ready(function()
+	{
+	    var a = ["#user-two", "#user-news", "#user-one"];
+	    var globalLang = moment();
+	    moment.lang('fr');
+
+	    Muffin.drawPop(a);
+	    setTimeout(function(){
+	        $(".user-card-title").addClass("elevated");
+	    }, 800);
+
+	    $(".raw-date").each(function()
+	    {
+	    	$(this).html( moment( $(this).attr("data-date") ).fromNow() );
+	    });
+	});
+	</script>
+
+</div>
