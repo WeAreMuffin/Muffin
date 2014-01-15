@@ -34,33 +34,130 @@ class User extends Controller
      */
     public function index ($params)
     {
-        $this->registerParams ($params);
-        $infos = Moon::get ('c_42_logins', 'login_eleve', $_SESSION['login']);
-        $user = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
-	$checkpublic = "";
-	if ( $user->comp_public == 1 )
-	    $checkpublic = "checked='checked'";
-        $formDataJson = $this->generateJsFormData ();
-        $checkedRadios = $this->getCheckedRadios ();
-        $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
-        $this->addData ('formDataJson', $formDataJson);
-        $this->addData ('checkedRadios', $checkedRadios);
-        $this->addData ('check_public', $checkpublic);
+        $this->prepareHomeData($params);
         $this->render ();
+    }
+
+    /*
+     * Page d'accueil
+     */
+    public function home ($params)
+    {
+        $this->prepareHomeData($params);
+        $this->render ();
+    }
+
+    protected function prepareHomeData($params)
+    {
+        $this->registerParams ($params);
+        $uid = $_SESSION['muffin_id'];
+        $infos = Moon::get ('c_42_logins', 'login_eleve', $_SESSION['login']);
+        $user = Moon::get ('c_user', 'id', $uid);
+
+        $q = "  SELECT DISTINCT *
+                FROM c_echanges e
+                    INNER JOIN c_competences c
+                    ON e.competence = c.id_competence
+                    INNER JOIN c_user_competences uc
+                    ON uc.id_competence = c.id_competence AND uc.id_user = e.id_propose
+                    INNER JOIN c_user u
+                    ON e.id_propose = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
+                WHERE
+                    e.id_demande = :id AND e.resume = 'attente'
+                ORDER BY e.resume DESC
+            ";
+
+        $q2 = "  SELECT DISTINCT *
+                FROM c_echanges e
+                    INNER JOIN c_competences c
+                    ON e.competence = c.id_competence
+                    INNER JOIN c_user_competences uc
+                    ON uc.id_competence = c.id_competence AND uc.id_user = e.id_propose
+                    INNER JOIN c_user u
+                    ON e.id_demande = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
+                WHERE
+                    e.id_propose = :id AND e.resume = 'accepte'
+                ORDER BY e.resume DESC
+            ";
+
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("id" => $uid));
+        $demandes = $r->fetchAll(PDO::FETCH_CLASS);
+
+        $r = $bd->prepare($q2);
+        $r->execute(array("id" => $uid));
+        $propositions = $r->fetchAll(PDO::FETCH_CLASS);
+
+        $news = $bd->query("SELECT * FROM c_news c ORDER BY c.date DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
+
+        $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
+        $this->addData ('user', $user);
+        $this->addData ('infos', $infos);
+        $this->addData ('news', $news);
+        $this->addData ('rank', $this->getRank($uid));
+        $this->addData ('count', $this->getCount());
+        $this->addData ('demandes', $demandes);
+        $this->addData ('propositions', $propositions);
+    }
+
+    /**
+     * Will return the rank associated with the given id.
+     */
+    private function getRank($id)
+    {
+        $bd = Core::getBdd()->getDb();
+        $rank = 0;
+        $top_c = "SELECT COUNT( * ) AS c, u.id AS i
+                        FROM c_echanges e
+                        INNER JOIN c_user u ON e.id_propose = u.id
+                        INNER JOIN c_42_logins l ON u.login = l.login_eleve
+                        GROUP BY e.id_propose
+                        ORDER BY c DESC";
+
+        foreach  ($bd->query($top_c) as $user)
+        {
+            $rank++;
+            if ($user['i'] == $id)
+                break;
+        }
+        if ($rank == 1)
+            $rank = "<span class='top-one'>$rank<sup>er</sup></span>";
+        else if ($rank == 2)
+            $rank = "<span class='top-two'>$rank<sup>ème</sup></span>";
+        else if ($rank == 3)
+            $rank = "<span class='top-three'>$rank<sup>ème</sup></span>";
+        else if ($rank <= 10)
+            $rank = "<span class='top-ten'>$rank<sup>ème</sup></span>";
+        else if ($rank <= 50)
+            $rank = "<span class='top-cinquante'>$rank<sup>ème</sup></span>";
+        else
+            $rank = "<span class='top-other'>$rank<sup>ème</sup></span>";
+
+        return ($rank);
+    }
+
+    /**
+     * Will return the total user count
+     */
+    private function getCount()
+    {
+        $bd = Core::getBdd()->getDb();
+        $u_insc_c = "SELECT DISTINCT COUNT(u.id) as c FROM c_user u";
+        $insc = 0 + $bd->query($u_insc_c)->fetchObject()->c;
+        return ($insc);
     }
 
     /**
      * @Ajax
+     * @deprecated since 2.1
      */
     public function getstatus ($params)
     {
-	$login = $this->filterPost('login');
-	if ($login)
-	{
-	    $r = shell_exec("curl -k https://dashboard.42.fr/crawler/pull/". $login . "/");
-	    echo($r);
-	}
-	else
 	    echo("{}");
     }
 
@@ -88,6 +185,16 @@ class User extends Controller
         {
             $s = false;
             $r = apc_fetch($_SESSION['muffin_id']."_me", $s);
+            if ($s == false)
+            {
+                $formDataJson = $this->generateJsFormData ();
+                $checkedRadios = $this->getCheckedRadios ();
+                $this->addData ('formDataJson', $formDataJson);
+                $this->addData ('checkedRadios', $checkedRadios);
+                $r = $this->getRenderedHtml('user.index.me');
+                apc_store($_SESSION['muffin_id']."_me", $r);
+                $this->dataIsUpToDate();
+            }
         }
         else
         {
