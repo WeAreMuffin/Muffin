@@ -235,6 +235,22 @@ var initializeHelpMenu = function()
 };
 Muffin.initializeHelpMenu = initializeHelpMenu;
 
+var initializeDraftsMenu = function()
+{
+	$("#drafts-panel > li[data-index]").hide();
+	$("#drafts-panel > li[data-index='1']").show();
+	$("#drafts-menu > li[data-index-toggle]").click(function()
+	{
+		var index = $(this).attr("data-index-toggle");
+		$("#drafts-menu > li[data-index-toggle]").removeClass("active");
+		$(this).addClass("active");
+		$("#drafts-panel > li[data-index!='" + index + "']").hide();
+		$("#drafts-panel > li[data-index='" + index + "']").show();
+		treatResize();
+	});
+};
+Muffin.initializeDraftsMenu = initializeDraftsMenu;
+
 var queryUserStatus = function()
 {
 	$("[data-locate]").click(function()

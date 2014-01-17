@@ -20,19 +20,23 @@
 				    </li>
 				{% endif %}
 				<li class="competence-tabbed" data-ct="{{ section }}">
-
+					<div class="left-pad"><span class="icon-{{ comp.user_icone }}"></span></div>
 				{% if comp.resume == "accepte" %}
-					<div class="competence-name"><p><b>{{ comp.login }} vous attend !</b></p></div>
+					<div class="competence-name">
+						<p><b>{{ comp.login }} vous attend !</b></p>
+					</div>
 				{% else %}
-					<div class="competence-name"><p><span class="side-legend">Aider </span><b>{{ comp.login }}</b></p></div>
+					<div class="competence-name"><p><span class="side-legend">Aider </span>
+						  <b>{{ comp.login }}</b></p>
+					</div>
 				{% endif %}
-
-				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
-				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
 
 				{% if comp.wtl_keyword != "general" and comp.resume != "bien" and comp.resume != "pasbien" %}
 					<div class="helpbox keywords to_print">{{comp.wtl_keyword}}</div>
 				{% endif %}
+
+				<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
+				<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
 
 				{# Gestion des status en cours #}
 				{% if comp.id_propose == NULL %}
@@ -50,6 +54,9 @@
 						déja aidé
 					</a>
 				{% endif %}
+
+                {# date #}
+                <span class="raw-date" data-date="{{ comp.date }}"></span>
 
 				{# Gestion des postes #}
 				{% if comp.poste and comp.poste != "" %}
@@ -93,7 +100,8 @@
 					{% endif %}
 
 					<li class="competence-tabbed" data-ct="{{ section }}">
-						<div class="competence-name"><p><b>{{ comp.login }}</b></p></div>
+						<div class="left-pad"><span class="icon-{{ comp.user_icone }}"></span></div>
+						<div class="competence-name"><p><b> {{ comp.login }}</b></p></div>
 
 						{# Gestion des status en cours #}
 						{% if comp.id_propose == NULL %}
@@ -118,6 +126,8 @@
 						<a class="inside icon-email2" href="mailto:{{ comp.login }}@student.42.fr"></a>
 						<a class="inside icon-user" href="https://intra.42.fr/user/{{ comp.login }}/"></a>
 
+                        {# date #}
+                        <span class="raw-date" data-date="{{ comp.date }}"></span>
 
 						{# Gestion des postes #}
 						{% if comp.poste and comp.poste != "" %}

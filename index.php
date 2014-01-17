@@ -9,6 +9,11 @@ require_once(__DIR__.'/Moon/loader.php');
  * Enfin, on démarre notre moteur
  */
 
+/**
+ * @TODO: TO REMOVE IN PRODUCTION ENVIRONMENT
+ */
+apc_clear_cache();
+
 Core::startEngine();
 
 Core::route();

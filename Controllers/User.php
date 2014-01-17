@@ -357,9 +357,9 @@ class User extends Controller
         if ( isset ($_SESSION['login']) )
             return true;
         else
-	{
-            return false;
-	}
+    	{
+                return false;
+    	}
     }
 
     /*   =======================================================================

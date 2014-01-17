@@ -1,246 +1,142 @@
 
 {% if not is_ajax %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head>
-    {% block meta %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{% block page_title %}Muffin{% endblock %}</title>
-    <meta name="description" content="Ce petit site a pour objectif de recueillir un maximum d'informations concernant les compétences de chacun, et de les mettre à disposition pour faciliter les échanges et le partage">
-    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
-    <meta name="google" value="notranslate">
-    <meta name="application-name" content="Muffin">
-    <meta name="application-url" content="http://muffin.lambdaweb.fr/">
-    <link rel="canonical" href="http://muffin.lambdaweb.fr/">
-    {% block meta_icons %}
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-114.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-144.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144.png">
-    {% endblock %}
-    {% endblock %}
+    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        {% block meta %}
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <title>{% block page_title %}Muffin{% endblock %}</title>
+            <meta name="description" content="Ce petit site a pour objectif de recueillir un maximum d'informations concernant les compétences de chacun, et de les mettre à disposition pour faciliter les échanges et le partage">
+            <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
+            <meta name="google" value="notranslate">
+            <meta name="application-name" content="Muffin">
+            <meta name="application-url" content="http://muffin.lambdaweb.fr/">
+            <link rel="canonical" href="http://muffin.lambdaweb.fr/">
+            {% block meta_icons %}
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+                <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-114.png">
+                <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114.png">
+                <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-144.png">
+                <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144.png">
+            {% endblock %}
+        {% endblock %}
 
 
-    {% block style %}
-    {% endblock %}
+        {% block style %}
+        {% endblock %}
 
-    {% block css_includes %}
-    <!-- Le styles -->
+        {% block css_includes %}
+            <!-- Le styles -->
 
-    {% for stylesheet in webdata.stylesheets %}
-    <link href="{{ webdata.base }}{{ stylesheet }}" rel="stylesheet">
-    {% endfor %}
+            {% for stylesheet in webdata.stylesheets %}
+            <link href="{{ webdata.base }}{{ stylesheet }}" rel="stylesheet">
+            {% endfor %}
 
+        {% endblock %}
 
-	<style>
-		.visible.helpbox
-		{
-			border: none;
-			display: inline-block;
-			width: 270px;
-			opacity: 1;
-		}
+        {% block head_javascript %}
+        <script src="Templates/Muffin/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
-		.helpbox-counter
-		{
-			display: inline-block;
-			position: relative;
-			width: 30px;
-			top: 0;
-		}
-
-		.helpbox-send:hover
-		{
-			background-color: rgba(217, 91, 67, 0.05);
-		}
-
-		.keywords-container {
-			position: relative;
-			background: #F7E4BE;
-			border: 1px solid #413E4A;
-		}
-
-		.keywords-container:after, .keywords-container:before {
-			right: 100%;
-			top: 50%;
-			border: solid transparent;
-			content: " ";
-			height: 0;
-			width: 0;
-			position: absolute;
-			pointer-events: none;
-		}
-
-		.keywords-container:after {
-			border-color: rgba(247, 228, 190, 0);
-			border-right-color: #F7E4BE;
-			border-width: 5px;
-			margin-top: -5px;
-		}
-
-		.keywords-container:before {
-			border-color: rgba(65, 62, 74, 0);
-			border-right-color: #413E4A;
-			border-width: 6px;
-			margin-top: -6px;
-		}
-
-		.helpbox-send
-		{
-			display: inline-block;
-			cursor: pointer;
-			padding-left: 5px;
-			color: #D95B43;
-			margin: auto;
-			text-align: center;
-			border-left: 1px solid #413E4A;
-			padding-right: 5px;
-		}
-		.keywords-container.closed
-		{
-			transition: all 0.4s;
-			border: 1px solid #413E4A;
-			opacity: 0;
-			position: absolute;
-			background-color: #F7E4BE;
-			z-index: -500;
-			right: -375px;
-			top: 43px;
-		}
-
-		.keywords-container.opened
-		{
-			transition: all 0.4s;
-			opacity: 1;
-			border: 1px solid #413E4A;
-			display: block;
-			position: absolute;
-			background-color: #F7E4BE;
-			z-index: 997;
-			right: -345px;
-			top: 43px;
-		}
-
-		.helpbox.keywords.to_print
-		{
-			display: inline-block;
-			text-align: center;
-			padding-left: 60px;
-			font-size: 16px;
-		}
-	</style>
-
-
-
-    {% endblock %}
-
-    {% block head_javascript %}
-    <script src="Templates/Muffin/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="Templates/Muffin/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
-    {% endblock %}
-</head>
-<body>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="Templates/Muffin/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        {% endblock %}
+    </head>
+    <body>
         <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-            <![endif]-->
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
 
-            {% block body %}
-            <div class="header-container">
-                {% block header %}
-                <header class="wrapper clearfix">
-                    <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>Citron & Meringue</span></i></h1>
-                    <div id="main-head-toolbar" class="main-head-toolbar">
-                        {% block header_after %}
-                            {% if webdata.session.muffin_id %}
-                            <a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera">0</a>
-                            <a class="btn" id="button-open-params" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a>
-                            <a class="btn" role="indicator">À jour</a>
-                            {% endif %}
-                        {% endblock %}
-                    </div>
-                </header>
-                {% endblock %}
-            </div>
+        {% block body %}
+        <div class="header-container">
+            {% block header %}
+            <header class="wrapper clearfix">
+                <h1 class="title"><span class="icon-muffin"></span> <i>Muffin <span style='color: #864032'>Citron & Meringue</span></i></h1>
+                <div id="main-head-toolbar" class="main-head-toolbar">
+                    {% block header_after %}
+                        {% if webdata.session.muffin_id %}
+                        <a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera">0</a>
+                        <a class="btn" id="button-open-params" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a>
+                        <a class="btn" role="indicator">À jour</a>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            </header>
+            {% endblock %}
+        </div>
 
-            {% block main %}
-            <div class="main-container">
-              <div data-role="container" class="main wrapper clearfix">
-                 {% block container %}
-                 <?php
-                 if ( isset ($_SESSION['login']) and isset ($_SESSION['code']) )
-                 {
-                     ?>
-
-                     <script>
-                         $(document).ready(function()
-                         {
+        {% block main %}
+        <div class="main-container">
+            <div data-role="container" class="main wrapper clearfix">
+            {% block container %}
+                <?php
+                    if ( isset ($_SESSION['login']) and isset ($_SESSION['code']) )
+                    {
+                ?>
+                    <script>
+                        $(document).ready(function()
+                        {
                             $.get("steps/step-2.php", {code: "<?= $_SESSION['code'] ?>", login: "<?= $_SESSION['login'] ?>"},
                                 function(data) {
                                     $("div[data-role='container']").html($(data));
-                                }
-                                );
+                            });
                         });
-                     </script>
-                     <?php
-                 }
-                 else
-                 {
-                     include_once 'steps/step-0.php';
-                 }
-                 ?>
+                    </script>
+                <?php
+                    }
+                    else
+                    {
+                        include_once 'steps/step-0.php';
+                    }
+                ?>
 
-                 {% endblock %}
-             </div> <!-- #main -->
-         </div> <!-- #main-container -->
-         {% endblock %}
+            {% endblock %}
+            </div> <!-- #main -->
+        </div> <!-- #main-container -->
+    {% endblock %}
+
+    {% block footer %}
+    <div class="footer-container">
+        <footer class="wrapper">
+            <div role="author">
+                <p><span class="icon-quill"></span> <i>Made with <span class="icon-love"></span> by <a href="http://www.lambdaweb.fr">lambdaweb</a></b> </i></p>
+            </div>
+            <div role="git-info">
+            </div>
+        </footer>
+    </div>
+    {% endblock %}
+
+    {% block javascript %}
+    <!-- ============= Le javascript =========== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% for js in webdata.scripts %}
+    <script src="{{ webdata.base }}{{ js }}"></script>
+    {% endfor %}
 
 
-         {% block footer %}
-         <div class="footer-container">
-            <footer class="wrapper">
-                <div role="author">
-                    <p><span class="icon-quill"></span> <i>Made with <span class="icon-love"></span> by <a href="http://www.lambdaweb.fr">lambdaweb</a></b> </i></p>
-                </div>
-                <div role="git-info">
-                </div>
-            </footer>
-        </div>
-        {% endblock %}
+    <script>
+        var _gaq = [['_setAccount', 'UA-45835616-1'], ['_trackPageview']];
+        (function(d, t) {
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = '//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
+    </script>
+    {% block debug %}
+    {# Shows the debug lines #}
+    {{ webdata.debug }}
+    {% endblock %}
 
-        {% block javascript %}
-        <!-- ============= Le javascript =========== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        {% for js in webdata.scripts %}
-        <script src="{{ webdata.base }}{{ js }}"></script>
-        {% endfor %}
-
-
-        <script>
-            var _gaq = [['_setAccount', 'UA-45835616-1'], ['_trackPageview']];
-            (function(d, t) {
-                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-                g.src = '//www.google-analytics.com/ga.js';
-                s.parentNode.insertBefore(g, s)
-            }(document, 'script'));
-        </script>
-        {% block debug %}
-        {# Shows the debug lines #}
-        {{ webdata.debug }}
-        {% endblock %}
-
-        {% endblock %}
-        {% endblock %}
+    {% endblock %}
+    {% endblock %}
     </body>
-    </html>
+</html>
 
-    {% else %}
+{% else %}
     {% block aj %}
     {% endblock %}
-    {% endif %}
+{% endif %}

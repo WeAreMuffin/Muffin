@@ -1,0 +1,26 @@
+<ul class="horizontal-buttons">
+    <li id="me-button-add">
+        <a class="btn" data-toggle="modal" data-target="#modal-add"><span class="icon-createfile"></span><span class='side-legend'> Nouveau</span></a>
+    </li>
+    {#
+    <li id="me-button-info">
+        <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-support3"></span><span class='side-legend'> Légende</span></a>
+    </li>
+    #}
+</ul>
+
+<ul class="horizontal-list" id="drafts-menu">
+    <li data-index-toggle="1" class="active"><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
+    <li data-index-toggle="2"><a><span class="icon-user4"></span> <span class="side-legend"> Mes drafts</span></a></li>
+</ul>
+
+<ul class="drafts-panels">
+    <li data-index="1" style="display: block;">
+	</li>
+    <li data-index="2" style="display: block;">
+	</li>
+</ul>
+
+<script>
+	Muffin.initializeDraftsMenu();
+</script>
