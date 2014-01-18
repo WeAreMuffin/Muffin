@@ -26,13 +26,48 @@
         {
             width: 210px;
 
+            &.side-menu ul[role="side-menu"]
+            {
+                min-height: 340px;
+            }
+
             & + article
             {
                 display: inline-block;
-                width: 80%;
+                width: 85%;
             }
         }
     }
+}
+/* grand */
+@media only screen and (max-width: 1440px) {
+
+
+    /*
+        ------------------------------------------------------------------------
+            Drafter
+        ------------------------------------------------------------------------
+    */
+
+    .drafter-article
+    {
+        width: 70%;
+
+        &+nav[role="draft-toolbar"]
+        {
+            ul
+            {
+                float: none;
+            }
+        }
+    }
+    div[data-role="container"].expanded > aside + article
+    {
+        display: inline-block;
+        width: 75%;
+    }
+
+
 }
 
 /* grand [tablette paysage] */
@@ -135,6 +170,33 @@
     {
         font-size: 4em;
     }
+
+
+
+    /*
+        ------------------------------------------------------------------------
+            Drafter
+        ------------------------------------------------------------------------
+    */
+
+    .drafter-article
+    {
+        width: 70%;
+
+        &+nav[role="draft-toolbar"]
+        {
+            ul
+            {
+                float: none;
+            }
+        }
+    }
+    div[data-role="container"].expanded > aside + article
+    {
+        display: inline-block;
+        width: 75%;
+    }
+
 }
 
 /* petit [tablette paysage] */

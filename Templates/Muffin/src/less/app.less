@@ -17,6 +17,7 @@
 /* Loading the fonts files from GWF */
 @import url("http://fonts.googleapis.com/css?family=Lato:300,400,700|Fredoka+One|Leckerli+One");
 @import url("http://fonts.googleapis.com/css?family=Patua+One");
+@import url("http://fonts.googleapis.com/css?family=Ubuntu:300,400");
 
 
 /* On fait les resets standards */
@@ -1962,6 +1963,153 @@ h1.title-remain,
         span
         {
             padding-right: 5px;
+        }
+    }
+}
+
+/*
+    ------------------------------------------------------------------------
+        Drafter render
+    ------------------------------------------------------------------------
+*/
+
+.drafter-render
+{
+    a
+    {
+        color: @muffin-black;
+
+        &:hover
+        {
+            color: @muffin-orange-dark;
+        }
+    }
+
+    blockquote {
+        padding: 0em 20px;
+        border-left: 5px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+/*
+    ------------------------------------------------------------------------
+        Drafter
+    ------------------------------------------------------------------------
+*/
+
+.drafter-article
+{
+    width: 85%;
+    margin: auto;
+    margin-top: 0px;
+    display: inline-block;
+
+    header
+    {
+        h1[role="title"]
+        {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            color: @muffin-red;
+            padding: 10px;
+
+            &.unedited
+            {
+                color: rgba(0, 0, 0, 0.3);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+            &:hover
+            {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            &:active,
+            &:focus
+            {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+                outline: none;
+            }
+        }
+    }
+
+    .main-drafter-aera
+    {
+        width: 100%;
+        margin: auto;
+        margin-top: 0px;
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.05);
+
+        #draft-aera
+        {
+            display: block;
+            color: #222222;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin: 0;
+            border: none;
+            min-height: 500px;
+            resize: none;
+            font-family: 'Ubuntu', serif;
+            font-size: 1.1em;
+
+            &:hover
+            {
+                border: none;
+            }
+
+            &:active,
+            &:focus
+            {
+                border: none;
+                outline: none;
+            }
+        }
+    }
+
+    &+nav[role="draft-toolbar"]
+    {
+        vertical-align: top;
+        width: 10%;
+        min-width: 180px;
+        margin: auto;
+        margin-top: 0px;
+        display: inline-block;
+
+        ul
+        {
+            float: right;
+            border-left: 1px solid #CABA9C;
+            min-height: 300px;
+            padding-left: 5px;
+
+            li
+            {
+                display: block;
+                padding-left: 5px;
+
+                &.separator
+                {
+                    margin-left: 5px;
+                    margin-top: 10px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                    font-size: 0.9em;
+                    color: rgba(0, 0, 0, 0.4);
+                    text-transform: uppercase;
+                }
+
+                &.user-draft
+                {
+                    padding: 5px;
+                    cursor: pointer;
+
+                    &:hover
+                    {
+                        background: rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
         }
     }
 }

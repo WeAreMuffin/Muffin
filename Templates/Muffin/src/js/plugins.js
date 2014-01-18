@@ -43,7 +43,7 @@
 window.Muffin = {};
 
 
-function goToUrl(url)
+function goToUrl(url, elt)
 {
 	$.get(url,
 		function(data) {
@@ -53,6 +53,18 @@ function goToUrl(url)
 			$("div[data-role='form-container']").html(data);
 			NProgress.done();
 			data.addClass("complete");
+
+			if (elt != undefined)
+			{
+				if (elt.attr("data-expand") != undefined)
+				{
+					Muffin.expandContainer();
+				}
+				else
+				{
+					Muffin.reduceContainer();
+				}
+			}
 			//reloadHandlers();
 		});
 
@@ -67,15 +79,7 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
-			if ($(this).attr("data-expand") != undefined)
-			{
-				Muffin.expandContainer();
-			}
-			else
-			{
-				Muffin.reduceContainer();
-			}
-			goToUrl(urlToGo);
+			goToUrl(urlToGo, $(this));
 		});
 	});
 }
@@ -641,3 +645,124 @@ Muffin.tour.home = function()
 		expose: true
     });
 };
+
+/* -----------------------------------------------------------------------------------
+  |                         	     DRAFT FUNCTIONS                                  |
+   ----------------------------------------------------------------------------------- */
+
+Muffin.draft = {};
+
+Muffin.draft.keycount = 0;
+Muffin.draft.saveInterval = 20;
+
+
+Muffin.draft.save = function()
+{
+	$("[role='indicator']").html("Enregistrement...");
+	if ($("#draft-aera").val() != "")
+	{
+		var title = $("#aera > header > h1").html();
+		var text = $("#draft-aera").val();
+
+		if ($("#aera").attr("data-draft-id") == undefined)
+		{
+			$.ajax({
+				type: "POST",
+				url: "Drafts/new_draft",
+				data: {titre: title, texte: text},
+				success: function(e){
+					console.log("Succes new !", e);
+					if (e > 0)
+					{
+						$("#aera").attr("data-draft-id", e);
+					}
+				}
+			});
+		}
+		else
+		{
+			var id = $("#aera").attr("data-draft-id");
+
+			$.ajax({
+				type: "POST",
+				url: "Drafts/update",
+				data: {titre: title, texte: text, id: id},
+				success: function(e){
+					$("[role='indicator']")
+						.html("<span class='icon-checkmark2'></span> Enregistré");
+					console.log("Succes update !", e);
+				}
+			});
+		}
+	}
+};
+
+Muffin.draft.load = function(id)
+{
+	if (id != undefined && id > 0)
+	{
+		$.ajax({
+			type: "POST",
+			url: "Drafts/get",
+				dataType: "json",
+			data: {id: id},
+			success: function(e){
+				var title = _.unescape(e.draft_name);
+				var text = _.unescape(e.draft_content);
+				$("#aera").attr("data-draft-id", e.draft_id);
+				$("#aera > header > h1").html(title);
+				$("#draft-aera").val(text);
+				Muffin.draft.render();
+			}
+		});
+	}
+};
+
+Muffin.draft.render = function(mk)
+{
+	if (mk == undefined)
+	{
+    	mk = $("#marked-aera");
+	}
+    var dr = $("#draft-aera");
+    var ct = $("#aera");
+    var ctnt = _.unescape($(dr).val());
+    var mkd = marked(ctnt);
+    mk.html(mkd);
+    Prism.highlightAll();
+};
+
+Muffin.draft.watch = function()
+{
+	Muffin.draft.render();
+    $("#draft-aera").keyup(function()
+    {
+
+    	Muffin.draft.keycount ++;
+    	if (Muffin.draft.keycount >= Muffin.draft.saveInterval)
+    	{
+    		Muffin.draft.keycount = 0;
+  			Muffin.draft.save();
+    	}
+    	Muffin.draft.render();
+
+    });
+
+    $("#draft-aera").change(function()
+  	{
+  		Muffin.draft.save();
+  	});
+};
+
+Muffin.draft.init = function()
+{
+	$("[data-draft-load]").click(function()
+	{
+		var elt = $(this);
+		var draft_id = $(this).attr("data-draft-id");
+		if (draft_id)
+		{
+			Muffin.draft.load(draft_id);
+		}
+	});
+}

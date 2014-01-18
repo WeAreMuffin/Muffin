@@ -1,35 +1,40 @@
-<article id="aera">
-    <header><h1 role="title" contenteditable="true">Untitled draft</h1></header>
-    <nav role="toolbar">
-    	<ul>
-    		<li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Preview</span></button></li>
-    		<li><button data-action="edit" style="display:none;"><span class="icon-pen"></span> <span class="legend">Edit</span></button></li>
-    		<li><button data-action="fullscreen"><span class="icon-expand2"></span> <span class="legend">Full screen</span></button></li>
-    	</ul>
-    </nav>
-    <section>
-    <textarea id="draft-aera">Begin here !</textarea>
-    <div id="marked-aera">
-
-    </div>
+<article class="drafter-article" id="aera">
+    <header>
+        <h1 role="title" class="unedited" contenteditable="true">Sans titre</h1>
+    </header>
+    <section class="main-drafter-aera">
+        <textarea id="draft-aera" placeholder="Vous pouvez commencer a écrire ici..." focus></textarea>
+    </section>
+    <section id="marked-aera" class="drafter-render">
     </section>
     <footer></footer>
 </article>
+<nav role="draft-toolbar">
+    <ul>
+        <li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Apercu</span></button></li>
+        <li><button data-action="edit" style="display:none;"><span class="icon-pen"></span> <span class="legend">Edition</span></button></li>
+        <li><button data-action="save"><span class="icon-save"></span> <span class="legend">Enregistrer</span></button></li>
+        {# <li><button data-action="fullscreen"><span class="icon-expand2"></span> <span class="legend">Full screen</span></button></li> #}
+        <li class="separator">Parametres<li>
+        <li class="separator">Derniers drafts<li>
+        {% for draft in userdrafts %}
+            <li class="user-draft" data-draft-load data-draft-id="{{ draft.draft_id }}">{{ draft.draft_name }}</li>
+        {% endfor %}
+    </ul>
+</nav>
 
 <script>
 
-$(document).ready(function()
-{
     var dr = $("#draft-aera");
     var mk = $("#marked-aera");
     var ct = $("#aera");
 
-    dr.change(function()
+    $(".drafter-article h1[role='title']").mouseout(function()
     {
-        var ctnt = $(this).val();
-        var mkd = marked(ctnt);
-        mk.html(mkd);
-        Prism.highlightAll();
+        if ($(this).html() != "Sans titre")
+        {
+            $(this).removeClass("unedited");
+        }
     });
 
     $('[data-action="preview"]').click(function()
@@ -48,10 +53,11 @@ $(document).ready(function()
         $('[data-action="preview"]').show();
     });
 
-    $('[data-action="fullscreen"]').click(function()
-    {
-        window.drafter.fscreen(ct);
-    });
-});
+    mk.hide();
+    mk.focus();
+    mk.trigger('click');
+    mk.select();
+    Muffin.draft.init();
+    Muffin.draft.watch();
 
 </script>
