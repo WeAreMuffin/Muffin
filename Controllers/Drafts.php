@@ -35,7 +35,7 @@ class Drafts extends Controller
     public function index ($params)
     {
         $this->registerParams($params);
-        $drafts = new Entities ("c_drafts");
+        $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."]");
         $userdrafts = new Entities ("c_drafts[draft_author=".$_SESSION["muffin_id"]."]");
         $this->addData("drafts", $drafts);
         $this->addData("userdrafts", $userdrafts);

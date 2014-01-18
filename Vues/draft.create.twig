@@ -14,6 +14,7 @@
         <li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Apercu</span></button></li>
         <li><button data-action="edit" style="display:none;"><span class="icon-pen"></span> <span class="legend">Edition</span></button></li>
         <li><button data-action="save"><span class="icon-save"></span> <span class="legend">Enregistrer</span></button></li>
+        <li><button data-action="publish"><span class="icon-gift2"></span> <span class="legend">Publier</span></button></li>
         {# <li><button data-action="fullscreen"><span class="icon-expand2"></span> <span class="legend">Full screen</span></button></li> #}
         <li class="separator">Parametres<li>
         <li class="separator">Derniers drafts<li>
@@ -51,6 +52,12 @@
         mk.hide();
         $('[data-action="edit"]').hide();
         $('[data-action="preview"]').show();
+    });
+
+
+    $(".raw-date").each(function()
+    {
+        $(this).html( moment( $(this).attr("data-date") ).fromNow() );
     });
 
     mk.hide();

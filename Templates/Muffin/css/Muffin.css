@@ -10873,6 +10873,74 @@ h1.title-remain,
         Drafter
     ------------------------------------------------------------------------
 */
+#draft-panel,
+#draft-panel ul {
+  padding-left: 0px;
+}
+.draft-list li {
+  display: inline-block;
+  padding: 20px;
+  width: 31%;
+  max-width: 31%;
+  margin: 10px 10px;
+  min-height: 200px;
+  cursor: pointer;
+  vertical-align: top;
+}
+.draft-list li .draft-title {
+  padding: 5px;
+  display: block;
+  color: #c02942;
+  border-bottom: 5px solid rgba(0, 0, 0, 0.05);
+}
+.draft-list li .draft-title h5 {
+  margin: 0px;
+  color: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+}
+.draft-list li .draft-text {
+  color: rgba(0, 0, 0, 0.4);
+}
+.draft-list li .draft-text p {
+  white-space: pre;
+}
+.draft-list li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.draft-list.user-draft li {
+  display: block;
+  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0px;
+  min-height: 0px;
+  cursor: pointer;
+  vertical-align: top;
+}
+.draft-list.user-draft li .draft-title {
+  padding: 5px;
+  margin: 0px;
+  display: inline-block;
+  color: #c02942;
+  border: none;
+}
+.draft-list.user-draft li .draft-title h1 {
+  display: inline-block;
+  font-size: 1.5em;
+}
+.draft-list.user-draft li .draft-title h5 {
+  margin: 0px;
+  padding-left: 10px;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+}
+.draft-list.user-draft li .draft-text {
+  display: block;
+}
+.draft-list.user-draft li .draft-text p {
+  white-space: normal;
+}
 .drafter-article {
   width: 85%;
   margin: auto;

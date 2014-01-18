@@ -25,11 +25,17 @@
             Aucun draft pour le moment...
         </h1>
     {% else %}
-        <ul>
+        <ul class="draft-list">
         {% for draft in drafts %}
             <li>
                 <a class="draft-item--li">
-                {{ draft.name }}
+                <div class="draft-title">
+                    <h1>{{ draft.draft_name }}</h1>
+                    <h5>crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }}</span> par {{ draft.c_user.login }}</h5>
+                </div>
+                <div class="draft-text">
+                    <p>{{ truncate(draft.draft_content, 100, " (...)") }}</p>
+                </div>
                 </a>
             </li>
         {% endfor %}
@@ -37,6 +43,27 @@
     {% endif %}
 	</li>
     <li data-index="3" style="display: block;">
+    {% if not userdrafts|length %}
+        <h1 style="color: rgba(0, 0, 0, 0.2);">
+            Aucun draft pour le moment...
+        </h1>
+    {% else %}
+        <ul class="user-draft draft-list">
+        {% for draft in userdrafts %}
+            <li>
+                <a class="draft-item--li">
+                <div class="draft-title">
+                    <h1>{{ draft.draft_name }}</h1>
+                    <h5>crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }}</span> par {{ draft.c_user.login }}</h5>
+                </div>
+                <div class="draft-text">
+                    <p>{{ truncate(draft.draft_content, 100, " (...)") }}</p>
+                </div>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 	</li>
 </ul>
 
