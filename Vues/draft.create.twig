@@ -1,0 +1,57 @@
+<article id="aera">
+    <header><h1 role="title" contenteditable="true">Untitled draft</h1></header>
+    <nav role="toolbar">
+    	<ul>
+    		<li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Preview</span></button></li>
+    		<li><button data-action="edit" style="display:none;"><span class="icon-pen"></span> <span class="legend">Edit</span></button></li>
+    		<li><button data-action="fullscreen"><span class="icon-expand2"></span> <span class="legend">Full screen</span></button></li>
+    	</ul>
+    </nav>
+    <section>
+    <textarea id="draft-aera">Begin here !</textarea>
+    <div id="marked-aera">
+
+    </div>
+    </section>
+    <footer></footer>
+</article>
+
+<script>
+
+$(document).ready(function()
+{
+    var dr = $("#draft-aera");
+    var mk = $("#marked-aera");
+    var ct = $("#aera");
+
+    dr.change(function()
+    {
+        var ctnt = $(this).val();
+        var mkd = marked(ctnt);
+        mk.html(mkd);
+        Prism.highlightAll();
+    });
+
+    $('[data-action="preview"]').click(function()
+    {
+        dr.hide();
+        mk.show();
+        $('[data-action="edit"]').show();
+        $('[data-action="preview"]').hide();
+    });
+
+    $('[data-action="edit"]').click(function()
+    {
+        dr.show();
+        mk.hide();
+        $('[data-action="edit"]').hide();
+        $('[data-action="preview"]').show();
+    });
+
+    $('[data-action="fullscreen"]').click(function()
+    {
+        window.drafter.fscreen(ct);
+    });
+});
+
+</script>

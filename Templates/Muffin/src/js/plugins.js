@@ -67,6 +67,14 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
+			if ($(this).attr("data-expand") != undefined)
+			{
+				Muffin.expandContainer();
+			}
+			else
+			{
+				Muffin.reduceContainer();
+			}
 			goToUrl(urlToGo);
 		});
 	});
@@ -250,6 +258,18 @@ var initializeDraftsMenu = function()
 	});
 };
 Muffin.initializeDraftsMenu = initializeDraftsMenu;
+
+var expandContainer = function()
+{
+	$("[data-role='container']").addClass("expanded");
+};
+Muffin.expandContainer = expandContainer;
+
+var reduceContainer = function()
+{
+	$("[data-role='container']").removeClass("expanded");
+};
+Muffin.reduceContainer = reduceContainer;
 
 var queryUserStatus = function()
 {

@@ -1,23 +1,42 @@
-<ul class="horizontal-buttons">
+
+    {#<ul class="horizontal-buttons">
     <li id="me-button-add">
         <a class="btn" data-toggle="modal" data-target="#modal-add"><span class="icon-createfile"></span><span class='side-legend'> Nouveau</span></a>
     </li>
-    {#
     <li id="me-button-info">
         <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-support3"></span><span class='side-legend'> Légende</span></a>
     </li>
-    #}
 </ul>
+    #}
 
 <ul class="horizontal-list" id="drafts-menu">
-    <li data-index-toggle="1" class="active"><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
-    <li data-index-toggle="2"><a><span class="icon-user4"></span> <span class="side-legend"> Mes drafts</span></a></li>
+    <li data-index-toggle="1" class="active"><a><span class="icon-pencil"></span> <span class="side-legend"> Ecrire</span></a></li>
+    <li data-index-toggle="2"><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
+    <li data-index-toggle="3"><a><span class="icon-user4"></span> <span class="side-legend"> Mes drafts</span></a></li>
 </ul>
 
-<ul class="drafts-panels">
+<ul id="drafts-panel">
     <li data-index="1" style="display: block;">
+    	{% include 'draft.create.twig' %}
 	</li>
     <li data-index="2" style="display: block;">
+    {% if not drafts|length %}
+        <h1 style="color: rgba(0, 0, 0, 0.2);">
+            Aucun draft pour le moment...
+        </h1>
+    {% else %}
+        <ul>
+        {% for draft in drafts %}
+            <li>
+                <a class="draft-item--li">
+                {{ draft.name }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+	</li>
+    <li data-index="3" style="display: block;">
 	</li>
 </ul>
 

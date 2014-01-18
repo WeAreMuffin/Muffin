@@ -10,11 +10,34 @@
 
 .visible-desktop {
     display: block;
-} 
+}
+
+
+/* Pour l'expand */
+@media only screen and (min-width: 1030px) {
+    div[data-role="container"].expanded
+    {
+        &.wrapper
+        {
+            transition: 0.2s all;
+            width: 100%;
+        }
+        & > aside
+        {
+            width: 210px;
+
+            & + article
+            {
+                display: inline-block;
+                width: 80%;
+            }
+        }
+    }
+}
 
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
-    
+
     .header-container {
         border-bottom: 30px solid #9E4838;
     }
@@ -256,7 +279,7 @@
             {
                 transition: none;
             }
-            
+
             li
             {
                 margin: 0 auto;
@@ -302,7 +325,7 @@
         }
 
     }
-    
+
     .horizontal-list
     {
     	li > a
@@ -316,14 +339,14 @@
 	{
 		padding-left: 0px;
 		text-align: left;
-		
+
 		ul[data-role="liste-competences"]
 		{
 			padding-left: 0px;
 			text-align: left;
 		}
 	}
-	
+
 	span.side-legend
 	{
 		display: none;

@@ -35,6 +35,8 @@ class Drafts extends Controller
     public function index ($params)
     {
         $this->registerParams($params);
+        $drafts = new Entities ("c_drafts");
+        $this->addData("drafts", $drafts);
         $this->render ();
     }
 

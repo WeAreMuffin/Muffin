@@ -9254,6 +9254,7 @@ body {
 .wrapper {
   width: 90%;
   margin: 0 5%;
+  transition: 0.2s all;
 }
 /* ===================
     ALL: Orange Theme
@@ -10896,6 +10897,20 @@ div[data-role="form-container"] form .visible > * {
 }
 .visible-desktop {
   display: block;
+}
+/* Pour l'expand */
+@media only screen and (min-width: 1030px) {
+  div[data-role="container"].expanded.wrapper {
+    transition: 0.2s all;
+    width: 100%;
+  }
+  div[data-role="container"].expanded > aside {
+    width: 210px;
+  }
+  div[data-role="container"].expanded > aside + article {
+    display: inline-block;
+    width: 80%;
+  }
 }
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
