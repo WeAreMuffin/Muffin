@@ -11,12 +11,13 @@
 </article>
 <nav role="draft-toolbar">
     <ul>
-        <li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Apercu</span></button></li>
+        <li class="separator">Paramètres<li>
+        <li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Aperçu</span></button></li>
         <li><button data-action="edit" style="display:none;"><span class="icon-pen"></span> <span class="legend">Edition</span></button></li>
         <li><button data-action="save"><span class="icon-save"></span> <span class="legend">Enregistrer</span></button></li>
         <li><button data-action="publish"><span class="icon-gift2"></span> <span class="legend">Publier</span></button></li>
+        <li><button data-action="unpublish" style="display:none;"><span class="icon-lock"></span> <span class="legend">Dépublier</span></button></li>
         {# <li><button data-action="fullscreen"><span class="icon-expand2"></span> <span class="legend">Full screen</span></button></li> #}
-        <li class="separator">Parametres<li>
         <li class="separator">Derniers drafts<li>
         {% for draft in userdrafts %}
             <li class="user-draft" data-draft-load data-draft-id="{{ draft.draft_id }}">{{ draft.draft_name }}</li>
@@ -52,6 +53,11 @@
         mk.hide();
         $('[data-action="edit"]').hide();
         $('[data-action="preview"]').show();
+    });
+
+    $('[data-action="save"]').click(function()
+    {
+        Muffin.draft.save();
     });
 
 
