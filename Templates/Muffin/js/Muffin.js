@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-01-23
+   mNymdhy          shddmy hNd       Sorti du four le 2014-01-24
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -6405,6 +6405,19 @@ Prism.hooks.add("after-highlight",function(e){var t=e.element.parentNode;if(!t||
 
 })(jQuery);
 
+function locationHashChanged() {
+    if (location.hash != "" && location.hash != undefined)
+    {
+        var url = location.hash;
+        Muffin.goToUrl(url.slice(2), ((url.search("Drafts") > 0) ? "expanded" : undefined));
+		if (url.search("Drafts") <= 0)
+		{
+			Muffin.reduceContainer();
+		}
+    }
+}
+
+
 $(document).ready(function()
 {
 	initalizeForm();
@@ -6413,6 +6426,7 @@ $(document).ready(function()
 		reloadHandlers();
 	});*/
 
+	window.onhashchange = locationHashChanged;
 	window.clearInterval(window.intervalHandler);
 	window.intervalHandler = setInterval(notifications,5000);
 	/**
@@ -6464,13 +6478,12 @@ $(document).ready(function()
 
 window.Muffin = {};
 
-
 function goToUrl(url, elt)
 {
 	$("div[data-role='form-container']").children().addClass("loading");
 	if (elt != undefined)
 	{
-		if ( elt === "expanded" || elt.attr("data-expand") != undefined)
+		if (elt === "expanded" || elt.attr("data-expand") != undefined)
 		{
 			Muffin.expandContainer();
 		}
@@ -6486,10 +6499,54 @@ function goToUrl(url, elt)
 			NProgress.done();
 			data.addClass("complete");
 			treatResize();
+			window.location.hash = "/" + url;
 	});
 
 }
 Muffin.goToUrl = goToUrl;
+
+/* -----------------------------------------------------------------------------------
+  |                         	     HASH FUNCTIONS                                  |
+   ----------------------------------------------------------------------------------- */
+
+/* World isn't ready yet
+
+Muffin.href = {};
+
+// Current url
+Muffin.href.url = "";
+
+Muffin.href.go = function(url)
+{
+	if (Muffin.href.url != url)
+	{
+        Muffin.href.url = url;
+        Muffin.goToUrl(url, ((url.search("Drafts") > 0) ? "expanded" : undefined));
+		if (url.search("Drafts") <= 0)
+		{
+			Muffin.reduceContainer();
+		}
+	}
+	else
+	{
+		console.log("url didn't change !");
+	}
+}
+
+Muffin.href.locationHashChanged = function()
+{
+    if (location.hash != "" && location.hash != undefined)
+    {
+        var url = location.hash;
+        Muffin.href.go(url.slice(2));
+    }
+}
+*/
+
+/* -----------------------------------------------------------------------------------
+  |                         	     CORE FUNCTIONS                                  |
+   ----------------------------------------------------------------------------------- */
+
 
 function bindAjaxEvents()
 {

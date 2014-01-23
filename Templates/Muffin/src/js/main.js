@@ -14,6 +14,19 @@
  * limitations under the License.
  */
 
+function locationHashChanged() {
+    if (location.hash != "" && location.hash != undefined)
+    {
+        var url = location.hash;
+        Muffin.goToUrl(url.slice(2), ((url.search("Drafts") > 0) ? "expanded" : undefined));
+		if (url.search("Drafts") <= 0)
+		{
+			Muffin.reduceContainer();
+		}
+    }
+}
+
+
 $(document).ready(function()
 {
 	initalizeForm();
@@ -22,6 +35,7 @@ $(document).ready(function()
 		reloadHandlers();
 	});*/
 
+	window.onhashchange = locationHashChanged;
 	window.clearInterval(window.intervalHandler);
 	window.intervalHandler = setInterval(notifications,5000);
 	/**

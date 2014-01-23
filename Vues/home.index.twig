@@ -10,14 +10,37 @@
         code.
     #}
 {% if webdata.user %}
-			 <div class="big-loader">
-			    <h1><span class="icon-foodtray"></span></h1>
-			    <h2>Préparation du menu...</h2> 
-			</div>
-<script>
+
+                    {% include 'user.index.modals.twig' %}
+                    {% include 'user.index.header.twig' %}
+                    {% include 'user.index.side-menu.twig' %}
+
+                    <article data-role="grid">
+                        <section>
+                            <a href="#!"></a>
+                            <div data-role="form-container">
+                                 <div class="big-loader">
+                                    <h1><span class="icon-foodtray"></span></h1>
+                                    <h2>Préparation du menu...</h2>
+                                </div>
+                            </div>
+                            <div id="form-result"></div>
+                        </section>
+                    </article>
+                    <script>
                         $(document).ready(function()
                         {
-                            window.muffin.verifierCode("{{ webdata.session.code }}", "{{ webdata.user }}");
+
+
+                            if (location.hash != "" && location.hash != undefined)
+                            {
+                                var url = location.hash;
+                                Muffin.goToUrl(url.slice(2), ((url.search("Drafts") > 0) ? "expanded" : undefined));
+                            }
+                            else
+                            {
+                                window.muffin.verifierCode("{{ webdata.session.code }}", "{{ webdata.user }}");
+                            }
                         });
                     </script>
 {% else %}

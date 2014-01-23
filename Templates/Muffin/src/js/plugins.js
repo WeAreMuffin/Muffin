@@ -42,7 +42,6 @@
 
 window.Muffin = {};
 
-
 function goToUrl(url, elt)
 {
 	$("div[data-role='form-container']").children().addClass("loading");
@@ -64,10 +63,54 @@ function goToUrl(url, elt)
 			NProgress.done();
 			data.addClass("complete");
 			treatResize();
+			window.location.hash = "/" + url;
 	});
 
 }
 Muffin.goToUrl = goToUrl;
+
+/* -----------------------------------------------------------------------------------
+  |                         	     HASH FUNCTIONS                                  |
+   ----------------------------------------------------------------------------------- */
+
+/* World isn't ready yet
+
+Muffin.href = {};
+
+// Current url
+Muffin.href.url = "";
+
+Muffin.href.go = function(url)
+{
+	if (Muffin.href.url != url)
+	{
+        Muffin.href.url = url;
+        Muffin.goToUrl(url, ((url.search("Drafts") > 0) ? "expanded" : undefined));
+		if (url.search("Drafts") <= 0)
+		{
+			Muffin.reduceContainer();
+		}
+	}
+	else
+	{
+		console.log("url didn't change !");
+	}
+}
+
+Muffin.href.locationHashChanged = function()
+{
+    if (location.hash != "" && location.hash != undefined)
+    {
+        var url = location.hash;
+        Muffin.href.go(url.slice(2));
+    }
+}
+*/
+
+/* -----------------------------------------------------------------------------------
+  |                         	     CORE FUNCTIONS                                  |
+   ----------------------------------------------------------------------------------- */
+
 
 function bindAjaxEvents()
 {

@@ -10976,6 +10976,7 @@ h1.title-remain,
   font-style: normal;
   font-size: 18px;
   line-height: 1.5;
+  word-break: break-word;
 }
 #draft-read h1,
 #draft-read h2,
