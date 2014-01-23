@@ -35,7 +35,7 @@ class Drafts extends Controller
     public function index ($params)
     {
         $this->registerParams($params);
-        $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."]");
+        $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."][public>0]");
         $userdrafts = new Entities ("c_drafts[draft_author=".$_SESSION["muffin_id"]."]");
         $this->addData("drafts", $drafts);
         $this->addData("userdrafts", $userdrafts);
@@ -90,6 +90,28 @@ class Drafts extends Controller
     }
 
     /*
+     * Va changer la visibilitee du draft
+     */
+    public function visibility ($params)
+    {
+        $id = $this->filterPost("id");
+        $new_v = $this->filterPost("new_v");
+        $this->registerParams($params);
+        $draft = Moon::get ('c_drafts', 'draft_id', $id);
+        $auteur = $_SESSION["muffin_id"];
+        if ($draft->draft_author == $auteur)
+        {
+            $nid = Core::getBdd ()->update (
+                            array ("public" => $new_v), 'c_drafts', array ("draft_id" => $id));
+            echo "{success: '{$nid}'}";
+        }
+        else
+        {
+            echo ($this->getErrorJson("access"));
+        }
+    }
+
+    /*
      * Va renvoyer un draft.
      */
     public function get ($params)
@@ -104,8 +126,27 @@ class Drafts extends Controller
         }
         else
         {
-            echo "{}";
+            echo ($this->getErrorJson("access"));
         }
+    }
+
+    /*
+     * Va renvoyer un draft.
+     */
+    public function read ($params)
+    {
+        $id = $this->filterPost("id");
+        $this->registerParams($params);
+        $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."][public>0]");
+        $draft = Moon::get ('c_drafts', 'draft_id', $id);
+        if ($draft->public != 0)
+        {
+            $this->addData("draft", $draft);
+            $this->addData("drafts", $drafts);
+            $this->render ();
+        }
+        else
+            echo ($this->getErrorJson("access"));
     }
 
     /*   =======================================================================
@@ -120,6 +161,24 @@ class Drafts extends Controller
         else
         {
                 return false;
+        }
+    }
+
+    /*   =======================================================================
+     *                      Json d'erreur
+     *   =======================================================================
+     */
+
+    private function getErrorJson($type)
+    {
+        switch ($type) {
+            case 'access':
+                return ("{error: 'error', msg: 'Vous n\'avez pas les droits nécessaires pour effectuer cette action'}");
+                break;
+
+            default:
+                return ("{error: 'error', msg: 'Une erreur s\'est produite.'}");
+                break;
         }
     }
 }

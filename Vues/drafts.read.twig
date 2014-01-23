@@ -1,0 +1,47 @@
+<div class="loading">
+    <div id="draft-read" class="drafter-render">
+        <h1 id="draft-read-title">{{ draft.draft_name }}
+            <small class="list-visibility">
+                <span class="icon-clock"></span>
+                <span class="raw-date" data-date="{{ draft.draft_date_c }}">Crée le {{ draft.draft_date_c }} </span>
+                 · <span class="icon-quill"></span>
+                <span class="up">{{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}</span>
+            </small>
+        </h1>
+        <div id="draft-read-content">{{ draft.draft_content }}</div>
+        <div id="draft-read-footer">
+            écrit par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
+            <span class="hover"> · <span class="raw-date" data-date="{{ draft.draft_date_c }}">Crée le {{ draft.draft_date_c }}</span>
+        </div>
+    </div>
+    <div id="draft-right">
+    <span class="list-icon icon-menu3"></span>
+    <ul>
+        <li data-action="back-to-top"><span><span class="icon-arrow-up3"></span> Haut de page</span></li>
+        <li data-action="back-to-list"><span><span class="icon-list"></span> Tous les articles</span></li>
+        {% for elt in drafts %}
+            <li id="draft-element-{{ elt.draft_id }}" data-id="{{ elt.draft_id }}">
+                    <span>{{ elt.draft_name }}</span>
+                    <span class="grey">
+                        Par {{ elt.c_user.login|lower }} ·
+                        <span class="raw-date" data-date="{{ elt.draft_date_c }}">Crée le {{ elt.draft_date_c }}</span>
+                    </span>
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
+<div>
+<script>
+    $(".raw-date").each(function()
+    {
+        $(this).html( moment( $(this).attr("data-date") ).fromNow() );
+    });
+
+    $("li[data-id]").click(function(){
+        Muffin.draft.read($(this).attr("data-id"));
+    });
+
+    $('li[data-action="back-to-list"]').click(function(){
+        Muffin.goToUrl("Drafts/read", "expanded")
+    });
+</script>

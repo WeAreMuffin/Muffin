@@ -12,6 +12,90 @@
     display: block;
 }
 
+/* Pour le menu draft lateral */
+@media only screen and (min-width: 1340px) {
+
+        #draft-right
+        {
+            position: fixed;
+            top: 100px;
+            right: 0px;
+            width: 350px;
+
+            span.list-icon
+            {
+                transition-delay: 0.3s;
+                transition: all 0.3s;
+                display: block;
+                text-align: right;
+                position: relative;
+                top: 80px;
+                font-size: 3em;
+                color: rgba(0, 0, 0, 0.3);
+                right: 30px;
+                opacity: 1;
+            }
+
+            li
+            {
+                transition-delay: 0.0s;
+                transition: all 0.4s;
+                position: relative;
+                display: block;
+                padding: 10px 15px;
+                margin-right: 10px;
+                right: -250px;
+                opacity: 0;
+                background-color: #F7E4BE;
+
+                & > span
+                {
+                    &.grey
+                    {
+                        color: rgba(0, 0, 0, 0.3);
+                    }
+                    display: block;
+                }
+
+                & + li
+                {
+                    border-top: 1px solid rgba(0, 0, 0, 0.05);
+                }
+
+                &[data-action]
+                {
+                    text-align: center;
+                    font-size: 1.1em;
+                    color: rgba(0, 0, 0, 0.5);
+
+                    & span[class^="icon-"]
+                    {
+                        padding-right: 10px;
+                    }
+                }
+            }
+
+            &:hover
+            {
+                li
+                {
+                    cursor: pointer;
+                    transition-delay: 0.3s;
+                    right: 0px;
+                    opacity: 1;
+                }
+
+                span.list-icon
+                {
+                    transition-delay: 0.0s;
+                    transition: all 0.3s;
+                    right: -50px;
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
 
 /* Pour l'expand */
 @media only screen and (min-width: 1030px) {

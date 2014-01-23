@@ -15,8 +15,21 @@
         <li><button data-action="preview"><span class="icon-eye3"></span> <span class="legend">Aperçu</span></button></li>
         <li><button data-action="edit" style="display:none;"><span class="icon-pen"></span> <span class="legend">Edition</span></button></li>
         <li><button data-action="save"><span class="icon-save"></span> <span class="legend">Enregistrer</span></button></li>
-        <li><button data-action="publish"><span class="icon-gift2"></span> <span class="legend">Publier</span></button></li>
-        <li><button data-action="unpublish" style="display:none;"><span class="icon-lock"></span> <span class="legend">Dépublier</span></button></li>
+        <li class="separator">Visibilité<li>
+        <li class="visibility-label">Moi seulement<li>
+        <li class="triple-toggle">
+            {# visible seulement par le proprietaire #}
+            <input type="radio" name="draft-access" value="0" id="draft-access--private" title="Moi seulement">
+            <label for="draft-access--private"><span class="icon-lock"></span></label>
+            <span class="link"></span>
+            {# visible seulement par les membres #}
+            <input type="radio" name="draft-access" value="1" id="draft-access--protected" title="Membres seulement">
+            <label for="draft-access--protected"><span class="icon-marvin"></span></label>
+            <span class="link"></span>
+            {# visible au monde entier #}
+            <input type="radio" name="draft-access" value="2" id="draft-access--public" title="Le monde entier">
+            <label for="draft-access--public"><span class="icon-earth"></span></label>
+        </li>
         {# <li><button data-action="fullscreen"><span class="icon-expand2"></span> <span class="legend">Full screen</span></button></li> #}
         <li class="separator">Derniers drafts<li>
         {% for draft in userdrafts %}
@@ -26,51 +39,6 @@
 </nav>
 
 <script>
-
-    var dr = $("#draft-aera");
-    var mk = $("#marked-aera");
-    var ct = $("#aera");
-
-    $(".drafter-article h1[role='title']").mouseout(function()
-    {
-        if ($(this).html() != "Sans titre")
-        {
-            $(this).removeClass("unedited");
-        }
-    });
-
-    $('[data-action="preview"]').click(function()
-    {
-        dr.hide();
-        mk.show();
-        $('[data-action="edit"]').show();
-        $('[data-action="preview"]').hide();
-    });
-
-    $('[data-action="edit"]').click(function()
-    {
-        dr.show();
-        mk.hide();
-        $('[data-action="edit"]').hide();
-        $('[data-action="preview"]').show();
-    });
-
-    $('[data-action="save"]').click(function()
-    {
-        Muffin.draft.save();
-    });
-
-
-    $(".raw-date").each(function()
-    {
-        $(this).html( moment( $(this).attr("data-date") ).fromNow() );
-    });
-
-    mk.hide();
-    mk.focus();
-    mk.trigger('click');
-    mk.select();
     Muffin.draft.init();
     Muffin.draft.watch();
-
 </script>

@@ -20,27 +20,7 @@
     	{% include 'draft.create.twig' %}
 	</li>
     <li data-index="2" style="display: block;">
-    {% if not drafts|length %}
-        <h1 style="color: rgba(0, 0, 0, 0.2);">
-            Aucun draft pour le moment...
-        </h1>
-    {% else %}
-        <ul class="draft-list">
-        {% for draft in drafts %}
-            <li>
-                <a class="draft-item--li">
-                <div class="draft-title">
-                    <h1>{{ draft.draft_name }}</h1>
-                    <h5>crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }}</span> par {{ draft.c_user.login }}</h5>
-                </div>
-                <div class="draft-text">
-                    <p>{{ truncate(draft.draft_content, 100, " (...)") }}</p>
-                </div>
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+        {% include 'draft.all.twig' %}
 	</li>
     <li data-index="3" style="display: block;">
     {% if not userdrafts|length %}
@@ -51,14 +31,23 @@
         <ul class="user-draft draft-list">
         {% for draft in userdrafts %}
             <li>
-                <a class="draft-item--li">
-                <div class="draft-title">
-                    <h1>{{ draft.draft_name }}</h1>
-                    <h5>crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }}</span> par {{ draft.c_user.login }}</h5>
-                </div>
-                <div class="draft-text">
-                    <p>{{ truncate(draft.draft_content, 100, " (...)") }}</p>
-                </div>
+                <a class="draft-item--li" data-draft-load="" data-draft-id="{{ draft.draft_id }}">
+                    <div class="draft-title">
+                        <h1>{{ draft.draft_name }}</h1>
+                         <span class="list-visibility">
+                            crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }}</span> ·
+                            {% if draft.public == 0 %}
+                                <span class="icon-lock"></span> Visible par vous uniquement
+                            {% elseif draft.public == 1 %}
+                                <span class="icon-marvin"></span> Visible par les membres
+                            {% elseif draft.public == 2 %}
+                                <span class="icon-earth"></span> Visible par tout le monde
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="draft-text">
+                        <p>{{ truncate(draft.draft_content, 400, " (...)") }}</p>
+                    </div>
                 </a>
             </li>
         {% endfor %}
@@ -69,4 +58,5 @@
 
 <script>
 	Muffin.initializeDraftsMenu();
+    treatResize();
 </script>
