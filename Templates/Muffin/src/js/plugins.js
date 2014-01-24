@@ -44,6 +44,7 @@ window.Muffin = {};
 
 function goToUrl(url, elt)
 {
+	console.log("loading !");
 	$("div[data-role='form-container']").children().addClass("loading");
 	if (elt != undefined)
 	{
@@ -89,9 +90,9 @@ Muffin.href.go = function(url)
 		if (url.search("Drafts") <= 0)
 		{
 			Muffin.reduceContainer();
-		}
+
 	}
-	else
+	e}lse
 	{
 		console.log("url didn't change !");
 	}
@@ -120,7 +121,8 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
-			goToUrl(urlToGo, $(this));
+			window.location.hash = "/" + urlToGo;
+			//goToUrl(urlToGo, $(this));
 		});
 	});
 }

@@ -1,20 +1,20 @@
 
 <ul class="horizontal-list" id="drafts-menu">
     <li data-index-toggle="1" data-load-target="Drafts/create" data-expand><a><span class="icon-pencil"></span> <span class="side-legend"> Ecrire</span></a></li>
-    <li data-index-toggle="2" class="active"><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
-    <li data-index-toggle="3" data-load-target="Drafts/mine" data-expand><a><span class="icon-user4"></span> <span class="side-legend"> Mes drafts</span></a></li>
+    <li data-index-toggle="2" data-load-target="Drafts/all" data-expand><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
+    <li data-index-toggle="3" class="active"><a><span class="icon-user4"></span> <span class="side-legend"> Mes drafts</span></a></li>
 </ul>
 
 <ul id="drafts-panel">
-    <li data-index="2" style="display: block;">
+    <li data-index="3" style="display: block;">
 
-    {% if not drafts|length %}
+    {% if not userdrafts|length %}
         <h1 style="color: rgba(0, 0, 0, 0.2);">
             Aucun draft pour le moment...
         </h1>
     {% else %}
         <ul class="draft-list read-list">
-        {% for draft in drafts %}
+        {% for draft in userdrafts %}
             <li id="draft-element-{{ draft.draft_id }}" data-id="{{ draft.draft_id }}">
                 <a class="draft-item--li">
                 <div class="draft-title">
@@ -43,7 +43,7 @@
 </ul>
 
 <script>
-    Muffin.bindAjaxEvents();
     treatResize();
+    Muffin.bindAjaxEvents();
 </script>
 

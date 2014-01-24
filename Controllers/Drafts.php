@@ -35,9 +35,40 @@ class Drafts extends Controller
     public function index ($params)
     {
         $this->registerParams($params);
-        $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."][public>0]");
         $userdrafts = new Entities ("c_drafts[draft_author=".$_SESSION["muffin_id"]."]");
+        $this->addData("userdrafts", $userdrafts);
+        $this->render ();
+    }
+
+    /*
+     * liste des drafts
+     */
+    public function all ($params)
+    {
+        $this->registerParams($params);
+        $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."][public>0]");
         $this->addData("drafts", $drafts);
+        $this->render ();
+    }
+
+    /*
+     * liste des drafts
+     */
+    public function mine ($params)
+    {
+        $this->registerParams($params);
+        $userdrafts = new Entities ("c_drafts[draft_author=".$_SESSION["muffin_id"]."]");
+        $this->addData("userdrafts", $userdrafts);
+        $this->render ();
+    }
+
+    /*
+     * liste des drafts
+     */
+    public function create ($params)
+    {
+        $this->registerParams($params);
+        $userdrafts = new Entities ("c_drafts[draft_author=".$_SESSION["muffin_id"]."]");
         $this->addData("userdrafts", $userdrafts);
         $this->render ();
     }
