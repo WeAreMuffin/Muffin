@@ -9590,6 +9590,10 @@ div[role="simple-row"] h4 {
   text-align: center;
   font-size: 1.3em;
 }
+div[role="simple-row"] ul[role="drafts"] li {
+  display: block;
+  cursor: pointer;
+}
 #user-two .half {
   display: inline-block;
   width: 45%;
@@ -10879,6 +10883,22 @@ h1.title-remain,
         Drafter
     ------------------------------------------------------------------------
 */
+.btn-draft-edit,
+.btn-draft-delete,
+.btn-draft-read {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  float: none;
+  padding: 6px 13px;
+  margin-left: 20px;
+}
+.btn-draft-edit:hover,
+.btn-draft-delete:hover,
+.btn-draft-read:hover {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.5);
+}
 .visibility-label {
   text-transform: uppercase;
   font-size: 0.7em;
@@ -11028,23 +11048,18 @@ ul.user-draft.draft-list {
 .draft-list li {
   position: relative;
   transition: all 0.4s;
-  display: inline-block;
-  padding: 20px;
-  right: 0px;
-  width: 31%;
-  max-width: 31%;
-  margin: 10px 10px;
-  min-height: 200px;
+  padding: 0px;
   border-radius: 0px;
-  border-left: 1px solid transparent;
   display: block;
-  padding: 10px;
   width: 100%;
   max-width: 100%;
   margin: 0px;
   min-height: 0px;
   cursor: pointer;
   vertical-align: top;
+}
+.draft-list li[data-id] {
+  cursor: pointer;
 }
 .draft-list li.escape-left {
   right: -2000px;
@@ -11072,9 +11087,6 @@ ul.user-draft.draft-list {
   color: rgba(0, 0, 0, 0.3);
   font-size: 0.9em;
   text-transform: uppercase;
-}
-.draft-list li:hover {
-  border-left: 1px solid #c02942;
 }
 .draft-list li .draft-title {
   padding: 5px;
@@ -11161,7 +11173,7 @@ ul.user-draft.draft-list {
   display: inline-block;
 }
 .drafter-article + nav[role="draft-toolbar"] ul {
-  float: right;
+  /*float: right;*/
   border-left: 1px solid #CABA9C;
   min-height: 300px;
   padding-left: 5px;

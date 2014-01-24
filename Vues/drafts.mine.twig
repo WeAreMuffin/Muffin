@@ -15,12 +15,12 @@
     {% else %}
         <ul class="draft-list read-list">
         {% for draft in userdrafts %}
-            <li id="draft-element-{{ draft.draft_id }}" data-id="{{ draft.draft_id }}">
+            <li>
                 <a class="draft-item--li">
                 <div class="draft-title">
                     <h1>{{ draft.draft_name }}</h1>
                          <span class="list-visibility">
-                            crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span> par {{ draft.c_user.login }} ·
+                            <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span> ·
                             {% if draft.public == 0 %}
                                 <span class="icon-lock"></span> Visible par vous uniquement
                             {% elseif draft.public == 1 %}
@@ -30,9 +30,15 @@
                             {% endif %}
                         </span>
                 </div>
+                <a class="btn-draft-edit" data-draft-load data-draft-id="{{ draft.draft_id }}"><span class="icon-pencil"></span> Edit</a>
+                <a class="btn-draft-read" data-id="{{ draft.draft_id }}"><span class="icon-eye"></span> Read</a>
+                <a class="btn-draft-delete" data-id="{{ draft.draft_id }}"><span class="icon-trash"></span> Delete</a>
+                {#
+                {#
                 <div class="draft-text">
                     <p>{{ truncate(draft.draft_content, 400, " (...)") }}</p>
                 </div>
+                #}
                 </a>
             </li>
         {% endfor %}
@@ -43,7 +49,8 @@
 </ul>
 
 <script>
-    treatResize();
     Muffin.bindAjaxEvents();
+    Muffin.draft.init();
+    Muffin.draft.watch();
 </script>
 

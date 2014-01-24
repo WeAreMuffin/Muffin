@@ -20,19 +20,25 @@
                 <div class="draft-title">
                     <h1>{{ draft.draft_name }}</h1>
                          <span class="list-visibility">
-                            crée <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span> par {{ draft.c_user.login }} ·
+                            <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span>
+                             · par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
+
+                            {#
                             {% if draft.public == 0 %}
-                                <span class="icon-lock"></span> Visible par vous uniquement
+                                <span class="icon-lock"></span>
                             {% elseif draft.public == 1 %}
-                                <span class="icon-marvin"></span> Visible par les membres
+                                <span class="icon-marvin"></span>
                             {% elseif draft.public == 2 %}
-                                <span class="icon-earth"></span> Visible par tout le monde
+                                <span class="icon-earth"></span>
                             {% endif %}
+                            #}
                         </span>
                 </div>
+                {#
                 <div class="draft-text">
                     <p>{{ truncate(draft.draft_content, 400, " (...)") }}</p>
                 </div>
+                #}
                 </a>
             </li>
         {% endfor %}
@@ -44,6 +50,7 @@
 
 <script>
     Muffin.bindAjaxEvents();
-    treatResize();
+    Muffin.draft.init();
+    Muffin.draft.watch();
 </script>
 

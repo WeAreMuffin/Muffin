@@ -44,4 +44,8 @@
     $('li[data-action="back-to-list"]').click(function(){
         Muffin.goToUrl("Drafts/read", "expanded")
     });
+    var ctnt = _.unescape($("#draft-read-content").html());
+    var mkd = marked(ctnt);
+    $("#draft-read-content").html(mkd);
+    Prism.highlightAll();
 </script>

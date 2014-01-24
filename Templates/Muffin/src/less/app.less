@@ -327,6 +327,15 @@ div[role="simple-row"]
         text-align: center;
         font-size: 1.3em;
     }
+
+    ul[role="drafts"]
+    {
+        li
+        {
+            display: block;
+            cursor: pointer;
+        }
+    }
 }
 
 #user-two
@@ -2003,6 +2012,24 @@ h1.title-remain,
     ------------------------------------------------------------------------
 */
 
+.btn-draft-edit,
+.btn-draft-delete,
+.btn-draft-read
+{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    float: none;
+    padding: 6px 13px;
+    margin-left: 20px;
+
+    &:hover
+    {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        color: rgba(0, 0, 0, 0.5);
+    }
+}
+
 .visibility-label
 {
     text-transform: uppercase;
@@ -2187,21 +2214,26 @@ ul.user-draft.draft-list
 .draft-list
 {
         padding: 0px;
+
         li
         {
             position: relative;
             transition: all 0.4s;
-            display: inline-block;
-            padding: 20px;
-            right: 0px;
-            width: 31%;
-            max-width: 31%;
-            margin: 10px 10px;
-            min-height: 200px;
+            padding: 0px;
+            border-radius: 0px;
+
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            margin: 0px;
+            min-height: 0px;
             cursor: pointer;
             vertical-align: top;
-            border-radius: 0px;
-            border-left: 1px solid transparent;
+
+            &[data-id]
+            {
+                cursor: pointer;
+            }
 
             &.escape-left
             {
@@ -2244,17 +2276,8 @@ ul.user-draft.draft-list
 
             &:hover
             {
-                border-left: 1px solid @muffin-red;
             }
 
-            display: block;
-            padding: 10px;
-            width: 100%;
-            max-width: 100%;
-            margin: 0px;
-            min-height: 0px;
-            cursor: pointer;
-            vertical-align: top;
 
 
             .draft-title
@@ -2375,7 +2398,7 @@ ul.user-draft.draft-list
 
         ul
         {
-            float: right;
+            /*float: right;*/
             border-left: 1px solid #CABA9C;
             min-height: 300px;
             padding-left: 5px;

@@ -18,6 +18,7 @@ function locationHashChanged() {
     if (location.hash != "" && location.hash != undefined)
     {
         var url = location.hash;
+        console.log("onhashchange(event) => " + url);
         Muffin.goToUrl(url.slice(2), ((url.search("Drafts") > 0) ? "expanded" : undefined));
 		if (url.search("Drafts") <= 0)
 		{

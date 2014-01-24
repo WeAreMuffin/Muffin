@@ -94,6 +94,9 @@ class User extends Controller
         $propositions = $r->fetchAll(PDO::FETCH_CLASS);
 
         $news = $bd->query("SELECT * FROM c_news c ORDER BY c.date DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
+        $drafts = $bd->query("SELECT * FROM c_drafts c
+                             WHERE c.public > 0 AND c.draft_author != ".$_SESSION['muffin_id']
+                             ." ORDER BY c.draft_date_c DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
 
         /* Premiere visite ? */
         if ($user->first_visit == 1)
@@ -110,6 +113,7 @@ class User extends Controller
         $this->addData ('user', $user);
         $this->addData ('infos', $infos);
         $this->addData ('news', $news);
+        $this->addData ('drafts', $drafts);
         $this->addData ('rank', $this->getRank($uid));
         $this->addData ('count', $this->getCount());
         $this->addData ('demandes', $demandes);

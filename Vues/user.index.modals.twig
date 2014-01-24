@@ -84,13 +84,13 @@
                             <h2><span class="icon-marvin"></span></h2>
                             <p>Projet</p>
                         </label>
-                        
+
                         <input type="radio" id="radio-type--precis" name="type_competence" value="2" required>
                         <label for='radio-type--precis' title="Un domaine tres précis (ex: pointeur sur fonction, matrice etc.)">
                             <h2><span class="icon-uniF6EC"></span></h2>
                             <p>Point particulier</p>
                         </label>
-                        
+
                         <input type="radio" id="radio-type--domaine" name="type_competence" value="1" required>
                         <label for='radio-type--domaine' title="Une compétence générale (ex: Anglais, Html, C etc.)">
                             <h2><span class="icon-certificate"></span></h2>
@@ -146,7 +146,7 @@
                     <div style="display:none;">
                         <p>Peut être pensez vous à :</p>
                         <ul id="search_user_results">
-                            
+
                         </ul>
                     </div>
                 </form>
@@ -222,7 +222,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-primary">
-                   Fermer 
+                   Fermer
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -240,32 +240,38 @@
 		}
 	}
 
-	function check_permission() 
+	function check_permission()
 	{
-  	  switch(window.webkitNotifications.checkPermission()) {
-        case 0:
-          // Continue
-          $("#enableNotifications").removeClass("warn").addClass("ok").html("<span class='icon-checkmark'></span> Notifications actives");
-          return true;
-          break;
+        if(window.webkitNotifications)
+        {
+      	  switch(window.webkitNotifications.checkPermission()) {
+            case 0:
+              // Continue
+              $("#enableNotifications").removeClass("warn").addClass("ok").html("<span class='icon-checkmark'></span> Notifications actives");
+              return true;
+              break;
 
-        case 2:
-          $("#enableNotifications").addClass("ask").html("Activer les notifications");
-        break;
-        
-        default:
-          $("#enableNotifications").addClass("warn").html("Notifications refusees");
-          return false;
-          break;
-      }
+            case 2:
+              $("#enableNotifications").addClass("ask").html("Activer les notifications");
+            break;
+
+            default:
+              $("#enableNotifications").addClass("warn").html("Notifications refusees");
+              return false;
+              break;
+            }
+        }
     }
 
 	function request_permission()
 	{
-		// 0 means we have permission to display notifications
-		if (window.webkitNotifications.checkPermission() != 0) {
-			window.webkitNotifications.requestPermission(check_permission);
-		  }
+        if(window.webkitNotifications)
+        {
+    		// 0 means we have permission to display notifications
+    		if (window.webkitNotifications.checkPermission() != 0) {
+    			window.webkitNotifications.requestPermission(check_permission);
+    		  }
+        }
 	}
 
     $("#search_comp_uid").keyup(function()
@@ -275,16 +281,19 @@
     });
 
 	check_permission();
-    if (window.webkitNotifications.checkPermission() != 0 && bSupNot())
+    if(window.webkitNotifications)
     {
-    	$("#enableNotifications").html("Activer les notifications");
-    	$("#enableNotifications").click(function()
-    	{
-    		request_permission();
-    		console.log("permission requested...");
-    	});
+        if (window.webkitNotifications.checkPermission() != 0 && bSupNot())
+        {
+        	$("#enableNotifications").html("Activer les notifications");
+        	$("#enableNotifications").click(function()
+        	{
+        		request_permission();
+        		console.log("permission requested...");
+        	});
+        }
     }
-  
+
 </script>
 
 

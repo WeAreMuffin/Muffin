@@ -121,8 +121,16 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
-			window.location.hash = "/" + urlToGo;
-			//goToUrl(urlToGo, $(this));
+			console.log("GOTO => (oldhash : " + window.location.hash + ") --> (#/" + urlToGo + ")");
+			if(history.pushState)
+			{
+			    history.pushState(null, null, "#/" + urlToGo);
+			    goToUrl(urlToGo, $(this));
+			}
+			else
+			{
+				window.location.hash = "#/" + urlToGo;
+			}
 		});
 	});
 }
@@ -797,6 +805,24 @@ Muffin.draft.load = function(id)
 	}
 };
 
+Muffin.draft.delete = function(id, elt)
+{
+	if (id != undefined && id > 0)
+	{
+		$.ajax({
+			type: "POST",
+			url: "Drafts/delete",
+			data: {id: id},
+			success: function(e){
+				if (elt)
+				{
+					$(elt).remove();
+				}
+			}
+		});
+	}
+};
+
 Muffin.draft.read = function(id)
 {
 	$("div[data-role='form-container']").children().addClass("loading");
@@ -806,19 +832,32 @@ Muffin.draft.read = function(id)
 			type: "POST",
 			url: "Drafts/read",
 			data: {id: id},
-			success: function(e){
+			success: function(e)
+			{
+
+				if(history.pushState)
+				{
+				    history.pushState(null, null, "#/Drafts/read/" + id);
+				    //goToUrl("Drafts/read/" + id, "expanded");
+				}
+				else
+				{
+					//window.location.hash = "#/Drafts/read/" + id;
+				}
+
 				data = $(e);
 				data.addClass("loading");
 				$(".read-list li").addClass("loading").hide();
 				$("[data-role='form-container']").html(data);
 				NProgress.done();
 				data.addClass("complete");
-				var ctnt = _.unescape($("#draft-read-content").html());
+				/*var ctnt = _.unescape($("#draft-read-content").html());
 			    var mkd = marked(ctnt);
 				$("#draft-read-content").html(mkd);
-			    Prism.highlightAll();
+			    Prism.highlightAll();*/
 				data.addClass("complete");
 				treatResize();
+
 			}
 		});
 	}
@@ -887,20 +926,29 @@ Muffin.draft.init = function()
     var mk = $("#marked-aera");
     var ct = $("#aera");
 
-    document.getElementById("draft-access--private").checked = true;
+    var p = document.getElementById("draft-access--private");
+    if (p)
+	{
+		p.checked = true;
+	}
 
-	$("[data-draft-load]").click(function()
+	$("[data-draft-load]").click(function(e)
 	{
 		var elt = $(this);
 		var draft_id = $(this).attr("data-draft-id");
 		if (draft_id)
 		{
-
-			$("#drafts-menu > li[data-index-toggle]").removeClass("active");
-			$("#drafts-menu > li[data-index-toggle='1']").addClass("active");
-			$("#drafts-panel > li[data-index='1']").show();
-			$("#drafts-panel > li[data-index!='1']").hide();
+			if(history.pushState)
+			{
+			    history.pushState(null, null, "#/Drafts/create");
+			    goToUrl("Drafts/create", "expanded");
+			}
+			else
+			{
+				window.location.hash = "#/Drafts/create";
+			}
 			Muffin.draft.load(draft_id);
+			e.stopImmediatePropagation();
 		}
 	});
 
@@ -943,13 +991,32 @@ Muffin.draft.init = function()
 
     $(".raw-date").each(function()
     {
+	    var globalLang = moment();
+	    moment.lang('fr');
+
         $(this).html( moment( $(this).attr("data-date") ).fromNow() );
+    });
+
+    $(".btn-draft-read[data-id]").click(function()
+    {
+    	var elt = $(this);
+		var _id = elt.attr("data-id");
+		Muffin.draft.read(_id);
+    });
+
+    $(".btn-draft-delete").click(function()
+    {
+    	var elt = $(this);
+    	var li = elt.parent();
+		var _id = elt.attr("data-id");
+		Muffin.draft.delete(_id, li);
     });
 
     $("li[id^='draft-element-']").click(function()
     {
     	var elt = $(this);
 		var _id = elt.attr("data-id");
+
 		Muffin.draft.read(_id);
 		/*
     	console.log("li click");

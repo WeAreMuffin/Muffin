@@ -52,7 +52,7 @@ class Drafts extends Controller
     }
 
     /*
-     * liste des drafts
+     * liste des drafts de l'utilisateur
      */
     public function mine ($params)
     {
@@ -63,7 +63,7 @@ class Drafts extends Controller
     }
 
     /*
-     * liste des drafts
+     * creation d'un draft
      */
     public function create ($params)
     {
@@ -164,13 +164,36 @@ class Drafts extends Controller
     /*
      * Va renvoyer un draft.
      */
+    public function delete ($params)
+    {
+        $id = $this->filterPost("id");
+        $this->registerParams($params);
+        $draft = Moon::get ('c_drafts', 'draft_id', $id);
+        $auteur = $_SESSION["muffin_id"];
+        if (Core::getBdd ()->delete ('c_drafts', array ("draft_id" => $id, "draft_author" => $_SESSION["muffin_id"])))
+        {
+            echo "1";
+        }
+        else
+        {
+            echo "0";
+        }
+    }
+
+     /**
+     * @PathInfo('idDraft')
+     * Va renvoyer un draft.
+     */
     public function read ($params)
     {
         $id = $this->filterPost("id");
         $this->registerParams($params);
+        $idg = $this->getUrlParam ('idDraft');
         $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."][public>0]");
+        if ($idg != NULL)
+            $id = $idg;
         $draft = Moon::get ('c_drafts', 'draft_id', $id);
-        if ($draft->public != 0)
+        if ($draft->public != 0 or $draft->draft_author == $_SESSION["muffin_id"])
         {
             $this->addData("draft", $draft);
             $this->addData("drafts", $drafts);
