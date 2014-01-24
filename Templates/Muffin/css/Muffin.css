@@ -917,13 +917,13 @@ table {
   pointer-events: none;
 }
 #nprogress .bar {
-  background: #D95B43;
+  background: #F7E4BE;
   position: fixed;
   z-index: 1200;
-  top: 75px;
+  top: 0px;
   left: 0;
   width: 100%;
-  height: 20px;
+  height: 5px;
 }
 /* Fancy blur effect */
 #nprogress .peg {
@@ -9430,8 +9430,8 @@ body {
     ALL: Orange Theme
    =================== */
 .header-container {
-  height: 95px;
-  border-bottom: 20px solid #9e4838;
+  height: 80px;
+  border-bottom: 5px solid #9e4838;
   /* @modif#head#fixed
     position: fixed;
     top: 0px;
@@ -9441,7 +9441,7 @@ body {
   z-index: 999;
 }
 .footer-container {
-  border-top: 20px solid #9e4838;
+  border-top: 5px solid #9e4838;
 }
 .header-container,
 .footer-container {
