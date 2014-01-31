@@ -9,6 +9,7 @@
 		{% if users_to_help|length %}
 		<h1>Des gens ont besoin de vous :</h1>
 		{% set section = "" %}
+		{% set counter = 0 %}
 		<ul data-role="liste-competences">
 			{% for comp in users_to_help %}
 
@@ -17,7 +18,11 @@
 				    <li class="competence-summary">
 					    <div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
 					    <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
+					    {% if count_to_help[counter].count > 4 %}
+					    	<a class="btn"><span class="icon-bubbles"></span> Organiser une reunion (pour {{ count_to_help[counter].count }} personnes)</a>
+					    {% endif %}
 				    </li>
+					{% set counter = counter + 1 %}
 				{% endif %}
 				<li class="competence-tabbed" data-ct="{{ section }}">
 					<div class="left-pad"><span class="icon-{{ comp.user_icone }}"></span></div>

@@ -58,7 +58,30 @@ class Echanges extends Controller
                         WHERE id_user = :id AND ucb.want_to_teach = 1 AND cb.expired = 0);
             ";
 
+        $q_count = "SELECT c.id_competence as id, count(c.id_competence) as count
+                FROM c_user_competences uc
+                    INNER JOIN c_competences c
+                    ON uc.id_competence = c.id_competence
+                    INNER JOIN c_user u
+                    ON uc.id_user = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
+            LEFT JOIN c_echanges e
+            ON e.id_demande = u.id AND e.competence = c.id_competence AND (e.id_propose = :id or e.id_propose = NULL)
+                WHERE id_user != :id
+                    AND want_to_learn = 1
+                    AND c.nom_competence IN (
+                        SELECT nom_competence
+                        FROM c_user_competences ucb
+                        INNER JOIN c_competences cb
+                        ON ucb.id_competence = cb.id_competence
+                        WHERE id_user = :id AND ucb.want_to_teach = 1 AND cb.expired = 0) GROUP BY c.id_competence;";
+
         $bd = Core::getBdd()->getDb();
+        $rq_count = $bd->prepare($q_count);
+        $rq_count->execute(array("id" => $user,"idu" => $user));
+        $res_count = $rq_count->fetchAll(PDO::FETCH_CLASS);
+
         $r = $bd->prepare($q);
         $r->execute(array("id" => $user,"idu" => $user));
         $res = $r->fetchAll(PDO::FETCH_CLASS);
@@ -89,6 +112,7 @@ class Echanges extends Controller
 
         $this->addData("want_to_learn", $want_to_learn);
         $this->addData("users_to_help", $res);
+        $this->addData("count_to_help", $res_count);
         $this->addData("users_can_help", $res_2);
         $this->render ();
     }
