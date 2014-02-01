@@ -49,7 +49,6 @@ class Stats extends Controller
 		$num_r = "SELECT COUNT( * ) AS c FROM c_echanges e";
 
         $bd = Core::getBdd()->getDb();
-
         $all = 0 + $bd->query($u_all_c)->fetchObject()->c;
 		$insc = 0 + $bd->query($u_insc_c)->fetchObject()->c;
 		$actif = $bd->query($u_actif_c)->rowCount();
