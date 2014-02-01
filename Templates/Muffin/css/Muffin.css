@@ -9349,6 +9349,15 @@ pre.line-numbers > code {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ *
+ * This file is part of the moon framework.
+ *
+ * (c) 2013 Lambdaweb - www.lambdaweb.fr
+ *
+ *
+ * @author lambda2
+ */
 /* Loading the fonts files from GWF */
 /* On fait les resets standards */
 html,
@@ -9944,6 +9953,9 @@ input + button > span[class^="icon-"] {
   position: relative;
   top: 3px;
   padding-left: 5px;
+}
+.btn.topicon span[class^="icon-"] {
+  top: 1px;
 }
 /*
     ------------------------------------------------------------------------

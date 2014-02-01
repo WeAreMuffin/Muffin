@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
+/*
+ *
+ * This file is part of the moon framework.
+ *
+ * (c) 2013 Lambdaweb - www.lambdaweb.fr
+ *
+ *
+ * @author lambda2
+ */
+
+
 function locationHashChanged() {
     if (location.hash != "" && location.hash != undefined)
     {
