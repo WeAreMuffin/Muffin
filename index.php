@@ -17,5 +17,4 @@ apc_clear_cache();
 Core::startEngine();
 
 Core::route();
-
 ?>
