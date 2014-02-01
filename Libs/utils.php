@@ -1,0 +1,7 @@
+<?php
+
+/*
+	Pas grand chose...
+*/
+
+?>
