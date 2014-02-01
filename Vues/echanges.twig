@@ -19,7 +19,9 @@
 					    <div class="competence-icon"><span class="icon-{{ comp.icone }}"></span></div>
 					    <b>{{ comp.nom_usuel|default(comp.nom_competence) }}</b>
 					    {% if count_to_help[counter].count > 4 %}
-					    	<a data-toggle="tooltop" data-placement="right" title="Organiser une reunion (pour {{ count_to_help[counter].count }} personnes)" class="btn topicon">
+					    	<a data-toggle="tooltip" data-id="{{comp.id_competence}}" data-toggle="modal"
+					    	 data-target="#modal-reunion-new" data-placement="right"
+					    	 title="Organiser une reunion (pour {{ count_to_help[counter].count }} personnes)" class="btn topicon">
 					    		<span class="icon-bubbles"></span> Reunion
 					    	</a>
 					    {% endif %}
@@ -242,5 +244,13 @@
 			});
 		}
 		echangeRefresh();
-		$("a").tooltip({position: "right"});
+		$('[data-target="#modal-reunion-new"]').click(function()
+		{
+			$.get("Reunion/getModal/"+$(this).attr("data-id"), function(e)
+			{
+				$("#modal-reunion-new .modal-content").html(e);
+				$("#modal-reunion-new").modal();
+			});
+			console.log("click");
+		});
 	</script>

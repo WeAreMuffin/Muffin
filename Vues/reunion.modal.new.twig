@@ -1,0 +1,59 @@
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MReunionNew"><span
+            class="icon-bubble"></span> Nouvelle réunion</h4>
+            </div>
+            <div class="modal-body">
+
+				<h3>Créer une nouvelle réunion sur {{ competence }}</h3>
+				<form id="form-reunion" class="form-reunion">
+					<div class="form-group">
+						<label for="text-reunion-new">Description :</label>
+						<textarea name="texte" id="text-reunion-new"></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="date-reunion-new">Date :</label>
+						<span>Le </span>
+						<input name="date" type="date" id="date-reunion-new">
+						<span> à </span>
+						<input name="time" type="time" id="time-reunion-new">
+						<span> heure(s). </span>
+					</div>
+
+					<div class="form-group">
+						<label for="duree-reunion-new">Durée :</label>
+						<span>Environ </span><input name="duree" value="2" type="number" id="duree-reunion-new"><span> heure(s).</span>
+					</div>
+
+					<div class="form-group">
+						<label for="lieu-reunion-new">Lieu :</label>
+						<span>En </span><input name="lieu" type="text" placeholder="ex: Amphi, e1..." id="lieu-reunion-new">
+					</div>
+					<input type="hidden" name="competence" value="{{ competence_id }}">
+				</form>
+				<div class="ajax-result"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" onclick="$('#form-reunion').submit();" id="btn_reunion_new" class="btn btn-primary">
+                    Créer <span id="reunion_icon" class='icon-uniF488'></span>
+                </button>
+            </div>
+            <script>
+				var pts = {
+					target: '#form-reunion .ajax-result', // target element(s) to be updated with server response
+					beforeSubmit: Muffin.showRequest, // pre-submit callback
+					success: Muffin.showResponse, // post-submit callback
+					url: "Reunion/nouvelle",
+					type: "post"       // 'get' or 'post', override for form's 'method' attribute
+				};
+
+				$('#form-reunion').submit(function() {
+					// inside event callbacks 'this' is the DOM element so we first
+					// wrap it in a jQuery object and then invoke ajaxSubmit
+					$(this).ajaxSubmit(pts);
+					return false;
+				});
+            </script>

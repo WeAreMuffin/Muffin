@@ -6606,12 +6606,14 @@ function showRequest(formData, jqForm, options) {
     //var queryString = $.param(formData);
     return true;
 }
+Muffin.showRequest = showRequest;
 
 // post-submit callback
 function showResponse(responseText, statusText, xhr, $form) {
 	NProgress.done();
 	$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Enregistré.");
 }
+Muffin.showResponse = showResponse;
 
 var initalizeForm = function() {
 	window.ioptions = {
