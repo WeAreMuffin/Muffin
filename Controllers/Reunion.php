@@ -34,10 +34,76 @@ class Reunion extends Controller
      */
     public function index ($params)
     {
-        $avnr = new Entities("c_reunion");
-        $avnr->loadFromDatabase();
-        $this->addData('a_venir', $avnr);
+        $this->addData("inscrit", $this->get_reunions_aray());
+        $this->addData('aujourdhui', $this->get_reunions_today());
+        $this->addData('past', $this->get_reunions_past());
+        $this->addData('future', $this->get_reunions_future());
         $this->render();
+    }
+
+    protected function get_reunions_today()
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
+                WHERE DATE(`reunion_date`) = CURRENT_DATE() AND `reunion_date` > NOW();
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array());
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        return($res);
+    }
+
+    protected function get_reunions_future()
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
+                WHERE DATE(`reunion_date`) > CURRENT_DATE() AND `reunion_date` > NOW();
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array());
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        return($res);
+    }
+
+    protected function get_reunions_past()
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
+                WHERE `reunion_date` < NOW();
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array());
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        return($res);
+    }
+
+
+    protected function get_reunions_aray()
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
+                WHERE rp.id_user = :id GROUP BY r.reunion_id;
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("id" => $_SESSION['muffin_id']));
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        $result = array();
+        foreach ($res as $key => $value) {
+            $result[] = $value->reunion_id;
+        }
+        return ($result);
     }
 
     /**
