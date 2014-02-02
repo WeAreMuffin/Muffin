@@ -1,35 +1,35 @@
 <div>
+	<h1>Réunions du jour</h1>
+	{% if aujourdhui|length %}
+		<ul class="liste-reunions">
+			{% for reunion in aujourdhui %}
+			    {% include 'reunion.list.twig' %}
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p class="simple-text font-x-large">Aucune réunion aujourd'hui</p>
+	{% endif %}
+
 	<h1>Réunions à venir</h1>
-	<ul class="liste-reunions">
-		{% for reunion in a_venir %}
-		    <li>
-		    	<div class="icon">
-		    		<span class="icon-{{ reunion.c_competences.icone }}"></span>
-		    	</div>
-		    	<div class="content">
-				    <p>
-					    Réunion sur <b>{{ reunion.c_competences.nom_usuel }}</b> ·
-					    <span class="date">{{ reunion.reunion_date }}</span>
-					    <a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">participer</a>
-				    </p>
-			    	<div class="bottom">
-				     	<div>
-				     		<span class="icon-clock"></span> {{ reunion.reunion_duree }}h
-						</div>
-						<div>
-				     		<span class="icon-place"></span> {{ reunion.reunion_lieu }}
-						</div>
-						<div>
-				     		<span class="icon-calendar2"></span> <span class="date-calendar">{{ reunion.reunion_date }}</span>
-						</div>
-						<div>
-				     		<p class="reunions-resume"><span class="icon-info3"></span> {{ reunion.reunion_texte }}<p>
-						</div>
-			     	</div>
-		     	</div>
-			</li>
-		{% endfor %}
-	</ul>
+	{% if future|length %}
+		<ul class="liste-reunions">
+			{% for reunion in future %}
+			    {% include 'reunion.list.twig' %}
+			{% endfor %}
+		</ul>
+	{% else %}
+	{% endif %}
+
+	<h1>Réunions passées</h1>
+	{% if past|length %}
+		<ul class="liste-reunions">
+			{% set is_past = {'is_past': true} %}
+			{% for reunion in past %}
+			    {% include 'reunion.list.twig' with is_past %}
+			{% endfor %}
+		</ul>
+	{% else %}
+	{% endif %}
 
 	<script type="text/javascript">
 	moment.lang('fr');
@@ -46,17 +46,21 @@
 	$("[data-action='participer-reunion']").click(function(){
 		var id = $(this).attr("data-reunion");
 		var btn = $(this);
+		var ctnr = btn.parent().parent().parent().find(".reunion-count");
 		$.get('Reunion/participer/' + id, function(e)
 		{
 			if (e == "1")
 			{
+				ctnr.html(parseInt(ctnr.html()) + 1);
 				btn.html('<span class="icon-checkmark2"></span> Vous etes inscrit');
 			}
 			else if (e == "-1")
 			{
+				ctnr.html(parseInt(ctnr.html()) - 1);
 				btn.html('<span class="icon-close"></span> Vous etes désinscrit');
 			}
 		});
 	});
+	$("[data-toggle='tooltip']").tooltip();
 	</script>
 </div>
