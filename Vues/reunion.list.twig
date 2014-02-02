@@ -1,0 +1,59 @@
+
+		    <li>
+		    	<div class="icon">
+		    		<span class="icon-{{ reunion.icone }}"></span>
+		    	</div>
+		    	<div class="content">
+				    <p>
+					    Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b> ·
+					    <span class="date">{{ reunion.reunion_date }}</span>
+
+						{# si la reunion est a venir #}
+					    {% if not is_past %}
+
+						    {% if reunion.reunion_id in inscrit %}
+						    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">se désinscrire</a>
+						    {% else %}
+						    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">participer</a>
+						    {% endif %}
+
+						{# si on a participe a la reunion #}
+						{% elseif reunion.reunion_id in inscrit %}
+
+							<span class="simple-text right"><span class="icon-checkmark2"></span> vous avez participé</span>
+
+					    {% endif %}
+
+				    </p>
+					{# si on a participe a la reunion #}
+					{% if is_past and reunion.reunion_id in inscrit %}
+					    <div class="middle">
+					    	{% if not reunion.feedback %}
+					    		<a class="button feedback right" data-type="feedback"><span class="icon-sad2"></span></a>
+					    		<a class="button feedback right" data-type="feedback"><span class="icon-neutral"></span></a>
+					    		<a class="button feedback right" data-type="feedback"><span class="icon-smiley"></span></a>
+					    		<span class="simple-text right">votre avis :</span>
+					    	{% endif %}
+					    </div>
+				    {% endif %}
+			    	<div class="bottom">
+				     	<div>
+				     		<span class="icon-clock"></span> {{ reunion.reunion_duree }}h
+						</div>
+						<div>
+				     		<span class="icon-place"></span> {{ reunion.reunion_lieu }}
+						</div>
+						<div>
+				     		<span class="icon-calendar2"></span> <span class="date-calendar">{{ reunion.reunion_date }}</span>
+						</div>
+						<div>
+				     		<p class="reunions-resume"><span class="icon-info3"></span> {{ reunion.reunion_texte }}<p>
+						</div>
+			     	</div>
+		     	</div>
+				{% set count = fetch('c_reunion_participe[id_reunion="'~ reunion.reunion_id ~ '"]')|length %}
+				{% set opacity = 0.2 + (count / 10) %}
+				<span data-placement="right" data-toggle="tooltip" title="il y a {{ count }} participant(s) inscrit(s)" class="reunion-count right" style="opacity: {{ opacity }}">
+					{{ count }}
+				</span>
+			</li>
