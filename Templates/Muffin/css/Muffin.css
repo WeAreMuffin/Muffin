@@ -10902,6 +10902,71 @@ h1.title-remain,
 }
 /*
     ------------------------------------------------------------------------
+        Page de réunion
+    ------------------------------------------------------------------------
+*/
+.liste-reunions li {
+  padding: 0px;
+  margin: 15px;
+  display: block;
+}
+.liste-reunions li div.icon {
+  display: inline-block;
+  max-width: 55px;
+  width: 15%;
+  vertical-align: top;
+}
+.liste-reunions li div.icon span[class^="icon-"] {
+  font-size: 3em;
+  color: rgba(0, 0, 0, 0.2);
+}
+.liste-reunions li div.content {
+  display: inline-block;
+  width: 80%;
+}
+.liste-reunions li div.content p {
+  margin: 5px 0px;
+  font-size: 1.1em;
+  color: #413e4a;
+}
+.liste-reunions li div.content .bottom {
+  color: rgba(0, 0, 0, 0.4);
+}
+.liste-reunions li div.content .bottom div {
+  display: inline-block;
+  margin-right: 10px;
+}
+.liste-reunions li div.content .bottom div span[class^="icon-"] {
+  padding: 0px 4px;
+}
+.liste-reunions li div.content .bottom .reunions-resume {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.9em;
+}
+.liste-reunions li div.content .right {
+  float: right;
+}
+.liste-reunions li + li {
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.button {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.5);
+  padding: 1px 6px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin: 0px 5px;
+}
+.button:hover {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.7);
+}
+/*
+    ------------------------------------------------------------------------
         Drafter render
     ------------------------------------------------------------------------
 */

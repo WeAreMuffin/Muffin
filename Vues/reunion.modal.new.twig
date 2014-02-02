@@ -42,10 +42,16 @@
                 </button>
             </div>
             <script>
+
+	            var create_end = function()
+	            {
+	            	console.log("end");
+	            }
+
 				var pts = {
 					target: '#form-reunion .ajax-result', // target element(s) to be updated with server response
 					beforeSubmit: Muffin.showRequest, // pre-submit callback
-					success: Muffin.showResponse, // post-submit callback
+					success: create_end, // post-submit callback
 					url: "Reunion/nouvelle",
 					type: "post"       // 'get' or 'post', override for form's 'method' attribute
 				};
@@ -54,6 +60,9 @@
 					// inside event callbacks 'this' is the DOM element so we first
 					// wrap it in a jQuery object and then invoke ajaxSubmit
 					$(this).ajaxSubmit(pts);
+					$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Crée.");
+					NProgress.done();
+ 					$('#modal-reunion-new').modal('hide');
 					return false;
 				});
             </script>

@@ -34,7 +34,10 @@ class Reunion extends Controller
      */
     public function index ($params)
     {
-
+        $avnr = new Entities("c_reunion");
+        $avnr->loadFromDatabase();
+        $this->addData('a_venir', $avnr);
+        $this->render();
     }
 
     /**
@@ -47,7 +50,7 @@ class Reunion extends Controller
         echo "COMPETENCE = $competence";
         if ($competence)
         {
-		    $c = Moon::get('c_competences', 'id_competence', $competence);
+		    $c = new Entities('c_competences[id_competence="'.$competence.'"]');
 		    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
         }
         $this->addData('competence', $c);
@@ -89,29 +92,27 @@ class Reunion extends Controller
 
 
     /**
-     * @PathInfo('user/competence')
+     * @PathInfo('reunion')
      */
-    public function accepter($params)
+    public function participer($params)
     {
-
-        // On récupère le login fourni dans l'url
-        $login = $this->getUrlParam ('user');
         $render = "0";
-        $competence = $this->getUrlParam ('competence');
-        if ($login and $competence)
-	{
-	    $c = Moon::get('c_competences', 'id_competence', $competence);
-	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
-            $cpt = new Entities("c_echanges[id_propose=\"$login\"][competence=\"$competence\"]");
-            if ($cpt)
+        $reunion = $this->getUrlParam ('reunion');
+        if ($reunion)
+    	{
+            $cpt = new Entities("c_reunion_participe[id_user=\"".$_SESSION['muffin_id']."\"][id_reunion=\"$reunion\"]");
+            if (count($cpt) == 0)
             {
-                $i = array ("id_demande" => $_SESSION['muffin_id'],
-                    "id_propose" => $login, "competence" => $competence);
-                $res = Core::getBdd ()->update (array("resume" => "accepte"), 'c_echanges', $i);
-		$this->notifier($_SESSION["login"]." a accepté votre aide sur le projet / la notion ".$c, $login);
+                $res = Core::getBdd ()->insert (array ("id_user" => $_SESSION['muffin_id'], "id_reunion" => $reunion), 'c_reunion_participe');
                 $render = "1";
             }
-        }
+            else if (count($cpt) > 0)
+            {
+                $i = array ("id_user" => $_SESSION['muffin_id'], "id_reunion" => $reunion);
+                $res = Core::getBdd ()->delete('c_reunion_participe', $i);
+                $render = "-1";
+            }
+    }
         echo ($render);
     }
 
