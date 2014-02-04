@@ -2044,6 +2044,35 @@ h1.title-remain,
 */
 
 
+.bretzel-separator
+{
+    display: block;
+    padding: 0px;
+    clear: both;
+    text-align: center;
+    margin: 30px 25% 0px 25%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:before
+    {
+        color: rgba(0, 0, 0, 0.2);
+        content: "\ea9f";
+        font-family: 'moon';
+        speak: none;
+        font-style: normal;
+        margin: auto;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        width: 100%;
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+        top: -15px;
+        background: rgb(247, 228, 190);
+        padding: 0px 25px;
+    }
+}
+
 .liste-reunions
 {
     li
@@ -2116,6 +2145,45 @@ h1.title-remain,
             padding-top: 10px;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
+    }
+}
+
+.red
+{
+    &:hover
+    {
+        background-color: rgba(238, 95, 95, 0.4);
+    }
+    &.active,
+    &:active
+    {
+        background-color: rgba(238, 95, 95, 1);
+    }
+}
+
+.orange
+{
+    &:hover
+    {
+        background-color: rgba(238, 181, 95, 0.4);
+    }
+    &.active,
+    &:active
+    {
+        background-color: rgba(238, 181, 95, 1);
+    }
+}
+
+.green
+{
+    &:hover
+    {
+        background-color: rgba(182, 214, 81, 0.4);
+    }
+    &.active,
+    &:active
+    {
+        background-color: rgba(182, 214, 81, 1);
     }
 }
 

@@ -28,10 +28,18 @@
 					{# si on a participe a la reunion #}
 					{% if is_past and reunion.reunion_id in inscrit %}
 					    <div class="middle">
-					    	{% if not reunion.feedback %}
-					    		<a class="button feedback right" data-type="feedback"><span class="icon-sad2"></span></a>
-					    		<a class="button feedback right" data-type="feedback"><span class="icon-neutral"></span></a>
-					    		<a class="button feedback right" data-type="feedback"><span class="icon-smiley"></span></a>
+					    	{% if reunion.reunion_id in feedback %}
+					    		<span class="simple-text right"></span>
+					    	{% else %}
+					    		<a class="button feedback right red" data-reunion="{{ reunion.reunion_id }}" data-feedback="0" data-type="feedback">
+					    			<span class="icon-sad2"></span>
+					    		</a>
+					    		<a class="button feedback right orange" data-reunion="{{ reunion.reunion_id }}" data-feedback="1" data-type="feedback">
+					    			<span class="icon-neutral"></span>
+					    		</a>
+					    		<a class="button feedback right green" data-reunion="{{ reunion.reunion_id }}" data-feedback="2" data-type="feedback">
+					    			<span class="icon-smiley"></span>
+					    		</a>
 					    		<span class="simple-text right">votre avis :</span>
 					    	{% endif %}
 					    </div>

@@ -35,6 +35,7 @@ class Reunion extends Controller
     public function index ($params)
     {
         $this->addData("inscrit", $this->get_reunions_aray());
+        $this->addData("feedback", $this->get_feedback_aray());
         $this->addData('aujourdhui', $this->get_reunions_today());
         $this->addData('past', $this->get_reunions_past());
         $this->addData('future', $this->get_reunions_future());
@@ -94,6 +95,25 @@ class Reunion extends Controller
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
                 WHERE rp.id_user = :id GROUP BY r.reunion_id;
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("id" => $_SESSION['muffin_id']));
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        $result = array();
+        foreach ($res as $key => $value) {
+            $result[] = $value->reunion_id;
+        }
+        return ($result);
+    }
+
+    protected function get_feedback_aray()
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
+                WHERE rp.id_user = :id AND rp.feedback IS NOT NULL GROUP BY r.reunion_id;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -183,31 +203,23 @@ class Reunion extends Controller
     }
 
     /**
-     * @PathInfo('user/competence')
+     * @PathInfo('reunion/feedback')
      */
-    public function bien($params)
+    public function feedback($params)
     {
 
         // On récupère le login fourni dans l'url
-        $login = $this->getUrlParam ('user');
+        $reunion = $this->getUrlParam ('reunion');
         $render = "0";
-        $competence = $this->getUrlParam ('competence');
-        if ($login and $competence)
-	{
-	    $c = Moon::get('c_competences', 'id_competence', $competence);
-	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
-            $cpt = new Entities("c_echanges[id_propose=\"$login\"][competence=\"$competence\"][resume=\"accepte\"]");
-            if ($cpt)
+        $feedback = $this->getUrlParam ('feedback');
+        if ($reunion and $feedback)
+        {
+            $cpt = new Entities("c_reunion_participe[id_user=\"".$_SESSION['muffin_id']."\"][id_reunion=\"$reunion\"]");
+            if (count($cpt) > 0)
             {
-                $i = array ("id_demande" => $_SESSION['muffin_id'],
-                    "id_propose" => $login, "competence" => $competence);
-                $res = Core::getBdd ()->update (array("resume" => "bien"), 'c_echanges', $i);
-
-		/* This user doesn't need help anymore ! Mission complete ! :D */
-		$res = Core::getBdd ()->update (array("want_to_learn" => 0), 'c_user_competences',
-		    array("id_user" => $_SESSION['muffin_id'], "id_competence" => $competence));
-		$this->notifier($_SESSION["login"]." vous remercie de l'avoir aidé sur le projet / la notion ".$c, $login);
-                $render = "1";
+                $i = array ("id_user" => $_SESSION['muffin_id'],
+                    "id_reunion" => $reunion);
+                $render = Core::getBdd ()->update (array("feedback" => $feedback), 'c_reunion_participe', $i);
             }
         }
         echo ($render);

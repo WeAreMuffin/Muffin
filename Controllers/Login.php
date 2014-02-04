@@ -80,18 +80,8 @@ class Login extends Controller
             echo "-2";
         else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
         {
-            if ($type == "staff")
-                $m = "\&m\=".urlencode($student->current()->mail);
-            else
-                $m = "";
-			shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass).$m);
-            /*
-            // Si on arrive à envoyer le mail, alors on affiche 1
-            if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
-                echo "1".($fakeMail ? $pass : '');
-            else
-                echo "1";
-                */
+            $mail = new MuffinMail($loginsExists->current());
+            $mail->sendMuffinPass($pass);
             echo "1";
         }
         else
@@ -134,18 +124,8 @@ class Login extends Controller
         if ( count ($loginsExists) and Core::getBdd ()->update (
                         array ("pass" => $shapass), 'c_user', array ("login" => $login)) )
         {
-            if ($type == "staff")
-                $m = "\&m\=".urlencode($student->current()->mail);
-            else
-                $m = "";
-            shell_exec("GET http://lambdaweb.fr/muffin/code.php\?login\=".urlencode($login)."\&pass\=".urlencode($pass).$m);
-            /*
-            // Si on arrive à envoyer le mail, alors on affiche 1
-            if ( $fakeMail or mail ($m["email"], $m["subject"], $m["message"], $m["headers"]) )
-                echo "1".($fakeMail ? $pass : '');
-            else
-                echo "1";
-                */
+            $mail = new MuffinMail($loginsExists->current());
+            $mail->reSendMuffinPass($pass);
             echo "1";
         }
         else

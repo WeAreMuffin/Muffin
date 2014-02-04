@@ -10905,6 +10905,31 @@ h1.title-remain,
         Page de réunion
     ------------------------------------------------------------------------
 */
+.bretzel-separator {
+  display: block;
+  padding: 0px;
+  clear: both;
+  text-align: center;
+  margin: 30px 25% 0px 25%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.bretzel-separator:before {
+  color: rgba(0, 0, 0, 0.2);
+  content: "\ea9f";
+  font-family: 'moon';
+  speak: none;
+  font-style: normal;
+  margin: auto;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  width: 100%;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  top: -15px;
+  background: #f7e4be;
+  padding: 0px 25px;
+}
 .liste-reunions li {
   padding: 0px;
   margin: 15px;
@@ -10955,6 +10980,27 @@ h1.title-remain,
 .liste-reunions li + li {
   padding-top: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.red:hover {
+  background-color: rgba(238, 95, 95, 0.4);
+}
+.red.active,
+.red:active {
+  background-color: #ee5f5f;
+}
+.orange:hover {
+  background-color: rgba(238, 181, 95, 0.4);
+}
+.orange.active,
+.orange:active {
+  background-color: #eeb55f;
+}
+.green:hover {
+  background-color: rgba(182, 214, 81, 0.4);
+}
+.green.active,
+.green:active {
+  background-color: #b6d651;
 }
 .font-large {
   font-size: 2rem;
