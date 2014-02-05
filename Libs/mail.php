@@ -43,10 +43,11 @@ class MuffinMail
 	protected $available_types = array(
 	    "auth_help" => 1,
 	    "auth_news" => 2,
-	    "auth_vers" => 4
+	    "auth_vers" => 4,
+	    "auth_reunion" => 8
 	);
 
-	protected $debug = false;
+	protected $debug = true;
 	protected $debug_addr = "contact@lambdaweb.fr";
 
 	protected $dest;
@@ -102,6 +103,28 @@ class MuffinMail
 		// The mail subject
 		$this->subject = "Muffin · Muffinpass oublié !";
 		return $this->sendMail();
+	}
+
+	public function sendUserWantToHelp($login_wth, $competence)
+	{
+		if ($this->dest->accept_mail & $this->available_types['auth_help'])
+		{
+			// Text content
+			$this->content = "Hey ".$this->dest->login." !\n";
+			$this->content .= "$login_wth te propose son aide en $competence !\n";
+			$this->content .= "Tu peux l'accepter des maintenant sur muffin.lambdaweb.fr\n";
+
+			// Html content
+			$this->htmlContent = $this->getHtmlHeader();
+			$this->htmlContent .= "<h2>Hey ".$this->dest->login.", $login_wth te propose son aide en $competence !</h2>";
+			$this->htmlContent .= "<a style='text-decoration: none;' href='http://muffin.lambdaweb.fr'><div style='text-align: center; margin: 10px;'><h3 style='margin: auto; display: inline-block;background-color: #C02942;border: 1px solid #882737;padding: 2px 15px;text-transform: capitalize; color: #FFF;border-radius: 3px;'class='squared'>accepter</h3></div></a>\n";
+			$this->htmlContent .= $this->getHtmlFooter();
+
+			// The mail subject
+			$this->subject = "Muffin · $login_wth te propose son aide en $competence !";
+			return $this->sendMail();
+		}
+		return (0);
 	}
 
 	protected function getMime()

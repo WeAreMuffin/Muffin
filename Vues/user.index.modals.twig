@@ -169,45 +169,6 @@
 </script>
 
 
-
-<!-- Modale de configuration -->
-<div class="modal fade" id="modal-params" tabindex="-1" role="dialog" aria-labelledby="MParams" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="MParams"><span class="icon-nut"></span> Paramètres de votre compte</h4>
-            </div>
-            <div class="modal-body">
-                <form target="User/update" id="form_params">
-                    <h4 id="status_pass_uid">Changer mon mot de passe.</h4>
-                    <p id="status_update_uid"></p>
-                    <label for='o_pass_uid'>Entrez votre ancien mot de passe</label>
-                    <input type="password" placeholder="Ancien mot de passe" id="o_pass_uid" name="o_pass_uid">
-                    <label for='n_pass_uid'>Entrez votre nouveau mot de passe</label>
-                    <input type="password" placeholder="Nouveau mot de passe" id="n_pass_uid" name="n_pass_uid">
-                    <label for='c_pass_uid'>Confirmez votre nouveau mot de passe</label>
-                    <input type="password" placeholder="Confirmation" id="c_pass_uid" name="c_pass_uid">
-                    <h4 id="status_public_uid">Mes compétences sont-elles publiques ?</h4>
-                    <label class='inline' for='c_public_uid'>Compétences publiques</label>
-                    <input type="checkbox" id="c_public_uid" name="c_public_uid" {{check_public}}>
-                </form>
-                <hr>
-                <p>
-                <a class="btn" id="enableNotifications"></a>
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                <button type="button" id="btn_search_comp_uid" onclick="$('#form_params').submit();" class="btn btn-primary">
-                    Enregistrer <span id="status_public_icon" class='icon-uniF488'></span>
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
 <!-- Modale de reunion -->
 <div class="modal fade" id="modal-reunion-new" tabindex="-1" role="dialog"
     aria-labelledby="MReunionNew" aria-hidden="true">

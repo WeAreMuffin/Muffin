@@ -1189,7 +1189,7 @@ ul#list-notification
 }
 div[data-role="form-container"]
 {
-    form
+    .items-panels form
     {
         display: inline-block;
 
@@ -2003,7 +2003,13 @@ h1.title-remain,
     ------------------------------------------------------------------------
 */
 
-.form-reunion
+.right
+{
+    float: right;
+}
+
+.form-reunion,
+.form
 {
     input
     {
@@ -2017,6 +2023,9 @@ h1.title-remain,
 
     .form-group
     {
+        margin-top: 3px;
+        margin-bottom: 3px;
+
         input,
         label
         {
@@ -2027,12 +2036,67 @@ h1.title-remain,
         {
             margin-right: 10px;
             min-width: 50px;
+
+            &.pad-half
+            {
+                min-width: 40%;
+            }
         }
 
         span
         {
             padding-right: 5px;
             color: rgba(0, 0, 0, 0.6);
+        }
+    }
+}
+
+.check_yes_no
+{
+    margin-left: 5px;
+
+    span
+    {
+        min-width: 40%;
+        display: inline-block;
+    }
+
+    label
+    {
+        text-align: center;
+        min-width: 0px;
+        padding-left: 10px;
+        margin-left: 0px;
+        margin-right: 0px !important;
+    }
+
+    input:first-of-type
+    {
+        display: none;
+        opacity: 0;
+
+        &+label
+        {
+            color: rgba(0, 0, 0, 0.3);
+        }
+        &:checked+label > span
+        {
+            color: @muffin-forest;
+        }
+    }
+    input:last-of-type
+    {
+        display: none;
+        opacity: 0;
+
+        &+label
+        {
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            color: rgba(0, 0, 0, 0.3);
+        }
+        &:checked+label > span
+        {
+            color: @muffin-red;
         }
     }
 }
@@ -2080,6 +2144,11 @@ h1.title-remain,
         padding: 0px;
         margin: 15px;
         display: block;
+
+        .button
+        {
+            padding: 1px 6px;
+        }
 
         div.icon
         {
@@ -2211,7 +2280,7 @@ h1.title-remain,
 {
     border: 1px solid rgba(0, 0, 0, 0.3);
     color: rgba(0, 0, 0, 0.5);
-    padding: 1px 6px;
+    padding: 5px 6px;
     text-align: center;
     cursor: pointer;
     font-size: 0.8em;

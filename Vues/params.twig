@@ -1,0 +1,137 @@
+<div class="div-params">
+<h1><span class="icon-spoon"></span> Paramètres de votre compte</h1>
+    <form target="User/update" id="form_params" class="form">
+
+        <h4 id="status_pass_uid">Changer mon mot de passe.</h4>
+
+        <p id="status_update_uid"></p>
+
+        <div class="form-group">
+            <label class="pad-half" for='o_pass_uid'>Entrez votre ancien mot de passe</label>
+            <input type="password" placeholder="Ancien mot de passe" id="o_pass_uid" name="o_pass_uid">
+        </div>
+
+        <div class="form-group">
+            <label class="pad-half" for='n_pass_uid'>Entrez votre nouveau mot de passe</label>
+            <input type="password" placeholder="Nouveau mot de passe" id="n_pass_uid" name="n_pass_uid">
+        </div>
+
+        <div class="form-group">
+            <label class="pad-half" for='c_pass_uid'>Confirmez votre nouveau mot de passe</label>
+            <input type="password" placeholder="Confirmation" id="c_pass_uid" name="c_pass_uid">
+        </div>
+
+        <h4 id="status_public_uid">Mes compétences sont-elles publiques ?</h4>
+
+        <div class="form-group">
+            <div class="check_yes_no">
+                <span>Compétences publiques : </span>
+                <input type="radio" value="1" id="c_public_uid_yes" name="c_public_uid" {{ user.comp_public ? 'checked="checked"' }}>
+                <label class='inline' for='c_public_uid_yes'><span class="icon-checkmark"></span></label>
+
+                <input type="radio" value="0" id="c_public_uid_no" name="c_public_uid" {{ not user.comp_public ? 'checked="checked"' }}>
+                <label class='inline' for='c_public_uid_no'><span class="icon-close"></span></label>
+            </div>
+        </div>
+
+        <h4>Je souhaite recevoir un email</h4>
+
+        <div class="form-group">
+            <div class="check_yes_no">
+                <span>Quand on me propose de l'aide : </span>
+                <input type="radio" value="1" id="radio_email_wth_yes" name="radio_email_wth" {{ (user.accept_mail b-and 1) ? 'checked="checked"'}}>
+                <label class='inline' for='radio_email_wth_yes'><span class="icon-checkmark"></span></label>
+
+                <input type="radio" value="0" id="radio_email_wth_no" name="radio_email_wth" {{ not (user.accept_mail b-and 1) ? 'checked="checked"'}}>
+                <label class='inline' for='radio_email_wth_no'><span class="icon-close"></span></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="check_yes_no">
+                <span>Quand une réunion peut m'intéresser : </span>
+                <input type="radio" value="1" id="radio_email_reunion_yes" name="radio_email_reunion" {{ (user.accept_mail b-and 8) ? 'checked="checked"'}}>
+                <label class='inline' for='radio_email_reunion_yes'><span class="icon-checkmark"></span></label>
+
+                <input type="radio" value="0" id="radio_email_reunion_no" name="radio_email_reunion" {{ not (user.accept_mail b-and 8) ? 'checked="checked"'}}>
+                <label class='inline' for='radio_email_reunion_no'><span class="icon-close"></span></label>
+            </div>
+        </div>
+
+        <h4>Notifications</h4>
+        <p>
+            <a id="enableNotifications"></a>
+        </p>
+        <div class="form-group">
+            <label class="pad-half"></label>
+            <a id="btn_search_comp_uid" onclick="$('#form_params').submit();" class="button">
+                Enregistrer <span id="status_public_icon" class='icon-uniF488'></span>
+            </a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+	function bSupNot()
+	{
+		if (window.webkitNotifications) {
+		  return true;
+		}
+		else {
+		  return false;
+		}
+	}
+
+	function check_permission()
+	{
+        if(window.webkitNotifications)
+        {
+      	  switch(window.webkitNotifications.checkPermission()) {
+            case 0:
+              // Continue
+              $("#enableNotifications").removeClass("warn").addClass("ok").html("les notifications sont activées");
+              return true;
+              break;
+
+            case 2:
+              $("#enableNotifications").addClass("ask").html("Activer les notifications");
+            break;
+
+            default:
+              $("#enableNotifications").addClass("warn").html("Notifications refusées");
+              return false;
+              break;
+            }
+        }
+    }
+
+	function request_permission()
+	{
+        if(window.webkitNotifications)
+        {
+    		// 0 means we have permission to display notifications
+    		if (window.webkitNotifications.checkPermission() != 0) {
+    			window.webkitNotifications.requestPermission(check_permission);
+    		  }
+        }
+	}
+
+	check_permission();
+    if(window.webkitNotifications)
+    {
+        if (window.webkitNotifications.checkPermission() != 0 && bSupNot())
+        {
+        	$("#enableNotifications").html("Activer les notifications");
+        	$("#enableNotifications").click(function()
+        	{
+        		request_permission();
+        		console.log("permission requested...");
+        	});
+        }
+    };
+
+    Muffin.initFormComportement();
+
+</script>
+
+

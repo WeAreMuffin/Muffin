@@ -133,11 +133,10 @@ class Reunion extends Controller
     {
         $competence = $this->getUrlParam ('competence');
         $c = "quelque chose";
-        echo "COMPETENCE = $competence";
         if ($competence)
         {
 		    $c = new Entities('c_competences[id_competence="'.$competence.'"]');
-		    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
+		    ($c->nom_usuel == NULL ? $c = $c->current()->nom_competence : $c = $c->current()->nom_usuel);
         }
         $this->addData('competence', $c);
         $this->addData('competence_id', $competence);

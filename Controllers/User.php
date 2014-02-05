@@ -242,11 +242,10 @@ class User extends Controller
         $old_pass = $this->filterPost ('o_pass_uid');
         $new_pass = $this->filterPost ('n_pass_uid');
         $new_pass_c = $this->filterPost ('c_pass_uid');
-        $public = $this->filterPost ('c_public_uid');
-        $this->updatePublic (!isNull ($public));
+        $user = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
+        $this->apply_email_preferences($user);
         if ( !isNull ($old_pass) and !isNull ($new_pass) and !isNull ($new_pass_c) )
         {
-            $user = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
             if ( $user->pass == sha1 ($old_pass) )
             {
                 if ( $new_pass == $new_pass_c )
@@ -272,10 +271,30 @@ class User extends Controller
         }
     }
 
+    protected function apply_email_preferences($user)
+    {
+        $wtl = $this->filterPost('radio_email_wth');
+        $reu = $this->filterPost('radio_email_reunion');
+        $public = $this->filterPost('c_public_uid');
+
+        $old = $user->accept_mail;
+        if ($wtl == "1")
+            $old = $old | 1;
+        else
+            $old = $old & 30;
+
+        if ($reu == "1")
+            $old = $old | 8;
+        else
+            $old = $old & 23;
+
+        $ret = Core::getBdd ()->update (
+                array ("comp_public" => $public, "accept_mail" => $old),
+                'c_user', array ("id" => $_SESSION['muffin_id']));
+    }
+
     protected function updatePublic ($public)
     {
-        $ret = Core::getBdd ()->update (
-                array ("comp_public" => ($public ? "1" : "0")), 'c_user', array ("id" => $_SESSION['muffin_id']));
         return ($ret);
     }
 

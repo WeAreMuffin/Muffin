@@ -10266,10 +10266,10 @@ ul#list-notification li + li {
   width: 100%;
   min-width: 80%;
 }
-div[data-role="form-container"] form {
+div[data-role="form-container"] .items-panels form {
   display: inline-block;
 }
-div[data-role="form-container"] form fieldset {
+div[data-role="form-container"] .items-panels form fieldset {
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -10277,38 +10277,38 @@ div[data-role="form-container"] form fieldset {
   text-align: center;
   position: relative;
 }
-div[data-role="form-container"] form fieldset h1 {
+div[data-role="form-container"] .items-panels form fieldset h1 {
   font-size: 3.6rem;
   line-height: 0px;
   vertical-align: top;
   max-height: 60px;
   margin-bottom: 5px;
 }
-div[data-role="form-container"] form fieldset h4 {
+div[data-role="form-container"] .items-panels form fieldset h4 {
   line-height: 0px;
 }
-div[data-role="form-container"] form fieldset a.clear-all {
+div[data-role="form-container"] .items-panels form fieldset a.clear-all {
   color: #F7E4BE;
   position: relative;
   top: 2px;
 }
-div[data-role="form-container"] form fieldset:hover a.clear-all,
-div[data-role="form-container"] form fieldset a.want-to-learn,
-div[data-role="form-container"] form fieldset a.want-to-teach {
+div[data-role="form-container"] .items-panels form fieldset:hover a.clear-all,
+div[data-role="form-container"] .items-panels form fieldset a.want-to-learn,
+div[data-role="form-container"] .items-panels form fieldset a.want-to-teach {
   color: #887D72;
 }
-div[data-role="form-container"] form fieldset a.clear-all:hover,
-div[data-role="form-container"] form fieldset a.want-to-learn:hover,
-div[data-role="form-container"] form fieldset a.want-to-teach:hover {
+div[data-role="form-container"] .items-panels form fieldset a.clear-all:hover,
+div[data-role="form-container"] .items-panels form fieldset a.want-to-learn:hover,
+div[data-role="form-container"] .items-panels form fieldset a.want-to-teach:hover {
   color: #D95B43;
 }
-div[data-role="form-container"] form fieldset div.radio,
-div[data-role="form-container"] form fieldset a.clear-all {
+div[data-role="form-container"] .items-panels form fieldset div.radio,
+div[data-role="form-container"] .items-panels form fieldset a.clear-all {
   width: 20px;
   height: 20px;
   display: inline-block;
 }
-div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-learn:before {
+div[data-role="form-container"] .items-panels form fieldset input[type="checkbox"] + label.want-to-learn:before {
   width: 20px;
   height: 20px;
   display: inline-block;
@@ -10328,13 +10328,13 @@ div[data-role="form-container"] form fieldset input[type="checkbox"] + label.wan
   top: 50px;
   right: 10px;
 }
-div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-learn:hover:before {
+div[data-role="form-container"] .items-panels form fieldset input[type="checkbox"] + label.want-to-learn:hover:before {
   color: #887D72;
 }
-div[data-role="form-container"] form fieldset input[type="checkbox"]:checked + label.want-to-learn:before {
+div[data-role="form-container"] .items-panels form fieldset input[type="checkbox"]:checked + label.want-to-learn:before {
   color: #9e4838;
 }
-div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-teach:before {
+div[data-role="form-container"] .items-panels form fieldset input[type="checkbox"] + label.want-to-teach:before {
   width: 20px;
   height: 20px;
   display: inline-block;
@@ -10354,30 +10354,30 @@ div[data-role="form-container"] form fieldset input[type="checkbox"] + label.wan
   top: 70px;
   right: 10px;
 }
-div[data-role="form-container"] form fieldset input[type="checkbox"] + label.want-to-teach:hover:before {
+div[data-role="form-container"] .items-panels form fieldset input[type="checkbox"] + label.want-to-teach:hover:before {
   color: #c02942;
 }
-div[data-role="form-container"] form fieldset input[type="checkbox"]:checked + label.want-to-teach:before {
+div[data-role="form-container"] .items-panels form fieldset input[type="checkbox"]:checked + label.want-to-teach:before {
   content: "\ec02";
   color: #c02942;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="1"]:before,
-div[data-role="form-container"] form fieldset div.radio input + label[for$="1"]:hover:before {
+div[data-role="form-container"] .items-panels form fieldset div.radio input:checked + label[for$="1"]:before,
+div[data-role="form-container"] .items-panels form fieldset div.radio input + label[for$="1"]:hover:before {
   color: #ffad00;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="2"]:before,
-div[data-role="form-container"] form fieldset div.radio input + label[for$="2"]:hover:before {
+div[data-role="form-container"] .items-panels form fieldset div.radio input:checked + label[for$="2"]:before,
+div[data-role="form-container"] .items-panels form fieldset div.radio input + label[for$="2"]:hover:before {
   color: #D95B43;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label[for$="3"]:before,
-div[data-role="form-container"] form fieldset div.radio input + label[for$="3"]:hover:before {
+div[data-role="form-container"] .items-panels form fieldset div.radio input:checked + label[for$="3"]:before,
+div[data-role="form-container"] .items-panels form fieldset div.radio input + label[for$="3"]:hover:before {
   color: #542437;
 }
-div[data-role="form-container"] form fieldset div.radio input:checked + label:before {
+div[data-role="form-container"] .items-panels form fieldset div.radio input:checked + label:before {
   content: "\edb2";
   font-size: 1.2rem;
 }
-div[data-role="form-container"] form fieldset div.radio input + label:before {
+div[data-role="form-container"] .items-panels form fieldset div.radio input + label:before {
   width: 20px;
   height: 40px;
   display: inline-block;
@@ -10394,14 +10394,14 @@ div[data-role="form-container"] form fieldset div.radio input + label:before {
   -moz-osx-font-smoothing: grayscale;
   color: #CEB789;
 }
-div[data-role="form-container"] form fieldset:hover div.radio input + label:before {
+div[data-role="form-container"] .items-panels form fieldset:hover div.radio input + label:before {
   color: #413E4A;
 }
-div[data-role="form-container"] form input {
+div[data-role="form-container"] .items-panels form input {
   display: none;
   opacity: 0;
 }
-div[data-role="form-container"] form input .visible {
+div[data-role="form-container"] .items-panels form input .visible {
   display: block;
   opacity: 1;
 }
@@ -10880,7 +10880,11 @@ h1.title-remain,
         Modale de reunion
     ------------------------------------------------------------------------
 */
-.form-reunion input {
+.right {
+  float: right;
+}
+.form-reunion input,
+.form input {
   border: 1px solid rgba(0, 0, 0, 0.3);
   color: rgba(0, 0, 0, 0.6);
   outline: none;
@@ -10888,17 +10892,65 @@ h1.title-remain,
   padding: 2px 5px;
   border-radius: 3px;
 }
+.form-reunion .form-group,
+.form .form-group {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
 .form-reunion .form-group input,
-.form-reunion .form-group label {
+.form .form-group input,
+.form-reunion .form-group label,
+.form .form-group label {
   display: inline-block;
 }
-.form-reunion .form-group label {
+.form-reunion .form-group label,
+.form .form-group label {
   margin-right: 10px;
   min-width: 50px;
 }
-.form-reunion .form-group span {
+.form-reunion .form-group label.pad-half,
+.form .form-group label.pad-half {
+  min-width: 40%;
+}
+.form-reunion .form-group span,
+.form .form-group span {
   padding-right: 5px;
   color: rgba(0, 0, 0, 0.6);
+}
+.check_yes_no {
+  margin-left: 5px;
+}
+.check_yes_no span {
+  min-width: 40%;
+  display: inline-block;
+}
+.check_yes_no label {
+  text-align: center;
+  min-width: 0px;
+  padding-left: 10px;
+  margin-left: 0px;
+  margin-right: 0px !important;
+}
+.check_yes_no input:first-of-type {
+  display: none;
+  opacity: 0;
+}
+.check_yes_no input:first-of-type + label {
+  color: rgba(0, 0, 0, 0.3);
+}
+.check_yes_no input:first-of-type:checked + label > span {
+  color: #699b3b;
+}
+.check_yes_no input:last-of-type {
+  display: none;
+  opacity: 0;
+}
+.check_yes_no input:last-of-type + label {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.3);
+}
+.check_yes_no input:last-of-type:checked + label > span {
+  color: #c02942;
 }
 /*
     ------------------------------------------------------------------------
@@ -10934,6 +10986,9 @@ h1.title-remain,
   padding: 0px;
   margin: 15px;
   display: block;
+}
+.liste-reunions li .button {
+  padding: 1px 6px;
 }
 .liste-reunions li div.icon {
   display: inline-block;
@@ -11019,7 +11074,7 @@ h1.title-remain,
 .button {
   border: 1px solid rgba(0, 0, 0, 0.3);
   color: rgba(0, 0, 0, 0.5);
-  padding: 1px 6px;
+  padding: 5px 6px;
   text-align: center;
   cursor: pointer;
   font-size: 0.8em;
