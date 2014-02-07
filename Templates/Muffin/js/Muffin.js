@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-02-05
+   mNymdhy          shddmy hNd       Sorti du four le 2014-02-07
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -14019,8 +14019,11 @@ Prism.hooks.add("after-highlight",function(e){var t=e.element.parentNode;if(!t||
 		{
 			if (e.toString()[0] === "1")
 			{
+				if (Muffin.redirect == undefined)
 				{
-					$.get("User/index",
+					Muffin.redirect = "User/index";
+				}
+					$.get(Muffin.redirect,
 						function(data)
 						{
 							$("#input-code").attr("disabled", "disabled");
@@ -14040,7 +14043,6 @@ Prism.hooks.add("after-highlight",function(e){var t=e.element.parentNode;if(!t||
 							NProgress.done();
 							data.addClass("complete");
 						});
-				}
 			}
 			else
 			{
@@ -14252,7 +14254,29 @@ window.Muffin = {};
 
 function goToUrl(url, elt)
 {
-	console.log("loading !");
+
+	var highlightMenu = function(hash)
+	{
+		var e = $('ul[role="side-menu"] li a[data-load-target^="' + hash + '"]');
+		if (e.length)
+		{
+			$('ul[role="side-menu"] li').removeClass("active");
+			e.parent().addClass("active");
+		}
+	};
+
+	var ha = url.split("/");
+	if (ha.length > 2)
+	{
+		ha = ha.splice(-2);
+	}
+	ha = ha.join("/");
+	if (ha)
+	{
+		highlightMenu(ha);
+	}
+
+
 	$("div[data-role='form-container']").children().addClass("loading");
 	if (elt != undefined)
 	{
@@ -14270,9 +14294,12 @@ function goToUrl(url, elt)
 			data.addClass("loading");
 			$("div[data-role='form-container']").html(data);
 			NProgress.done();
-			data.addClass("complete");
-			treatResize();
-			window.location.hash = "/" + url;
+			setTimeout(function()
+			{
+				data.addClass("complete");
+				treatResize();
+				window.location.hash = "/" + url;
+			}, 100);
 	});
 
 }

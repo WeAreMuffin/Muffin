@@ -38,6 +38,11 @@
                             }
                             else
                             {
+                                {% if redirect %}
+                                if (window.Muffin == undefined)
+                                    window.muffin = {};
+                                window.Muffin.redirect = "{{redirect}}";
+                                {% endif %}
                                 window.muffin.verifierCode("{{ webdata.session.code }}", "{{ webdata.user }}");
                             }
                         });
@@ -57,6 +62,14 @@
         </div>
     </aside>
     <article data-content="login">
+        {% if redirect %}
+            <script>
+                if (window.Muffin == undefined)
+                    window.muffin = {};
+                window.Muffin.redirect = "{{redirect}}";
+            </script>
+            <div class="panel"><p><span class="icon-alert"></span> Vous devez etre connecté pour acceder à cette page.</p></div>
+        {% endif %}
         <header class="tra">
             <div role="title">
                 <h1>Tout d'abord, qui est-tu ?</h1>

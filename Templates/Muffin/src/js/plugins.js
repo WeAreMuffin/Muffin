@@ -44,7 +44,29 @@ window.Muffin = {};
 
 function goToUrl(url, elt)
 {
-	console.log("loading !");
+
+	var highlightMenu = function(hash)
+	{
+		var e = $('ul[role="side-menu"] li a[data-load-target^="' + hash + '"]');
+		if (e.length)
+		{
+			$('ul[role="side-menu"] li').removeClass("active");
+			e.parent().addClass("active");
+		}
+	};
+
+	var ha = url.split("/");
+	if (ha.length > 2)
+	{
+		ha = ha.splice(-2);
+	}
+	ha = ha.join("/");
+	if (ha)
+	{
+		highlightMenu(ha);
+	}
+
+
 	$("div[data-role='form-container']").children().addClass("loading");
 	if (elt != undefined)
 	{
@@ -62,9 +84,12 @@ function goToUrl(url, elt)
 			data.addClass("loading");
 			$("div[data-role='form-container']").html(data);
 			NProgress.done();
-			data.addClass("complete");
-			treatResize();
-			window.location.hash = "/" + url;
+			setTimeout(function()
+			{
+				data.addClass("complete");
+				treatResize();
+				window.location.hash = "/" + url;
+			}, 100);
 	});
 
 }

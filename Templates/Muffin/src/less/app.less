@@ -889,6 +889,22 @@ div[data-role="container"]
     }
 }
 
+.panel
+{
+    padding: 0px 40px;
+    border: 1px solid #D3C1A0;
+    margin: auto;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    color: #A25E55;
+
+    p
+    {
+        color: rgba(0, 0, 0, 0.7);
+    }
+}
+
 /*
     ------------------------------------------------------------------------
         Header
@@ -945,24 +961,26 @@ aside.side-menu
     ul.affix{
         position: fixed;
         top: 0px;
-        width: 200px;
+        width: 185px;
     }
     a.btn
     {
         width: 90%;
-        text-align: center;
+        text-align: left;
         margin-top: 10px;
         display: block;
         line-height: 30px;
-        color: #53777A;
+        color: rgba(0, 0, 0, 0.6);
         background: transparent;
         border-width: 1px;
+
 
         span[class^="icon"]
         {
             position: relative;
+            transition: all 0.1s;
             top: 7px;
-            left: 6px;
+            left: 0px;
             padding-left: 5px;
             float: left;
         }
@@ -980,14 +998,46 @@ aside.side-menu
 
 
         li {
+
+            transition: all 0.1s;
+            background-color: transparent;
+
             a.btn
             {
                 transition: all 0.1s;
-                border-color: transparent;
+                border: none;
+
+                span.side-legend
+                {
+                    margin-left: 5px;
+                }
 
                 &:hover
+                {
+                    color: @muffin-red;
+
+                    span[class^="icon"]
                     {
-                    border-color: @muffin-green;
+                        color: @muffin-red;
+                    }
+                }
+            }
+
+            &.active
+            {
+                background-color: @muffin-red;
+
+                a.btn span.side-legend
+                {
+                    color:  #fff;
+                }
+                a.btn:hover
+                {
+
+                    span[class^="icon"]
+                    {
+                        color: rgba(0, 0, 0, 0.7);
+                    }
                 }
             }
         }
@@ -2767,14 +2817,14 @@ ul.user-draft.draft-list
 {
     visibility: hidden;
     position: relative;
-    bottom: -50px;
+    bottom: -20px;
 }
 
 .preparing:not(.modal) {
     transition: all 0.4s;
     opacity: 0;
     position: relative;
-    bottom: -50px;
+    bottom: -20px;
 }
 
 .complete:not(.modal)

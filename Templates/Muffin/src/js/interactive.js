@@ -111,8 +111,11 @@
 		{
 			if (e.toString()[0] === "1")
 			{
+				if (Muffin.redirect == undefined)
 				{
-					$.get("User/index",
+					Muffin.redirect = "User/index";
+				}
+					$.get(Muffin.redirect,
 						function(data)
 						{
 							$("#input-code").attr("disabled", "disabled");
@@ -132,7 +135,6 @@
 							NProgress.done();
 							data.addClass("complete");
 						});
-				}
 			}
 			else
 			{
