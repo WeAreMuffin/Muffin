@@ -298,7 +298,11 @@ class Reunion extends Controller
         if ( isset ($_SESSION['login']) )
             return true;
         else
+        {
+            header("./?redirect=Reunion");
+            echo "<script>document.location = '?redirect=Reunion'</script";
             return false;
+        }
     }
 }
 

@@ -38,6 +38,8 @@ class Home extends Controller
 
     public function index ($params = array ())
     {
+        $redirect = $this->filterGet("redirect");
+        $this->addData ('redirect', $redirect);
         $this->render ();
     }
 
