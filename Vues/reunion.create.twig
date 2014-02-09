@@ -1,0 +1,97 @@
+
+<ul class="horizontal-buttons">
+    <li id="reunions-button-add">
+		<a class="btn" data-load-target="Reunion/index"><span class="icon-bubbles"></span> Toutes les réunions</a>
+    </li>
+    <li id="reunions-button-add">
+        <a class="btn" data-load-target="Reunion/mine">
+        	<span class="icon-user"></span><span class='side-legend'> Mes réunions</span>
+        </a>
+    </li>
+</ul>
+<div class="loading light-form">
+	<h1>Nouvelle réunion</h1>
+	<form id="form-create-reunion" class="form-reunion">
+		<div class="form-group">
+			<label for="text-reunion-create">Description :</label>
+			<textarea name="texte" id="text-reunion-create"></textarea>
+		</div>
+
+		<div class="form-group">
+			<label for="cmp-reunion-create">Thème :</label>
+			<select name="competence" id="cmp-reunion-create">
+				{% for cmp in competences %}
+				    <option name="competence" value="{{ cmp.id_competence }}">{{ cmp.nom_usuel|default(cmp.nom_competence) }}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="type-reunion-create">Type de réunion :</label>
+			<select name="type" id="type-reunion-create">
+				{% for type in types %}
+					{% if (type.role_type b-and user_role) > 0 %}
+					    <option name="type" value="{{ type.id_type }}">{{ type.nom_type }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="date-reunion-create">Date :</label>
+			<span>Le </span>
+			<input name="date" type="date" id="date-reunion-create" required>
+			<span> à </span>
+			<input name="time" type="time" id="time-reunion-create">
+			<span> heure(s). </span>
+		</div>
+
+		<div class="form-group">
+			<label for="duree-reunion-create">Durée :</label>
+			<span>Environ </span><input name="duree" value="2" type="number" id="duree-reunion-create"><span> heure(s).</span>
+		</div>
+
+		<div class="form-group">
+			<label for="lieu-reunion-create">Lieu :</label>
+			<span>En </span><input name="lieu" type="text" placeholder="ex: Amphi, e1..." id="lieu-reunion-create">
+		</div>
+	<div class="bretzel-separator"></div>
+		<div class="form-group">
+		<div class="ajax-result" style="display: none;"></div>
+		<a class="button" data-load-target="Reunion/index"><span class="icon-back"></span> Retour aux réunions</a>
+		<a onclick="$('#form-create-reunion').submit();" id="btn_reunion_create" class="button">Créer <span id="reunion_icon" class='icon-uniF488'></span></a>
+		</div>
+	</form>
+    <script>
+
+        var create_end = function(a, b, c)
+        {
+        	if (a == "1")
+        	{
+	        	$("#btn_reunion_create").html("Enregistré <span class='icon-checkmark2'></span>");
+				NProgress.done();
+				Muffin.goToUrl("Reunion/index");
+        	}
+        	else
+	        	$("#btn_reunion_create").html("Une erreur s'est produite <span class='icon-close'></span>");
+
+        }
+
+		var pts = {
+			target: '#form-create-reunion .ajax-result', // target element(s) to be updated with server response
+			beforeSubmit: Muffin.showRequest, // pre-submit callback
+			success: create_end, // post-submit callback
+			url: "Reunion/nouvelle",
+			type: "post"       // 'get' or 'post', override for form's 'method' attribute
+		};
+
+		$('#form-create-reunion').submit(function() {
+			// inside event callbacks 'this' is the DOM element so we first
+			// wrap it in a jQuery object and then invoke ajaxSubmit
+			$(this).ajaxSubmit(pts);
+			$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Crée.");
+			return false;
+		});
+		Muffin.bindAjaxEvents();
+    </script>
+</div>
