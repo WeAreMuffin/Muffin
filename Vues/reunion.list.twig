@@ -9,7 +9,7 @@
 					    <span class="date">{{ reunion.reunion_date }}</span>
 
 						{# si la reunion est a venir #}
-					    {% if not is_past %}
+					    {% if not mine and not is_past %}
 
 						    {% if reunion.reunion_id in inscrit %}
 						    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">se désinscrire</a>
@@ -18,15 +18,22 @@
 						    {% endif %}
 
 						{# si on a participe a la reunion #}
-						{% elseif reunion.reunion_id in inscrit %}
+						{% elseif not mine and reunion.reunion_id in inscrit %}
 
 							<span class="simple-text right"><span class="icon-checkmark2"></span> vous avez participé</span>
+
+						{# si on est le créateur de la réunion et qu'elle n'est pas envore passée #}
+						{% elseif mine and not is_past %}
+
+						    <a data-action="delete-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">
+						    <span class="icon-close"></span> Annuler
+						    </a>
 
 					    {% endif %}
 
 				    </p>
 					{# si on a participe a la reunion #}
-					{% if is_past and reunion.reunion_id in inscrit %}
+					{% if not mine and is_past and reunion.reunion_id in inscrit %}
 					    <div class="middle">
 					    	{% if reunion.reunion_id in feedback %}
 					    		<span class="simple-text right"></span>

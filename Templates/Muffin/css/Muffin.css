@@ -10142,6 +10142,7 @@ aside.side-menu ul[role="side-menu"] {
 aside.side-menu ul[role="side-menu"] li {
   transition: all 0.1s;
   background-color: transparent;
+  list-style: none;
 }
 aside.side-menu ul[role="side-menu"] li a.btn {
   transition: all 0.1s;
@@ -10164,6 +10165,11 @@ aside.side-menu ul[role="side-menu"] li.active a.btn span.side-legend {
 }
 aside.side-menu ul[role="side-menu"] li.active a.btn:hover span[class^="icon"] {
   color: rgba(0, 0, 0, 0.7);
+}
+aside.side-menu ul[role="side-menu"] li.separator {
+  border-top: 1px solid #CABA9C;
+  height: 2px;
+  margin: 10px 33%;
 }
 div[role="add-competence"],
 div[role="show-stats"] {
@@ -10261,23 +10267,31 @@ ul#list-notification li + li {
 #form-result {
   display: none;
 }
-.modal-body form label {
+.modal-body form label,
+.light-form form label {
   display: block;
   margin-top: 5px;
 }
-.modal-body form label span.opt {
+.modal-body form label span.opt,
+.light-form form label span.opt {
   color: rgba(0, 0, 0, 0.3);
 }
-.modal-body form label.inline {
+.modal-body form label.inline,
+.light-form form label.inline {
   display: inline-block;
 }
-.modal-body form label + input[type="checkbox"] {
+.modal-body form label + input[type="checkbox"],
+.light-form form label + input[type="checkbox"] {
   display: inline-block;
 }
 .modal-body form #input-nom-comp,
+.light-form form #input-nom-comp,
 .modal-body form #search_comp_uid,
+.light-form form #search_comp_uid,
 .modal-body form textarea,
-.modal-body form input[type="password"] {
+.light-form form textarea,
+.modal-body form input[type="password"],
+.light-form form input[type="password"] {
   border: 1px solid rgba(0, 0, 0, 0.3);
   background-color: transparent;
   border-radius: 3px;
@@ -10285,13 +10299,26 @@ ul#list-notification li + li {
   min-width: 80%;
   padding: 4px;
 }
-.modal-body form #ms-input-0 {
+.modal-body form select,
+.light-form form select {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  outline: rgba(0, 0, 0, 0);
+  outline-offset: 0px;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  padding: 4px;
+}
+.modal-body form #ms-input-0,
+.light-form form #ms-input-0 {
   min-width: 20% !important;
   min-height: 26px;
   border: none;
 }
 .modal-body #input-nom-comp,
-.modal-body #search_comp_uid {
+.light-form #input-nom-comp,
+.modal-body #search_comp_uid,
+.light-form #search_comp_uid {
   border: 1px solid rgba(0, 0, 0, 0.3);
   background-color: transparent;
   border-radius: 3px;

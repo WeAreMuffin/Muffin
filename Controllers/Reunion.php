@@ -42,59 +42,84 @@ class Reunion extends Controller
         $this->render();
     }
 
-    protected function get_reunions_today()
+    /*
+     * Les réunions de l'utilisateur
+     */
+    public function mine ($params)
+    {
+        $this->addData("inscrit", $this->get_reunions_aray(true));
+        $this->addData("feedback", $this->get_feedback_aray(true));
+        $this->addData('aujourdhui', $this->get_reunions_today(true));
+        $this->addData('past', $this->get_reunions_past(true));
+        $this->addData('future', $this->get_reunions_future(true));
+        $this->render();
+    }
+
+    public function create ($params)
+    {
+        $this->addData('competences', new Entities("c_competences"));
+        $this->addData('types', new Entities("c_reunion_type"));
+        $this->addData('user_role', Role::getUserAuth($_SESSION['muffin_id']));
+        $this->render();
+    }
+
+    protected function get_reunions_today($me = false)
     {
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
-                WHERE DATE(`reunion_date`) = CURRENT_DATE() AND `reunion_date` > NOW();
+                WHERE DATE(`reunion_date`) = CURRENT_DATE() AND `reunion_date` > NOW()
+                AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
-        $r->execute(array());
+        $r->execute(array("uid" => $_SESSION['muffin_id']));
         $res = $r->fetchAll(PDO::FETCH_CLASS);
         return($res);
     }
 
-    protected function get_reunions_future()
+    protected function get_reunions_future($me = false)
     {
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
-                WHERE DATE(`reunion_date`) > CURRENT_DATE() AND `reunion_date` > NOW();
+                WHERE DATE(`reunion_date`) > CURRENT_DATE() AND `reunion_date` > NOW()
+                AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
-        $r->execute(array());
+        $r->execute(array("uid" => $_SESSION['muffin_id']));
         $res = $r->fetchAll(PDO::FETCH_CLASS);
         return($res);
     }
 
-    protected function get_reunions_past()
+    protected function get_reunions_past($me = false)
     {
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
-                WHERE `reunion_date` < NOW();
+                WHERE `reunion_date` < NOW()
+                AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
-        $r->execute(array());
+        $r->execute(array("uid" => $_SESSION['muffin_id']));
         $res = $r->fetchAll(PDO::FETCH_CLASS);
         return($res);
     }
 
 
-    protected function get_reunions_aray()
+    protected function get_reunions_aray($me = false)
     {
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
-                WHERE rp.id_user = :id GROUP BY r.reunion_id;
+                WHERE rp.id_user = :id GROUP BY r.reunion_id
+                AND r.reunion_organisateur ".($me ? "=" : "!=")." :id;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -107,13 +132,14 @@ class Reunion extends Controller
         return ($result);
     }
 
-    protected function get_feedback_aray()
+    protected function get_feedback_aray($me = false)
     {
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
-                WHERE rp.id_user = :id AND rp.feedback IS NOT NULL GROUP BY r.reunion_id;
+                WHERE rp.id_user = :id AND rp.feedback IS NOT NULL GROUP BY r.reunion_id
+                AND r.reunion_organisateur ".($me ? "=" : "!=")." :id;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -151,6 +177,7 @@ class Reunion extends Controller
         $date = $this->filterPost("date");
         $time = $this->filterPost("time");
         $duree = $this->filterPost("duree");
+        $type = $this->filterPost("type");
         $competence = $this->filterPost('competence');
         if ($competence)
 		{
@@ -163,7 +190,7 @@ class Reunion extends Controller
             {
             */
                 $i = array ("reunion_organisateur" => $_SESSION['muffin_id'],
-                    "reunion_competence" => $competence, "reunion_texte" => $text,
+                    "reunion_competence" => $competence, "reunion_texte" => $text, "reunion_type" => $type,
                     "reunion_date" => $date." ".$time.":00", "reunion_duree" => $duree, "reunion_lieu" => $lieu);
                 $res = Core::getBdd ()->insert ($i, 'c_reunion');
 				//$this->notifier($_SESSION["login"]." voudrait vous aider sur le projet / la notion ".$c, $login);

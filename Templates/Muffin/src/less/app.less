@@ -1001,6 +1001,8 @@ aside.side-menu
 
             transition: all 0.1s;
             background-color: transparent;
+            list-style: none;
+
 
             a.btn
             {
@@ -1039,6 +1041,13 @@ aside.side-menu
                         color: rgba(0, 0, 0, 0.7);
                     }
                 }
+            }
+
+            &.separator
+            {
+                border-top: 1px solid #CABA9C;
+                height: 2px;
+                margin: 10px 33%;
             }
         }
     }
@@ -1185,7 +1194,8 @@ ul#list-notification
     display: none;
 }
 
-.modal-body
+.modal-body,
+.light-form
 {
     form
     {
@@ -1217,6 +1227,17 @@ ul#list-notification
             border-radius: 3px;
             width: 100%;
             min-width: 80%;
+            padding: 4px;
+        }
+
+        select
+        {
+            background-color: rgba(0, 0, 0, 0);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            outline: rgba(0, 0, 0, 0);
+            outline-offset: 0px;
+            -webkit-appearance: none;
+            border-radius: 3px;
             padding: 4px;
         }
 

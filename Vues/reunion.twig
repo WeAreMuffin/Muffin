@@ -1,3 +1,17 @@
+
+<ul class="horizontal-buttons">
+    <li id="reunions-button-add">
+        <a class="btn" data-load-target="Reunion/create">
+        	<span class="icon-bullhorn"></span><span class='side-legend'> Nouvelle réunion</span>
+        </a>
+    </li>
+    <li id="reunions-button-add">
+        <a class="btn" data-load-target="Reunion/mine">
+        	<span class="icon-user"></span><span class='side-legend'> Mes réunions</span>
+        </a>
+    </li>
+</ul>
+
 <div class="loading">
 	<h1>Réunions du jour</h1>
 	{% if aujourdhui|length %}
@@ -20,6 +34,7 @@
 			{% endfor %}
 		</ul>
 	{% else %}
+		<p class="simple-text font-x-large">Aucune réunion à venir</p>
 	{% endif %}
 
 	<div class="bretzel-separator"></div>
@@ -33,6 +48,7 @@
 			{% endfor %}
 		</ul>
 	{% else %}
+		<p class="simple-text font-x-large">Aucune réunion passée</p>
 	{% endif %}
 
 	<script type="text/javascript">
@@ -76,5 +92,6 @@
 		});
 	});
 	$("[data-toggle='tooltip']").tooltip();
+	Muffin.bindAjaxEvents();
 	</script>
 </div>
