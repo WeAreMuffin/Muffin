@@ -11465,15 +11465,23 @@ ul.user-draft.draft-list {
 .draft-list li {
   position: relative;
   transition: all 0.4s;
-  padding: 0px;
+  padding: 5px 10px;
   border-radius: 0px;
   display: block;
   width: 100%;
   max-width: 100%;
-  margin: 0px;
+  margin: 5px 10px;
   min-height: 0px;
   cursor: pointer;
   vertical-align: top;
+}
+.draft-list li:nth-child(2n) {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.draft-list li .middle {
+  margin-right: 15px;
+  height: 50px;
+  line-height: 50px;
 }
 .draft-list li[data-id] {
   cursor: pointer;

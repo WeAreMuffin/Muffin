@@ -22,23 +22,12 @@
                          <span class="list-visibility">
                             <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span>
                              · par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
-
-                            {#
-                            {% if draft.public == 0 %}
-                                <span class="icon-lock"></span>
-                            {% elseif draft.public == 1 %}
-                                <span class="icon-marvin"></span>
-                            {% elseif draft.public == 2 %}
-                                <span class="icon-earth"></span>
-                            {% endif %}
-                            #}
                         </span>
                 </div>
-                {#
-                <div class="draft-text">
-                    <p>{{ truncate(draft.draft_content, 400, " (...)") }}</p>
-                </div>
-                #}
+                <a data-action="star" class="right middle">
+                    <span class="icon-star"></span> {{ fetch('c_drafts_like[id_draft_like="' ~ draft.draft_id ~'"]')|length }}
+                </a>
+                <a class="right middle"><span class="icon-eye3"></span> {{ draft.draft_views }} vues</a>
                 </a>
             </li>
         {% endfor %}
