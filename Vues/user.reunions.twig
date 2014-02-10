@@ -1,0 +1,15 @@
+        {% if reunions %}
+        <div role="simple-row" id="user-reunions" class="loading">
+            <h3 class="section-title"><span class="icon-bubbles"></span> Les réunions à venir <small>qui pourraient t'intéresser</small></h3>
+            <ul role="reunions">
+                {% for reunion in reunions %}
+                    <li>
+                        <a data-load-target="Reunion/index">
+                            Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b> ·
+                            <span class="date-calendar">{{ reunion.reunion_date }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}

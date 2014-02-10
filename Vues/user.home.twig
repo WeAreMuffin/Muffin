@@ -5,6 +5,9 @@
 	{# Les dernieres nouveautees #}
 	{% include 'user.news.twig' %}
 
+  {# Les réunions qui pourraient interesser #}
+  {% include 'user.reunions.twig' %}
+
   {# Les derniers articles #}
   {% include 'user.articles.twig' %}
 
@@ -52,7 +55,7 @@
 	<script>
 	$(document).ready(function()
 	{
-	    var a = ["#user-two", "#user-drafts", "#user-news", "#user-one"];
+	    var a = ["#user-two", "#user-drafts", "#user-news", "#user-reunions", "#user-one"];
 	    var globalLang = moment();
 	    moment.lang('fr');
 
@@ -156,6 +159,17 @@
     }
     echangeRefresh();
 	});
+  moment.lang('fr');
+  $(".date").each(function()
+  {
+    var ctn = $(this).text();
+    $(this).html(moment(ctn).fromNow());
+  });
+  $(".date-calendar").each(function()
+  {
+    var ctn = $(this).text();
+    $(this).html(moment(ctn).calendar());
+  });
 	</script>
 
 </div>
