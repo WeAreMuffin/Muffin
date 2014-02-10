@@ -1,0 +1,119 @@
+
+<div class="about">
+	<h1>À propos de Muffin</h1>
+	<p class="about">Muffin est un site destiné aux étudiants de 42 afin d'améliorer les échanges, l'organisation et le partage au sein de la communauté.</p>
+	<div class="bretzel-separator"></div>
+	<div class="about-project-status">
+		<span class="waiting"></span>
+	</div>
+	<h3>Aidez nous</h3>
+		<a class="button" href="https://github.com/wearemuffin/Muffin/issues/new">Déclarer un bug</a>
+	</div>
+	<div class="bretzel-separator"></div>
+	<h2>Ils nous donnent un petit coup de pouce :</h2>
+
+	<div class="about-contributors"><span class="waiting"></span></div>
+
+
+</div>
+
+<script>
+	var contributorTemplate = _.template("<a href='<%= html_url %>'><figure class='user'><img src='<%= avatar_url %>' class='rounded'><figcaption>\
+		<span class='name'><%= name %></span></figcaption></figure></a>");
+	var projectTemplate = _.template("<div class='left-section'><span class='icon-uniF78F'></span></div>\
+	                                     <div class='right-section'><h4>Derniere mises à jour</h4> \
+	                                     <span class='updates'><span class='icon-uniF008'></span> Développement: <span class='date-calendar'>\
+	                                     	<%= updated_at %></span></span>\
+	                                     <span class='updates'><span class='icon-speed'></span> Production: <span class='date-calendar'>\
+	                                     	<%= release_date %></span></span>\
+	                                     <div class='form'>\
+	                                     <p><span>Git url</span> : <span class='code'><%= git_url %></span></p>\
+	                                     <p><span>Clone url</span> : <span class='code'><%= clone_url %></span></p>\
+	                                     <p><span>Svn url</span> : <span class='code'><%= svn_url %></span></p></div>\
+	                                     <div class='tiny-container'><span class='icon-star'></span> <%= stargazers_count %></div>\
+	                                     <div class='tiny-container'><span class='icon-eye'></span> <%= watchers_count %></div>\
+	                                     <div class='tiny-container'><span class='icon-uniF786'></span> <%= forks_count %></div>\
+	                                     <div class='tiny-container'><span class='icon-uniF7BA'></span> <%= default_branch %></div>\
+	                                     </div>");
+
+	// Status
+	$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/tags", function(dataT)
+	{
+		var lastSha = dataT[0].commit.sha;
+		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/commits/" + lastSha, function(dataC)
+		{
+			$.getJSON("https://api.github.com/repos/wearemuffin/Muffin", function(data)
+			{
+				console.log(data);
+				data.release_date = dataC.commit.committer.date;
+				$(".about-project-status").html(projectTemplate(data));
+				moment.lang('fr');
+				$(".date-calendar").each(function()
+				{
+					var ctn = $(this).text();
+					$(this).html(moment(ctn).calendar());
+				});
+			});
+		});
+	});
+
+	// Contributeurs
+	$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/stats/contributors", function(dataT)
+	{
+		var users = [];
+		var c = $(".about-contributors");
+		c.html("");
+		_.each(dataT, function(e) { users.push(e.author.login); });
+		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/issues", function(u)
+		{
+			_.each(u, function(e) { users.push(e.user.login); });
+			_.each(users, function(e) { $.getJSON("https://api.github.com/users/" + e, function(k)
+			{
+				if (k.id != "3030511")
+				{
+					if(k.name == undefined)
+						k.name = e;
+					c.append(contributorTemplate(k));
+				}
+			}); });
+		});
+	});
+	// $("#issue-submit").click(function()
+	// {
+	// 	$.ajax({
+	// 		type: "GET",
+	// 		url: "https://github.com/login/oauth/access_token",
+	// 		data:
+	// 		{
+	// 			client_id: "a83045728aa535209ac5",
+	// 			redirect_uri: "http://88.183.177.155/Muffin_devel/#/About/index",
+	// 			scope: ["public_repo", "repo", "user"],
+	// 			state: "asdfasdfasdf"
+	// 		},success: function(e)
+	// 		{
+	// 			console.log("retour: ", e);
+	// 		}
+	// 	});
+
+	//     $.ajax({
+	// 		type: "POST",
+	// 		accept: "application/vnd.github.v3+json",
+	// 		url: "https://api.github.com/repos/lambda2/Muffin/issues",
+	// 		data:
+	// 		{
+	// 			title: $("#issue-text").val(),
+	// 			body: $("#issue-text").val(),
+	// 			"assignee": "octocat",
+	// 			"milestone": 1,
+	// 			"labels": [
+	// 			  "Label1",
+	// 			  "Label2"
+	// 			]
+	// 		},success: function(e)
+	// 		{
+	// 			console.log("retour: ", e);
+	// 		}
+	// 	});
+	// });
+
+</script>
