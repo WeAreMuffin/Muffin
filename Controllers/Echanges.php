@@ -237,9 +237,9 @@ class Echanges extends Controller
 
     protected function notifier($message, $id)
     {
-	$i = array ("id_user" => $id, "message" => $message);
-	$res = Core::getBdd()->insert($i, 'c_notifications');
-	return ($res);
+    	$i = array ("id_user" => $id, "message" => $message);
+    	$res = Core::getBdd()->insert($i, 'c_notifications');
+    	return ($res);
     }
 
     public function oldhelp ($params)

@@ -54,10 +54,10 @@ $(document).ready(function()
 	 * Json calls to Github Api
 	 * @type @exp;$@call;getJSON
 	 */
-	$.getJSON("https://api.github.com/repos/lambda2/Muffin/tags", function(dataT)
+	$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/tags", function(dataT)
 	{
 		var lastSha = dataT[0].commit.sha;
-		$.getJSON("https://api.github.com/repos/lambda2/Muffin/commits/" + lastSha, function(dataC)
+		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/commits/" + lastSha, function(dataC)
 		{
 			var lastCommit = dataC;
 			var cDate = lastCommit.commit.committer.date.slice(0, 10);
@@ -65,7 +65,7 @@ $(document).ready(function()
 			var cDel = lastCommit.stats.deletions;
 			var cStats = "<span class='icon-flow-tree'></span> <span class='git-add'>+" + cAdd + "</span>  <span class='git-del'>-" + cDel + "</span>";
 			$("div[role='git-info']").html("<p>\n\
-				<a href='https://github.com/lambda2/Muffin'><span class='icon-github'></span>\n\
+				<a href='https://github.com/wearemuffin/Muffin'><span class='icon-github'></span>\n\
 				v" + dataT[0].name + " datant du " + cDate + "  ─  " + cStats + "</a> </p>");
 		});
 	});

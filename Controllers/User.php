@@ -114,11 +114,30 @@ class User extends Controller
         $this->addData ('user', $user);
         $this->addData ('infos', $infos);
         $this->addData ('news', $news);
+        $this->addData ('reunions', $this->get_future_reunions());
         $this->addData ('drafts', $drafts);
         $this->addData ('rank', $this->getRank($uid));
         $this->addData ('count', $this->getCount());
         $this->addData ('demandes', $demandes);
         $this->addData ('propositions', $propositions);
+    }
+
+
+
+    protected function get_future_reunions($me = false)
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
+                WHERE `reunion_date` > NOW()
+                AND (r.reunion_organisateur ".($me ? "=" : "!=")." :uid OR 1);
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("uid" => $_SESSION['muffin_id']));
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        return($res);
     }
 
     /**

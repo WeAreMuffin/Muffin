@@ -63,6 +63,41 @@ class Reunion extends Controller
         $this->render();
     }
 
+     /**
+     * @PathInfo('id')
+     * Va supprimer une réunion.
+     */
+    public function delete ($params)
+    {
+        $id = $this->getUrlParam("id");
+        $this->registerParams($params);
+        $auteur = $_SESSION["muffin_id"];
+        $reunion = new Entities ("c_reunion[reunion_id=\"{$id}\"][reunion_organisateur=\"{$auteur}\"]");
+
+        if (count($reunion) == 1)
+        {
+
+            $reunion = $reunion->current();
+            //---------------
+            $participants = new Entities ("c_reunion_participe[id_reunion=\"{$id}\"]");
+            foreach ($participants as $key => $user) {
+                $i = array ("id_user" => $user->id_user, "message" => "La réunion sur ".$reunion->c_competences->nom_competence." a été annulée");
+                $res = Core::getBdd()->insert($i, 'c_notifications');
+            }
+            //---------------
+
+            Core::getBdd ()->delete ('c_reunion_participe', array ("id_reunion" => $id));
+            if (Core::getBdd ()->delete ('c_reunion', array ("reunion_id" => $id, "reunion_organisateur" => $auteur)))
+            {
+                echo "1";
+            }
+            else
+            {
+                echo "0";
+            }
+        }
+    }
+
     protected function get_reunions_today($me = false)
     {
 

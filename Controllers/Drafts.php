@@ -162,13 +162,12 @@ class Drafts extends Controller
     }
 
     /*
-     * Va renvoyer un draft.
+     * Va supprimer un draft.
      */
     public function delete ($params)
     {
         $id = $this->filterPost("id");
         $this->registerParams($params);
-        $draft = Moon::get ('c_drafts', 'draft_id', $id);
         $auteur = $_SESSION["muffin_id"];
         if (Core::getBdd ()->delete ('c_drafts', array ("draft_id" => $id, "draft_author" => $_SESSION["muffin_id"])))
         {
