@@ -166,10 +166,10 @@
 .tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
-  color: #413e4a;
+  color: #e4d0a7;
   text-align: center;
   text-decoration: none;
-  background-color: #e4d0a7;
+  background-color: #413e4a;
   border-radius: 4px;
 }
 .tooltip-arrow {
@@ -184,52 +184,52 @@
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: #e4d0a7;
+  border-top-color: #413e4a;
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
   left: 5px;
   border-width: 5px 5px 0;
-  border-top-color: #e4d0a7;
+  border-top-color: #413e4a;
 }
 .tooltip.top-right .tooltip-arrow {
   bottom: 0;
   right: 5px;
   border-width: 5px 5px 0;
-  border-top-color: #e4d0a7;
+  border-top-color: #413e4a;
 }
 .tooltip.right .tooltip-arrow {
   top: 50%;
   left: 0;
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
-  border-right-color: #e4d0a7;
+  border-right-color: #413e4a;
 }
 .tooltip.left .tooltip-arrow {
   top: 50%;
   right: 0;
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
-  border-left-color: #e4d0a7;
+  border-left-color: #413e4a;
 }
 .tooltip.bottom .tooltip-arrow {
   top: 0;
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #e4d0a7;
+  border-bottom-color: #413e4a;
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
   left: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #e4d0a7;
+  border-bottom-color: #413e4a;
 }
 .tooltip.bottom-right .tooltip-arrow {
   top: 0;
   right: 5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #e4d0a7;
+  border-bottom-color: #413e4a;
 }
 .popover {
   position: absolute;
@@ -9982,6 +9982,7 @@ input + button > span[class^="icon-"] {
 .about .right-section {
   max-width: 70%;
   display: inline-block;
+  text-align: left;
 }
 .about .right-section span.updates {
   margin: 10px;
@@ -10042,6 +10043,11 @@ input + button > span[class^="icon-"] {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #CEB789;
+}
+.about-contributors,
+.about-project-status,
+h2 {
+  text-align: center;
 }
 figure.user {
   display: inline-block;
@@ -11154,10 +11160,22 @@ h1.title-remain,
   background: #f7e4be;
   padding: 0px 25px;
 }
+.liste-reunions {
+  margin-left: 0px;
+  padding-left: 0px;
+}
 .liste-reunions li {
   padding: 0px;
   margin: 15px;
   display: block;
+}
+.liste-reunions li .attrs {
+  width: 40px;
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 2em;
+  vertical-align: top;
+  color: rgba(0, 0, 0, 0.6);
 }
 .liste-reunions li .button {
   padding: 1px 6px;
@@ -11166,6 +11184,7 @@ h1.title-remain,
   display: inline-block;
   max-width: 55px;
   width: 15%;
+  margin-top: 10px;
   vertical-align: top;
 }
 .liste-reunions li div.icon span[class^="icon-"] {
@@ -11193,6 +11212,9 @@ h1.title-remain,
 .liste-reunions li div.content .bottom div {
   display: inline-block;
   margin-right: 10px;
+}
+.liste-reunions li div.content .bottom div .user {
+  text-transform: capitalize;
 }
 .liste-reunions li div.content .bottom div span[class^="icon-"] {
   padding: 0px 4px;
@@ -11837,6 +11859,17 @@ div[data-role="form-container"] form .visible > * {
     right: -250px;
     opacity: 0;
     background-color: #F7E4BE;
+  }
+  #draft-right li.list-header {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  #draft-right li.list-header .stats > div {
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    min-width: 100px;
   }
   #draft-right li > span {
     display: block;

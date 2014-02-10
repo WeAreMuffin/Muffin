@@ -1,18 +1,24 @@
 
 <div class="about">
+
 	<h1>À propos de Muffin</h1>
 	<p class="about">Muffin est un site destiné aux étudiants de 42 afin d'améliorer les échanges, l'organisation et le partage au sein de la communauté.</p>
+	<a class="button" href="https://github.com/WeAreMuffin/Muffin"><span style="color: #000000" class="icon-github"></span> Voir le projet sur GitHub</a>
+	<a class="button" href="https://www.facebook.com/wearemuffin"><span style="color: #354C8C" class="icon-facebook4"></span> Suivez nous sur Facebook</a>
+	<a class="button" href="https://github.com/wearemuffin/Muffin/issues/new"><span style="color: #C02942" class="icon-bug"></span> Déclarer un bug</a>
+	<a class="button" href="mailto:muffin@lambdaweb.fr"><span class="icon-envelop"></span> Nous contacter</a>
+
 	<div class="bretzel-separator"></div>
+
+	<div class="about-contributors"><span class="waiting"></span></div>
+
+	<div class="bretzel-separator"></div>
+
 	<div class="about-project-status">
 		<span class="waiting"></span>
 	</div>
-	<h3>Aidez nous</h3>
-		<a class="button" href="https://github.com/wearemuffin/Muffin/issues/new">Déclarer un bug</a>
-	</div>
-	<div class="bretzel-separator"></div>
-	<h2>Ils nous donnent un petit coup de pouce :</h2>
 
-	<div class="about-contributors"><span class="waiting"></span></div>
+	</div>
 
 
 </div>
@@ -21,7 +27,7 @@
 	var contributorTemplate = _.template("<a href='<%= html_url %>'><figure class='user'><img src='<%= avatar_url %>' class='rounded'><figcaption>\
 		<span class='name'><%= name %></span></figcaption></figure></a>");
 	var projectTemplate = _.template("<div class='left-section'><span class='icon-uniF78F'></span></div>\
-	                                     <div class='right-section'><h4>Derniere mises à jour</h4> \
+	                                     <div class='right-section'><h4>Dernières mises à jour</h4> \
 	                                     <span class='updates'><span class='icon-uniF008'></span> Développement: <span class='date-calendar'>\
 	                                     	<%= updated_at %></span></span>\
 	                                     <span class='updates'><span class='icon-speed'></span> Production: <span class='date-calendar'>\
@@ -67,6 +73,7 @@
 		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/issues", function(u)
 		{
 			_.each(u, function(e) { users.push(e.user.login); });
+			console.log(users);
 			_.each(users, function(e) { $.getJSON("https://api.github.com/users/" + e, function(k)
 			{
 				if (k.id != "3030511")

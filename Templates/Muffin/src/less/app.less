@@ -778,6 +778,7 @@ input + button > span[class^="icon-"] {
     {
         max-width: 70%;
         display: inline-block;
+        text-align: left;
 
         span.updates
         {
@@ -852,6 +853,13 @@ input + button > span[class^="icon-"] {
         -moz-osx-font-smoothing: grayscale;
         color: #CEB789;
     }
+}
+
+.about-contributors,
+.about-project-status,
+h2
+{
+    text-align: center;
 }
 
 figure.user
@@ -2356,11 +2364,24 @@ h1.title-remain,
 
 .liste-reunions
 {
+    margin-left: 0px;
+    padding-left: 0px;
+
     li
     {
         padding: 0px;
         margin: 15px;
         display: block;
+
+        .attrs
+        {
+            width: 40px;
+            margin-top: 10px;
+            display: inline-block;
+            font-size: 2em;
+            vertical-align: top;
+            color: rgba(0, 0, 0, 0.6);
+        }
 
         .button
         {
@@ -2372,6 +2393,7 @@ h1.title-remain,
             display: inline-block;
             max-width: 55px;
             width: 15%;
+            margin-top: 10px;
             vertical-align: top;
 
             span[class^="icon-"]
@@ -2405,6 +2427,11 @@ h1.title-remain,
                 {
                     display: inline-block;
                     margin-right: 10px;
+
+                    .user
+                    {
+                        text-transform: capitalize;
+                    }
 
                     span[class^="icon-"]
                     {
@@ -2748,6 +2775,7 @@ ul.user-draft.draft-list
 
         li
         {
+
             position: relative;
             transition: all 0.4s;
             padding: 0px;
