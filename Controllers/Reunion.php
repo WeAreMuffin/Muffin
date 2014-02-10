@@ -103,6 +103,9 @@ class Reunion extends Controller
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
+                INNER JOIN `c_user` u ON r.reunion_organisateur = u.id
+                INNER JOIN `c_42_logins` lo ON u.login = lo.login_eleve
+                INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE DATE(`reunion_date`) = CURRENT_DATE() AND `reunion_date` > NOW()
                 AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
@@ -119,6 +122,9 @@ class Reunion extends Controller
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
+                INNER JOIN `c_user` u ON r.reunion_organisateur = u.id
+                INNER JOIN `c_42_logins` lo ON u.login = lo.login_eleve
+                INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE DATE(`reunion_date`) > CURRENT_DATE() AND `reunion_date` > NOW()
                 AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
@@ -135,6 +141,9 @@ class Reunion extends Controller
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
+                INNER JOIN `c_user` u ON r.reunion_organisateur = u.id
+                INNER JOIN `c_42_logins` lo ON u.login = lo.login_eleve
+                INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE `reunion_date` < NOW()
                 AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
@@ -204,6 +213,23 @@ class Reunion extends Controller
         echo $this->getRenderedHtml("reunion.modal.new");
     }
 
+    protected function alertInterestedPeopleForNewReunion($reunion, $competence)
+    {
+        $reunion = Moon::get('c_reunion', 'reunion_id', $reunion);
+        $users = new Entities("c_user_competences[id_competence=\"{$competence}\"][want_to_learn=\"1\"]");
+        $c = new Entities("c_competences[id_competence=\"{$competence}\"]");
+        ($c->nom_usuel == NULL ? $c = $c->current()->nom_competence : $c = $c->current()->nom_usuel);
+        $users->loadFromDatabase();
+        var_dump($users);
+        foreach ($users as $key => $user)
+        {
+            $user_to_help = Moon::get('c_user', 'id', $user->id_user);
+            echo "ready to send mail to ".$user_to_help->login;
+            $mail = new MuffinMail($user_to_help);
+            $mail->sendUserReunionCanInterest($reunion, $_SESSION['login'], $c);
+        }
+    }
+
     public function nouvelle ($params)
     {
         $render = "0";
@@ -228,6 +254,7 @@ class Reunion extends Controller
                     "reunion_competence" => $competence, "reunion_texte" => $text, "reunion_type" => $type,
                     "reunion_date" => $date." ".$time.":00", "reunion_duree" => $duree, "reunion_lieu" => $lieu);
                 $res = Core::getBdd ()->insert ($i, 'c_reunion');
+                $this->alertInterestedPeopleForNewReunion($res, $competence);
 				//$this->notifier($_SESSION["login"]." voudrait vous aider sur le projet / la notion ".$c, $login);
                 $render = "1";
             /*

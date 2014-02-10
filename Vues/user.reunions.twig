@@ -6,7 +6,7 @@
                     <li>
                         <a data-load-target="Reunion/index">
                             Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b> ·
-                            <span class="date-calendar">{{ reunion.reunion_date }}</span>
+                            <span class="date-calendar">{{ reunion.reunion_date }}</span> en {{ reunion.reunion_lieu }}
                         </a>
                     </li>
                 {% endfor %}

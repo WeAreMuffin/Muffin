@@ -129,9 +129,12 @@ class User extends Controller
 
         $q = "  SELECT *
                 FROM  `c_reunion` r
+                INNER JOIN `c_user` u ON r.reunion_organisateur = u.id
+                INNER JOIN `c_42_logins` lo ON u.login = lo.login_eleve
+                INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE `reunion_date` > NOW()
-                AND (r.reunion_organisateur ".($me ? "=" : "!=")." :uid OR 1);
+                AND (r.reunion_organisateur ".($me ? "=" : "!=")." :uid);
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);

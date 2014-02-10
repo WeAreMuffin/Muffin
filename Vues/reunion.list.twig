@@ -1,12 +1,21 @@
 
 		    <li>
+		    	<div class="attrs">
+		    	{% if reunion.reunion_type > 1 %}
+		    		<div data-toggle="tooltip" title="{{ reunion.description_type }}"><span class="icon-{{ reunion.icone_type }}"></span></div>
+		    	{% endif %}
+		    	</div>
 		    	<div class="icon">
 		    		<span class="icon-{{ reunion.icone }}"></span>
 		    	</div>
 		    	<div class="content">
 				    <p>
-					    Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b> ·
-					    <span class="date">{{ reunion.reunion_date }}</span>
+		    			{% if reunion.reunion_type > 1 %}
+					    {{ reunion.nom_type }} sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
+					    {% else %}
+					    Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
+		    			{% endif %}
+					     · <span class="date">{{ reunion.reunion_date }}</span>
 
 						{# si la reunion est a venir #}
 					    {% if not mine and not is_past %}
@@ -52,13 +61,16 @@
 					    </div>
 				    {% endif %}
 			    	<div class="bottom">
-				     	<div>
+				     	<div data-placement="bottom" data-toggle="tooltip" title="Durée (approximative) de la réunion">
 				     		<span class="icon-clock"></span> {{ reunion.reunion_duree }}h
 						</div>
-						<div>
+						<div data-placement="bottom" data-toggle="tooltip" title="Lieu de la réunion">
 				     		<span class="icon-place"></span> {{ reunion.reunion_lieu }}
 						</div>
-						<div>
+						<div data-placement="bottom" data-toggle="tooltip" title="Organisateur de la réunion">
+				     		<span class="icon-user2"></span> <span class="user">{{ reunion.prenom|lower }} {{ reunion.nom|lower }}</span>
+						</div>
+						<div data-placement="bottom" data-toggle="tooltip" title="Date de la réunion">
 				     		<span class="icon-calendar2"></span> <span class="date-calendar">{{ reunion.reunion_date }}</span>
 						</div>
 						<div>

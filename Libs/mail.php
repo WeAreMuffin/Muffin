@@ -127,6 +127,29 @@ class MuffinMail
 		return (0);
 	}
 
+    public function sendUserReunionCanInterest($reunion, $login_wth, $c)
+    {
+        if ($this->dest->accept_mail & $this->available_types['auth_reunion'])
+        {
+            // Text content
+            $this->content = "Hey ".$this->dest->login." !\n";
+            $this->content .= "$login_wth va organiser une réunion sur {$c} qui pourrait t'intéresser!\n";
+            $this->content .= "Tu peux réserver ta place dès maintenant sur muffin.lambdaweb.fr\n";
+
+            // Html content
+            $this->htmlContent = $this->getHtmlHeader();
+            $this->htmlContent .= "<h2>Hey ".$this->dest->login.", $login_wth va organiser une réunion sur {$c} qui pourrait t'intéresser!</h2>";
+            $this->htmlContent .= "<p>".$reunion->reunion_texte." - La réunion se déroulera en ".$reunion->reunion_lieu." le ".$reunion->reunion_date."</p>";
+            $this->htmlContent .= "<a style='text-decoration: none;' href='http://muffin.lambdaweb.fr'><div style='text-align: center; margin: 10px;'><h3 style='margin: auto; display: inline-block;background-color: #C02942;border: 1px solid #882737;padding: 2px 15px;text-transform: capitalize; color: #FFF;border-radius: 3px;'class='squared'>voir</h3></div></a>\n";
+            $this->htmlContent .= $this->getHtmlFooter();
+
+            // The mail subject
+            $this->subject = "Muffin · $login_wth organise une réunion sur $c !";
+            return $this->sendMail();
+        }
+        return (0);
+    }
+
 	protected function getMime()
 	{
 		$crlf = "\n";
@@ -147,7 +170,7 @@ class MuffinMail
 	protected function getSmtp()
 	{
 		$params = array();
-		$params["debug"] = false;//$this->debug;
+		$params["debug"] = true;//$this->debug;
 		$params["host"] = "smtp.lambdaweb.fr";
 		$params["port"] = 587;
 		$params["auth"] = true;
