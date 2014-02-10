@@ -189,17 +189,28 @@ class Drafts extends Controller
         $this->registerParams($params);
         $idg = $this->getUrlParam ('idDraft');
         $drafts = new Entities ("c_drafts[draft_author!=".$_SESSION["muffin_id"]."][public>0]");
+        $likes = new Entities ("c_drafts_like[id_draft_like=\"{$id}\"]");
         if ($idg != NULL)
             $id = $idg;
         $draft = Moon::get ('c_drafts', 'draft_id', $id);
         if ($draft->public != 0 or $draft->draft_author == $_SESSION["muffin_id"])
         {
+            $this->incrementViews($id);
             $this->addData("draft", $draft);
             $this->addData("drafts", $drafts);
+            $this->addData("likes", $likes);
             $this->render ();
         }
         else
             echo ($this->getErrorJson("access"));
+    }
+
+    protected function incrementViews($draft_id)
+    {
+        $draft = Moon::get ('c_drafts', 'draft_id', $draft_id);
+        $views = $draft->draft_views;
+        $views++;
+        $nid = Core::getBdd ()->update (array ("draft_views" => $views), 'c_drafts', array ("draft_id" => $draft_id));
     }
 
     /*   =======================================================================

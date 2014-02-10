@@ -6,20 +6,29 @@
                 <span class="raw-date" data-date="{{ draft.draft_date_c }}">Crée le {{ draft.draft_date_c }} </span>
                  · <span class="icon-quill"></span>
                 <span class="up">{{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}</span>
+
             </small>
         </h1>
         <div id="draft-read-content">{{ draft.draft_content }}</div>
         <div id="draft-read-footer">
             écrit par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
             <span class="hover"> · <span class="raw-date" data-date="{{ draft.draft_date_c }}">Crée le {{ draft.draft_date_c }}</span>
+                         · <span class="views-count">{{ draft.draft_views }} vues</span>
         </div>
     </div>
     <div id="draft-right">
     <span class="list-icon icon-menu3"></span>
     <ul>
+        <li class="list-header">
+        <div class="stats">
+            <div class="stats-views"> <span class="icon-eye3"> {{ draft.draft_views }} vues</span></div>
+            <div class="stats-likes"><a data-action="star" class="button"><span class="icon-star"></span> {{ likes|length }} star</a></div>
+        </div>
+        </li>
         <li data-action="back-to-top"><span><span class="icon-arrow-up3"></span> Haut de page</span></li>
         <li data-action="back-to-list"><span><span class="icon-list"></span> Tous les articles</span></li>
         {% for elt in drafts %}
+            {% if elt.draft_id != draft.draft_id %}
             <li id="draft-element-{{ elt.draft_id }}" data-id="{{ elt.draft_id }}">
                     <span>{{ elt.draft_name }}</span>
                     <span class="grey">
@@ -27,6 +36,7 @@
                         <span class="raw-date" data-date="{{ elt.draft_date_c }}">Crée le {{ elt.draft_date_c }}</span>
                     </span>
             </li>
+            {% endif %}
         {% endfor %}
     </ul>
     </div>
@@ -42,7 +52,7 @@
     });
 
     $('li[data-action="back-to-list"]').click(function(){
-        Muffin.goToUrl("Drafts/read", "expanded")
+        Muffin.goToUrl("Drafts/all", "expanded")
     });
     var ctnt = _.unescape($("#draft-read-content").html());
     var mkd = marked(ctnt);
