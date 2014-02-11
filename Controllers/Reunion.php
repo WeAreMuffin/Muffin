@@ -220,7 +220,6 @@ class Reunion extends Controller
         $c = new Entities("c_competences[id_competence=\"{$competence}\"]");
         ($c->nom_usuel == NULL ? $c = $c->current()->nom_competence : $c = $c->current()->nom_usuel);
         $users->loadFromDatabase();
-        var_dump($users);
         foreach ($users as $key => $user)
         {
             $user_to_help = Moon::get('c_user', 'id', $user->id_user);

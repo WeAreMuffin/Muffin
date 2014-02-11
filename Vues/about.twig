@@ -50,7 +50,6 @@
 		{
 			$.getJSON("https://api.github.com/repos/wearemuffin/Muffin", function(data)
 			{
-				console.log(data);
 				data.release_date = dataC.commit.committer.date;
 				$(".about-project-status").html(projectTemplate(data));
 				moment.lang('fr');
@@ -66,14 +65,12 @@
 	// Contributeurs
 	$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/stats/contributors", function(dataT)
 	{
-		var users = [];
+		var users = _.map(dataT, function(elt){ return elt.author.login; });
 		var c = $(".about-contributors");
 		c.html("");
-		_.each(dataT, function(e) { users.push(e.author.login); });
 		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/issues", function(u)
 		{
-			_.each(u, function(e) { users.push(e.user.login); });
-			console.log(users);
+			users = _.union(users, _.map(u, function(elt){ return elt.user.login; }));
 			_.each(users, function(e) { $.getJSON("https://api.github.com/users/" + e, function(k)
 			{
 				if (k.id != "3030511")
@@ -82,7 +79,7 @@
 						k.name = e;
 					c.append(contributorTemplate(k));
 				}
-			}); });
+			});});
 		});
 	});
 	// $("#issue-submit").click(function()

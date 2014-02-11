@@ -213,6 +213,32 @@ class Drafts extends Controller
         $nid = Core::getBdd ()->update (array ("draft_views" => $views), 'c_drafts', array ("draft_id" => $draft_id));
     }
 
+    /**
+     * @PathInfo('draft')
+     */
+    public function star($params)
+    {
+        $render = "0";
+        $draft = $this->getUrlParam ('draft');
+        if ($draft)
+        {
+            $cpt = new Entities("c_drafts_like[id_user_like=\"".$_SESSION['muffin_id']."\"][id_draft_like=\"$draft\"]");
+            if (count($cpt) == 0)
+            {
+                $res = Core::getBdd ()->insert (array ("id_user_like" => $_SESSION['muffin_id'], "id_draft_like" => $draft), 'c_drafts_like');
+                $render = "1";
+            }
+            else if (count($cpt) > 0)
+            {
+                $i = array ("id_user_like" => $_SESSION['muffin_id'], "id_draft_like" => $draft);
+                $res = Core::getBdd ()->delete('c_drafts_like', $i);
+                $render = "-1";
+            }
+    }
+        echo ($render);
+    }
+
+
     /*   =======================================================================
      *                      Surcharge pour l'accès membre
      *   =======================================================================

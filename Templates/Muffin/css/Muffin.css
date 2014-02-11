@@ -11437,6 +11437,14 @@ h1.title-remain,
   font-size: 3em;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
+#draft-read-title .on-hover {
+  transition: 0.2s all;
+  opacity: 0;
+}
+#draft-read-title:hover .on-hover {
+  transition: 0.2s all;
+  opacity: 1;
+}
 #draft-read-title small {
   display: block;
   font-size: 0.4em;

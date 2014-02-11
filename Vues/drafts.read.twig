@@ -6,6 +6,7 @@
                 <span class="raw-date" data-date="{{ draft.draft_date_c }}">Crée le {{ draft.draft_date_c }} </span>
                  · <span class="icon-quill"></span>
                 <span class="up">{{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}</span>
+                <span class="on-hover"> · <a data-action="star" data-id="{{ draft.draft_id }}"><span data-star class="icon-starempty"></span></a></span>
 
             </small>
         </h1>
@@ -22,7 +23,7 @@
         <li class="list-header">
         <div class="stats">
             <div class="stats-views"> <span class="icon-eye3"> {{ draft.draft_views }} vues</span></div>
-            <div class="stats-likes"><a data-action="star" class="button"><span class="icon-star"></span> {{ likes|length }} star</a></div>
+            <div class="stats-likes"><a data-action="star" class="button"><span class="icon-starempty" data-star></span> {{ likes|length }} star</a></div>
         </div>
         </li>
         <li data-action="back-to-top"><span><span class="icon-arrow-up3"></span> Haut de page</span></li>
@@ -41,6 +42,7 @@
     </ul>
     </div>
 <div>
+    {{ dump(draft.c_drafts_like) }}
 <script>
     $(".raw-date").each(function()
     {
@@ -49,6 +51,29 @@
 
     $("li[data-id]").click(function(){
         Muffin.draft.read($(this).attr("data-id"));
+    });
+
+    // star if starred
+    {% if draft.c_drafts_like|length %}
+        console.log("star");
+        {% else %}
+        console.log("not star");
+    {% endif %}
+
+    $("[data-action='star']").click(function()
+    {
+        var ctn = $(this);
+        $.get("Drafts/star/" + ctn.attr("data-id"), function(e)
+        {
+            if (e == "1")
+            {
+                $("[data-star]").removeClass("icon-starempty").addClass('icon-starfull');
+            }
+            else if (e == "-1")
+            {
+                $("[data-star]").removeClass("icon-starfull").addClass('icon-starempty');
+            }
+        });
     });
 
     $('li[data-action="back-to-list"]').click(function(){
