@@ -48,7 +48,7 @@
 <div>
 <script>
     // star if starred
-    {% if draft.c_drafts_like.id_user_like|length %}
+    {% if draft.c_drafts_like and draft.c_drafts_like.id_user_like|length %}
         $("[data-star]").removeClass("icon-starempty").addClass('icon-starfull');
     {% endif %}
     Muffin.draft.onRead();

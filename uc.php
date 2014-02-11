@@ -101,7 +101,7 @@ padding: 0px;
                 <div class="center-message">
                     <img src="logo.png" alt="logo">
                     <h1>Muffin est en cuisine !</h1>
-                    <h3>Et revient dans quelques jours, avec encore plus de chocolat !</h3>
+                    <h3>Et revient dans quelques instants, avec encore plus de chocolat !</h3>
                 </div>
 
             </div> <!-- #main -->
