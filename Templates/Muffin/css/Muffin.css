@@ -11514,10 +11514,8 @@ ul.user-draft.draft-list {
 }
 .draft-list li .draft-text {
   color: rgba(0, 0, 0, 0.4);
-}
-.draft-list li .draft-text p {
-  white-space: pre;
-  margin: 0px 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .draft-list li .list-visibility {
   padding-left: 5px;
@@ -11542,9 +11540,6 @@ ul.user-draft.draft-list {
   display: inline-block;
   color: rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
-}
-.draft-list li .draft-text {
-  display: block;
 }
 .draft-list li .draft-text p {
   white-space: normal;

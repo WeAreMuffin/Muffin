@@ -30,6 +30,11 @@
                             {% endif %}
                         </span>
                 </div>
+                <a data-action="star" data-id="{{ draft.draft_id }}" class="draft-text middle">
+                    <span data-star
+                        class="icon-{{ draft.c_drafts_like.id_draft_like|length ? 'starfull' : 'starempty' }}"></span> {{ draft.c_drafts_like.id_draft_like|length }}
+                </a>
+                <a class="draft-text middle"><span class="icon-eye3"></span> {{ draft.draft_views }} vues</a>
                 <a class="btn-draft-edit" data-draft-load data-draft-id="{{ draft.draft_id }}"><span class="icon-pencil"></span> Edit</a>
                 <a class="btn-draft-read" data-id="{{ draft.draft_id }}"><span class="icon-eye"></span> Read</a>
                 <a class="btn-draft-delete" data-id="{{ draft.draft_id }}"><span class="icon-trash"></span> Delete</a>
