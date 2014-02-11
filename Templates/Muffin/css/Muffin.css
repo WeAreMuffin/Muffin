@@ -11437,6 +11437,9 @@ h1.title-remain,
   font-size: 3em;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
+#draft-read-title [data-star] {
+  cursor: pointer;
+}
 #draft-read-title .on-hover {
   transition: 0.2s all;
   opacity: 0;

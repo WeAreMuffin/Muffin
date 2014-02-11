@@ -42,7 +42,6 @@
     </ul>
     </div>
 <div>
-    {{ dump(draft.c_drafts_like) }}
 <script>
     $(".raw-date").each(function()
     {
@@ -54,10 +53,8 @@
     });
 
     // star if starred
-    {% if draft.c_drafts_like|length %}
-        console.log("star");
-        {% else %}
-        console.log("not star");
+    {% if draft.c_drafts_like.id_user_like|length %}
+        $("[data-star]").removeClass("icon-starempty").addClass('icon-starfull');
     {% endif %}
 
     $("[data-action='star']").click(function()

@@ -196,6 +196,7 @@ class Drafts extends Controller
         if ($draft->public != 0 or $draft->draft_author == $_SESSION["muffin_id"])
         {
             $this->incrementViews($id);
+            $draft = Moon::get ('c_drafts', 'draft_id', $id);
             $this->addData("draft", $draft);
             $this->addData("drafts", $drafts);
             $this->addData("likes", $likes);
