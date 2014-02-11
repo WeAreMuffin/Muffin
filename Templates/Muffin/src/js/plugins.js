@@ -945,7 +945,55 @@ Muffin.draft.watch = function()
   	{
   		Muffin.draft.save();
   	});
+    $("#aera > header > h1").change(function()
+  	{
+  		Muffin.draft.save();
+  	});
 };
+
+Muffin.draft.onRead = function()
+{
+	$(".raw-date").each(function()
+    {
+        $(this).html( moment( $(this).attr("data-date") ).fromNow() );
+    });
+
+    $("li[data-id]").click(function(){
+        Muffin.draft.read($(this).attr("data-id"));
+    });
+
+    $("[data-action='star']").click(function()
+    {
+        var ctn = $(this);
+        $.get("Drafts/star/" + ctn.attr("data-id"), function(e)
+        {
+            if (e == "1")
+            {
+                $("[data-star]").removeClass("icon-starempty").addClass('icon-starfull');
+                var old = parseInt($("[data-star-count]").text());
+                $("[data-star-count]").html(old + 1);
+            }
+            else if (e == "-1")
+            {
+                if ($("[data-star]").hasClass("icon-starfull"))
+                {
+                    var old = parseInt($("[data-star-count]").text());
+                    if (old > 0)
+                        $("[data-star-count]").html(old - 1);
+                }
+                $("[data-star]").removeClass("icon-starfull").addClass('icon-starempty');
+            }
+        });
+    });
+
+    $('li[data-action="back-to-list"]').click(function(){
+        Muffin.goToUrl("Drafts/all", "expanded")
+    });
+    var ctnt = _.unescape($("#draft-read-content").html());
+    var mkd = marked(ctnt);
+    $("#draft-read-content").html(mkd);
+    Prism.highlightAll();
+}
 
 Muffin.draft.init = function()
 {

@@ -11439,6 +11439,7 @@ h1.title-remain,
 }
 #draft-read-title [data-star] {
   cursor: pointer;
+  margin-right: 3px;
 }
 #draft-read-title .on-hover {
   transition: 0.2s all;

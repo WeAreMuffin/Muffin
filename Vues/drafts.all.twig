@@ -24,8 +24,9 @@
                              · par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
                         </span>
                 </div>
-                <a data-action="star" class="right middle">
-                    <span class="icon-star"></span> {{ fetch('c_drafts_like[id_draft_like="' ~ draft.draft_id ~'"]')|length }}
+                <a data-action="star" data-id="{{ draft.draft_id }}" class="right middle">
+                    <span data-star
+                        class="icon-{{ draft.c_drafts_like.id_draft_like|length ? 'starfull' : 'starempty' }}"></span> {{ draft.c_drafts_like.id_draft_like|length }}
                 </a>
                 <a class="right middle"><span class="icon-eye3"></span> {{ draft.draft_views }} vues</a>
                 </a>

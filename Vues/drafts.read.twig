@@ -23,7 +23,11 @@
         <li class="list-header">
         <div class="stats">
             <div class="stats-views"> <span class="icon-eye3"> {{ draft.draft_views }} vues</span></div>
-            <div class="stats-likes"><a data-action="star" class="button"><span class="icon-starempty" data-star></span> {{ likes|length }} star</a></div>
+            <div class="stats-likes">
+                <a data-action="star" data-id="{{ draft.draft_id }}" class="button">
+                    <span class="icon-starempty" data-star></span> <span data-star-count>{{ likes|length }}</span> star
+                </a>
+            </div>
         </div>
         </li>
         <li data-action="back-to-top"><span><span class="icon-arrow-up3"></span> Haut de page</span></li>
@@ -43,41 +47,9 @@
     </div>
 <div>
 <script>
-    $(".raw-date").each(function()
-    {
-        $(this).html( moment( $(this).attr("data-date") ).fromNow() );
-    });
-
-    $("li[data-id]").click(function(){
-        Muffin.draft.read($(this).attr("data-id"));
-    });
-
     // star if starred
     {% if draft.c_drafts_like.id_user_like|length %}
         $("[data-star]").removeClass("icon-starempty").addClass('icon-starfull');
     {% endif %}
-
-    $("[data-action='star']").click(function()
-    {
-        var ctn = $(this);
-        $.get("Drafts/star/" + ctn.attr("data-id"), function(e)
-        {
-            if (e == "1")
-            {
-                $("[data-star]").removeClass("icon-starempty").addClass('icon-starfull');
-            }
-            else if (e == "-1")
-            {
-                $("[data-star]").removeClass("icon-starfull").addClass('icon-starempty');
-            }
-        });
-    });
-
-    $('li[data-action="back-to-list"]').click(function(){
-        Muffin.goToUrl("Drafts/all", "expanded")
-    });
-    var ctnt = _.unescape($("#draft-read-content").html());
-    var mkd = marked(ctnt);
-    $("#draft-read-content").html(mkd);
-    Prism.highlightAll();
+    Muffin.draft.onRead();
 </script>
