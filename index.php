@@ -1,6 +1,5 @@
 <?php
-if ($_SERVER["SERVER_ADDR"] != "192.168.0.13")
-	header("Location: uc.php");
+
 // Pour vérifier a tout moment qu'on est dans l'index.php
 $INDEX = true;
 

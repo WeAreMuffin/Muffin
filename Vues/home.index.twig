@@ -9,7 +9,7 @@
         du login de l'étudiant, l'envoi d'un code à ce dernier et la vérification de ce
         code.
     #}
-{% if webdata.user %}
+{% if webdata.user or webdata.session.muffin_id %}
 
                     {% include 'user.index.modals.twig' %}
                     {% include 'user.index.header.twig' %}
