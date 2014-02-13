@@ -47,7 +47,7 @@ class MuffinMail
 	    "auth_reunion" => 8
 	);
 
-	protected $debug = true;
+	protected $debug = false;
 	protected $debug_addr = "contact@lambdaweb.fr";
 
 	protected $dest;
@@ -170,7 +170,7 @@ class MuffinMail
 	protected function getSmtp()
 	{
 		$params = array();
-		$params["debug"] = true;//$this->debug;
+		$params["debug"] = false;//$this->debug;
 		$params["host"] = "smtp.lambdaweb.fr";
 		$params["port"] = 587;
 		$params["auth"] = true;
