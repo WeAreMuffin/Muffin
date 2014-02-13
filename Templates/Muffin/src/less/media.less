@@ -140,6 +140,7 @@
             }
         }
     }
+
 }
 /* grand */
 @media only screen and (max-width: 1440px) {
@@ -175,21 +176,18 @@
 /* grand [tablette paysage] */
 @media only screen and (max-width: 1024px) {
 
-    .header-container {
-        border-bottom: 30px solid #9E4838;
-    }
-
     aside.side-menu ul.affix {
         position: fixed;
-        top: 55px;
+        top: 0px;
         left: 0;
-        color: @muffin-yellow;
+        background-color: @muffin-yellow;
         z-index: 1009;
         width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.11);
 
         li a.btn
         {
-            color: @muffin-yellow;
+            color: rgba(0, 0, 0, 0.5);
             border: none;
         }
     }
@@ -236,8 +234,11 @@
         ul[role="side-menu"]
         {
             margin: 0px auto;
+            margin-bottom: 20px;
+            padding: 0px;
             border-color: transparent;
             border-left: none;
+            text-align: center;
 
 
             li
@@ -249,13 +250,19 @@
 
                 a.btn
                 {
-                    padding: 0px 10px;
+                    line-height: 20px;
                     width: 100%;
 
                     span[class^="icon-"]
                     {
+                        top: auto;
                         left: 0px;
                     }
+                }
+
+                &.separator {
+                    border-top: none;
+                    display: none;
                 }
             }
         }
@@ -281,28 +288,24 @@
         ------------------------------------------------------------------------
     */
 
-    .drafter-article
-    {
-        width: 70%;
 
-        &+nav[role="draft-toolbar"]
-        {
-            ul
-            {
-                float: none;
-            }
-        }
-    }
-    div[data-role="container"].expanded > aside + article
+     #draft-read
     {
-        display: inline-block;
-        width: 75%;
+        padding: 0px;
+        width: 100%;
+        max-width: 100%;
+        text-align: left;
     }
 
+    #draft-right
+    {
+        display: none;
+    }
 }
 
 /* petit [tablette paysage] */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px)
+{
 
     .loading, .complete, .preparing {
         transition: none !important;
@@ -339,9 +342,14 @@
     }
 
     .header-container {
-        height: 130px;
-        border-bottom: 45px solid #9E4838;
+        height: 70px;
         position: static;
+        margin-bottom: 25px;
+
+        #main-head-toolbar
+        {
+            display: none;
+        }
     }
 
 
@@ -354,7 +362,7 @@
     }
 
     #nprogress .bar {
-      top: 95px;
+      top: 0px;
     }
     div[role="description-tablette"] > div {
         display: block;
@@ -394,6 +402,7 @@
 
 
     h1.title {
+        margin: 10px auto;
         text-align: center;
         width: 100%;
         display: block;
@@ -401,6 +410,16 @@
     }
 
     h1.title > i > span {
+        display: none;
+    }
+
+    .about a {
+        display: block;
+        margin: 5px;
+    }
+
+    .footer-container
+    {
         display: none;
     }
 
@@ -432,6 +451,9 @@
     div[data-role="container"] > aside {
         display: block;
         width: 100%;
+        position: relative;
+        left: 0px;
+        right: 0px;
 
         ul[role="side-menu"]
         {
@@ -451,6 +473,13 @@
                 font-size: 2em;
                 display: inline-block;
                 text-align: center;
+
+                &.active
+                {
+                    color: #C02942;
+                    background-color: transparent;
+                    border-bottom: 3px solid #C02942;
+                }
 
                 a.btn
                 {
@@ -483,11 +512,16 @@
 
         ul[role="side-menu"].affix
         {
-            height: 45px;
-            background-color: @muffin-orange-dark;
+            height: 50px;
+            background-color: @muffin-yellow;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             top: 0px;
         }
 
+    }
+
+    div[role="simple-row"] div[role="user-name"] {
+        margin-top: 20px;
     }
 
     .horizontal-list
@@ -520,10 +554,77 @@
 		display: inline-block;
 	}
 }
+
+@media only screen and (max-width: 610px) {
+
+
+    .items-panels
+    {
+        overflow-x: hidden;
+    }
+        ul[role="side-menu"]
+        {
+            li
+            {
+                margin: 4px auto;
+                font-size: 1.7em;
+
+                a.btn
+                {
+                    padding: 5px 0px !important;
+
+                    span[class^="icon-"] {
+                        padding: 5px 0px !important;
+                    }
+                }
+            }
+        }
+}
+
 /* plus petit [tablette portrait] */
 @media only screen and (max-width: 480px) {
 
+    .keywords-container,
+    .keywords-container.opened
+    {
+        display: none;
+    }
 
+    .about-project-status
+    {
+        form
+        {
+            span.code
+            {
+                display: block;
+                word-wrap: break-word;
+            }
+        }
+    }
+
+    .liste-reunions li
+    {
+        div.content {
+            display: block;
+            width: 100%;
+        }
+
+        div.attrs,
+        div.icon
+        {
+            display: none;
+        }
+
+        .right {
+            float: none !important;
+            display: block;
+        }
+    }
+
+    .hidden-mobile
+    {
+        display: none !important;
+    }
 
     header.wrapper.clearfix
     {
@@ -550,9 +651,13 @@
         font-size: 1.5em;
     }
 
+    div[role="simple-row"] ul[role="drafts"] li {
+        word-break: break-all;
+    }
+
     div[data-role="container"] > aside {
         display: block;
-        margin: auto;
+        margin: 5px auto;
         vertical-align: top;
         padding: 0px;
 
@@ -561,10 +666,19 @@
         {
             li
             {
-                font-size: 1.6em;
+                border-bottom: 3px solid transparent;
+                font-size: 2em;
+                padding: 0px 6px;
 
                 a.btn span[class^="icon-"] {
                     padding: 10px 0;
+                }
+
+                &.active
+                {
+                    color: #C02942;
+                    background-color: transparent;
+                    border-bottom: 3px solid #C02942;
                 }
             }
         }
@@ -630,6 +744,37 @@
         left: 5px;
         font-size: 2rem;
     }
+
+    #draft-read-title {
+        text-align: center;
+        transition: all 0.4s;
+        padding: 10px;
+        font-size: 2em;
+        border-bottom: 5px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .user-card-title small {
+        display: block;
+    }
+
+    .check_yes_no span {
+        display: block;
+    }
+
+    .div-params,
+    .liste-reunions
+    {
+        text-align: left;
+    }
+
+    .liste-reunions
+    {
+        .attrs,
+        .icon
+        {
+            display: none;
+        }
+    }
 }
 
 /* tout petit [portable portrait] */
@@ -655,8 +800,7 @@
         {
             li
             {
-                font-size: 1.2em;
-                padding: 0px 3px;
+                font-size: 1.8em;
             }
         }
     }

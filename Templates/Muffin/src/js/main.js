@@ -47,6 +47,11 @@ $(document).ready(function()
 		reloadHandlers();
 	});*/
 
+	$(".header-mobile-button").click(function()
+	{
+		$("aside.side-menu").toggleClass("open");
+	});
+
 	window.onhashchange = locationHashChanged;
 	window.clearInterval(window.intervalHandler);
 	window.intervalHandler = setInterval(notifications,5000);

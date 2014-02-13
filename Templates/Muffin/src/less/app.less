@@ -28,6 +28,7 @@
 @import url("http://fonts.googleapis.com/css?family=Lato:300,400,700|Fredoka+One|Leckerli+One");
 @import url("http://fonts.googleapis.com/css?family=Patua+One");
 @import url("http://fonts.googleapis.com/css?family=Ubuntu:300,400");
+@import url("http://fonts.googleapis.com/css?family=Droid+Sans+Mono");
 
 
 /* On fait les resets standards */
@@ -1065,6 +1066,10 @@ div[data-role="container"]
     ------------------------------------------------------------------------
 */
 
+.header-mobile-button
+{
+    display: none;
+}
 
 article[role="header"]
 {
@@ -2725,6 +2730,12 @@ font-style:normal;font-weight:700;
     pre
     {
         font-size: 0.9em;
+    }
+
+    pre,
+    code
+    {
+        font-family: 'Droid Sans Mono', sans-serif;
     }
 }
 

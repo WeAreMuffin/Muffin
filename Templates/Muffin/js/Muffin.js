@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-02-11
+   mNymdhy          shddmy hNd       Sorti du four le 2014-02-13
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -14200,6 +14200,11 @@ $(document).ready(function()
 		reloadHandlers();
 	});*/
 
+	$(".header-mobile-button").click(function()
+	{
+		$("aside.side-menu").toggleClass("open");
+	});
+
 	window.onhashchange = locationHashChanged;
 	window.clearInterval(window.intervalHandler);
 	window.intervalHandler = setInterval(notifications,5000);
@@ -14807,7 +14812,7 @@ var reloadHandlers = function()
 		placement: "auto bottom"
 	});
 
-	$('aside.side-menu > ul').affix(
+	$('aside.side-menu:not(.open) > ul').affix(
 	{
 		offset: {
 			top: 100,

@@ -597,7 +597,7 @@ var reloadHandlers = function()
 		placement: "auto bottom"
 	});
 
-	$('aside.side-menu > ul').affix(
+	$('aside.side-menu:not(.open) > ul').affix(
 	{
 		offset: {
 			top: 100,
