@@ -1,0 +1,134 @@
+
+
+    <article data-content="login">
+        {% if redirect %}
+            <script>
+                if (window.Muffin == undefined)
+                    window.muffin = {};
+                window.Muffin.redirect = "{{redirect}}";
+            </script>
+            <div class="panel"><p><span class="icon-alert"></span> Vous devez etre connecté pour acceder à cette page.</p></div>
+        {% endif %}
+
+        <div class="col-left">
+            <div class="simple-row">
+<!--                 <span class="icon-coffee coffee"></span>
+                <span class="icon-socialnetworking bubble"></span>
+                <span class="icon-coffee coffee"></span> -->
+            </div>
+        </div>
+
+        <div class="col-right">
+            <header class="tra">
+                <div role="title">
+                    <h1>Se connecter</h1>
+                    <p>Utilisez vos identifiants Muffin ou 42</p>
+                </div>
+            </header>
+            <section class="tra">
+                <form class="form" id="form-login">
+                    <div class="form-group">
+                        <!-- <label for="input-login">Uid :</label> -->
+                        <input type="text" placeholder="Votre uid" id="input-login" name="login" >
+                    </div>
+
+                    <div class="bretzel-separator"></div>
+
+                    <div class="form-group">
+                        <!-- <label for="input-passphrase">Votre Muffinpass :</label> -->
+                        <input type="password" placeholder="Muffinpass" id="input-passphrase" name="passphrase" >
+                    </div>
+                    <h3>Ou</h3>
+                    <div class="form-group">
+                        <!-- <label for="input-passphrase">Votre mot de passe 42 :</label> -->
+                        <input type="password" placeholder="Mot de passe 42 " id="input-pass42" name="pass42" >
+                    </div>
+                    <div class="bretzel-separator"></div>
+                    <div class="form-group">
+                        <button class="button" type="submit">Connexion</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <script>
+            $(document).ready(function()
+            {
+                function tts(e, x, y)
+                {
+                    return (e.transform().localMatrix.translate(x, y).toTransformString());
+                }
+
+                function popTasses()
+                {
+                    setTimeout(function(){
+                        Snap.select("#tasse_fond").animate({
+                            transform: tts(Snap.select("#tasse_fond"), -15, 0)
+                        }, 2000, mina.backout);
+                        Snap.select("#tasse_fond").animate({
+                            opacity: 0.10
+                        }, 200);
+                    }, 500);
+
+                    setTimeout(function(){
+                        Snap.select("#tasse_droite").animate({
+                            transform: tts(Snap.select("#tasse_droite"), 25, 0)
+                        }, 2000, mina.backout);
+                        Snap.select("#tasse_droite").animate({
+                            opacity: 0.12
+                        }, 200);
+                    }, 1000);
+
+                    setTimeout(function()
+                    {
+                        var logo = Snap.select("#muffin_text");
+                        logo.animate({
+                            opacity: 1,
+                            transform: tts(logo, 0, -70)
+                        }, 1000, mina.bounce);
+                        Snap.select("#tasse_gauche").animate({opacity: 0.12}, 200);
+                        Snap.select("#tasse_gauche").animate({
+                            transform: tts(Snap.select("#tasse_gauche"), -25, 0)
+                        }, 2000, mina.backout);
+                    }, 1500);
+                }
+
+                function popBubbles()
+                {
+                    setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.10}, 500);}, 500);
+                    setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 1000);
+                    setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.10}, 500);}, 1500);
+                    // setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.0}, 500);}, 5500);
+                    // setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.0}, 500);}, 7000);
+                    // setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.0}, 500);}, 10500);
+                }
+
+                var s = Snap(".col-left .simple-row");
+                Snap.load("Templates/Muffin/img/cups.svg", function (f) {
+                    // Note that we traversre and change attr before SVG
+                    // is even added to the page
+                    var k = f;
+                    f.select("#tasse_droite").attr({opacity: 0});
+                    f.select("#bulle_coeur").attr({opacity: 0});
+                    f.select("#bulle_haut").attr({opacity: 0});
+                    f.select("#bulle_bas").attr({opacity: 0});
+                    f.select("#tasse_gauche").attr({opacity: 0});
+                    f.select("#tasse_fond").attr({opacity: 0});
+                    f.select("#muffin_text").attr({opacity: 0});
+                    popTasses();
+                        popBubbles();
+                    s.append(f);
+                });
+
+				$("#input-login").focus();
+                $("#form-login").submit(function(ev)
+                {
+                    $("#input-login + button").html("<span class='icon-time'></span>");
+                    ev.preventDefault();
+                    console.log("Submit !");
+                    window.muffin.envoyerCode($("#input-login").val());
+                    return false;
+                });
+            });
+        </script>
+    </article>

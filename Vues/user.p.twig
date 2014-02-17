@@ -1,0 +1,137 @@
+<div class="main-homepage">
+	{# L'entete avec le nom et le rang #}
+	{% include 'user.card.twig' %}
+
+	{# Les dernieres nouveautees #}
+	{% include 'user.news.twig' %}
+
+  {# Les réunions qui pourraient interesser #}
+  {% include 'user.reunions.twig' %}
+
+  {# Les derniers articles #}
+  {% include 'user.articles.twig' %}
+
+
+  {# le recap des affaires en cours #}
+  {% include 'user.affairs.twig' %}
+
+
+
+  <script>
+   var a = ["#user-two", "#user-drafts", "#user-news", "#user-reunions", "#user-one"];
+   var globalLang = moment();
+   moment.lang('fr');
+
+   Muffin.drawPop(a);
+   setTimeout(function()
+   {
+     $(".user-card-title").addClass("elevated");
+     Muffin.treatResize();
+   }, 800);
+
+   $(".raw-date").each(function()
+   {
+    if ( $(this).html() == "")
+     $(this).html( moment( $(this).attr("data-date") ).fromNow() );
+    });
+
+   Muffin.bindAjaxEvents();
+
+
+   var echangeRefresh = function()
+   {
+
+    $("a.btn.proposer").click(function()
+    {
+      var btn = $(this);
+      btn.addClass("sleep");
+      $.get('{{ href("Echanges","proposer") }}/'
+            + $(this).attr("data-user") +'/'
+            + $(this).attr("data-competence"), function(d)
+            {
+              btn.removeClass("sleep");
+              if(d == "1")
+              {
+                btn.addClass("attente").html(" En attente ");
+              }
+              else
+              {
+                btn.html("<span class='icon-warning'></span> Erreur");
+              }
+            });
+    });
+
+    $("a.btn.accepter-aide").click(function()
+    {
+      var btn = $(this);
+      btn.addClass("sleep");
+      $.get('{{ href("Echanges","accepter") }}/'
+            + $(this).attr("data-user") +'/'
+            + $(this).attr("data-competence"), function(d)
+            {
+              btn.removeClass("sleep");
+              if(d == "1")
+              {
+                btn.after('<a data-toggle="tooltip" title="Ca va mieux !" class="aide-nice" data-competence="'
+                          + btn.attr("data-competence") + '" data-user="'
+                          + btn.attr("data-user") + '"><span class="icon-uniF7D9"></span></a>'
+                          +'<a data-toggle="tooltip" title="C\'est toujours un peu flou !" class="aide-not-nice" data-competence="'
+                          + btn.attr("data-competence") + '" data-user="'
+                          + btn.attr("data-user") + '"><span class="icon-uniF7E0"></span></a>');
+                btn.remove();
+                echangeRefresh();
+              }
+              else
+              {
+                btn.html("<span class='icon-warning'></span> Erreur");
+              }
+            });
+});
+
+
+$("a.aide-nice").click(function()
+{
+  var btn = $(this);
+  btn.addClass("sleep");
+  btn.html("...");
+  $.get('{{ href("Echanges","bien") }}/'
+        + $(this).attr("data-user") +'/'
+        + $(this).attr("data-competence"), function(d)
+        {
+          btn.removeClass("sleep");
+          btn.parent().html("Génial ! Bonne continuation !");
+          $(".tooltip").remove();
+        });
+});
+
+$("a.aide-not-nice").click(function()
+{
+  var btn = $(this);
+  btn.addClass("sleep");
+  btn.html("...");
+  $.get('{{ href("Echanges","pasbien") }}/'
+        + $(this).attr("data-user") +'/'
+        + $(this).attr("data-competence"), function(d)
+        {
+          btn.removeClass("sleep");
+          btn.parent().html("Arf ! On va essayer de trouver quelqu'un d'autre !");
+          $(".tooltip").remove();
+        });
+});
+}
+echangeRefresh();
+
+moment.lang('fr');
+$(".date").each(function()
+{
+  var ctn = $(this).text();
+  $(this).html(moment(ctn).fromNow());
+});
+$(".date-calendar").each(function()
+{
+  var ctn = $(this).text();
+  $(this).html(moment(ctn).calendar());
+});
+</script>
+
+</div>

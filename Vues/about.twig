@@ -63,24 +63,33 @@
 	});
 
 	// Contributeurs
+
+	/* en dur, les contrib indirectes */
+	var users = ["sanecz"];
+	var f = [];
+
 	$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/stats/contributors", function(dataT)
 	{
-		var users = _.map(dataT, function(elt){ return elt.author.login; });
+		users = _.union(users, _.map(dataT, function(elt){ return elt.author.login; }));
 		var c = $(".about-contributors");
 		c.html("");
-		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/issues", function(u)
+
+		$.getJSON("https://api.github.com/repos/wearemuffin/Muffin/issues?state=closed", function(u) //2fix
 		{
 			users = _.union(users, _.map(u, function(elt){ return elt.user.login; }));
-			_.each(users, function(e) { $.getJSON("https://api.github.com/users/" + e, function(k)
+
+			_.each(users, function(e, ind) { $.getJSON("https://api.github.com/users/" + e, function(k, i)
 			{
-				if (k.id != "3030511")
-				{
 					if(k.name == undefined)
 						k.name = e;
-					c.append(contributorTemplate(k));
-				}
-			});});
-		});
+					f.push(k);
+					if (ind == (users.length - 1))
+					{
+						f = _.sortBy(f, function(e){ return (e.name)});
+						_.each(f, function(us){c.append(contributorTemplate(us)); });
+					}
+			});
+		}); });
 	});
 	// $("#issue-submit").click(function()
 	// {

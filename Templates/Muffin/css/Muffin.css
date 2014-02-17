@@ -9557,6 +9557,49 @@ nav a:hover {
   min-width: 50%;
 }
 /* ==========================================================================
+                             Login page
+   ========================================================================== */
+[data-content="login"] {
+  display: block;
+}
+[data-content="login"] .col-left,
+[data-content="login"] .col-right {
+  width: 48%;
+  display: inline-block;
+}
+[data-content="login"] .col-left {
+  vertical-align: top;
+  margin-top: 0px;
+}
+[data-content="login"] .col-left .simple-row {
+  text-align: left;
+}
+[data-content="login"] .col-left .simple-row span {
+  text-align: left;
+  font-size: 9em;
+  color: rgba(0, 0, 0, 0.1);
+}
+[data-content="login"] .col-left .simple-row span.coffee {
+  position: relative;
+}
+[data-content="login"] .col-left .simple-row span.bubble {
+  position: relative;
+  bottom: 50px;
+}
+[data-content="login"] .col-right {
+  text-align: center;
+}
+[data-content="login"] .col-right h3 {
+  margin: 0em;
+}
+[data-content="login"] .col-right .form-group input,
+[data-content="login"] .col-right .form-group .button {
+  width: 50%;
+  margin: auto;
+  padding: 10px;
+  display: block;
+}
+/* ==========================================================================
                              Fiche profil et accueil
    ========================================================================== */
 .little-icon {

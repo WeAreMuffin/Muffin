@@ -4,100 +4,17 @@
 
 {% block container %}
 
-    {#
-        Ce fichier va contenir la première étape du questionnaire, c'est à dire la prise
-        du login de l'étudiant, l'envoi d'un code à ce dernier et la vérification de ce
-        code.
-    #}
-{% if webdata.user or webdata.session.muffin_id %}
-
                     {% include 'user.index.modals.twig' %}
                     {% include 'user.index.header.twig' %}
-                    {% include 'user.index.side-menu.twig' %}
 
                     <article data-role="grid">
                         <section>
                             <a href="#!"></a>
                             <div data-role="form-container">
-                                 <div class="big-loader">
-                                    <h1><span class="icon-foodtray"></span></h1>
-                                    <h2>Préparation du menu...</h2>
-                                </div>
+                                    {% include 'home.login.twig' %}
                             </div>
                             <div id="form-result"></div>
                         </section>
                     </article>
-                    <script>
-                        $(document).ready(function()
-                        {
 
-                            if (location.hash != "" && location.hash != undefined)
-                            {
-                                var url = location.hash;
-                                Muffin.goToUrl(url.slice(2), ((url.search("Drafts") > 0) ? "expanded" : undefined));
-                            }
-                            else
-                            {
-                                {% if redirect %}
-                                if (window.Muffin == undefined)
-                                    window.muffin = {};
-                                window.Muffin.redirect = "{{redirect}}";
-                                {% endif %}
-                                window.muffin.verifierCode("{{ webdata.session.code }}", "{{ webdata.user }}");
-                            }
-                        });
-                    </script>
-{% else %}
-    <article data-content="home">
-        <header>
-            <div role="home-title">
-                <h3>Ce petit site a pour objectif de <span>recueillir</span> un maximum d'informations concernant les <span>compétences</span> de chacun,
-                    et de les mettre à disposition pour faciliter les <span>échanges</span> et le <span>partage</span>.</h3>
-            </div>
-        </header>
-    </article>
-    <aside>
-        <div role="icon">
-            <span class="icon-info"></span>
-        </div>
-    </aside>
-    <article data-content="login">
-        {% if redirect %}
-            <script>
-                if (window.Muffin == undefined)
-                    window.muffin = {};
-                window.Muffin.redirect = "{{redirect}}";
-            </script>
-            <div class="panel"><p><span class="icon-alert"></span> Vous devez etre connecté pour acceder à cette page.</p></div>
-        {% endif %}
-        <header class="tra">
-            <div role="title">
-                <h1>Tout d'abord, qui est-tu ?</h1>
-                <p>Entre ton uid pour t'identifier</p>
-            </div>
-        </header>
-        <section class="tra">
-            <form id="form-login">
-                <input type="text" placeholder="Uid" id="input-login" name="login" >
-                <button type="submit"><span class='icon-uniF488'></span></button>
-            </form>
-        </section>
-
-        <script>
-            $(document).ready(function()
-            {
-				$("#input-login").focus();
-                $("#form-login").submit(function(ev)
-                {
-                    $("#input-login + button").html("<span class='icon-time'></span>");
-                    ev.preventDefault();
-                    console.log("Submit !");
-                    window.muffin.envoyerCode($("#input-login").val());
-                    return false;
-                });
-            });
-        </script>
-    </article>
-
-{% endif %}
 {% endblock %}

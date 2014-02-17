@@ -277,6 +277,74 @@ nav {
 
 
 /* ==========================================================================
+                             Login page
+   ========================================================================== */
+
+[data-content="login"]
+{
+    display: block;
+
+    .col-left,
+    .col-right
+    {
+        width: 48%;
+        display: inline-block;
+    }
+
+    .col-left
+    {
+        vertical-align: top;
+        margin-top: 0px;
+
+        .simple-row
+        {
+            text-align: left;
+
+            span
+            {
+                text-align: left;
+                font-size: 9em;
+                color: rgba(0, 0, 0, 0.1);
+
+                &.coffee
+                {
+                    position: relative;
+                }
+
+                &.bubble
+                {
+                    position: relative;
+                    bottom: 50px;
+                }
+            }
+        }
+    }
+
+    .col-right
+    {
+        text-align: center;
+
+        h3
+        {
+            margin: 0em;
+        }
+
+        .form-group
+        {
+            input,
+            .button
+            {
+                width: 50%;
+                margin: auto;
+                padding: 10px;
+                display: block;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
                              Fiche profil et accueil
    ========================================================================== */
 
