@@ -20846,162 +20846,451 @@ return Snap;
 
 }(jQuery);
 
+( function( window ) {
+
+'use strict';
+
+// class helper functions from bonzo https://github.com/ded/bonzo
+
+function classReg( className ) {
+  return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+}
+
+// classList support for class management
+// altho to be fair, the api sucks because it won't accept multiple classes at once
+var hasClass, addClass, removeClass;
+
+if ( 'classList' in document.documentElement ) {
+  hasClass = function( elem, c ) {
+    return elem.classList.contains( c );
+  };
+  addClass = function( elem, c ) {
+    elem.classList.add( c );
+  };
+  removeClass = function( elem, c ) {
+    elem.classList.remove( c );
+  };
+}
+else {
+  hasClass = function( elem, c ) {
+    return classReg( c ).test( elem.className );
+  };
+  addClass = function( elem, c ) {
+    if ( !hasClass( elem, c ) ) {
+      elem.className = elem.className + ' ' + c;
+    }
+  };
+  removeClass = function( elem, c ) {
+    elem.className = elem.className.replace( classReg( c ), ' ' );
+  };
+}
+
+function toggleClass( elem, c ) {
+  var fn = hasClass( elem, c ) ? removeClass : addClass;
+  fn( elem, c );
+}
+
+var classie = {
+  // full names
+  hasClass: hasClass,
+  addClass: addClass,
+  removeClass: removeClass,
+  toggleClass: toggleClass,
+  // short names
+  has: hasClass,
+  add: addClass,
+  remove: removeClass,
+  toggle: toggleClass
+};
+
+// transport
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( classie );
+} else {
+  // browser global
+  window.classie = classie;
+}
+
+})( window );
+
+;( function( window ) {
+
+	'use strict';
+
+	// https://gist.github.com/edankwan/4389601
+	Modernizr.addTest('csstransformspreserve3d', function () {
+		var prop = Modernizr.prefixed('transformStyle');
+		var val = 'preserve-3d';
+		var computedStyle;
+		if(!prop) return false;
+
+		prop = prop.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
+
+		Modernizr.testStyles('#modernizr{' + prop + ':' + val + ';}', function (el, rule) {
+			computedStyle = window.getComputedStyle ? getComputedStyle(el, null).getPropertyValue(prop) : '';
+		});
+
+		return (computedStyle === val);
+	});
+
+	function extend( a, b ) {
+		for( var key in b ) {
+			if( b.hasOwnProperty( key ) ) {
+				a[key] = b[key];
+			}
+		}
+		return a;
+	}
+
+	// support
+	var support = { transitions : Modernizr.csstransitions, transforms3d : Modernizr.csstransforms3d && Modernizr.csstransformspreserve3d },
+		// transition end event name
+		transEndEventNames = {
+			'WebkitTransition': 'webkitTransitionEnd',
+			'MozTransition': 'transitionend',
+			'OTransition': 'oTransitionEnd',
+			'msTransition': 'MSTransitionEnd',
+			'transition': 'transitionend'
+		},
+		transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
+
+	function ProgressButton( el, options ) {
+		this.button = el;
+		this.options = extend( {}, this.options );
+  		extend( this.options, options );
+  		this._init();
+	}
+
+	ProgressButton.prototype.options = {
+		// time in ms that the status (success or error will be displayed)
+		// during this time the button will be disabled
+		statusTime : 1500
+	};
+
+	ProgressButton.prototype._init = function() {
+		this._validate();
+		// create structure
+		this._create();
+		// init events
+		this._initEvents();
+	};
+
+	ProgressButton.prototype._validate = function() {
+		// we will consider the fill/horizontal as default
+		if( this.button.getAttribute( 'data-style' ) === null ) {
+			this.button.setAttribute( 'data-style', 'fill' );
+		}
+		if( this.button.getAttribute( 'data-vertical' ) === null && this.button.getAttribute( 'data-horizontal' ) === null ) {
+			this.button.setAttribute( 'data-horizontal', '' );
+		}
+		if( !support.transforms3d && this.button.getAttribute( 'data-perspective' ) !== null ) {
+			this.button.removeAttribute( 'data-perspective' );
+			this.button.setAttribute( 'data-style', 'fill' );
+			this.button.removeAttribute( 'data-vertical' );
+			this.button.setAttribute( 'data-horizontal', '' );
+		}
+	};
+
+	ProgressButton.prototype._create = function() {
+		var textEl = document.createElement( 'span' );
+		textEl.className = 'content';
+		textEl.innerHTML = this.button.innerHTML;
+		var progressEl = document.createElement( 'span' );
+		progressEl.className = 'progress';
+
+		var progressInnerEl = document.createElement( 'span' );
+		progressInnerEl.className = 'progress-inner';
+		progressEl.appendChild( progressInnerEl );
+		// clear content
+		this.button.innerHTML = '';
+
+		if( this.button.getAttribute( 'data-perspective' ) !== null ) {
+			var progressWrapEl = document.createElement( 'span' );
+			progressWrapEl.className = 'progress-wrap';
+			progressWrapEl.appendChild( textEl );
+			progressWrapEl.appendChild( progressEl );
+			this.button.appendChild( progressWrapEl );
+		}
+		else {
+			this.button.appendChild( textEl );
+			this.button.appendChild( progressEl );
+		}
+
+		// the element that serves as the progress bar
+		this.progress = progressInnerEl;
+
+		// property to change on the progress element
+		if( this.button.getAttribute( 'data-horizontal' ) !== null ) {
+			this.progressProp = 'width';
+		}
+		else if( this.button.getAttribute( 'data-vertical' ) !== null ) {
+			this.progressProp = 'height';
+		}
+		this._enable();
+	};
+
+	ProgressButton.prototype._setProgress = function( val ) {
+		this.progress.style[ this.progressProp ] = 100 * val + '%';
+	};
+
+	ProgressButton.prototype._initEvents = function() {
+		var self = this;
+		this.button.addEventListener( 'click', function() {
+			// disable the button
+			self.button.setAttribute( 'disabled', '' );
+			// add class state-loading to the button (applies a specific transform to the button depending which data-style is defined - defined in the stylesheets)
+			classie.remove( self.progress, 'notransition' );
+			classie.add( this, 'state-loading' );
+
+			setTimeout( function() {
+				if( typeof self.options.callback === 'function' ) {
+					self.options.callback( self );
+				}
+				else {
+					self._setProgress( 1 );
+					var onEndTransFn = function( ev ) {
+						if( support.transitions && ev.propertyName !== self.progressProp ) return;
+						this.removeEventListener( transEndEventName, onEndTransFn );
+						self._stop();
+					};
+
+					if( support.transitions ) {
+						self.progress.addEventListener( transEndEventName, onEndTransFn );
+					}
+					else {
+						onEndTransFn.call();
+					}
+
+				}
+			},
+			self.button.getAttribute( 'data-style' ) === 'fill' ||
+			self.button.getAttribute( 'data-style' ) === 'top-line' ||
+			self.button.getAttribute( 'data-style' ) === 'lateral-lines' ? 0 : 200 ); // TODO: change timeout to transitionend event callback
+		} );
+	};
+
+	ProgressButton.prototype._stop = function( status ) {
+		var self = this;
+
+		setTimeout( function() {
+			// fade out progress bar
+			self.progress.style.opacity = 0;
+			var onEndTransFn = function( ev ) {
+				if( support.transitions && ev.propertyName !== 'opacity' ) return;
+				this.removeEventListener( transEndEventName, onEndTransFn );
+				classie.add( self.progress, 'notransition' );
+				self.progress.style[ self.progressProp ] = '0%';
+				self.progress.style.opacity = 1;
+			};
+
+			if( support.transitions ) {
+				self.progress.addEventListener( transEndEventName, onEndTransFn );
+			}
+			else {
+				onEndTransFn.call();
+			}
+
+
+			// add class state-success to the button
+			if( typeof status === 'number' ) {
+				var statusClass = status > 0 ? 'state-success' : 'state-error';
+				classie.add( self.button, statusClass );
+				// after options.statusTime remove status
+				if (status <= 0)
+				{
+					setTimeout( function() {
+						classie.remove( self.button, statusClass );
+						self._enable();
+					}, self.options.statusTime );
+				}
+			}
+			else {
+				self._enable();
+			}
+
+			// remove class state-loading from the button
+			classie.remove( self.button, 'state-loading' );
+		}, 100 );
+	};
+
+	// enable button
+	ProgressButton.prototype._enable = function() {
+		this.button.removeAttribute( 'disabled' );
+	}
+
+	// add to global namespace
+	window.ProgressButton = ProgressButton;
+
+})( window );
 
 (function($) {
 
-	window.muffin = {};
+ 	window.muffin = {};
 
-	/*
-	 * ============================================================================
-	 * Step-00 Connexion
-	 * ============================================================================
-	 */
-	muffin.displaceElt = function(disap, displace)
-	{
-		var height = displace.offset().top - disap.offset().top;
-		disap.addClass("disappear");
-		displace.attr("style", "position: relative;top: -" + height + "px;");
-	};
+ 	muffin.drawAnimations = function()
+ 	{
+ 		function tts(e, x, y)
+ 		{
+ 			return (e.transform().localMatrix.translate(x, y).toTransformString());
+ 		}
 
-	muffin.envoyerCode = function(login)
-	{
-		NProgress.start();
-		$.ajax({
-			type: "GET",
-			url: "Login/register/" + login
-		}).done(function(e)
-		{
-			if (e.toString()[0] === "1")
-			{
-				NProgress.inc();
-				$.get("Home/loginnew/" + login, function(data) {
-					$("#input-login").attr("disabled", "disabled");
-					$("#input-login + button").attr("disabled", "disabled")
-						.html("<span class='icon-checkmark'></span>");
-					data = $(data);
-					data.addClass("loading");
-					$("div[data-role='container']").append(data);
-					setTimeout(function() {
-						$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: '#input-code'});
-						NProgress.done();
-						data.addClass("complete");
-						muffin.displaceElt($("[data-content='login'] header"), $("[data-content='login'] form"));
-						data.find("#input-passphrase").focus();
-					}, 200);
-				});
-			}
-			else if (e.toString().slice(0, 2) === "-1")
-			{
-				NProgress.inc();
-				$.get("Home/loginExists/" + login, function(data) {
-					$("#input-login").attr("disabled", "disabled");
-					$("#input-login + button").attr("disabled", "disabled")
-						.html("<span class='icon-checkmark'></span>");
-					data = $(data);
-					data.addClass("loading");
-					$("div[data-role='container']").append(data);
-					setTimeout(function() {
+ 		function popTasses()
+ 		{
+ 			setTimeout(function(){
+ 				Snap.select("#tasse_fond").animate({
+ 					transform: tts(Snap.select("#tasse_fond"), -15, 0)
+ 				}, 2000, mina.backout);
+ 				Snap.select("#tasse_fond").animate({
+ 					opacity: 0.10
+ 				}, 200);
+ 			}, 500);
 
-						$.smoothScroll({offset: ($(window).height() / 2), scrollElement: null, scrollTarget: '#input-code'});
-						NProgress.done();
-						data.addClass("complete");
-						muffin.displaceElt($("[data-content='login'] header"), $("[data-content='login'] form"));
-					}, 200);
-				});
-			}
-			else if (e.toString().slice(0, 2) === "-2")
-			{
-				NProgress.done();
-				$("[data-content='login'] div[role='title'] > p").first().html("Vous devez être un étudiant de 42");
-				$("#input-login + button").html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span>');
-			}
+ 			setTimeout(function(){
+ 				Snap.select("#tasse_droite").animate({
+ 					transform: tts(Snap.select("#tasse_droite"), 25, 0)
+ 				}, 2000, mina.backout);
+ 				Snap.select("#tasse_droite").animate({
+ 					opacity: 0.12
+ 				}, 200);
+ 			}, 1000);
+
+ 			setTimeout(function()
+ 			{
+ 				var logo = Snap.select("#muffin_text");
+ 				logo.animate({
+ 					opacity: 1,
+ 					transform: tts(logo, 0, -70)
+ 				}, 1000, mina.bounce);
+ 				Snap.select("#tasse_gauche").animate({opacity: 0.12}, 200);
+ 				Snap.select("#tasse_gauche").animate({
+ 					transform: tts(Snap.select("#tasse_gauche"), -25, 0)
+ 				}, 2000, mina.backout);
+ 			}, 1500);
+ 		}
+
+ 		function popBubbles()
+ 		{
+ 			setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.10}, 500);}, 500);
+ 			setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 1000);
+ 			setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.10}, 500);}, 1500);
+ 		}
+
+ 		var s = Snap(".col-left .simple-row");
+ 		Snap.load("Templates/Muffin/img/cups.svg", function (f) {
+ 			f.select("#tasse_droite").attr({opacity: 0});
+ 			f.select("#bulle_coeur").attr({opacity: 0});
+ 			f.select("#bulle_haut").attr({opacity: 0});
+ 			f.select("#bulle_bas").attr({opacity: 0});
+ 			f.select("#tasse_gauche").attr({opacity: 0});
+ 			f.select("#tasse_fond").attr({opacity: 0});
+ 			f.select("#muffin_text").attr({opacity: 0});
+ 			popTasses();
+ 			popBubbles();
+ 			s.append(f);
+ 		});
+ 	}
+
+
+ 	muffin.bindLoginEvents = function()
+ 	{
+
+
+ 		$("#input-login").focus();
+ 		muffin.drawAnimations();
+ 		$("#input-login").keyup(function(ev)
+ 		{
+ 			$.ajax({
+ 				type: "POST",
+ 				url: "Login/checkLogin/",
+ 				data: {"login": $("#input-login").val()}
+ 			}).done(function(e)
+ 			{
+ 				$(".form-group.error").removeClass("error");
+ 				if (e == "1")
+ 				{
+ 					$("#input-login").parent().addClass("success");
+ 				}
+ 				else
+ 				{
+ 					$("#input-login").parent().removeClass("success");
+ 				}
+ 			});
+ 		});
+
+ 		[].slice.call( document.querySelectorAll( 'button.progress-button' ) ).forEach( function( bttn )
+ 		{
+ 			new ProgressButton( bttn,
+ 			{
+ 				callback : function( instance )
+ 				{
+ 					var progress = 0,
+ 					interval = setInterval( function() {
+ 						progress = Math.min( progress + Math.random() * 0.1, 1 );
+ 						instance._setProgress( progress );
+
+ 						if( progress === 1 ) {
+ 							instance._stop(0);
+ 							clearInterval( interval );
+ 						}
+ 					}, 400 );
+ 					$.ajax({
+ 						type: "POST",
+ 						url: "Login/tryToLogIn/",
+ 						data: {
+ 							"login": $("#input-login").val(),
+ 							"passphrase": $("#input-passphrase").val(),
+ 							"pass42": $("#input-pass42").val()
+ 						}
+ 					}).done(function(e)
+ 					{
+ 						clearInterval( interval );
+ 						console.log("result : ", e);
+ 						if (e == "1")
+ 						{
+ 							instance._stop(1);
+ 							$.ajax({
+ 								type: "GET",
+ 								url: "User/index" /*@TODO: MANAGE REDIRECT */
+ 							}).done(function(e)
+ 							{
+ 								$("div[data-role='container']").fadeOut(100, function()
+ 								{
+ 									$(this).html($(e));
+ 									$(this).fadeIn(100);
+					                $(".header-container").show();
+					                $(".footer-container").show();
+ 								});
+ 							});
+
+ 						}
+ 						else
+ 						{
+ 							var elt = undefined;
+ 							switch (e)
+ 							{
+ 								case "0":
+ 								elt = $("#input-login").parent();
+ 								break;
+ 								case "-1":
+ 								elt = $("#input-pass42").parent();
+ 								break;
+ 								case "-2":
+ 								elt = $("#input-passphrase").parent();
+ 								break;
+ 								default:
+ 								elt = $("#input-login").parent();
+ 								break;
+ 							}
+ 							instance._stop(0);
+ 							$(".form-group.error").removeClass("error");
+ 							elt.removeClass("success").addClass("error");
+ 						}
+ 					});
+ 				}
+ 			});
 		});
 	};
-
-
-	/*
-	 * ============================================================================
-	 * Step-01 exists Passw
-	 * ============================================================================
-	 */
-
-
-	muffin.changeName = function(name)
-	{
-		$("[data-content='login']").addClass("disappear")
-			.queue("fx", function() {
-				$(this).html("<h1 class='entered-login'><i>" + name + "</i></h1>").dequeue();
-			}).addClass("appear");
-	};
-
-	muffin.verifierCode = function(code, login)
-	{
-		$.ajax({
-			type: "POST",
-			data: {code: code, login: login},
-			url: "Login/checkCode"
-		}).done(function(e)
-		{
-			if (e.toString()[0] === "1")
-			{
-				if (Muffin.redirect == undefined)
-				{
-					Muffin.redirect = "User/index";
-				}
-					$.get(Muffin.redirect,
-						function(data)
-						{
-							$("#input-code").attr("disabled", "disabled");
-							$("#input-code + button").attr("disabled", "disabled")
-								.html("<span class='icon-checkmark'></span>");
-							data = $(data);
-							data.addClass("loading");
-							$("div[data-role='container']").children().slideUp();
-							$("div[data-role='container']").html(data);
-							var headerToolbar = $("#main-head-toolbar");
-							if (headerToolbar.children().length == 0)
-							{
-								headerToolbar.html('<a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera"></a><a class="btn" data-toggle="modal" data-target="#modal-params"><span class="icon-spoon"></span></a><a class="btn" role="indicator">À jour</a>');
-					            console.log("Toolbar updated !");
-							}
-							reloadHandlers();
-							NProgress.done();
-							data.addClass("complete");
-						});
-			}
-			else
-			{
-				$("#form-passphrase").parent().parent().find("div[role='title'] > p").first().html("Mot de passe incorrect");
-				$("#input-passphrase").attr("style", "color: #C02942");
-				$("#form-passphrase").find("button")
-					.html('<span style="color: #C02942;" class="icon-warning-sign"></span> <span class="icon-repeat"></span> ');
-			}
-		});
-	};
-
-	muffin.renvoyerCode = function(login)
-	{
-		var button = $("#re-send-mail");
-		var span = button.find("span").first();
-		span.removeClass("icon-repeat").addClass("icon-time");
-		$.ajax({
-			type: "GET",
-			url: "Login/update/" + login
-		}).done(function(e)
-		{
-
-			NProgress.done();
-			if (e.toString()[0] === "1")
-			{
-				button.html("Mail envoyé ! <span class='icon-checkmark'></span>");
-			}
-			else
-			{
-				button.html("Une erreur s'est produite <span class='icon-warning-outline'></span>");
-			}
-		});
-	};
-
 
 	/*
 	 * ============================================================================
@@ -21010,87 +21299,87 @@ return Snap;
 	 */
 
 	 muffin.autoSearchUser = function(name)
-	{
-		var max_results = 5;
-		var container = $("#search_user_results");
-		var field = $("#search_comp_uid");
-		if(name != "" && name != undefined)
-		{
-			$.getJSON("Search/users/" + name, function(data)
-			{
-				var a, i;
-				container.parent().show();
-				container.empty();
-			  	for (i in data) {
-			  		if ( i < max_results)
-			  		{
-			  			console.log(i);
-				  		a = $("<li><a>" + data[i] + "</a></li>");
-				  		a.click(function() {
-				  			field.val($(this).text());
-				  			muffin.searchUSerData();
-				  		});
-						container.append(a);
-					}
-				}
-			});
-		}
-		else
-		{
-			container.parent().hide();
-			container.empty();
-		}
-	}
+	 {
+	 	var max_results = 5;
+	 	var container = $("#search_user_results");
+	 	var field = $("#search_comp_uid");
+	 	if(name != "" && name != undefined)
+	 	{
+	 		$.getJSON("Search/users/" + name, function(data)
+	 		{
+	 			var a, i;
+	 			container.parent().show();
+	 			container.empty();
+	 			for (i in data) {
+	 				if ( i < max_results)
+	 				{
+	 					console.log(i);
+	 					a = $("<li><a>" + data[i] + "</a></li>");
+	 					a.click(function() {
+	 						field.val($(this).text());
+	 						muffin.searchUSerData();
+	 					});
+	 					container.append(a);
+	 				}
+	 			}
+	 		});
+	 	}
+	 	else
+	 	{
+	 		container.parent().hide();
+	 		container.empty();
+	 	}
+	 }
 
-	muffin.searchUSerData = function()
-	{
-		var login = $("#search_comp_uid").val();
-		var button = $("#btn_search_comp_uid");
-		var span = button.find("span").first();
-		var status = $("#status_search_comp_uid");
-		var modal = ("#modal-explore");
-		if (login)
-		{
-			span.removeClass("icon-uniF488").addClass("icon-clock3");
-			$.ajax({
-				type: "GET",
-				url: "Search/user/" + login
-			}).done(function(e)
-			{
+	 muffin.searchUSerData = function()
+	 {
+	 	var login = $("#search_comp_uid").val();
+	 	var button = $("#btn_search_comp_uid");
+	 	var span = button.find("span").first();
+	 	var status = $("#status_search_comp_uid");
+	 	var modal = ("#modal-explore");
+	 	if (login)
+	 	{
+	 		span.removeClass("icon-uniF488").addClass("icon-clock3");
+	 		$.ajax({
+	 			type: "GET",
+	 			url: "Search/user/" + login
+	 		}).done(function(e)
+	 		{
 
-				NProgress.done();
-				if (e.toString()[0] === "0")
-				{
-					span.removeClass("icon-clock3").addClass("icon-multiply");
-					status.html("Il semblerait que l'uid n'existe pas, ou que ses compétences ne soient pas publiques.");
-				}
-				else
-				{
-					span.removeClass("icon-clock3").addClass("icon-uniF488");
-					$(modal).modal('hide');
-		  			$("#search_comp_uid").val("");
-		  			muffin.autoSearchUser();
-					e = $(e);
-						e.addClass("loading");
-						$("div[data-role='form-container']").children().slideUp();
-						$("div[data-role='form-container']").html(e);
-						setTimeout(function() {
-							NProgress.done();
-							e.addClass("complete");
-							reloadHandlers();
-						}, 200);
-				}
-			});
-		}
-		else
-		{
-			status.html("Vous devez rentrer un uid");
-		}
+	 			NProgress.done();
+	 			if (e.toString()[0] === "0")
+	 			{
+	 				span.removeClass("icon-clock3").addClass("icon-multiply");
+	 				status.html("Il semblerait que l'uid n'existe pas, ou que ses compétences ne soient pas publiques.");
+	 			}
+	 			else
+	 			{
+	 				span.removeClass("icon-clock3").addClass("icon-uniF488");
+	 				$(modal).modal('hide');
+	 				$("#search_comp_uid").val("");
+	 				muffin.autoSearchUser();
+	 				e = $(e);
+	 				e.addClass("loading");
+	 				$("div[data-role='form-container']").children().slideUp();
+	 				$("div[data-role='form-container']").html(e);
+	 				setTimeout(function() {
+	 					NProgress.done();
+	 					e.addClass("complete");
+	 					reloadHandlers();
+	 				}, 200);
+	 			}
+	 		});
+	 	}
+	 	else
+	 	{
+	 		status.html("Vous devez rentrer un uid");
+	 	}
 
-	};
+	 };
 
 
-})(jQuery);
+	})(jQuery);
 
 /*
  *
@@ -21104,7 +21393,7 @@ return Snap;
 
 
 function locationHashChanged() {
-    if (location.hash != "" && location.hash != undefined)
+    if (!_.contains(["", "/", "#", "#/Login/logout", "#/"], location.hash) && location.hash != undefined)
     {
         var url = location.hash;
         console.log("onhashchange(event) => " + url);
@@ -21134,6 +21423,13 @@ $(document).ready(function()
 	$("#main-search-form--button").click(function()
 	{
 		$("#main-search-form--input").toggleClass("open");
+	});
+	$("#main-search-form").hover(function()
+	{
+		$("#main-search-form--input").addClass("open");
+	},function()
+	{
+		$("#main-search-form--input").removeClass("open");
 	});
 
 	window.onhashchange = locationHashChanged;
@@ -21944,11 +22240,67 @@ Muffin.search.initSearchForm = function() {
 		return false;
 	});
 
+	$('#main-search-form--input').focus(function(){
+		if ($(this).val().length)
+		{
+			$("#main-search-form--results").show();
+		}
+		else
+		{
+			$("#main-search-form--results").hide();
+		}
+	});
+
+	$("div.main-container").click(function()
+	{
+		if ($("#main-search-form--results").is(":visible")
+		    && $("#main-search-form--input").not(":focus"))
+		{
+			$("#main-search-form--results").hide();
+		}
+	})
+
+	$("#main-search-form--results").click(function()
+	{
+			$(this).hide();
+	})
+
 	$('#main-search-form--input').keyup(function(event)
 	{
 		var k = event.which;
+		if ($(this).val() == "" || k == 27)
+		{
+			$("#main-search-form--results").hide();
+			return false;
+		}
+		else if ($(this).val().length)
+		{
+			$("#main-search-form--results").show();
+		}
 		console.log("key : ", event.which);
-		if (k != 37 && k != 39)
+		if (k == 13)
+		{
+			if ($("#main-search-form--results").find(".selected").length)
+			{
+				var link = $("#main-search-form--results").find(".selected").first();
+				var urlToGo = link.attr("data-load-target");
+				if (urlToGo != undefined)
+				{
+					console.log("ready to go to ", urlToGo);
+					if(history.pushState)
+					{
+					    history.pushState(null, null, "#/" + urlToGo);
+					    goToUrl(urlToGo, link);
+					}
+					else
+					{
+						window.location.hash = "#/" + urlToGo;
+					}
+				}
+			}
+			return false;
+		}
+		else if (k != 37 && k != 39)
 		{
 			switch(k)
 			{
@@ -21959,27 +22311,6 @@ Muffin.search.initSearchForm = function() {
 				case 38:
 					console.log("keyup");
 					Muffin.search.selectUp();
-				break;
-				case 13:
-					if ($("#main-search-form--results").find(".selected").length)
-					{
-						var link = $("#main-search-form--results").find(".selected").first();
-						var urlToGo = link.attr("data-load-target");
-						if (urlToGo != undefined)
-						{
-							console.log("ready to go to ", urlToGo);
-							if(history.pushState)
-							{
-							    history.pushState(null, null, "#/" + urlToGo);
-							    goToUrl(urlToGo, link);
-							}
-							else
-							{
-								window.location.hash = "#/" + urlToGo;
-							}
-						}
-					}
-					return false;
 				break;
 				default:
 					$('#main-search-form').ajaxSubmit(Muffin.search.options);
@@ -22068,6 +22399,12 @@ Muffin.draft.save = function()
 	}
 };
 
+Muffin.draft.decode = function(input){
+	var e = document.createElement('div');
+	e.innerHTML = input;
+	return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
 Muffin.draft.load = function(id)
 {
 	if (id != undefined && id > 0)
@@ -22078,8 +22415,8 @@ Muffin.draft.load = function(id)
 				dataType: "json",
 			data: {id: id},
 			success: function(e){
-				var title = _.unescape(e.draft_name);
-				var text = _.unescape(e.draft_content);
+				var title = Muffin.draft.decode(e.draft_name);
+				var text = Muffin.draft.decode(e.draft_content);
 				$("#aera").attr("data-draft-id", e.draft_id);
 				$("#aera > header > h1").html(title);
 				$("#draft-aera").val(text);
@@ -22298,7 +22635,10 @@ Muffin.draft.init = function()
 			{
 				window.location.hash = "#/Drafts/create";
 			}
-			Muffin.draft.load(draft_id);
+			setTimeout(function()
+			{
+				Muffin.draft.load(draft_id);
+			}, 500);
 			e.stopImmediatePropagation();
 		}
 	});

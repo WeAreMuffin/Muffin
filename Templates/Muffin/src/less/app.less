@@ -139,6 +139,7 @@ body {
     z-index: 999;
 }
 
+
 .footer-container {
     border-top: 5px solid rgba(158, 72, 56, 1);
 }
@@ -147,6 +148,12 @@ body {
 .footer-container
 {
     background: #D95B43;
+
+    &.empty
+    {
+        background-color: transparent;
+        border: none;
+    }
 }
 
 header > h1.title
@@ -280,6 +287,25 @@ nav {
                              Login page
    ========================================================================== */
 
+.login-footer
+{
+    padding-top: 20px;
+    margin-top: 40px;
+    text-align: center;
+    display: block;
+
+    color: rgba(0, 0, 0, 0.1);
+
+    .button
+    {
+        text-decoration: none;
+        border-color: transparent;
+        margin: 0px 10px;
+        color: rgba(0, 0, 0, 0.3);
+
+    }
+}
+
 [data-content="login"]
 {
     display: block;
@@ -331,6 +357,8 @@ nav {
 
         .form-group
         {
+            position: relative;
+
             input,
             .button
             {
@@ -338,6 +366,54 @@ nav {
                 margin: auto;
                 padding: 10px;
                 display: block;
+                background-color: lighten(@muffin-yellow, 2%)
+            }
+
+            &:after
+            {
+                    display: block;
+                    height: 40px;
+                    width: 40px;
+                    top: 0px;
+                    right: 25%;
+                    opacity: 0;
+                    position: absolute;
+                    background-color: transparent;
+                    font-family: 'moon';
+                    speak: none;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-variant: normal;
+                    text-transform: none;
+                    line-height: 1;
+                    transition: 0.3s all;
+                    text-align: center;
+                    line-height: 40px;
+            }
+
+            &.success
+            {
+                &:after
+                {
+                    color: @muffin-forest;
+                    content: "\e61d";
+                    opacity: 1;
+                }
+            }
+            &.error
+            {
+                &:after
+                {
+                    color: @muffin-red;
+                    content: "\ef45";
+                    opacity: 1;
+                }
+            }
+
+
+            .button
+            {
+                background-color: @muffin-yellow;
             }
         }
     }
@@ -1112,12 +1188,19 @@ div[data-role="container"]
     }
 }
 
+.padtop
+{
+    margin: auto;
+    display: block;
+    height: 60px;
+}
+
 .panel
 {
     padding: 0px 40px;
     border: 1px solid #D3C1A0;
     margin: auto;
-    display: inline-block;
+    display: block;
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 3px;
     color: #A25E55;
@@ -1146,7 +1229,7 @@ div[data-role="container"]
 
     #main-search-form--input
     {
-        transition: all 1s;
+        transition: all 0.3s;
         min-height: 30px;
         margin: 0px;
         min-width: 0px;
@@ -1180,6 +1263,7 @@ div[data-role="container"]
 
     #main-search-form--results
     {
+        display: none;
         position: absolute;
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-top: 1px solid rgba(0, 0, 0, 0.0);
@@ -1192,7 +1276,9 @@ div[data-role="container"]
         .row
         {
             clear: both;
-            padding: 10px;
+            text-align: left;
+            padding: 2px 10px;
+            cursor: pointer;
 
             .row-icon
             {
@@ -3473,4 +3559,167 @@ div[data-role="form-container"] form .visible > *
 {
 	display: inline-block;
 	opacity: 1;
+}
+
+/* ==========================================================================
+   Shrink button
+   ========================================================================== */
+.form .form-group .progress-button span.progress,
+.form .form-group .progress-button span.progress-inner
+{
+    padding-right: 0px;
+    color: rgba(0, 0, 0, 0);
+}
+
+/* General styles for all types of buttons */
+.progress-button {
+    position: relative;
+    display: inline-block;
+    padding: 0 60px;
+    outline: none;
+    border: none;
+    background-color: @muffin-yellow;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    // background: #1d9650;
+    // color: #fff;
+    color: @muffin-black;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1em;
+    line-height: 4;
+}
+
+.progress-button[disabled],
+.progress-button[disabled].state-loading {
+    cursor: default;
+}
+
+.progress-button .content {
+    position: relative;
+    display: block;
+}
+
+.progress-button .content::before,
+.progress-button .content::after  {
+    position: absolute;
+    right: 20px;
+    color: @muffin-black;
+    // color: #0e7138;
+    font-family: "moon";
+    opacity: 0;
+    -webkit-transition: opacity 0.3s 0.3s;
+    transition: opacity 0.3s 0.3s;
+}
+
+.progress-button .content::before {
+    content: "\e61d"; /* Checkmark for success */
+}
+
+.progress-button .content::after {
+    content: "\e607"; /* Cross for error */
+}
+
+.progress-button.state-success .content::before,
+.progress-button.state-error .content::after {
+    opacity: 1;
+}
+
+.notransition {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
+.progress-button .progress {
+    background-color: darken(@muffin-yellow, 10%)
+    // background: #148544;
+}
+
+.progress-button .progress-inner {
+    position: absolute;
+    left: 0;
+    // background: #0e7138;
+    background-color: @muffin-orange;
+}
+
+.progress-button[data-horizontal] .progress-inner {
+    top: 0;
+    width: 0;
+    height: 100%;
+    -webkit-transition: width 0.3s, opacity 0.3s;
+    transition: width 0.3s, opacity 0.3s;
+}
+
+.progress-button[data-vertical] .progress-inner {
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    -webkit-transition: height 0.3s, opacity 0.3s;
+    transition: height 0.3s, opacity 0.3s;
+}
+
+/* Necessary 3d styles for buttons with perspective */
+
+.progress-button[data-perspective] {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+    -webkit-perspective: 900px;
+    perspective: 900px;
+}
+
+.progress-button[data-perspective] .content {
+    padding: 0 60px;
+    background: #1d9650;
+}
+
+.progress-button[data-perspective] .progress-wrap {
+    display: block;
+    -webkit-transition: -webkit-transform 0.2s;
+    transition: transform 0.2s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.progress-button[data-perspective] .content,
+.progress-button[data-perspective] .progress {
+    outline: 1px solid rgba(0,0,0,0); /* Smoothen jagged edges in FF */
+}
+
+.progress-button[data-style="shrink"] { /* common for horizontal and vertical */
+    overflow: hidden;
+    -webkit-transition: -webkit-transform 0.2s;
+    transition: transform 0.2s;
+}
+
+.progress-button[data-style="shrink"][data-horizontal] .content {
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.progress-button[data-style="shrink"][data-horizontal] .content::before,
+.progress-button[data-style="shrink"][data-horizontal] .content::after {
+    top: 100%;
+    right: auto;
+    left: 50%;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.progress-button[data-style="shrink"][data-horizontal].state-loading {
+    -webkit-transform: scaleY(0.3);
+    transform: scaleY(0.3);
+}
+
+.progress-button[data-style="shrink"][data-horizontal].state-loading .content {
+    opacity: 0;
+}
+
+.progress-button[data-style="shrink"][data-horizontal].state-success .content,
+.progress-button[data-style="shrink"][data-horizontal].state-error .content {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
 }

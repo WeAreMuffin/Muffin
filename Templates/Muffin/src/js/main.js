@@ -26,7 +26,7 @@
 
 
 function locationHashChanged() {
-    if (location.hash != "" && location.hash != undefined)
+    if (!_.contains(["", "/", "#", "#/Login/logout", "#/"], location.hash) && location.hash != undefined)
     {
         var url = location.hash;
         console.log("onhashchange(event) => " + url);
@@ -56,6 +56,13 @@ $(document).ready(function()
 	$("#main-search-form--button").click(function()
 	{
 		$("#main-search-form--input").toggleClass("open");
+	});
+	$("#main-search-form").hover(function()
+	{
+		$("#main-search-form--input").addClass("open");
+	},function()
+	{
+		$("#main-search-form--input").removeClass("open");
 	});
 
 	window.onhashchange = locationHashChanged;

@@ -798,11 +798,67 @@ Muffin.search.initSearchForm = function() {
 		return false;
 	});
 
+	$('#main-search-form--input').focus(function(){
+		if ($(this).val().length)
+		{
+			$("#main-search-form--results").show();
+		}
+		else
+		{
+			$("#main-search-form--results").hide();
+		}
+	});
+
+	$("div.main-container").click(function()
+	{
+		if ($("#main-search-form--results").is(":visible")
+		    && $("#main-search-form--input").not(":focus"))
+		{
+			$("#main-search-form--results").hide();
+		}
+	})
+
+	$("#main-search-form--results").click(function()
+	{
+			$(this).hide();
+	})
+
 	$('#main-search-form--input').keyup(function(event)
 	{
 		var k = event.which;
+		if ($(this).val() == "" || k == 27)
+		{
+			$("#main-search-form--results").hide();
+			return false;
+		}
+		else if ($(this).val().length)
+		{
+			$("#main-search-form--results").show();
+		}
 		console.log("key : ", event.which);
-		if (k != 37 && k != 39)
+		if (k == 13)
+		{
+			if ($("#main-search-form--results").find(".selected").length)
+			{
+				var link = $("#main-search-form--results").find(".selected").first();
+				var urlToGo = link.attr("data-load-target");
+				if (urlToGo != undefined)
+				{
+					console.log("ready to go to ", urlToGo);
+					if(history.pushState)
+					{
+					    history.pushState(null, null, "#/" + urlToGo);
+					    goToUrl(urlToGo, link);
+					}
+					else
+					{
+						window.location.hash = "#/" + urlToGo;
+					}
+				}
+			}
+			return false;
+		}
+		else if (k != 37 && k != 39)
 		{
 			switch(k)
 			{
@@ -813,27 +869,6 @@ Muffin.search.initSearchForm = function() {
 				case 38:
 					console.log("keyup");
 					Muffin.search.selectUp();
-				break;
-				case 13:
-					if ($("#main-search-form--results").find(".selected").length)
-					{
-						var link = $("#main-search-form--results").find(".selected").first();
-						var urlToGo = link.attr("data-load-target");
-						if (urlToGo != undefined)
-						{
-							console.log("ready to go to ", urlToGo);
-							if(history.pushState)
-							{
-							    history.pushState(null, null, "#/" + urlToGo);
-							    goToUrl(urlToGo, link);
-							}
-							else
-							{
-								window.location.hash = "#/" + urlToGo;
-							}
-						}
-					}
-					return false;
 				break;
 				default:
 					$('#main-search-form').ajaxSubmit(Muffin.search.options);
@@ -922,6 +957,12 @@ Muffin.draft.save = function()
 	}
 };
 
+Muffin.draft.decode = function(input){
+	var e = document.createElement('div');
+	e.innerHTML = input;
+	return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
 Muffin.draft.load = function(id)
 {
 	if (id != undefined && id > 0)
@@ -932,8 +973,8 @@ Muffin.draft.load = function(id)
 				dataType: "json",
 			data: {id: id},
 			success: function(e){
-				var title = _.unescape(e.draft_name);
-				var text = _.unescape(e.draft_content);
+				var title = Muffin.draft.decode(e.draft_name);
+				var text = Muffin.draft.decode(e.draft_content);
 				$("#aera").attr("data-draft-id", e.draft_id);
 				$("#aera > header > h1").html(title);
 				$("#draft-aera").val(text);
@@ -1152,7 +1193,10 @@ Muffin.draft.init = function()
 			{
 				window.location.hash = "#/Drafts/create";
 			}
-			Muffin.draft.load(draft_id);
+			setTimeout(function()
+			{
+				Muffin.draft.load(draft_id);
+			}, 500);
 			e.stopImmediatePropagation();
 		}
 	});
