@@ -35,60 +35,6 @@ class Login extends Controller
     }
 
     /**
-     * Va enregistrer l'utilisateur en parametre de l'url.
-     *
-     * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
-     *
-     * @PathInfo('login')
-     * @Ajax
-     */
-    public function register ($params = array ())
-    {
-        // Si à true, alors aucun mail ne sera envoyé.
-        $fakeMail = true;
-
-        // On récupère le login fourni dans l'url
-        $login = $this->getUrlParam ('login');
-        $type = "student";
-
-        // Liste des élèves 42 avec ce login
-        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
-
-        // On génère le mot de passe
-        $pass = $this->generatePassPhrase ();
-
-        if ($student->current())
-        {
-            if ($student->current()->type == "staff")
-            {
-                $type = "staff";
-            }
-        }
-        else
-        {
-            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 0);
-            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 3, "/home/lambda2/logs/muffin.unknown_users");
-            error_log("L'utilisateur [".$login."] n'est pas reference dans la base de donnees.", 3, "/var/log/httpd/muffin.unknown_users");
-        }
-        // Le hash qui sera dans la bdd
-        $shapass = sha1 (trim (strtolower ($pass)));
-
-        // Liste des élèves inscrits avec le même login
-        $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
-
-        if ( !count ($student) )
-            echo "-2";
-        else if ( !count ($loginsExists) and Core::getBdd ()->insert (array ("login" => $login, "pass" => $shapass), 'c_user') )
-        {
-            $mail = new MuffinMail($loginsExists->current());
-            $mail->sendMuffinPass($pass);
-            echo "1";
-        }
-        else
-            echo "-1";
-    }
-
-    /**
      * Va update le pass de l'utilisateur en parametre de l'url.
      *
      * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
@@ -132,54 +78,142 @@ class Login extends Controller
             echo "-1";
     }
 
-    /**
-     * Va afficher une représentation json de l'utilisateur,
-     * comprenant le nom et le prénom.
-     *
-     * @return un json {nom : -, prenom: -}
-     *
-     * @PathInfo('login')
-     * @Ajax
+    /*
+     * *************************************************************************
+     *                  Nouvelle partie
+     * *************************************************************************
      */
-    public function json ($params = array ())
-    {
-        // On récupère le login fourni dans l'url
-        $login = $this->getUrlParam ('login');
-        $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
-
-        if ( $infos->exists () )
-        {
-            echo '{ "nom" : "'
-            . ucfirst (strtolower ($infos->nom)) . '", "prenom" : "'
-            . ucfirst (strtolower ($infos->prenom))
-            . '" }';
-        }
-        else
-            echo "0";
-    }
 
     /**
      * Va verifier que le code et le login dans post sont bien valides.
      * Si c'est le cas, une session va être enregistrée.
      * @Ajax
      */
-    public function checkCode ($params = array ())
+    public function tryToLogIn ($params = array ())
     {
         // On récupère le login fourni dans l'url
-        $code = htmlentities($_POST['code']);
-        $shacode = sha1 (trim (strtolower ($code)));
-        $login = htmlentities($_POST['login']);
-        $infos = new Entities ("c_user[login=\"{$login}\"][pass=\"{$shacode}\"]");
+        $code42 = $this->filterPost("pass42");
+        $mpass = $this->filterPost("passphrase");
+        $login = $this->filterPost('login');
 
-        if ( count ($infos) == 1 )
+        /* Connexion standard, avec les logins Muffin */
+        if ($login != NULL and $mpass != NULL)
         {
-            $_SESSION['login'] = $login;
-            $_SESSION['code'] = $code;
-            $_SESSION['muffin_id'] = $infos->current ()->id;
-            echo "1";
+            $shacode = sha1 (trim (strtolower($mpass)));
+            $infos = new Entities ("c_user[login=\"{$login}\"][pass=\"{$shacode}\"]");
+
+            if (count($infos) == 1)
+            {
+                $_SESSION['login'] = $login;
+                $_SESSION['code'] = $shacode;
+                $_SESSION['muffin_id'] = $infos->current ()->id;
+                echo "1";
+            }
+            else
+                echo "-2";
+        } /* Connexion avec les logins 42 */
+        else if ($login and $code42 != NULL)
+        {
+            sleep(2); // On fait un petit slepp pour eviter le ldap-force
+            /* On essaye de s'authentifier */
+            $result = Auth42::authenticate($login, $code42);
+            if ($result === true)
+            {
+                $this->registerNewUser($login, $code42);
+            }
+            else
+                echo "-3";
         }
         else
             echo "0";
+    }
+
+    public function checkLogin ($params = array ())
+    {
+        $login = $this->filterPost('login');
+        if ($login and strlen($login))
+        {
+            $infos = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
+            echo ((count($infos) == 1) ? "1" : "0");
+        }
+        else
+            echo "0";
+    }
+
+    /**
+     * Va enregistrer l'utilisateur de 42 sur Muffin.
+     */
+    protected function registerNewUser ($login, $pass42)
+    {
+        $type = "student";
+
+        // Liste des élèves 42 avec ce login
+        $student = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
+
+        // On génère le mot de passe
+        $pass = $this->generatePassPhrase ();
+
+        if ($student->current())
+        {
+            if ($student->current()->type == "staff")
+            {
+                $type = "staff";
+            }
+        }
+        else
+        {
+            $auth = new Auth42();
+            $info = $auth->search("uid=".$login, $login, $pass42);
+            if ($info and $info['count'] == 1)
+            {
+                Core::getBdd ()->insert (array(
+                                             "login_eleve" => $login,
+                                             "nom" => $info[0]['last-name'][0],
+                                             "prenom" => $info[0]['first-name'][0]),
+                                        'c_42_logins');
+            }
+        }
+        // Le hash qui sera dans la bdd
+        $shapass = sha1 (trim (strtolower ($pass)));
+        $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
+
+        if ($loginsExists->current())
+        {
+            $_SESSION['login'] = $login;
+            $_SESSION['code'] = $loginsExists->current()->pass;
+            $_SESSION['muffin_id'] = $loginsExists->current()->id;
+            echo "1";
+        }
+        else
+        {
+            if (Core::getBdd ()->insert(array ("login" => $login, "pass" => $shapass), 'c_user'))
+            {
+                $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
+                $mail = new MuffinMail($loginsExists->current());
+                $mail->sendParralelMuffinPass($pass);
+                $_SESSION['login'] = $login;
+                $_SESSION['code'] = $loginsExists->current()->pass;
+                $_SESSION['muffin_id'] = $loginsExists->current()->id;
+                echo "1";
+            }
+            else
+                echo "-1";
+        }
+    }
+
+    public function logout($params)
+    {
+        $_SESSION = array();
+        if (ini_get("session.use_cookies"))
+        {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+        $this->render();
     }
 
     /*
@@ -188,47 +222,6 @@ class Login extends Controller
      * *************************************************************************
      */
 
-    /**
-     * Va retourner un tableau contenant les textes pour l'email d'inscription
-     * @param string $login le login de l'utilisateur
-     * @param string $pass le mot de passe généré <b>en clair</b>
-     * @return array un tableau associatif contenant [email,subject,message,headers]
-     */
-    protected function getInscriptionEmailTemplate ($login, $pass)
-    {
-        $email = $login . '@student.42.fr';
-        $subject = "Muffin - Votre muffinpass";
-        $message = "Voici votre muffinpass: [ $pass ]\n"
-                . "Vous pouvez l'entrer dès maintenant sur http://muffin.lambdaweb.fr avec votre uid ($login).";
-        $headers = 'From: Muffin <no-reply@lambdaweb.fr>';
-        return (array (
-            "email" => $email,
-            "subject" => $subject,
-            "message" => $message,
-            "headers" => $headers)
-                );
-    }
-
-    /**
-     * Va retourner un tableau contenant les textes pour l'email de mise à jour
-     * @param string $login le login de l'utilisateur
-     * @param string $pass le mot de passe généré <b>en clair</b>
-     * @return array un tableau associatif contenant [email,subject,message,headers]
-     */
-    protected function getUpdateEmailTemplate ($login, $pass)
-    {
-        $email = $login . '@student.42.fr';
-        $subject = "Muffin - Votre nouveau muffinpass";
-        $message = "Voici votre nouveau muffinpass: [ $pass ]\n"
-                . "Vous pouvez l'entrer dès maintenant sur http://muffin.lambdaweb.fr avec votre uid ($login).";
-        $headers = 'From: Muffin <no-reply@lambdaweb.fr>';
-        return (array (
-            "email" => $email,
-            "subject" => $subject,
-            "message" => $message,
-            "headers" => $headers)
-                );
-    }
 
     /**
      * Va générer un pass "maison" ;)

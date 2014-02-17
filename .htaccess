@@ -337,9 +337,9 @@ FileETag None
 
 Options +FollowSymLinks
 RewriteEngine On
-RewriteRule ^([^/]*)/([^/]*)$ index.php?p=$1->$2 [L]
-RewriteRule ^([^/]*)/([^/]*)$ index.php?p=$1->$2 [L]
-RewriteRule ^([^/]*)/([^/]*)/([\,\s\%\!\?\:\;\'\"\#a-zA-Z0-9-_\/]*)$ index.php?p=$1->$2?$3 [L]
+RewriteRule ^([^/#]*)/([^/]*)$ index.php?p=$1->$2 [L]
+RewriteRule ^([^/#]*)/([^/]*)$ index.php?p=$1->$2 [L]
+RewriteRule ^([^/#]*)/([^/]*)/([\,\s\%\!\?\:\;\'\"\#a-zA-Z0-9-_\/]*)$ index.php?p=$1->$2?$3 [L]
 
 </IfModule>
 
