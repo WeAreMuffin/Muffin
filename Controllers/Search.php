@@ -21,7 +21,7 @@
  *
  * (c) 2013 Lambdaweb - www.lambdaweb.fr
  *
- * 
+ *
  * @author lambda2
  */
 
@@ -32,9 +32,9 @@ class Search extends Controller
     {
         $this->rejectAccess();
     }
-    
+
     /**
-     * 
+     *
      * @PathInfo('login')
      */
     public function user($params)
@@ -59,7 +59,7 @@ class Search extends Controller
     }
 
     /**
-     * 
+     *
      * @PathInfo('login')
      */
     public function users($params)
@@ -73,8 +73,40 @@ class Search extends Controller
         $res = $r->fetchAll(PDO::FETCH_COLUMN);
         echo(json_encode($res));
     }
-    
-    
+
+    /**
+     * The main search function
+     * @TODO confidentialité
+     */
+    public function searchall($params)
+    {
+        // On récupère le login fourni dans l'url
+        $query = $this->filterPost('search');
+        $users = $this->searchGlobalUsers($query);
+        echo(json_encode($users));
+    }
+
+    protected function searchGlobalUsers($q)
+    {
+        $return = array();
+        $qu = "  SELECT * FROM c_user u
+                INNER JOIN c_42_logins cl
+                ON u.login = cl.login_eleve WHERE u.login LIKE :login";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($qu);
+        $r->execute(array("login" => '%'.$q.'%'));
+        while ($e = $r->fetchObject())
+        {
+            $return[] = array(
+                              "icon" => $e->user_icone,
+                              "text" => $e->login,
+                              "desc" => strtolower($e->prenom." ".$e->nom),
+                              "link" => "User/p/".$e->login);
+        }
+        return ($return);
+    }
+
+
     /*   =======================================================================
      *                      Surcharge pour l'accès membre
      *   =======================================================================
@@ -87,8 +119,8 @@ class Search extends Controller
         else
             return false;
     }
-    
-    
+
+
     /*
      * Specifique aux formulaires
      */
@@ -113,8 +145,8 @@ class Search extends Controller
     protected function generateJsFormData ($user)
     {
         $datas = array ();
-	$q = "SELECT * FROM c_competences WHERE c_competences.id_competence IN ( 
-		SELECT id_competence FROM c_user_competences 
+	$q = "SELECT * FROM c_competences WHERE c_competences.id_competence IN (
+		SELECT id_competence FROM c_user_competences
 		WHERE `c_user_competences`.`id_user` = :id )";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);

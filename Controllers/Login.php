@@ -180,7 +180,6 @@ class Login extends Controller
         }
         else
             echo "0";
-        echo "\ncode for $login = $code -> $shacode ";
     }
 
     /*

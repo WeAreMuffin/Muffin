@@ -48,6 +48,98 @@ class User extends Controller
         $this->render ();
     }
 
+    /**
+     * @PathInfo('user')
+     * Page d'utilisateur quelconque
+     */
+    public function p ($params)
+    {
+        $this->registerParams ($params);
+        $login = $this->getUrlParam('user');
+        $user = Moon::get ('c_user', 'login', $login);
+        if ($user)
+        {
+            $this->prepareUserData($login, $user);
+            $this->render ();
+        }
+    }
+
+
+    protected function prepareUserData($login, $user)
+    {
+        $this->registerParams ($params);
+        $uid = $user->id;
+        $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
+
+        $q = "  SELECT DISTINCT *
+                FROM c_echanges e
+                    INNER JOIN c_competences c
+                    ON e.competence = c.id_competence
+                    INNER JOIN c_user_competences uc
+                    ON uc.id_competence = c.id_competence AND uc.id_user = e.id_propose
+                    INNER JOIN c_user u
+                    ON e.id_propose = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
+                WHERE
+                    e.id_demande = :id AND e.resume = 'attente'
+                ORDER BY e.resume DESC
+            ";
+
+        $q2 = "  SELECT DISTINCT *
+                FROM c_echanges e
+                    INNER JOIN c_competences c
+                    ON e.competence = c.id_competence
+                    INNER JOIN c_user_competences uc
+                    ON uc.id_competence = c.id_competence AND uc.id_user = e.id_propose
+                    INNER JOIN c_user u
+                    ON e.id_demande = u.id
+                    INNER JOIN c_42_logins cl
+                    ON u.login = cl.login_eleve
+                WHERE
+                    e.id_propose = :id AND e.resume = 'accepte'
+                ORDER BY e.resume DESC
+            ";
+
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("id" => $uid));
+        $demandes = $r->fetchAll(PDO::FETCH_CLASS);
+
+        $r = $bd->prepare($q2);
+        $r->execute(array("id" => $uid));
+        $propositions = $r->fetchAll(PDO::FETCH_CLASS);
+
+        $news = $bd->query("SELECT * FROM c_news c ORDER BY c.date DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
+        $drafts = $bd->query("SELECT * FROM c_drafts c
+                             WHERE c.public > 0 AND c.draft_author != ".$_SESSION['muffin_id']
+                             ." ORDER BY c.draft_date_c DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
+
+        /* Premiere visite ? */
+        if ($user->first_visit == 1)
+        {
+            $this->addData ('take_a_tour', true);
+            $this->setVisited();
+        }
+        else
+        {
+            $this->addData ('take_a_tour', false);
+        }
+
+        $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
+        $this->addData ('user', $user);
+        $this->addData ('infos', $infos);
+        $this->addData ('news', $news);
+        $this->addData ('reunions', $this->get_future_reunions());
+        $this->addData ('drafts', $drafts);
+        $this->addData ('rank', $this->getRank($uid));
+        $this->addData ('count', $this->getCount());
+        $this->addData ('demandes', $demandes);
+        $this->addData ('propositions', $propositions);
+    }
+
+
+
     protected function prepareHomeData($params)
     {
         $this->registerParams ($params);
