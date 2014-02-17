@@ -8,20 +8,18 @@
                 window.Muffin.redirect = "{{redirect}}";
             </script>
             <div class="panel"><p><span class="icon-alert"></span> Vous devez etre connecté pour acceder à cette page.</p></div>
+            {% else %}
+            <div class="padtop"></div>
         {% endif %}
 
         <div class="col-left">
-            <div class="simple-row">
-<!--                 <span class="icon-coffee coffee"></span>
-                <span class="icon-socialnetworking bubble"></span>
-                <span class="icon-coffee coffee"></span> -->
-            </div>
+            <div class="simple-row"></div>
         </div>
 
         <div class="col-right">
             <header class="tra">
                 <div role="title">
-                    <h1>Se connecter</h1>
+                    <h1><span class="icon-key"></span> Se connecter</h1>
                     <p>Utilisez vos identifiants Muffin ou 42</p>
                 </div>
             </header>
@@ -45,7 +43,7 @@
                     </div>
                     <div class="bretzel-separator"></div>
                     <div class="form-group">
-                        <button class="button" type="submit">Connexion</button>
+                    <button class="progress-button" data-style="shrink" data-horizontal>Connexion</button>
                     </div>
                 </form>
             </section>
@@ -54,81 +52,15 @@
         <script>
             $(document).ready(function()
             {
-                function tts(e, x, y)
-                {
-                    return (e.transform().localMatrix.translate(x, y).toTransformString());
-                }
-
-                function popTasses()
-                {
-                    setTimeout(function(){
-                        Snap.select("#tasse_fond").animate({
-                            transform: tts(Snap.select("#tasse_fond"), -15, 0)
-                        }, 2000, mina.backout);
-                        Snap.select("#tasse_fond").animate({
-                            opacity: 0.10
-                        }, 200);
-                    }, 500);
-
-                    setTimeout(function(){
-                        Snap.select("#tasse_droite").animate({
-                            transform: tts(Snap.select("#tasse_droite"), 25, 0)
-                        }, 2000, mina.backout);
-                        Snap.select("#tasse_droite").animate({
-                            opacity: 0.12
-                        }, 200);
-                    }, 1000);
-
-                    setTimeout(function()
-                    {
-                        var logo = Snap.select("#muffin_text");
-                        logo.animate({
-                            opacity: 1,
-                            transform: tts(logo, 0, -70)
-                        }, 1000, mina.bounce);
-                        Snap.select("#tasse_gauche").animate({opacity: 0.12}, 200);
-                        Snap.select("#tasse_gauche").animate({
-                            transform: tts(Snap.select("#tasse_gauche"), -25, 0)
-                        }, 2000, mina.backout);
-                    }, 1500);
-                }
-
-                function popBubbles()
-                {
-                    setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.10}, 500);}, 500);
-                    setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 1000);
-                    setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.10}, 500);}, 1500);
-                    // setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.0}, 500);}, 5500);
-                    // setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.0}, 500);}, 7000);
-                    // setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.0}, 500);}, 10500);
-                }
-
-                var s = Snap(".col-left .simple-row");
-                Snap.load("Templates/Muffin/img/cups.svg", function (f) {
-                    // Note that we traversre and change attr before SVG
-                    // is even added to the page
-                    var k = f;
-                    f.select("#tasse_droite").attr({opacity: 0});
-                    f.select("#bulle_coeur").attr({opacity: 0});
-                    f.select("#bulle_haut").attr({opacity: 0});
-                    f.select("#bulle_bas").attr({opacity: 0});
-                    f.select("#tasse_gauche").attr({opacity: 0});
-                    f.select("#tasse_fond").attr({opacity: 0});
-                    f.select("#muffin_text").attr({opacity: 0});
-                    popTasses();
-                        popBubbles();
-                    s.append(f);
-                });
-
-				$("#input-login").focus();
-                $("#form-login").submit(function(ev)
-                {
-                    $("#input-login + button").html("<span class='icon-time'></span>");
-                    ev.preventDefault();
-                    console.log("Submit !");
-                    window.muffin.envoyerCode($("#input-login").val());
-                    return false;
-                });
+                $(".header-container").hide();
+                $(".footer-container").hide();
+                muffin.bindLoginEvents();
             });
         </script>
     </article>
+    <footer class="login-footer">
+        <a class="button" href="https://github.com/WeAreMuffin/Muffin"><span class="icon-github"></span> GitHub</a>
+        <a class="button" href="https://www.facebook.com/wearemuffin"><span class="icon-facebook4"></span> Facebook</a>
+        <a class="button" href="https://github.com/wearemuffin/Muffin/issues/new"><span class="icon-bug"></span> Bug ?</a>
+        <a class="button" href="mailto:muffin@lambdaweb.fr"><span class="icon-envelop"></span> Contact</a>
+    </footer>

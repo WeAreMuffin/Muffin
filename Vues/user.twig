@@ -1,3 +1,7 @@
+{#
+{% extends 'base.twig' %}
+#}
+
 {% block container %}
 	{% include 'user.index.modals.twig' %}
 	{% include 'user.index.header.twig' %}
@@ -13,4 +17,14 @@
 			<div id="form-result"></div>
 		</section>
 	</article>
+	<script type="text/javascript">
+
+
+            if (!_.contains(["", "/", "#", "#/Login/logout", "#/"], location.hash) && location.hash != undefined)
+            {
+                var url = location.hash;
+                Muffin.goToUrl(url.slice(2), ((url.search("Drafts") > 0) ? "expanded" : undefined));
+            }
+
+	</script>
 {% endblock %}

@@ -3,18 +3,38 @@
 
 
 {% block container %}
+{#
+    {% include 'user.index.modals.twig' %}
+    {% include 'user.index.header.twig' %}
+#}
 
-                    {% include 'user.index.modals.twig' %}
-                    {% include 'user.index.header.twig' %}
+    {# Si l'utilisateur est connecté, on le redirige #}
+    {% if webdata.session.muffin_id %}
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $.ajax({
+                type: "GET",
+                url: "User/index" /*@TODO: MANAGE REDIRECT */
+            }).done(function(e)
+            {
+                $('div[data-role="container"]').html(e);
+                $(".header-container").show();
+                $(".footer-container").show();
+            });
+        });
+    </script>
 
-                    <article data-role="grid">
-                        <section>
-                            <a href="#!"></a>
-                            <div data-role="form-container">
-                                    {% include 'home.login.twig' %}
-                            </div>
-                            <div id="form-result"></div>
-                        </section>
-                    </article>
+    {% else %}
+    <article data-role="grid">
+        <section>
+            <a href="#!"></a>
+            <div data-role="form-container">
+                    {% include 'home.login.twig' %}
+            </div>
+            <div id="form-result"></div>
+        </section>
+    </article>
+    {% endif %}
 
 {% endblock %}
