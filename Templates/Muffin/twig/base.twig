@@ -59,7 +59,14 @@
                     {% block header_after %}
                         {% if webdata.session.muffin_id %}
                         <a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera">0</a>
-                        <a class="btn" data-load-target="Params/index" id="button-open-params"><span class="icon-nut"></span></a>
+                        <form id="main-search-form">
+                            <button type="button" id="main-search-form--button"><span class="icon-search"></span></button>
+                            <input type="text" id="main-search-form--input" name="search" placeholder="Cherchez quelque chose">
+                            <div id="main-search-form--results">
+
+                            </div>
+                        </form>
+                        <!-- <a class="btn" data-load-target="Params/index" id="button-open-params"><span class="icon-nut"></span></a> -->
                         <!-- <a class="btn" role="indicator">À jour</a> -->
                         {% endif %}
                     {% endblock %}

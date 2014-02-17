@@ -1062,6 +1062,115 @@ div[data-role="container"]
 
 /*
     ------------------------------------------------------------------------
+        Champ de recherche du header
+    ------------------------------------------------------------------------
+*/
+
+#main-search-form
+{
+    display: inline-block;
+    float: right;
+    margin-top: 25px;
+    font-size: 1.4em;
+    width: 350px;
+    position: relative;
+    text-align: right;
+
+    #main-search-form--input
+    {
+        transition: all 1s;
+        min-height: 30px;
+        margin: 0px;
+        min-width: 0px;
+        width: 35px;
+        padding: 2px 2px 2px 30px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        &::-webkit-input-placeholder { color:rgba(0, 0, 0, 0.2); }
+        &::-moz-placeholder { color:rgba(0, 0, 0, 0.2); } /* firefox 19+ */
+        &:-ms-input-placeholder { color:rgba(0, 0, 0, 0.2); } /* ie */
+        &input:-moz-placeholder { color:rgba(0, 0, 0, 0.2); }
+        color: @muffin-yellow;
+
+        &.open
+        {
+            width: 310px;
+            opacity: 1;
+        }
+    }
+
+    #main-search-form--button
+    {
+        color: @muffin-orange-dark;
+        position: relative;
+        z-index: 1200;
+        width: 33px;
+        height: 35px;
+        right: -36px;
+        top: -2px;
+    }
+
+    #main-search-form--results
+    {
+        position: absolute;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-top: 1px solid rgba(0, 0, 0, 0.0);
+        right: 0px;
+        z-index: 60;
+        width: 310px;
+        background-color: @muffin-yellow;
+        top: 30px;
+
+        .row
+        {
+            clear: both;
+            padding: 10px;
+
+            .row-icon
+            {
+                text-align: left;
+                display: inline-block;
+                vertical-align: top;
+                width: 30px;
+                margin-top: 4px;
+            }
+
+            .content
+            {
+                text-align: left;
+                display: inline-block;
+                width: 250px;
+                font-size: 0.8em;
+
+                .content-title
+                {
+                    display: inline-block;
+                    color: @muffin-black;
+                }
+
+                .content-sub
+                {
+                    display: inline-block;
+                    color: rgba(0, 0, 0, 0.3);
+                    max-width: 250px;
+                    word-wrap: break-word;
+                    font-size: 0.8em;
+                    text-transform: capitalize;
+                    word-break: break-all;
+                }
+            }
+
+            &:hover,
+            &.selected
+            {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+}
+
+/*
+    ------------------------------------------------------------------------
         Header
     ------------------------------------------------------------------------
 */
@@ -1278,8 +1387,8 @@ p {
             border: none;
             height: 95px;
             float: right;
-            font-size: 2em;
-            line-height: 75px;
+            font-size: 1.7em;
+            line-height: 80px;
             color: @muffin-orange-dark;
 
             &:hover
@@ -1302,9 +1411,9 @@ p {
 		.not-num
 		{
 		    position: relative;
-		    font-size: 0.7em;
-		    left: -22px;
-		    top: -3px;
+		    font-size: 0.6em;
+		    left: -19px;
+		    top: -2px;
 		}
 	    }
         }

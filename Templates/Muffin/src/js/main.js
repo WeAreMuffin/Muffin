@@ -43,6 +43,7 @@ $(document).ready(function()
 {
 	initalizeForm();
 	reloadHandlers();
+	Muffin.search.initSearchForm();
 	/*$.bind("ajaxComplete", function() {
 		reloadHandlers();
 	});*/
@@ -50,6 +51,11 @@ $(document).ready(function()
 	$(".header-mobile-button").click(function()
 	{
 		$("aside.side-menu").toggleClass("open");
+	});
+
+	$("#main-search-form--button").click(function()
+	{
+		$("#main-search-form--input").toggleClass("open");
 	});
 
 	window.onhashchange = locationHashChanged;

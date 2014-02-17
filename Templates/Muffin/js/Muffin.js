@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-02-13
+   mNymdhy          shddmy hNd       Sorti du four le 2014-02-17
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -14196,6 +14196,7 @@ $(document).ready(function()
 {
 	initalizeForm();
 	reloadHandlers();
+	Muffin.search.initSearchForm();
 	/*$.bind("ajaxComplete", function() {
 		reloadHandlers();
 	});*/
@@ -14203,6 +14204,11 @@ $(document).ready(function()
 	$(".header-mobile-button").click(function()
 	{
 		$("aside.side-menu").toggleClass("open");
+	});
+
+	$("#main-search-form--button").click(function()
+	{
+		$("#main-search-form--input").toggleClass("open");
 	});
 
 	window.onhashchange = locationHashChanged;
@@ -14361,7 +14367,6 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
-			console.log("GOTO => (oldhash : " + window.location.hash + ") --> (#/" + urlToGo + ")");
 			if(history.pushState)
 			{
 			    history.pushState(null, null, "#/" + urlToGo);
@@ -14934,6 +14939,133 @@ Muffin.charts.drawInscrits = function(data)
 }
 
  	/* -----------------------------------------------------------------------------------
+ 	  |                                SEARCH FUNCTIONS                                  |
+ 	   ----------------------------------------------------------------------------------- */
+
+Muffin.search = {};
+
+// pre-submit callback
+Muffin.search.beforeSearch = function(formData, jqForm, options) {
+	NProgress.start();
+	$('#main-search-form--button').html("<span class='icon-hourglass'></span>");
+    //var queryString = $.param(formData);
+    return true;
+}
+
+// post-submit callback
+Muffin.search.afterSearch = function(responseText, statusText, xhr, $form) {
+	NProgress.done();
+	$('#main-search-form--button').html("<span class='icon-search'></span>");
+	var ctn = $.parseJSON(responseText);
+	var ctainer = $("#main-search-form--results");
+	var template = _.template("	<div class='row' data-load-target='<%= link %>'>\
+		                          	<div class='row-icon'><span class='icon-<%= icon %>'></span></div>\
+									<div class='content'>\
+										<div class='content-title'><%= text %></div>\
+										<div class='content-sub'><%= desc %></div>\
+									</div>\
+								</div>");
+	ctainer.html("");
+	_.each(ctn, function(e, i)
+	{
+		if (i > 10)
+			return;
+		ctainer.append(template(e));
+	});
+	Muffin.bindAjaxEvents();
+}
+
+Muffin.search.selectUp = function()
+{
+	var elt = $("#main-search-form--results");
+	var old = elt.children(".row").last();
+	if (elt.find(".selected").length)
+	{
+		old = elt.find(".selected").prev();
+		if (old.length == 0)
+			old = elt.children(".row").last();
+	}
+	elt.find(".selected").removeClass("selected");
+	old.addClass("selected");
+}
+
+Muffin.search.selectDown = function()
+{
+	var elt = $("#main-search-form--results");
+	var old = elt.children(".row").first();
+	if (elt.find(".selected").length)
+	{
+		old = elt.find(".selected").next();
+		if (old.length == 0)
+			old = elt.children(".row").first();
+	}
+	elt.find(".selected").removeClass("selected");
+	old.addClass("selected");
+}
+
+Muffin.search.initSearchForm = function() {
+	Muffin.search.options = {
+		target: '#main-search-form--results', // target element(s) to be updated with server response
+		beforeSubmit: Muffin.search.beforeSearch, // pre-submit callback
+		success: Muffin.search.afterSearch, // post-submit callback
+		url: "Search/searchall",
+		type: "post"       // 'get' or 'post', override for form's 'method' attribute
+	};
+
+	$('#main-search-form').submit(function() {
+		// inside event callbacks 'this' is the DOM element so we first
+		// wrap it in a jQuery object and then invoke ajaxSubmit
+		$(this).ajaxSubmit(Muffin.search.options);
+		return false;
+	});
+
+	$('#main-search-form--input').keyup(function(event)
+	{
+		var k = event.which;
+		console.log("key : ", event.which);
+		if (k != 37 && k != 39)
+		{
+			switch(k)
+			{
+				case 40:
+					console.log("keydown");
+					Muffin.search.selectDown();
+				break;
+				case 38:
+					console.log("keyup");
+					Muffin.search.selectUp();
+				break;
+				case 13:
+					if ($("#main-search-form--results").find(".selected").length)
+					{
+						var link = $("#main-search-form--results").find(".selected").first();
+						var urlToGo = link.attr("data-load-target");
+						if (urlToGo != undefined)
+						{
+							console.log("ready to go to ", urlToGo);
+							if(history.pushState)
+							{
+							    history.pushState(null, null, "#/" + urlToGo);
+							    goToUrl(urlToGo, link);
+							}
+							else
+							{
+								window.location.hash = "#/" + urlToGo;
+							}
+						}
+					}
+					return false;
+				break;
+				default:
+					$('#main-search-form').ajaxSubmit(Muffin.search.options);
+				break;
+			}
+		}
+	});
+};
+
+
+ 	/* -----------------------------------------------------------------------------------
  	  |                           TAKE A TOUR FUNCTIONS                                  |
  	   ----------------------------------------------------------------------------------- */
 
@@ -15200,9 +15332,13 @@ Muffin.draft.onRead = function()
             }
         });
     });
-
+    $('li[data-action="back-to-top"]').click(function(){
+        $.smoothScroll({
+		  offset: 100
+		});
+    });
     $('li[data-action="back-to-list"]').click(function(){
-        Muffin.goToUrl("Drafts/all", "expanded")
+        Muffin.goToUrl("Drafts/all", "expanded");
     });
     var ctnt = _.unescape($("#draft-read-content").html());
     var mkd = marked(ctnt);
