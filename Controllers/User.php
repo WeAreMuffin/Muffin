@@ -60,14 +60,33 @@ class User extends Controller
         if ($user)
         {
             $this->prepareUserData($login, $user);
+            $this->getAverageTime($login);
             $this->render ();
         }
+    }
+
+    protected function getAverageTime($login)
+    {
+        $datas = new Entities('c_42_time[login="'.$login.'"]');
+        $q = "SELECT avg(duration) AS moy, date FROM `c_42_time` GROUP BY `date`";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array());
+        $avg = $r->fetchAll();
+        $this->addData('stats_time', $datas);
+        //$this->addData('stats_time_avg', $avg);
+        $this->addData('stats_time_avg', array_column($avg, 'moy'));
+    }
+
+    public function gtb($params)
+    {
+        $this->registerParams ($params);
+        $this->render();
     }
 
 
     protected function prepareUserData($login, $user)
     {
-        $this->registerParams ($params);
         $uid = $user->id;
         $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
 

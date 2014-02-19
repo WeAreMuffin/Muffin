@@ -62,7 +62,7 @@
  		function popBubbles()
  		{
  			setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.10}, 500);}, 500);
- 			setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 1000);
+ 			setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 800);
  			setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.10}, 500);}, 1500);
  		}
 
@@ -151,6 +151,10 @@
 					                $(".header-container").show();
 					                $(".footer-container").show();
  								});
+ 								$.ajax({
+	 								type: "GET",
+	 								url: "User/gtb"
+	 							}).done(function(e){$("#main-head-toolbar").html($(e));});
  							});
 
  						}

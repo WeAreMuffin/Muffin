@@ -61,6 +61,16 @@ class Role
 		return (self::allowed($id, self::$USER));
 	}
 
+	public static function isAdmin($id)
+	{
+		return (self::allowed($id, self::$ADMIN));
+	}
+
+	public static function isAdminWithRole($role)
+	{
+		return ($role & self::$ADMIN);
+	}
+
 }
 
 ?>

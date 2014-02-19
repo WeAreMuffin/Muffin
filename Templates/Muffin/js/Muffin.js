@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-02-17
+   mNymdhy          shddmy hNd       Sorti du four le 2014-02-19
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -21172,7 +21172,7 @@ if ( typeof define === 'function' && define.amd ) {
  		function popBubbles()
  		{
  			setTimeout(function(){ Snap.select("#bulle_haut").animate({opacity: 0.10}, 500);}, 500);
- 			setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 1000);
+ 			setTimeout(function(){ Snap.select("#bulle_bas").animate({opacity: 0.10}, 500);}, 800);
  			setTimeout(function(){ Snap.select("#bulle_coeur").animate({opacity: 0.10}, 500);}, 1500);
  		}
 
@@ -21261,6 +21261,10 @@ if ( typeof define === 'function' && define.amd ) {
 					                $(".header-container").show();
 					                $(".footer-container").show();
  								});
+ 								$.ajax({
+	 								type: "GET",
+	 								url: "User/gtb"
+	 							}).done(function(e){$("#main-head-toolbar").html($(e));});
  							});
 
  						}
@@ -21410,27 +21414,7 @@ $(document).ready(function()
 {
 	initalizeForm();
 	reloadHandlers();
-	Muffin.search.initSearchForm();
-	/*$.bind("ajaxComplete", function() {
-		reloadHandlers();
-	});*/
 
-	$(".header-mobile-button").click(function()
-	{
-		$("aside.side-menu").toggleClass("open");
-	});
-
-	$("#main-search-form--button").click(function()
-	{
-		$("#main-search-form--input").toggleClass("open");
-	});
-	$("#main-search-form").hover(function()
-	{
-		$("#main-search-form--input").addClass("open");
-	},function()
-	{
-		$("#main-search-form--input").removeClass("open");
-	});
 
 	window.onhashchange = locationHashChanged;
 	window.clearInterval(window.intervalHandler);
@@ -21867,8 +21851,12 @@ var checkNotifications = function()
 					not.show();
 				}
 			});
+			n.html("<span title='" + e + " notification(s) non-lue(s)' data-toggle='tooltip' style='color: #F7E4BE' class='icon-uniF52F'></span>");
 		}
-		n.html("<span class='icon-elipse'></span><span class='not-num'>" + e + "</span>");
+		else
+		{
+			n.html("<span title='aucune notification non-lue' data-toggle='tooltip' class='icon-uniF52B'></span>");
+		}
 	});
 }
 Muffin.checkNotifications = checkNotifications;

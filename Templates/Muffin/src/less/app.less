@@ -128,7 +128,7 @@ body {
    =================== */
 
 .header-container {
-    height: 80px;
+    height: 50px;
     border-bottom: 5px solid rgba(158, 72, 56, 1);
     /* @modif#head#fixed
     position: fixed;
@@ -137,6 +137,13 @@ body {
     */
     width: 100%;
     z-index: 999;
+
+    header > h1.title
+    {
+        margin: 7px 4px 4px 4px;
+        font-size: 1.7em;
+    }
+
 }
 
 
@@ -235,7 +242,7 @@ nav {
 
     footer {
         color: #F7E4BE;
-        padding: 20px 0;
+        padding: 0px 0;
 
     }
 }
@@ -870,12 +877,12 @@ input + button > span[class^="icon-"] {
 }
 
 .btn {
-    border: 2px solid @muffin-green;
-    background-color: @muffin-green;
-    color: #F7E4BE;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.5);
     border-radius: 3px;
-    height: 30px;
     margin: 0px 5px;
+    text-align: center;
     cursor: pointer;
 
     span[class^="icon-"]
@@ -890,7 +897,45 @@ input + button > span[class^="icon-"] {
         top: 1px;
     }
 }
+/*
+    ------------------------------------------------------------------------
+        Users pages
+    ------------------------------------------------------------------------
+*/
 
+.p-user
+{
+    position: relative;
+    height: 200px;
+    display: block;
+
+    .p-picture
+    {
+        position: absolute;
+        height: 150px;
+        border-radius: 3px;
+        width: 150px;
+        background-position: 50% 50%;
+        background-size: 100%;
+        opacity: 0.9;
+    }
+
+    .p-title
+    {
+        margin-left: 150px;
+        font-size: 1.2em;
+
+        h1
+        {
+            font-size: 2.6em;
+            margin: 0;
+            margin-bottom: 0;
+            padding-top: 30px;
+            padding-left: 10px;
+        }
+    }
+
+}
 /*
     ------------------------------------------------------------------------
         ABOUT
@@ -904,37 +949,45 @@ input + button > span[class^="icon-"] {
         text-decoration: none;
     }
 
+    .center
+    {
+        display: block;
+        text-align: center;
+    }
+
+    .tiny-container
+    {
+        display: inline-block;
+
+        &+.tiny-container
+        {
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    }
+
     .left-section
     {
-        max-width: 26%;
+        width: 49%;
         display: inline-block;
-        margin-right: 40px;
+        margin-right: 15px;
         height: 220px;
         vertical-align: top;
-        margin-top: 40px;
+        text-align: right;
 
-        span
+
+        span.updates
         {
-            font-size: 200px;
-            color: rgba(0, 0, 0, 0.1);
+            display: block;
+            margin: 10px;
         }
     }
     .right-section
     {
-        max-width: 70%;
+        max-width: 48%;
         display: inline-block;
         text-align: left;
-
-        span.updates
-        {
-            margin: 10px;
-            &+.updates
-            {
-                margin-left: 10px;
-                padding-left: 10px;
-                border-left: 1px solid rgba(0, 0, 0, 0.2);
-            }
-        }
 
         .form
         {
@@ -946,18 +999,6 @@ input + button > span[class^="icon-"] {
                 background-color: rgba(0, 0, 0, 0.05);
                 border-radius: 3px;
                 color: rgba(0, 0, 0, 0.6);
-            }
-        }
-
-        .tiny-container
-        {
-            display: inline-block;
-
-            &+.tiny-container
-            {
-                margin-left: 10px;
-                padding-left: 10px;
-                border-left: 1px solid rgba(0, 0, 0, 0.2);
             }
         }
     }
@@ -1221,7 +1262,7 @@ div[data-role="container"]
 {
     display: inline-block;
     float: right;
-    margin-top: 25px;
+    margin-top: 7px;
     font-size: 1.4em;
     width: 350px;
     position: relative;
@@ -1254,7 +1295,7 @@ div[data-role="container"]
     {
         color: @muffin-orange-dark;
         position: relative;
-        z-index: 1200;
+        z-index: 1000;
         width: 33px;
         height: 35px;
         right: -36px;
@@ -1395,6 +1436,7 @@ aside.side-menu
         color: rgba(0, 0, 0, 0.6);
         background: transparent;
         border-width: 1px;
+        text-decoration: none;
 
 
         span[class^="icon"]
@@ -1539,10 +1581,10 @@ p {
         {
             background-color: transparent;
             border: none;
-            height: 95px;
+            height: 45px;
             float: right;
-            font-size: 1.7em;
-            line-height: 80px;
+            font-size: 0.7em;
+            line-height: 40px;
             color: @muffin-orange-dark;
 
             &:hover
@@ -2031,7 +2073,7 @@ ul[data-role="liste-competences"]
 		margin: 0px 5px;
     	&.online
     	{
-        	color: @muffin-green;
+        	color: @muffin-red;
     	}
 	}
 
@@ -2144,10 +2186,11 @@ ul[data-role="liste-competences"]
 
         a.btn
         {
+            color: @muffin-yellow;
             font-size: 0.6em;
             min-height: 30px;
             padding: 4px 6px;
-            line-height: 17px;
+            line-height: 22px;
             background-color: @muffin-red;
             border-color: @muffin-red;
             text-transform: uppercase;

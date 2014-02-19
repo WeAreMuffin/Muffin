@@ -9440,7 +9440,7 @@ body {
     ALL: Orange Theme
    =================== */
 .header-container {
-  height: 80px;
+  height: 50px;
   border-bottom: 5px solid #9e4838;
   /* @modif#head#fixed
     position: fixed;
@@ -9449,6 +9449,10 @@ body {
     */
   width: 100%;
   z-index: 999;
+}
+.header-container header > h1.title {
+  margin: 7px 4px 4px 4px;
+  font-size: 1.7em;
 }
 .footer-container {
   border-top: 5px solid #9e4838;
@@ -9518,7 +9522,7 @@ nav a:hover {
 }
 .footer-container footer {
   color: #F7E4BE;
-  padding: 20px 0;
+  padding: 0px 0;
 }
 /* ===============
     ALL: IE Fixes
@@ -10042,12 +10046,12 @@ input + button > span[class^="icon-"] {
   font-size: 2em;
 }
 .btn {
-  border: 2px solid #53777a;
-  background-color: #53777a;
-  color: #F7E4BE;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5);
   border-radius: 3px;
-  height: 30px;
   margin: 0px 5px;
+  text-align: center;
   cursor: pointer;
 }
 .btn span[class^="icon-"] {
@@ -10060,36 +10064,70 @@ input + button > span[class^="icon-"] {
 }
 /*
     ------------------------------------------------------------------------
+        Users pages
+    ------------------------------------------------------------------------
+*/
+.p-user {
+  position: relative;
+  height: 200px;
+  display: block;
+}
+.p-user .p-picture {
+  position: absolute;
+  height: 150px;
+  border-radius: 3px;
+  width: 150px;
+  background-position: 50% 50%;
+  background-size: 100%;
+  opacity: 0.9;
+}
+.p-user .p-title {
+  margin-left: 150px;
+  font-size: 1.2em;
+}
+.p-user .p-title h1 {
+  font-size: 2.6em;
+  margin: 0;
+  margin-bottom: 0;
+  padding-top: 30px;
+  padding-left: 10px;
+}
+/*
+    ------------------------------------------------------------------------
         ABOUT
     ------------------------------------------------------------------------
 */
 .about a {
   text-decoration: none;
 }
-.about .left-section {
-  max-width: 26%;
+.about .center {
+  display: block;
+  text-align: center;
+}
+.about .tiny-container {
   display: inline-block;
-  margin-right: 40px;
-  height: 220px;
-  vertical-align: top;
-  margin-top: 40px;
 }
-.about .left-section span {
-  font-size: 200px;
-  color: rgba(0, 0, 0, 0.1);
-}
-.about .right-section {
-  max-width: 70%;
-  display: inline-block;
-  text-align: left;
-}
-.about .right-section span.updates {
-  margin: 10px;
-}
-.about .right-section span.updates + .updates {
+.about .tiny-container + .tiny-container {
   margin-left: 10px;
   padding-left: 10px;
   border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+.about .left-section {
+  width: 49%;
+  display: inline-block;
+  margin-right: 15px;
+  height: 220px;
+  vertical-align: top;
+  text-align: right;
+}
+.about .left-section span.updates {
+  display: block;
+  margin: 10px;
+}
+.about .right-section {
+  max-width: 48%;
+  display: inline-block;
+  text-align: left;
 }
 .about .right-section .form {
   margin-bottom: 10px;
@@ -10099,14 +10137,6 @@ input + button > span[class^="icon-"] {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 3px;
   color: rgba(0, 0, 0, 0.6);
-}
-.about .right-section .tiny-container {
-  display: inline-block;
-}
-.about .right-section .tiny-container + .tiny-container {
-  margin-left: 10px;
-  padding-left: 10px;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
 }
 .waiting {
   color: rgba(0, 0, 0, 0.4);
@@ -10305,7 +10335,7 @@ div[data-role="container"] ul.items-panels li {
 #main-search-form {
   display: inline-block;
   float: right;
-  margin-top: 25px;
+  margin-top: 7px;
   font-size: 1.4em;
   width: 350px;
   position: relative;
@@ -10343,7 +10373,7 @@ div[data-role="container"] ul.items-panels li {
 #main-search-form #main-search-form--button {
   color: #9e4838;
   position: relative;
-  z-index: 1200;
+  z-index: 1000;
   width: 33px;
   height: 35px;
   right: -36px;
@@ -10448,6 +10478,7 @@ aside.side-menu a.btn {
   color: rgba(0, 0, 0, 0.6);
   background: transparent;
   border-width: 1px;
+  text-decoration: none;
 }
 aside.side-menu a.btn span[class^="icon"] {
   position: relative;
@@ -10539,10 +10570,10 @@ p {
 .header-container header a.btn {
   background-color: transparent;
   border: none;
-  height: 95px;
+  height: 45px;
   float: right;
-  font-size: 1.7em;
-  line-height: 80px;
+  font-size: 0.7em;
+  line-height: 40px;
   color: #9e4838;
 }
 .header-container header a.btn:hover {
@@ -10908,7 +10939,7 @@ ul[data-role="liste-competences"] a {
   margin: 0px 5px;
 }
 ul[data-role="liste-competences"] a.online {
-  color: #53777a;
+  color: #c02942;
 }
 ul[data-role="liste-competences"] li {
   padding: 10px 0px;
@@ -10989,10 +11020,11 @@ ul[data-role="liste-competences"] li a.aide-nice {
   color: #699b3b;
 }
 ul[data-role="liste-competences"] li a.btn {
+  color: #f7e4be;
   font-size: 0.6em;
   min-height: 30px;
   padding: 4px 6px;
-  line-height: 17px;
+  line-height: 22px;
   background-color: #c02942;
   border-color: #c02942;
   text-transform: uppercase;

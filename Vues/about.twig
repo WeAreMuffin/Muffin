@@ -26,20 +26,25 @@
 <script>
 	var contributorTemplate = _.template("<a href='<%= html_url %>'><figure class='user'><img src='<%= avatar_url %>' class='rounded'><figcaption>\
 		<span class='name'><%= name %></span></figcaption></figure></a>");
-	var projectTemplate = _.template("<div class='left-section'><span class='icon-uniF78F'></span></div>\
-	                                     <div class='right-section'><h4>Dernières mises à jour</h4> \
-	                                     <span class='updates'><span class='icon-uniF008'></span> Développement: <span class='date-calendar'>\
-	                                     	<%= updated_at %></span></span>\
-	                                     <span class='updates'><span class='icon-speed'></span> Production: <span class='date-calendar'>\
-	                                     	<%= release_date %></span></span>\
-	                                     <div class='form'>\
-	                                     <p><span>Git url</span> : <span class='code'><%= git_url %></span></p>\
-	                                     <p><span>Clone url</span> : <span class='code'><%= clone_url %></span></p>\
-	                                     <p><span>Svn url</span> : <span class='code'><%= svn_url %></span></p></div>\
+	var projectTemplate = _.template("<div class='center'>\
 	                                     <div class='tiny-container'><span class='icon-star'></span> <%= stargazers_count %></div>\
 	                                     <div class='tiny-container'><span class='icon-eye'></span> <%= watchers_count %></div>\
 	                                     <div class='tiny-container'><span class='icon-uniF786'></span> <%= forks_count %></div>\
 	                                     <div class='tiny-container'><span class='icon-uniF7BA'></span> <%= default_branch %></div>\
+	                                 <div>\
+	                                 <div class='left-section'>\
+	                                     <h4>Dernières mises à jour</h4> \
+	                                     <span class='updates'><span class='icon-uniF008'></span> Développement: <span class='date-calendar'>\
+	                                     	<%= updated_at %></span></span>\
+	                                     <span class='updates'><span class='icon-speed'></span> Production: <span class='date-calendar'>\
+	                                     	<%= release_date %></span></span>\
+	                                 </div>\
+	                                     <div class='right-section'>\
+	                                     	<h4>Accès au git</h4> \
+	                                     <div class='form'>\
+	                                     <p><span>Git url</span> : <span class='code'><%= git_url %></span></p>\
+	                                     <p><span>Clone url</span> : <span class='code'><%= clone_url %></span></p>\
+	                                     <p><span>Svn url</span> : <span class='code'><%= svn_url %></span></p></div>\
 	                                     </div>");
 
 	// Status

@@ -425,8 +425,12 @@ var checkNotifications = function()
 					not.show();
 				}
 			});
+			n.html("<span title='" + e + " notification(s) non-lue(s)' data-toggle='tooltip' style='color: #F7E4BE' class='icon-uniF52F'></span>");
 		}
-		n.html("<span class='icon-elipse'></span><span class='not-num'>" + e + "</span>");
+		else
+		{
+			n.html("<span title='aucune notification non-lue' data-toggle='tooltip' class='icon-uniF52B'></span>");
+		}
 	});
 }
 Muffin.checkNotifications = checkNotifications;

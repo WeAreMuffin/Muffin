@@ -104,9 +104,8 @@ class Login extends Controller
 
             if (count($infos) == 1)
             {
-                $_SESSION['login'] = $login;
-                $_SESSION['code'] = $shacode;
-                $_SESSION['muffin_id'] = $infos->current ()->id;
+                $u = $infos->current();
+                $this->createSession($login, $shacode, $u->id, $u->auths);
                 echo "1";
             }
             else
@@ -179,9 +178,8 @@ class Login extends Controller
 
         if ($loginsExists->current())
         {
-            $_SESSION['login'] = $login;
-            $_SESSION['code'] = $loginsExists->current()->pass;
-            $_SESSION['muffin_id'] = $loginsExists->current()->id;
+            $u = $loginsExists->current();
+            $this->createSession($login, $u->pass, $u->id, $u->auths);
             echo "1";
         }
         else
@@ -191,9 +189,8 @@ class Login extends Controller
                 $loginsExists = new Entities ("c_user[login=\"{$login}\"]");
                 $mail = new MuffinMail($loginsExists->current());
                 $mail->sendParralelMuffinPass($pass);
-                $_SESSION['login'] = $login;
-                $_SESSION['code'] = $loginsExists->current()->pass;
-                $_SESSION['muffin_id'] = $loginsExists->current()->id;
+                $u = $loginsExists->current();
+                $this->createSession($login, $u->pass, $u->id, $u->auths);
                 echo "1";
             }
             else
@@ -213,7 +210,16 @@ class Login extends Controller
             );
         }
         session_destroy();
+        header("location: .."); // osé... @XXX
         $this->render();
+    }
+
+    protected function createSession($login, $code, $id, $role)
+    {
+        $_SESSION['login'] = $login;
+        $_SESSION['code'] = $code;
+        $_SESSION['muffin_id'] = $id;
+        $_SESSION['role'] = $role;
     }
 
     /*
