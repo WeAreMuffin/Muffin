@@ -1,0 +1,19 @@
+        {% if reunions %}
+        <div role="simple-row" id="p-user-reunions" class="loading">
+            <h3 class="section-title"><span class="icon-bubbles"></span> Les réunions de {{infos.prenom}}</h3>
+            <ul role="reunions">
+                {% for reunion in reunions %}
+                    <li>
+                        <a data-load-target="Reunion/index">
+                            Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b> ·
+                            <span class="date-calendar">{{ reunion.reunion_date }}</span> en {{ reunion.reunion_lieu }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div role="simple-row" id="p-user-reunions" class="loading">
+            <h3 class="section-title"><span class="icon-bubbles"></span> {{infos.prenom}} n'organise pas de réunions prochainement...</h3>
+        </div>
+        {% endif %}

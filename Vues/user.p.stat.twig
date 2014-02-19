@@ -1,0 +1,40 @@
+        <div role="simple-row" id="p-user-stats" class="loading p-stat">
+            <canvas id="p-user-chart" width="800" height="150"></canvas>
+        </div>
+        <script type="text/javascript">
+        var globalLang = moment();
+        moment.lang('fr');
+        var dates = "{{stats_time.date|join(',')}}";
+        dates = _.map(dates.split(","), function(e){ return (moment(e).fromNow());});
+        var options = {
+            scaleShowGridLines: false,
+            scaleLabel : "<%=value%> h",
+            scaleOverride: true,
+            scaleSteps : 6,
+            scaleStepWidth : 4,
+            scaleStartValue : 0
+        };
+
+        var data = {
+            labels : dates,
+            datasets : [
+                {
+                    fillColor : "rgba(192, 41, 66, 0.5)",
+                    strokeColor : "rgba(192, 41, 66, 1)",
+                    pointColor : "rgba(192, 41, 66, 1)",
+                    pointStrokeColor : "rgb(247, 228, 190)",
+                    data : [{{stats_time.duration|join(',')}}]
+                },
+                {
+                    fillColor : "rgba(216, 154, 126,0.3)",
+                    strokeColor : "rgba(158, 72, 56, 0.5)",
+                    pointColor : "rgb(217, 91, 67)",
+                    pointStrokeColor : "rgb(247, 228, 190)",
+                    data : [{{stats_time_avg|join(',')}}]
+                }
+            ]
+        }
+        var ctx = $("#p-user-chart").get(0).getContext("2d");
+        new Chart(ctx).Line(data,options);
+
+        </script>

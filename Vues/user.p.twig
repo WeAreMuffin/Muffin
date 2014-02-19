@@ -1,24 +1,19 @@
 <div class="main-homepage">
-	{# L'entete avec le nom et le rang #}
-	{% include 'user.card.twig' %}
+	{# L'entete avec le nom #}
+	{% include 'user.p.card.twig' %}
 
-	{# Les dernieres nouveautees #}
-	{% include 'user.news.twig' %}
+  {# les stats #}
+  {% include 'user.p.stat.twig' %}
 
   {# Les réunions qui pourraient interesser #}
-  {% include 'user.reunions.twig' %}
+  {% include 'user.p.reunions.twig' %}
 
   {# Les derniers articles #}
-  {% include 'user.articles.twig' %}
-
-
-  {# le recap des affaires en cours #}
-  {% include 'user.affairs.twig' %}
-
+  {% include 'user.p.articles.twig' %}
 
 
   <script>
-   var a = ["#user-two", "#user-drafts", "#user-news", "#user-reunions", "#user-one"];
+   var a = ["#p-user-drafts", "#p-user-reunions", "#p-user-stats", "#p-user-one"];
    var globalLang = moment();
    moment.lang('fr');
 
