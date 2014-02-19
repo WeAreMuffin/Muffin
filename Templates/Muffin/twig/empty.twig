@@ -1,0 +1,104 @@
+
+{% if not is_ajax %}
+<!DOCTYPE html>
+    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        {% block meta %}
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <title>{% block page_title %}Muffin{% endblock %}</title>
+            <meta name="description" content="Ce petit site a pour objectif de recueillir un maximum d'informations concernant les compétences de chacun, et de les mettre à disposition pour faciliter les échanges et le partage">
+            <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no" />
+            <meta name="google" value="notranslate">
+            <meta name="application-name" content="Muffin">
+            <meta name="application-url" content="http://muffin.lambdaweb.fr/">
+            <link rel="canonical" href="http://muffin.lambdaweb.fr/">
+            {% block meta_icons %}
+                <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+                <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-114.png">
+                <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114.png">
+                <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-144.png">
+                <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144.png">
+            {% endblock %}
+        {% endblock %}
+
+
+        {% block style %}
+        {% endblock %}
+
+        {% block css_includes %}
+            <!-- Le styles -->
+
+            {% for stylesheet in webdata.stylesheets %}
+            <link href="{{ webdata.base }}{{ stylesheet }}" rel="stylesheet">
+            {% endfor %}
+
+        {% endblock %}
+
+        {% block head_javascript %}
+        <script src="Templates/Muffin/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="Templates/Muffin/js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        {% endblock %}
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        {% block body %}
+        <div class="header-container empty">
+        </div>
+
+        {% block main %}
+        <div class="main-container">
+            <div data-role="container" class="main wrapper clearfix">
+            {% block container %}
+
+
+            {% endblock %}
+            </div> <!-- #main -->
+        </div> <!-- #main-container -->
+    {% endblock %}
+
+    {% block footer %}
+    <div class="footer-container empty">
+        <footer class="wrapper">
+        </footer>
+    </div>
+    {% endblock %}
+
+    {% block javascript %}
+    <!-- ============= Le javascript =========== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% for js in webdata.scripts %}
+    <script src="{{ webdata.base }}{{ js }}"></script>
+    {% endfor %}
+
+
+    <script>
+        var _gaq = [['_setAccount', 'UA-45835616-1'], ['_trackPageview']];
+        (function(d, t) {
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = '//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g, s)
+        }(document, 'script'));
+    </script>
+    {% block debug %}
+    {# Shows the debug lines #}
+    {{ webdata.debug }}
+    {% endblock %}
+
+    {% endblock %}
+    {% endblock %}
+    </body>
+</html>
+
+{% else %}
+    {% block aj %}
+    {% endblock %}
+{% endif %}

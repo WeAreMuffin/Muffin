@@ -1,14 +1,17 @@
 <script>
+    document.location.hash = "";
+    document.location = "../Home";
 $(document).ready(function()
 {
     document.location.hash = "";
-    $.ajax({ type: "GET", url: "Home/index" }).done(function(e)
-    {
-        $("body").fadeOut(100, function()
-        {
-            $(this).html(e);
-            $(this).fadeIn(100);
-        });
-    });
+    document.location = "Home/index";
+    // $.ajax({ type: "GET", url: "Home/index" }).done(function(e)
+    // {
+    //     $("body").fadeOut(100, function()
+    //     {
+    //         $(this).html(e);
+    //         $(this).fadeIn(100);
+    //     });
+    // });
 });
 </script>

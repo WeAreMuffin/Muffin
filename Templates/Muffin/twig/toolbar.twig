@@ -1,0 +1,35 @@
+
+{#
+	Toolbar de droite, qui est juste a droite du titre, dans le header. Elle contient les notifications et
+	la barre de recherche. Elle n'est visible seulement pour les utilisateurs connectés.
+#}
+
+{% if webdata.session.muffin_id %}
+	<a class="btn" data-toggle="modal" data-target="#modal-notifications" class="btn" id="notif-aera"> </a>
+	<form id="main-search-form">
+	    <button type="button" id="main-search-form--button"><span class="icon-search"></span></button>
+	    <input type="text" id="main-search-form--input" name="search" placeholder="Cherchez quelque chose">
+	    <div id="main-search-form--results">
+	    </div>
+	</form>
+
+	<script type="text/javascript">
+	$(document).ready(function()
+	  {
+
+		$("#main-search-form--button").click(function()
+		{
+			$("#main-search-form--input").toggleClass("open");
+		});
+		$("#main-search-form").hover(function()
+		{
+			$("#main-search-form--input").addClass("open");
+		},function()
+		{
+			$("#main-search-form--input").removeClass("open");
+		});
+
+	  	Muffin.search.initSearchForm();
+	  });
+	</script>
+{% endif %}
