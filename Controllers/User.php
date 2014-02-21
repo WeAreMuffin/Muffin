@@ -90,30 +90,35 @@ class User extends Controller
     protected function prepareUserData($login, $user)
     {
         $uid = $user->id;
-        $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
+	    $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
 
 
-        $this->getAverageTime($login);
-        $exch = new Entities('c_echanges[id_propose="'.$uid.'"]');
-        $reunions = $this->get_p_future_reunions($uid);
+	    $this->getAverageTime($login);
+	if ($uid)
+	{
+	    $exch = new Entities('c_echanges[id_propose="'.$uid.'"]');
+	    $reunions = $this->get_p_future_reunions($uid);
 
-        $bd = Core::getBdd()->getDb();
-        $drafts = $bd->query("SELECT * FROM c_drafts c
-                             WHERE c.public > 0 AND c.draft_author = ".$uid
-                             ." ORDER BY c.draft_date_c DESC LIMIT 0,5")
-                            ->fetchAll(PDO::FETCH_CLASS);
+	    $bd = Core::getBdd()->getDb();
+	    $drafts = $bd->query("SELECT * FROM c_drafts c
+				 WHERE c.public > 0 AND c.draft_author = ".$uid." ORDER BY c.draft_date_c DESC LIMIT 0,5")
+				->fetchAll(PDO::FETCH_CLASS);
+	    $json = $this->prepareUserWall($uid);
+	    $this->addData ('exch', $exch);
+	    $this->addData ('reunions', $reunions);
+	    $this->addData ('drafts', $drafts);
+	    $this->addData ('json', $json);
+	}
+	else
+	{
+	    $this->addData ('json', "[]");
+	}
 
-        $json = $this->prepareUserWall($uid);
-
-        $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
-        $this->addData ('user', $user);
-        $this->addData ('infos', $infos);
-        $this->addData ('exch', $exch);
-        $this->addData ('reunions', $reunions);
-        $this->addData ('drafts', $drafts);
-        $this->addData ('json', $json);
-        $this->addData ('rank', $this->getRank($uid));
-        $this->addData ('count', $this->getCount());
+	$this->addData ('nom', ucfirst (strtolower ($infos->nom)));
+	$this->addData ('user', $user);
+	$this->addData ('infos', $infos);
+	$this->addData ('rank', $this->getRank($uid));
+	$this->addData ('count', $this->getCount());
     }
 
     protected function prepareUserWall($uid)
@@ -153,7 +158,7 @@ class User extends Controller
             $w_json[] = array("icon" => "bubble",
                                    "type" => "reunion",
                                    "date" => $value->reunion_date,
-                                   "name" => "va organiser une réunions sur $c");
+                                   "name" => "va organiser une réunion sur $c");
         }
         foreach ($exch as $key => $value)
         {
