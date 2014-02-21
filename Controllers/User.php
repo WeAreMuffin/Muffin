@@ -150,7 +150,7 @@ class User extends Controller
             $c = Moon::get('c_competences', 'id_competence', $value->reunion_competence);
             ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
 
-            $w_json[] = array("icon" => "bubbles",
+            $w_json[] = array("icon" => "bubble",
                                    "type" => "reunion",
                                    "date" => $value->reunion_date,
                                    "name" => "va organiser une réunions sur $c");
@@ -163,7 +163,7 @@ class User extends Controller
             if ($value->want_to_teach == 1)
                 $msg = "a envie d'aider";
 
-            $w_json[] = array("icon" => "repeat",
+            $w_json[] = array("icon" => $value->want_to_teach == 1 ? "student" : "loved",
                                    "type" => "exch",
                                    "date" => $value->date_user_c,
                                    "name" => "$msg en ".$c);

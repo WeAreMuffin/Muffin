@@ -625,12 +625,21 @@ ul[role="wall"]
 
 ul[role="wall"]
 {
+    padding: 0 0 0 20px;
+
     li
     {
         border-left: 3px solid rgba(0, 0, 0, 0.1);
-        padding: 5px 5px 5px 10px;
-        margin: 0px;
+        padding: 5px 5px 5px 15px;
+        margin: 0px 5px;
         position: relative;
+
+        span[class^="icon-"]
+        {
+
+            color: rgba(0, 0, 0, 0.2);
+            margin-right: 5px;
+        }
 
         &.future
         {
@@ -647,6 +656,7 @@ ul[role="wall"]
                 transform-origin: center center;
                 display: inline-block;
                 content: "\e8cc";
+                color: rgba(0, 0, 0, 0.5);
                 font-family: 'moon';
                 speak: none;
                 font-style: normal;
@@ -694,8 +704,8 @@ ul[role="wall"]
                 height: 40px;
                 width: 40px;
                 left: -45px;
-                color: rgba(0, 0, 0, 0.05);
-                top: 40px;
+                color: rgba(0, 0, 0, 0.1);
+                top: 0px;
                 transform-origin: center center;
                 display: inline-block;
                 content: "\edd0";

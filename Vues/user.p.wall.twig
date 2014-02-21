@@ -1,12 +1,7 @@
 
 <div role="simple-row" id="p-user-wall" class="loading">
-    <!-- <h3 class="section-title"><span class="icon-news"></span> Drafts</h3> -->
+    <h3 class="section-title"><span class="icon-time"></span> Activité récente</h3>
     <ul role="wall">
-        {% for draft in drafts %}
-            <li data-action="read-draft" data-id="{{ draft.draft_id }}">
-                {{ draft.draft_name }} · {# date #} <span class="raw-date" data-date="{{ draft.draft_date_c }}"></span>
-            </li>
-        {% endfor %}
     </ul>
 </div>
 <script type="text/javascript">

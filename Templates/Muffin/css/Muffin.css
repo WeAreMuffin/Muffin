@@ -9794,11 +9794,18 @@ ul[role="reunions"] li .raw-date,
 ul[role="wall"] li .raw-date {
   padding-right: 5px;
 }
+ul[role="wall"] {
+  padding: 0 0 0 20px;
+}
 ul[role="wall"] li {
   border-left: 3px solid rgba(0, 0, 0, 0.1);
-  padding: 5px 5px 5px 10px;
-  margin: 0px;
+  padding: 5px 5px 5px 15px;
+  margin: 0px 5px;
   position: relative;
+}
+ul[role="wall"] li span[class^="icon-"] {
+  color: rgba(0, 0, 0, 0.2);
+  margin-right: 5px;
 }
 ul[role="wall"] li.future {
   border-left: 5px solid rgba(192, 41, 66, 0.45);
@@ -9813,6 +9820,7 @@ ul[role="wall"] li.future + .present:before {
   transform-origin: center center;
   display: inline-block;
   content: "\e8cc";
+  color: rgba(0, 0, 0, 0.5);
   font-family: 'moon';
   speak: none;
   font-style: normal;
@@ -9846,6 +9854,27 @@ ul[role="wall"] li.future + .present:after {
 }
 ul[role="wall"] li.present {
   border-left: 5px solid rgba(192, 41, 66, 0.7);
+}
+ul[role="wall"] li.present + .past:after {
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  left: -45px;
+  color: rgba(0, 0, 0, 0.1);
+  top: 0px;
+  transform-origin: center center;
+  display: inline-block;
+  content: "\edd0";
+  font-family: 'moon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  text-align: center;
+  line-height: 40px;
 }
 ul[role="wall"] li.past {
   border-left: 5px solid rgba(0, 0, 0, 0.05);
