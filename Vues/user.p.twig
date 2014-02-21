@@ -1,19 +1,18 @@
 <div class="main-homepage">
+{% if public or 1 %}
+
 	{# L'entete avec le nom #}
 	{% include 'user.p.card.twig' %}
 
   {# les stats #}
   {% include 'user.p.stat.twig' %}
 
-  {# Les réunions qui pourraient interesser #}
-  {% include 'user.p.reunions.twig' %}
-
-  {# Les derniers articles #}
-  {% include 'user.p.articles.twig' %}
+  {# Les ~ actus #}
+  {% include 'user.p.wall.twig' %}
 
 
   <script>
-   var a = ["#p-user-drafts", "#p-user-reunions", "#p-user-stats", "#p-user-one"];
+   var a = ["#p-user-wall", "#p-user-stats", "#p-user-one"];
    var globalLang = moment();
    moment.lang('fr');
 
@@ -128,5 +127,14 @@ $(".date-calendar").each(function()
   $(this).html(moment(ctn).calendar());
 });
 </script>
+
+
+{% else %}
+  <div class="nothing-to-see">
+    <h1>Utilisateur Introuvable</h1>
+    <p>L'utilisateur n'existe pas, ou a choisi de ne pas être affiché</p>
+  </div>
+{% endif %}
+
 
 </div>

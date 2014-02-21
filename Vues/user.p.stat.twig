@@ -10,9 +10,55 @@
             scaleShowGridLines: false,
             scaleLabel : "<%=value%> h",
             scaleOverride: true,
-            scaleSteps : 6,
-            scaleStepWidth : 4,
-            scaleStartValue : 0
+            scaleSteps : 4,
+            scaleStepWidth : 6,
+            scaleStartValue : 0,
+            onAnimationComplete: function()
+            {
+                ctx = $("#p-user-chart").get(0).getContext("2d");
+
+                var i_user = "{{ infos.prenom }}";
+                var i_userl = ctx.measureText(i_user).width;
+                var g_user = "Moyenne de la promotion";
+                var g_userl = ctx.measureText(g_user).width;
+                var l_pad = 90;
+                var sp = 10;
+
+                ctx.fillStyle = "rgba(192, 41, 66, 1)";
+                ctx.beginPath();
+                ctx.arc(l_pad, sp, 6, 0, Math.PI*2, true);
+                ctx.closePath();
+                ctx.fill();
+                ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+                ctx.fillText(i_user, l_pad + sp + i_userl, sp);
+
+                ctx.fillStyle = "rgb(247, 228, 190)";
+                ctx.beginPath();
+                ctx.arc(l_pad, sp, 3, 0, Math.PI*2, true);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = "rgb(217, 91, 67)";
+                ctx.beginPath();
+                ctx.arc(l_pad + 4*sp + i_userl, sp, 6, 0, Math.PI*2, true);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = "rgb(247, 228, 190)";
+                ctx.beginPath();
+                ctx.arc(l_pad + 4*sp + i_userl, sp, 3, 0, Math.PI*2, true);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+                ctx.fillText(g_user, l_pad + 5*sp + g_userl + i_userl, sp);
+
+                ctx.font = "20px 'Lato', sans-serif";
+                var t = "TEMPS DE CONNEXION EN HEURES PAR JOUR";
+                var l = ctx.measureText(t);
+                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+                ctx.fillText(t, (800 - (800 - l.width) / 2), 50);
+            }
         };
 
         var data = {
@@ -35,6 +81,7 @@
             ]
         }
         var ctx = $("#p-user-chart").get(0).getContext("2d");
+
         new Chart(ctx).Line(data,options);
 
         </script>

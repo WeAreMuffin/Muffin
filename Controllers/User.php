@@ -57,10 +57,10 @@ class User extends Controller
         $this->registerParams ($params);
         $login = $this->getUrlParam('user');
         $user = Moon::get ('c_user', 'login', $login);
+        $this->addData("public", ($user->comp_public == 1));
         if ($user)
         {
             $this->prepareUserData($login, $user);
-            $this->getAverageTime($login);
             $this->render ();
         }
     }
@@ -74,8 +74,10 @@ class User extends Controller
         $r->execute(array());
         $avg = $r->fetchAll();
         $this->addData('stats_time', $datas);
-        //$this->addData('stats_time_avg', $avg);
-        $this->addData('stats_time_avg', array_column($avg, 'moy'));
+        $moy = array_column($avg, 'moy');
+        $this->addData('stats_time_avg', $moy);
+        $this->addData('stats_time_user_avg', (array_sum($datas->duration) / count($datas)));
+        $this->addData('stats_time_full_avg', (array_sum($moy) / count($moy)));
     }
 
     public function gtb($params)
@@ -90,71 +92,84 @@ class User extends Controller
         $uid = $user->id;
         $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
 
-        $q = "  SELECT DISTINCT *
-                FROM c_echanges e
-                    INNER JOIN c_competences c
-                    ON e.competence = c.id_competence
-                    INNER JOIN c_user_competences uc
-                    ON uc.id_competence = c.id_competence AND uc.id_user = e.id_propose
-                    INNER JOIN c_user u
-                    ON e.id_propose = u.id
-                    INNER JOIN c_42_logins cl
-                    ON u.login = cl.login_eleve
-                WHERE
-                    e.id_demande = :id AND e.resume = 'attente'
-                ORDER BY e.resume DESC
-            ";
 
-        $q2 = "  SELECT DISTINCT *
-                FROM c_echanges e
-                    INNER JOIN c_competences c
-                    ON e.competence = c.id_competence
-                    INNER JOIN c_user_competences uc
-                    ON uc.id_competence = c.id_competence AND uc.id_user = e.id_propose
-                    INNER JOIN c_user u
-                    ON e.id_demande = u.id
-                    INNER JOIN c_42_logins cl
-                    ON u.login = cl.login_eleve
-                WHERE
-                    e.id_propose = :id AND e.resume = 'accepte'
-                ORDER BY e.resume DESC
-            ";
+        $this->getAverageTime($login);
+        $exch = new Entities('c_echanges[id_propose="'.$uid.'"]');
+        $reunions = $this->get_p_future_reunions($uid);
 
         $bd = Core::getBdd()->getDb();
-        $r = $bd->prepare($q);
-        $r->execute(array("id" => $uid));
-        $demandes = $r->fetchAll(PDO::FETCH_CLASS);
-
-        $r = $bd->prepare($q2);
-        $r->execute(array("id" => $uid));
-        $propositions = $r->fetchAll(PDO::FETCH_CLASS);
-
-        $news = $bd->query("SELECT * FROM c_news c ORDER BY c.date DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
         $drafts = $bd->query("SELECT * FROM c_drafts c
-                             WHERE c.public > 0 AND c.draft_author != ".$_SESSION['muffin_id']
-                             ." ORDER BY c.draft_date_c DESC LIMIT 0,5")->fetchAll(PDO::FETCH_CLASS);
+                             WHERE c.public > 0 AND c.draft_author = ".$uid
+                             ." ORDER BY c.draft_date_c DESC LIMIT 0,5")
+                            ->fetchAll(PDO::FETCH_CLASS);
 
-        /* Premiere visite ? */
-        if ($user->first_visit == 1)
-        {
-            $this->addData ('take_a_tour', true);
-            $this->setVisited();
-        }
-        else
-        {
-            $this->addData ('take_a_tour', false);
-        }
+        $json = $this->prepareUserWall($uid);
 
         $this->addData ('nom', ucfirst (strtolower ($infos->nom)));
         $this->addData ('user', $user);
         $this->addData ('infos', $infos);
-        $this->addData ('news', $news);
-        $this->addData ('reunions', $this->get_future_reunions());
+        $this->addData ('exch', $exch);
+        $this->addData ('reunions', $reunions);
         $this->addData ('drafts', $drafts);
+        $this->addData ('json', $json);
         $this->addData ('rank', $this->getRank($uid));
         $this->addData ('count', $this->getCount());
-        $this->addData ('demandes', $demandes);
-        $this->addData ('propositions', $propositions);
+    }
+
+    protected function prepareUserWall($uid)
+    {
+        $w_json = array();
+
+        $bd = Core::getBdd()->getDb();
+        $drafts = $bd->query("SELECT * FROM c_drafts c
+                             WHERE c.public > 0 AND c.draft_author = ".$uid
+                             ." ORDER BY c.draft_date_c DESC LIMIT 0,5")
+                            ->fetchAll(PDO::FETCH_CLASS);
+        $reunions = $bd->query("SELECT * FROM c_reunion c
+                             WHERE c.reunion_organisateur = ".$uid
+                             ." LIMIT 0,5")
+                            ->fetchAll(PDO::FETCH_CLASS);
+        $exch = $bd->query("SELECT * FROM c_user_competences c
+                             WHERE c.id_user = ".$uid
+                             ." LIMIT 0,5")
+                            ->fetchAll(PDO::FETCH_CLASS);
+
+
+        /**
+         * Fetch all the data from drafts, reunions and exchanges
+         */
+        foreach ($drafts as $key => $value)
+        {
+            $w_json[] = array("icon" => "write",
+                                   "type" => "draft",
+                                   "date" => $value->draft_date_c,
+                                   "name" => "a écrit \"".$value->draft_name."\"");
+        }
+        foreach ($reunions as $key => $value)
+        {
+            $c = Moon::get('c_competences', 'id_competence', $value->reunion_competence);
+            ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
+
+            $w_json[] = array("icon" => "bubbles",
+                                   "type" => "reunion",
+                                   "date" => $value->reunion_date,
+                                   "name" => "va organiser une réunions sur $c");
+        }
+        foreach ($exch as $key => $value)
+        {
+            $c = Moon::get('c_competences', 'id_competence', $value->id_competence);
+            ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
+            $msg = "a besoin d'aide";
+            if ($value->want_to_teach == 1)
+                $msg = "a envie d'aider";
+
+            $w_json[] = array("icon" => "repeat",
+                                   "type" => "exch",
+                                   "date" => $value->date_user_c,
+                                   "name" => "$msg en ".$c);
+        }
+
+        return (json_encode($w_json));
     }
 
 
@@ -235,6 +250,7 @@ class User extends Controller
 
 
 
+
     protected function get_future_reunions($me = false)
     {
 
@@ -254,6 +270,25 @@ class User extends Controller
         return($res);
     }
 
+    protected function get_p_future_reunions($id)
+    {
+
+        $q = "  SELECT *
+                FROM  `c_reunion` r
+                INNER JOIN `c_user` u ON r.reunion_organisateur = u.id
+                INNER JOIN `c_42_logins` lo ON u.login = lo.login_eleve
+                INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
+                LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
+                WHERE `reunion_date` > NOW()
+                AND (r.reunion_organisateur = :uid);
+            ";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($q);
+        $r->execute(array("uid" => $id));
+        $res = $r->fetchAll(PDO::FETCH_CLASS);
+        return($res);
+    }
+
     /**
      * Will return the rank associated with the given id.
      */
@@ -261,12 +296,13 @@ class User extends Controller
     {
         $bd = Core::getBdd()->getDb();
         $rank = 0;
-        $top_c = "SELECT COUNT( * ) AS c, u.id AS i
-                        FROM c_echanges e
-                        INNER JOIN c_user u ON e.id_propose = u.id
-                        INNER JOIN c_42_logins l ON u.login = l.login_eleve
-                        GROUP BY e.id_propose
-                        ORDER BY c DESC";
+        $top_c = "SELECT COUNT( * ) AS c, u.id AS i, l.login_eleve
+                    FROM c_echanges e
+                    INNER JOIN c_user u ON e.id_propose = u.id
+                    INNER JOIN c_42_logins l ON u.login = l.login_eleve
+                    GROUP BY e.id_propose
+                    ORDER BY c DESC , i ASC
+                    LIMIT 0 , 30";
 
         foreach  ($bd->query($top_c) as $user)
         {

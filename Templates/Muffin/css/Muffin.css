@@ -9763,23 +9763,24 @@ div[role="simple-row"] ul[role="drafts"] li {
 .user-card-title small span.right a > span {
   color: rgba(0, 0, 0, 0.3);
 }
-.user-card-title .top-one {
+.top-one {
   color: #CAA34E;
 }
-.user-card-title .top-two {
+.top-two {
   color: #C0C0C0;
 }
-.user-card-title .top-three {
+.top-three {
   color: #9B7348;
 }
-.user-card-title .top-ten {
+.top-ten {
   color: #E22D00;
 }
-.user-card-title .top-cinquante {
+.top-cinquante {
   color: #C06D6D;
 }
 ul[role="news"] li,
-ul[role="reunions"] li {
+ul[role="reunions"] li,
+ul[role="wall"] li {
   text-align: justify;
   border-left: 5px solid rgba(0, 0, 0, 0.05);
   /* font-style: italic; */
@@ -9789,8 +9790,65 @@ ul[role="reunions"] li {
   color: rgba(0, 0, 0, 0.6);
 }
 ul[role="news"] li .raw-date,
-ul[role="reunions"] li .raw-date {
+ul[role="reunions"] li .raw-date,
+ul[role="wall"] li .raw-date {
   padding-right: 5px;
+}
+ul[role="wall"] li {
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+  padding: 5px 5px 5px 10px;
+  margin: 0px;
+  position: relative;
+}
+ul[role="wall"] li.future {
+  border-left: 5px solid rgba(192, 41, 66, 0.45);
+}
+ul[role="wall"] li.future + .present:before {
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  left: -45px;
+  top: -2px;
+  transform-origin: center center;
+  display: inline-block;
+  content: "\e8cc";
+  font-family: 'moon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  text-align: center;
+  line-height: 40px;
+}
+ul[role="wall"] li.future + .present:after {
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  left: -45px;
+  color: rgba(192, 41, 66, 0.45);
+  top: -40px;
+  transform-origin: center center;
+  display: inline-block;
+  content: "\edd3";
+  font-family: 'moon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  text-align: center;
+  line-height: 40px;
+}
+ul[role="wall"] li.present {
+  border-left: 5px solid rgba(192, 41, 66, 0.7);
+}
+ul[role="wall"] li.past {
+  border-left: 5px solid rgba(0, 0, 0, 0.05);
 }
 .section-title {
   text-align: left;
@@ -10069,7 +10127,7 @@ input + button > span[class^="icon-"] {
 */
 .p-user {
   position: relative;
-  height: 200px;
+  height: 160px;
   display: block;
 }
 .p-user .p-picture {
@@ -10082,15 +10140,54 @@ input + button > span[class^="icon-"] {
   opacity: 0.9;
 }
 .p-user .p-title {
-  margin-left: 150px;
+  margin-left: 170px;
   font-size: 1.2em;
 }
 .p-user .p-title h1 {
   font-size: 2.6em;
   margin: 0;
+  text-transform: capitalize;
   margin-bottom: 0;
   padding-top: 30px;
   padding-left: 10px;
+}
+.p-user .p-title h2 {
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+}
+.p-user .p-title h2 > span {
+  padding-right: 10px;
+  font-size: 0.8em;
+  color: rgba(0, 0, 0, 0.35);
+}
+.p-user .p-title h2 > span > [class^="icon-"],
+.p-user .p-title h2 > span.red > [class^="icon-"],
+.p-user .p-title h2 > span.green > [class^="icon-"] {
+  color: rgba(0, 0, 0, 0.2);
+}
+.p-user .p-title h2 > span > [class^="top-"] {
+  margin-right: 0px;
+}
+.p-user .p-title h2 > span + span {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 10px;
+}
+.p-user .p-title h2 > span.red {
+  color: #c02942;
+}
+.p-user .p-title h2 > span.green {
+  color: #699b3b;
+}
+.nothing-to-see {
+  text-align: center;
+  display: block;
+  width: 100%;
+  background: url("../img/muffin_spy.png");
+  background-position: 42% 100%;
+  background-size: auto 80%;
+  opacity: 1;
+  background-repeat: no-repeat;
+  min-height: 250px;
 }
 /*
     ------------------------------------------------------------------------

@@ -2,5 +2,20 @@
             <div class="p-picture" style="background-image: url(data:image/jpeg;base64,{{ infos.picture }})"> </div>
             <div class="p-title">
                 <h1> {{ infos.prenom|lower }} {{ infos.nom|lower }} </h1>
+                <h2>
+                    <span class="tiny-container"><span class="icon-medal"></span> {{ rank }}</span>
+                        {% if stats_time_user_avg < stats_time_full_avg %}
+                            <span class="tiny-container">
+                        {% elseif stats_time_user_avg > 17 %}
+                            <span class="tiny-container red">
+                        {% else %}
+                            <span class="tiny-container green">
+                        {% endif %}
+                        <span class="icon-history"></span> {{ stats_time_user_avg|number_format(2, '.', ',') }} <sup>h/jour</sup>
+                    </span>
+                    <span class="tiny-container"><span class="icon-repeat"></span> {{ exch|length }}</span>
+                    <span class="tiny-container"><span class="icon-write"></span> {{ drafts|length }}</span>
+                    <span class="tiny-container"><span class="icon-bubbles"></span> {{ reunions|length }}</span>
+                </h2>
             </div>
         </div>

@@ -1,0 +1,54 @@
+
+<div role="simple-row" id="p-user-wall" class="loading">
+    <!-- <h3 class="section-title"><span class="icon-news"></span> Drafts</h3> -->
+    <ul role="wall">
+        {% for draft in drafts %}
+            <li data-action="read-draft" data-id="{{ draft.draft_id }}">
+                {{ draft.draft_name }} · {# date #} <span class="raw-date" data-date="{{ draft.draft_date_c }}"></span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<script type="text/javascript">
+
+var wall_data = {{ json }};
+
+wall_data = _.sortBy(wall_data, function(e){ return(moment(e.date).unix()); });
+
+var w_cont = $("ul[role='wall']");
+
+var wall_item = _.template("\
+                <li>\
+                    <span class='icon-<%= icon %>'></span> \
+                    {{ infos.prenom }} <%= name %> - \
+                    <span class='raw-date' data-date='<%= date %>'></span>\
+                </li>");
+_.each(wall_data, function(e)
+{
+    w_cont.prepend(wall_item(e));
+});
+
+w_cont.find("li").each(function(e)
+{
+    var d = $(this).find("[data-date]").attr("data-date");
+    if (moment(d).isBefore())
+    {
+        $(this).addClass("past");
+    }
+    else if (moment(d).day() == moment().day())
+    {
+        $(this).addClass("present");
+    }
+    else if (moment(d).isAfter())
+    {
+        $(this).addClass("future");
+    }
+});
+
+$("li[data-action='read-draft']").click(function()
+{
+    var id = $(this).attr("data-id");
+    Muffin.draft.read(id);
+    Muffin.expandContainer();
+});
+</script>
