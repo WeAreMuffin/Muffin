@@ -79,6 +79,14 @@ function goToUrl(url, elt)
 			Muffin.reduceContainer();
 		}
 	}
+	if (elt != undefined && elt.attr("user-profile") != undefined)
+	{
+		$(".profile-aside").addClass("opened");
+	}
+	else
+	{
+		$(".profile-aside").removeClass("opened");
+	}
 	$.get(url, function(data) {
 			data = $(data);
 			data.addClass("loading");

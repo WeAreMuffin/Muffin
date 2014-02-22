@@ -1009,6 +1009,76 @@ input + button > span[class^="icon-"] {
 }
 /*
     ------------------------------------------------------------------------
+        Aside little profile
+    ------------------------------------------------------------------------
+*/
+.profile-aside
+{
+    position: relative;
+    cursor: pointer;
+    top: 0px;
+    transition: 0.4s all;
+
+    &.opened
+    {
+        top: 40px;
+        opacity: 0;
+        transition: 0.4s all;
+    }
+
+    .aside-picture
+    {
+        position: absolute;
+        left: 15px;
+        top: 5px;
+        height: 45px;
+        border-radius: 2px;
+        width: 45px;
+        background-position: 50% 50%;
+        background-size: 100%;
+    }
+    .aside-title
+    {
+        margin-left: 70px;
+        display: block;
+        color: @muffin-black;
+
+        & > span
+        {
+            display: block;
+            text-transform: capitalize;
+        }
+
+        & > div
+        {
+            display: block;
+
+            & > span
+            {
+                padding-right: 5px;
+                font-size: 0.8em;
+                color: rgba(0, 0, 0, 0.35);
+
+                > [class^="icon-"],
+                &.red > [class^="icon-"],
+                &.green > [class^="icon-"]
+                {
+                    color: rgba(0, 0, 0, 0.2);
+                }
+
+                &+span
+                {
+                    border-left: 1px solid rgba(0, 0, 0, 0.1);
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+}
+
+
+/*
+    ------------------------------------------------------------------------
         Users pages
     ------------------------------------------------------------------------
 */
@@ -2935,44 +3005,44 @@ h1.title-remain,
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
     }
-}
 
-.red
-{
-    &:hover
+    .red
     {
-        background-color: rgba(238, 95, 95, 0.4);
+        &:hover
+        {
+            background-color: rgba(238, 95, 95, 0.4);
+        }
+        &.active,
+        &:active
+        {
+            background-color: rgba(238, 95, 95, 1);
+        }
     }
-    &.active,
-    &:active
-    {
-        background-color: rgba(238, 95, 95, 1);
-    }
-}
 
-.orange
-{
-    &:hover
+    .orange
     {
-        background-color: rgba(238, 181, 95, 0.4);
+        &:hover
+        {
+            background-color: rgba(238, 181, 95, 0.4);
+        }
+        &.active,
+        &:active
+        {
+            background-color: rgba(238, 181, 95, 1);
+        }
     }
-    &.active,
-    &:active
-    {
-        background-color: rgba(238, 181, 95, 1);
-    }
-}
 
-.green
-{
-    &:hover
+    .green
     {
-        background-color: rgba(182, 214, 81, 0.4);
-    }
-    &.active,
-    &:active
-    {
-        background-color: rgba(182, 214, 81, 1);
+        &:hover
+        {
+            background-color: rgba(182, 214, 81, 0.4);
+        }
+        &.active,
+        &:active
+        {
+            background-color: rgba(182, 214, 81, 1);
+        }
     }
 }
 

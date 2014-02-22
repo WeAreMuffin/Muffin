@@ -29,6 +29,19 @@
 
 <div class="header-mobile-button"><span class="icon-muffin"></span></div>
 <aside data-spy="affix" data-offset-top="400" class="side-menu">
+    {% if webdata.session.muffin_id %}
+        <div class="profile-aside" user-profile data-load-target="User/p">
+            <div class="aside-picture" style="background-image: url(data:image/jpeg;base64,{{ infos.picture }})"> </div>
+            <div class="aside-title">
+                <span> {{ infos.prenom|lower }} {{ infos.nom|lower }} </span>
+                <div>
+                    <span class="tiny-container"><span class="icon-repeat"></span> {{ uexch|length }}</span>
+                    <span class="tiny-container"><span class="icon-write"></span> {{ udrafts|length }}</span>
+                    <span class="tiny-container"><span class="icon-bubbles"></span> {{ ureunions|length }}</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <ul role="side-menu">
         {% if webdata.session.muffin_id %}
             <li>

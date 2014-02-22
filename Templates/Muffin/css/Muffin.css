@@ -10151,6 +10151,58 @@ input + button > span[class^="icon-"] {
 }
 /*
     ------------------------------------------------------------------------
+        Aside little profile
+    ------------------------------------------------------------------------
+*/
+.profile-aside {
+  position: relative;
+  cursor: pointer;
+  top: 0px;
+  transition: 0.4s all;
+}
+.profile-aside.opened {
+  top: 40px;
+  opacity: 0;
+  transition: 0.4s all;
+}
+.profile-aside .aside-picture {
+  position: absolute;
+  left: 15px;
+  top: 5px;
+  height: 45px;
+  border-radius: 2px;
+  width: 45px;
+  background-position: 50% 50%;
+  background-size: 100%;
+}
+.profile-aside .aside-title {
+  margin-left: 70px;
+  display: block;
+  color: #413e4a;
+}
+.profile-aside .aside-title > span {
+  display: block;
+  text-transform: capitalize;
+}
+.profile-aside .aside-title > div {
+  display: block;
+}
+.profile-aside .aside-title > div > span {
+  padding-right: 5px;
+  font-size: 0.8em;
+  color: rgba(0, 0, 0, 0.35);
+}
+.profile-aside .aside-title > div > span > [class^="icon-"],
+.profile-aside .aside-title > div > span.red > [class^="icon-"],
+.profile-aside .aside-title > div > span.green > [class^="icon-"] {
+  color: rgba(0, 0, 0, 0.2);
+}
+.profile-aside .aside-title > div > span + span {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 10px;
+}
+/*
+    ------------------------------------------------------------------------
         Users pages
     ------------------------------------------------------------------------
 */
@@ -11594,25 +11646,25 @@ h1.title-remain,
   padding-top: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
-.red:hover {
+.liste-reunions .red:hover {
   background-color: rgba(238, 95, 95, 0.4);
 }
-.red.active,
-.red:active {
+.liste-reunions .red.active,
+.liste-reunions .red:active {
   background-color: #ee5f5f;
 }
-.orange:hover {
+.liste-reunions .orange:hover {
   background-color: rgba(238, 181, 95, 0.4);
 }
-.orange.active,
-.orange:active {
+.liste-reunions .orange.active,
+.liste-reunions .orange:active {
   background-color: #eeb55f;
 }
-.green:hover {
+.liste-reunions .green:hover {
   background-color: rgba(182, 214, 81, 0.4);
 }
-.green.active,
-.green:active {
+.liste-reunions .green.active,
+.liste-reunions .green:active {
   background-color: #b6d651;
 }
 .font-large {

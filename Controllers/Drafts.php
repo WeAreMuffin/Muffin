@@ -85,7 +85,7 @@ class Drafts extends Controller
         {
             $id = Core::getBdd ()->insert (
                     array ("draft_name" => $title,
-                        "draft_content" => $text, "draft_date_m" => "NOW()",
+                        "draft_content" => $text,
                         "draft_author" => $auteur), 'c_drafts');
             echo $id;
         }

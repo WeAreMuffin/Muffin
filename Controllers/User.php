@@ -56,6 +56,8 @@ class User extends Controller
     {
         $this->registerParams ($params);
         $login = $this->getUrlParam('user');
+        if ($login == NULL)
+            $login = $_SESSION['login'];
         $user = Moon::get ('c_user', 'login', $login);
         $this->addData("public", ($user->comp_public == 1));
         if ($user)
@@ -94,31 +96,31 @@ class User extends Controller
 
 
 	    $this->getAverageTime($login);
-	if ($uid)
-	{
-	    $exch = new Entities('c_echanges[id_propose="'.$uid.'"]');
-	    $reunions = $this->get_p_future_reunions($uid);
+    	if ($uid)
+    	{
+    	    $exch = new Entities('c_echanges[id_propose="'.$uid.'"]');
+    	    $reunions = $this->get_p_future_reunions($uid);
 
-	    $bd = Core::getBdd()->getDb();
-	    $drafts = $bd->query("SELECT * FROM c_drafts c
-				 WHERE c.public > 0 AND c.draft_author = ".$uid." ORDER BY c.draft_date_c DESC LIMIT 0,5")
-				->fetchAll(PDO::FETCH_CLASS);
-	    $json = $this->prepareUserWall($uid);
-	    $this->addData ('exch', $exch);
-	    $this->addData ('reunions', $reunions);
-	    $this->addData ('drafts', $drafts);
-	    $this->addData ('json', $json);
-	}
-	else
-	{
-	    $this->addData ('json', "[]");
-	}
+    	    $bd = Core::getBdd()->getDb();
+    	    $drafts = $bd->query("SELECT * FROM c_drafts c
+    				 WHERE c.public > 0 AND c.draft_author = ".$uid." ORDER BY c.draft_date_c DESC LIMIT 0,5")
+    				->fetchAll(PDO::FETCH_CLASS);
+    	    $json = $this->prepareUserWall($uid);
+    	    $this->addData ('exch', $exch);
+    	    $this->addData ('reunions', $reunions);
+    	    $this->addData ('drafts', $drafts);
+    	    $this->addData ('json', $json);
+    	}
+    	else
+    	{
+    	    $this->addData ('json', "[]");
+    	}
 
-	$this->addData ('nom', ucfirst (strtolower ($infos->nom)));
-	$this->addData ('user', $user);
-	$this->addData ('infos', $infos);
-	$this->addData ('rank', $this->getRank($uid));
-	$this->addData ('count', $this->getCount());
+    	$this->addData ('nom', ucfirst (strtolower ($infos->nom)));
+    	$this->addData ('user', $user);
+    	$this->addData ('infos', $infos);
+    	$this->addData ('rank', $this->getRank($uid));
+    	$this->addData ('count', $this->getCount());
     }
 
     protected function prepareUserWall($uid)
@@ -251,6 +253,20 @@ class User extends Controller
         $this->addData ('count', $this->getCount());
         $this->addData ('demandes', $demandes);
         $this->addData ('propositions', $propositions);
+
+        /* user head part */
+
+        $uid = $_SESSION['muffin_id'];
+        $exch = new Entities('c_echanges[id_propose="'.$uid.'"]');
+        $reunions = $this->get_p_future_reunions($uid);
+
+        $bd = Core::getBdd()->getDb();
+        $drafts = $bd->query("SELECT * FROM c_drafts c
+                 WHERE c.public > 0 AND c.draft_author = ".$uid." ORDER BY c.draft_date_c DESC LIMIT 0,5")
+                ->fetchAll(PDO::FETCH_CLASS);
+        $this->addData ('uexch', $exch);
+        $this->addData ('ureunions', $reunions);
+        $this->addData ('udrafts', $drafts);
     }
 
 
