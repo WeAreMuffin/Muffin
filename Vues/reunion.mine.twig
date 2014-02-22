@@ -1,19 +1,19 @@
 
 <ul class="horizontal-buttons">
     <li id="reunions-button-add">
-		<a class="btn" data-load-target="Reunion/index"><span class="icon-bubbles"></span> Toutes les réunions</a>
-    </li>
-    <li id="reunions-button-add">
         <a class="btn" data-load-target="Reunion/create">
         	<span class="icon-bullhorn"></span><span class='side-legend'> Nouvelle réunion</span>
         </a>
+    </li>
+    <li id="reunions-button-add">
+		<a class="btn" data-load-target="Reunion/index"><span class="icon-bubbles"></span> Toutes les réunions</a>
     </li>
 </ul>
 
 {% set mine = {'mine' : true} %}
 
 <div class="loading">
-	<h1>Réunions du jour</h1>
+	<h3>Réunions du jour</h3>
 	{% if aujourdhui|length %}
 		<ul class="liste-reunions">
 			{% for reunion in aujourdhui %}
@@ -26,7 +26,7 @@
 
 	<div class="bretzel-separator"></div>
 
-	<h1>Réunions à venir</h1>
+	<h3>Réunions à venir</h3>
 	{% if future|length %}
 		<ul class="liste-reunions">
 			{% for reunion in future %}
@@ -39,7 +39,7 @@
 
 	<div class="bretzel-separator"></div>
 
-	<h1>Réunions passées</h1>
+	<h3>Réunions passées</h3>
 	{% if past|length %}
 		<ul class="liste-reunions">
 			{% set is_past = {'is_past': true} %}

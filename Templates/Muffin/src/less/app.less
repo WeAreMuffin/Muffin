@@ -1018,10 +1018,11 @@ input + button > span[class^="icon-"] {
     cursor: pointer;
     top: 0px;
     transition: 0.4s all;
+    padding: 0px;
 
     &.opened
     {
-        top: 40px;
+        top: 10px;
         opacity: 0;
         transition: 0.4s all;
     }
@@ -1029,7 +1030,7 @@ input + button > span[class^="icon-"] {
     .aside-picture
     {
         position: absolute;
-        left: 15px;
+        left: 5px;
         top: 5px;
         height: 45px;
         border-radius: 2px;
@@ -1039,7 +1040,7 @@ input + button > span[class^="icon-"] {
     }
     .aside-title
     {
-        margin-left: 70px;
+        margin-left: 65px;
         display: block;
         color: @muffin-black;
 
@@ -1378,19 +1379,24 @@ div[data-role="container"]
     & > aside
     {
         display: inline-block;
-        width: 20%;
+        width: 19%;
+        margin-right: 10px;
         vertical-align: top;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
 
         & + article
         {
             display: inline-block;
             width: 79%;
+            padding-right: 10px;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
         }
     }
 
     ul.horizontal-buttons
     {
         padding-left: 0px;
+        margin-top: 0px;
         border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 
         li
@@ -1692,8 +1698,9 @@ aside.side-menu
 
     ul[role="side-menu"]
     {
-        margin: 40px 20px 0px 0px;
-        border-right: 1px solid #CABA9C;
+        margin: 10px 0px 0px 0px;
+        padding-left: 0px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
 
 
         li {
@@ -2782,6 +2789,14 @@ h1.title-remain,
 .form-reunion,
 .form
 {
+    .panel
+    {
+        padding: 5px 10px;
+        font-size: 0.8em;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.39);
+    }
+
     input
     {
         border: 1px solid rgba(0, 0, 0, 0.3);
@@ -2794,7 +2809,7 @@ h1.title-remain,
 
     .form-group
     {
-        margin-top: 3px;
+        margin-top: 10px;
         margin-bottom: 3px;
 
         input,

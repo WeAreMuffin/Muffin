@@ -1,5 +1,22 @@
+<ul class="horizontal-buttons">
+    <li>
+        <a class="btn" data-load-target="User/me"><span class="icon-arrow-left"></span><span class='side-legend'> Retour</span></a>
+    </li>
+    <li id="me-button-explore">
+        <a class="btn" data-toggle="modal" data-target="#modal-explore"><span class="icon-search"></span><span class='side-legend'> Explorer</span></a>
+    </li>
+    <li id="me-button-info">
+        <a class="btn" data-toggle="modal" data-target="#modal-info"><span class="icon-support3"></span><span class='side-legend'> Légende</span></a>
+    </li>
+</ul>
+
 <h1>Voici les compétences de {{ user.prenom }}</h1>
-        {{ formDataJson }}
+<ul class="items-panels">
+<li>
+    {{ formDataJson }}
+    </li>
+</ul>
+
 <script>
 
         window.toCheck = [{{ checkedRadios }}];

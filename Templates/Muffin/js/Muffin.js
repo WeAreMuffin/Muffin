@@ -21505,7 +21505,7 @@ function goToUrl(url, elt)
 			Muffin.reduceContainer();
 		}
 	}
-	if (elt != undefined && elt.attr("user-profile") != undefined)
+	if (elt != undefined && typeof(elt) === "object" && elt.attr("user-profile") != undefined)
 	{
 		$(".profile-aside").addClass("opened");
 	}
