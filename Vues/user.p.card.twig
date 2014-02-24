@@ -1,21 +1,42 @@
         <div role="simple-row" id="p-user-one" class="loading p-user">
             <div class="p-picture" style="background-image: url(data:image/jpeg;base64,{{ infos.picture }})"> </div>
             <div class="p-title">
-                <h1> {{ infos.prenom|lower }} {{ infos.nom|lower }} </h1>
+                <h1> {{ infos.prenom|lower }} {{ infos.nom|lower }}
+                    {% if infou.comp_public == 0 %}
+                        <span class="icon-lock user-card-lock" title="Votre profil n'est visible que par vous" data-toggle="tooltip"></span>
+                    {% endif %}
+                </h1>
+                {% if infou.id == webdata.session.muffin_id %}
+                <p id="p-user-bio" contenteditable="true">{{ infou.bio|default("Clique pour ajouter du blabla") }}</p>
+                {% else %}
+                    <p id="p-user-bio">{{ infou.bio|default("Cadet à 42") }}</p>
+                {% endif %}
                 <h2>
                     <span class="tiny-container"><span class="icon-medal"></span> {{ rank }}</span>
-                        {% if stats_time_user_avg < stats_time_full_avg %}
-                            <span class="tiny-container">
-                        {% elseif stats_time_user_avg > 17 %}
-                            <span class="tiny-container red">
-                        {% else %}
-                            <span class="tiny-container green">
-                        {% endif %}
-                        <span class="icon-history"></span> {{ stats_time_user_avg|number_format(2, '.', ',') }} <sup>h/jour</sup>
-                    </span>
+                    {% if stats_time_user_avg < stats_time_full_avg %}
+                        <span class="tiny-container">
+                    {% elseif stats_time_user_avg > 17 %}
+                        <span class="tiny-container red">
+                    {% else %}
+                        <span class="tiny-container green">
+                    {% endif %}
+                            <span class="icon-history"></span> {{ stats_time_user_avg|number_format(2, '.', ',') }} <sup>h/jour</sup>
+                        </span>
                     <span class="tiny-container"><span class="icon-repeat"></span> {{ exch|length }}</span>
                     <span class="tiny-container"><span class="icon-write"></span> {{ drafts|length }}</span>
                     <span class="tiny-container"><span class="icon-bubbles"></span> {{ reunions|length }}</span>
                 </h2>
             </div>
         </div>
+        {% if infou.id == webdata.session.muffin_id %}
+            <script>
+            $("#p-user-bio").keyup(function()
+            {
+            $.ajax({
+              type: "POST",
+              url: "User/updateBio",
+              data: { bio: $("#p-user-bio").text() }
+            });
+            });
+            </script>
+        {% endif %}

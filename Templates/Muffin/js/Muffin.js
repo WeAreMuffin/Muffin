@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-02-22
+   mNymdhy          shddmy hNd       Sorti du four le 2014-02-24
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -21194,28 +21194,45 @@ if ( typeof define === 'function' && define.amd ) {
 
  	muffin.bindLoginEvents = function()
  	{
-
+ 		console.log("binded !");
 
  		$("#input-login").focus();
  		muffin.drawAnimations();
  		$("#input-login").keyup(function(ev)
  		{
- 			$.ajax({
- 				type: "POST",
- 				url: "Login/checkLogin/",
- 				data: {"login": $("#input-login").val()}
- 			}).done(function(e)
- 			{
- 				$(".form-group.error").removeClass("error");
- 				if (e == "1")
+			$.getJSON( "Login/checkLogin/" + ($("#input-login").val()), function(e)
+			{
+	 				$(".form-group.error").removeClass("error");
+	 				if (e.valid === true)
+	 				{
+	 					$("#input-login").parent().addClass("success");
+	 					if (e.exists === true)
+	 					{
+	 						$("#reset-pass").addClass("open");
+	 					}
+	 				}
+	 				else
+	 				{
+	 					$("#input-login").parent().removeClass("success");
+	 					$("#reset-pass").removeClass("open");
+	 				}
+			});
+ 		});
+
+ 		$("#reset-pass").click(function()
+ 		{
+			$.getJSON( "Login/update/" + ($("#input-login").val()), function(e)
+			{
+ 				if (e.auth === true && e.mail === true)
  				{
- 					$("#input-login").parent().addClass("success");
+ 					$("#reset-pass").html("<span class='icon-checkmark2'></span> Un mail vous a été envoyé !");
+ 					setTimeout(function(){$("#reset-pass").removeClass("open");}, 1000);
  				}
  				else
  				{
- 					$("#input-login").parent().removeClass("success");
+ 					$("#reset-pass").html("<span class='icon-alert'></span> Une erreur s'est produite");
  				}
- 			});
+			});
  		});
 
  		[].slice.call( document.querySelectorAll( 'button.progress-button' ) ).forEach( function( bttn )

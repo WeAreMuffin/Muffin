@@ -67,6 +67,52 @@ class User extends Controller
         }
     }
 
+    protected function getUserSkills($uid)
+    {
+            $e = new Entities('c_user_competences[id_user="'.$uid.'"][niveau>0]');
+            $e->setOrder("niveau", "DESC");
+            return ($e);
+    }
+
+    /**
+     * Mise a jour de la bio
+     */
+    public function updateBio($params)
+    {
+        $bio = $this->filterPost ('bio');
+        if (!isNull ($bio))
+        {
+            Core::getBdd ()->update (
+                    array ("bio" => $bio), 'c_user', array ("id" => $_SESSION['muffin_id']));
+                echo "1";
+        }
+        else
+        {
+            echo "1";
+        }
+    }
+
+    /**
+     * Mise a jour de la visibilité du profil
+     */
+    public function updateVisibility($params)
+    {
+        $visible = $this->filterPost ('visible');
+        if (!isNull ($visible))
+        {
+            Core::getBdd ()->update (
+                    array ("comp_public" => $visible, "first_visit" => "0"),
+                    'c_user',
+                    array ("id" => $_SESSION['muffin_id'])
+                );
+                echo "1";
+        }
+        else
+        {
+            echo "0";
+        }
+    }
+
     protected function getAverageTime($login)
     {
         $datas = new Entities('c_42_time[login="'.$login.'"]');
@@ -93,6 +139,7 @@ class User extends Controller
     {
         $uid = $user->id;
 	    $infos = Moon::get ('c_42_logins', 'login_eleve', $login);
+        $infou = Moon::get ('c_user', 'login', $login);
 
 
 	    $this->getAverageTime($login);
@@ -109,6 +156,7 @@ class User extends Controller
     	    $this->addData ('exch', $exch);
     	    $this->addData ('reunions', $reunions);
     	    $this->addData ('drafts', $drafts);
+            $this->addData ('skills', $this->getUserSkills($uid));
     	    $this->addData ('json', $json);
     	}
     	else
@@ -119,6 +167,7 @@ class User extends Controller
     	$this->addData ('nom', ucfirst (strtolower ($infos->nom)));
     	$this->addData ('user', $user);
     	$this->addData ('infos', $infos);
+        $this->addData ('infou', $infou);
     	$this->addData ('rank', $this->getRank($uid));
     	$this->addData ('count', $this->getCount());
     }

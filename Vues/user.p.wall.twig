@@ -1,8 +1,19 @@
 
-<div role="simple-row" id="p-user-wall" class="loading">
-    <h3 class="section-title"><span class="icon-time"></span> Activité récente</h3>
-    <ul role="wall">
-    </ul>
+<div role="simple-row"  id="p-user-wall" class="loading">
+    <div class="two-tiers">
+        <h3 class="section-title"><span class="icon-timeline"></span> Activité récente</h3>
+        <ul role="wall">
+        </ul>
+    </div>
+    <div class="tier skills">
+        <h3 class="section-title"><span class="icon-sword"></span> Compétences</h3>
+        {% for skill in skills %}
+            <div class="little-box">
+                <span class="skill-level-{{ skill.niveau }} icon-{{ skill.c_competences.icone }}"
+                 title="{{ skill.c_competences.nom_usuel|default(skill.c_competences.nom_competence) }}" data-toggle="tooltip"><span>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 <script type="text/javascript">
 

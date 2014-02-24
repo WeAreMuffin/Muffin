@@ -1,5 +1,5 @@
 <div class="main-homepage">
-{% if public or 1 %}
+{% if public or (infou.auth b-and 8) or infou.id == webdata.session.muffin_id %}
 
 	{# L'entete avec le nom #}
 	{% include 'user.p.card.twig' %}
@@ -30,6 +30,7 @@
     });
 
    Muffin.bindAjaxEvents();
+  $("[data-toggle='tooltip']").tooltip();
 
 
    var echangeRefresh = function()

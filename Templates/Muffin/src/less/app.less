@@ -417,6 +417,36 @@ nav {
                 }
             }
 
+            #input-passphrase
+            {
+                position: relative;
+                z-index: 200;
+            }
+
+            #reset-pass
+            {
+                opacity: 0;
+                transition: 0.5s all;
+                position: relative;
+                z-index: 50;
+                width: 50%;
+                top: -38px;
+                position: relative;
+                margin: auto;
+                padding: 6px;
+                border: 1px solid rgba(0, 0, 0, 0.3);
+                border-top: none;
+                border-radius: 0px 0px 3px 3px;
+
+                &.open
+                {
+                    cursor: pointer;
+                    display: block;
+                    opacity: 1;
+                    top: -2px;
+                }
+            }
+
 
             .button
             {
@@ -431,14 +461,86 @@ nav {
                              Fiche profil et accueil
    ========================================================================== */
 
+.skills
+{
+    text-align: left;
+
+    &> h3
+    {
+        margin-bottom: 10px;
+    }
+}
+
 .little-icon
 {
     font-size: 0.7em;
 }
 
+.little-box
+{
+    display: inline-block;
+    padding: 10px;
+    text-align: right;
+    min-width: 31%;
+    font-size: 1.8em;
+
+    & > span
+    {
+        display: block;
+        margin: auto;
+        text-align: center;
+    }
+
+    .skill-level-1
+    {
+        color: rgba(0, 0, 0, 0.2);
+    }
+
+    .skill-level-2
+    {
+        color: rgba(0, 0, 0, 0.4);
+    }
+
+    .skill-level-3
+    {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+
+/*
+    .skill-level-1
+    {
+        color: #542437;
+    }
+
+    .skill-level-2
+    {
+        color: #D95B43;
+    }
+
+    .skill-level-3
+    {
+        color: #D59611;
+    }
+*/
+    .skill-name
+    {
+        text-transform: uppercase;
+        font-size: 0.8em;
+        color: rgba(0, 0, 0, 0.4);
+    }
+}
+
 div[role="simple-row"]
 {
     display: block;
+
+    & > div
+    {
+        vertical-align: top;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
 
     .quarter
     {
@@ -449,6 +551,16 @@ div[role="simple-row"]
     {
         display: inline-block;
         width: 46%;
+    }
+    .two-tiers
+    {
+        display: inline-block;
+        width: 65%;
+    }
+    .tier
+    {
+        display: inline-block;
+        width: 32%;
     }
     .three-quarter
     {
@@ -1012,19 +1124,50 @@ input + button > span[class^="icon-"] {
         Aside little profile
     ------------------------------------------------------------------------
 */
+
+#modal-update-terms
+{
+    .modal-footer
+    {
+        text-align: center;
+        .btn
+        {
+            display: inline-block;
+            width: 45%;
+            color: #fff;
+            padding: 5px;
+            font-weight: 900;
+            text-transform: uppercase;
+
+            &.btn-warning
+            {
+                background-color: @muffin-red;
+            }
+
+            &.btn-primary
+            {
+                background-color: @muffin-forest;
+            }
+        }
+    }
+}
+
+
 .profile-aside
 {
     position: relative;
     cursor: pointer;
     top: 0px;
-    transition: 0.4s all;
+    transition: 0.3s all;
     padding: 0px;
+    height: 55px;
 
     &.opened
     {
         top: 10px;
         opacity: 0;
-        transition: 0.4s all;
+        transition: 0.3s all;
+        height: 0px;
     }
 
     .aside-picture
@@ -1089,16 +1232,25 @@ input + button > span[class^="icon-"] {
     position: relative;
     height: 160px;
     display: block;
+    background: rgba(0, 0, 0, 0.04);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 
     .p-picture
     {
         position: absolute;
-        height: 150px;
-        border-radius: 3px;
-        width: 150px;
+        height: 160px;
+        top: -1px;
+        left: -1px;
+        bottom: -1px;
+        border-radius: 5px 0px 0px 5px;
+        width: 145px;
         background-position: 50% 50%;
         background-size: 100%;
-        opacity: 0.9;
+        box-shadow: inset -3px 0px 18px 0px #000;
+        opacity: 1;
     }
 
     .p-title
@@ -1114,12 +1266,31 @@ input + button > span[class^="icon-"] {
             margin-bottom: 0;
             padding-top: 30px;
             padding-left: 10px;
+
+            .user-card-lock
+            {
+                font-size: 0.4em;
+                text-transform: none;
+                color: rgba(99, 26, 16, 0.65);
+
+                & + .tooltip
+                {
+                    text-transform: none;
+                }
+            }
+
+        }
+
+        #p-user-bio
+        {
+            margin: 15px 20px 15px 10px;
         }
 
         h2
         {
             text-align: left;
             font-family: 'Lato', sans-serif;
+            margin: 10px;
 
             > span
             {
@@ -2086,7 +2257,7 @@ div[data-role="form-container"]
 
                 &:checked + label[for$="1"]:before,
                     & + label[for$="1"]:hover:before {
-                    color: rgb(255, 173, 0);
+                    color: #542437;
                 }
 
                 &:checked + label[for$="2"]:before,
@@ -2096,7 +2267,7 @@ div[data-role="form-container"]
 
                 &:checked + label[for$="3"]:before,
                     & + label[for$="3"]:hover:before {
-                    color: #542437;
+                    color: rgb(255, 173, 0);
                 }
 
                 &:checked + label:before {
@@ -2792,6 +2963,7 @@ h1.title-remain,
     .panel
     {
         padding: 5px 10px;
+        width: 90%;
         font-size: 0.8em;
         line-height: 20px;
         color: rgba(0, 0, 0, 0.39);

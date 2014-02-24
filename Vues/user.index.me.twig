@@ -23,6 +23,7 @@
 <script>
 
         window.toCheck = [{{ checkedRadios }}];
+        $("[data-toggle='tooltip']").tooltip();
         $(".footer-container").addClass("nofix");
         NProgress.start();
         $("[data-submit]").unbind();

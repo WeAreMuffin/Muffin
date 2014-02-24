@@ -37,7 +37,7 @@ class Login extends Controller
     /**
      * Va update le pass de l'utilisateur en parametre de l'url.
      *
-     * @return string -2 si non 42, -1 si déja enregistré, 0 si erreur, 1 si ok
+     * @return JSON {"auth":true, "mail":true} si tout va bien
      *
      * @PathInfo('login')
      * @Ajax
@@ -72,10 +72,10 @@ class Login extends Controller
         {
             $mail = new MuffinMail($loginsExists->current());
             $mail->reSendMuffinPass($pass);
-            echo "1";
+            echo '{"auth":true, "mail":true}';
         }
         else
-            echo "-1";
+            echo '{"auth":false}';
     }
 
     /*
@@ -127,16 +127,25 @@ class Login extends Controller
             echo "0";
     }
 
+    /**
+     * Va renvoyer un json definissant si l'utilisateur est valide et
+     * si il est déja inscrit.
+     *
+     * @PathInfo('login')
+     * @Ajax
+     */
     public function checkLogin ($params = array ())
     {
-        $login = $this->filterPost('login');
+        $login = $this->getUrlParam('login');
         if ($login and strlen($login))
         {
             $infos = new Entities ("c_42_logins[login_eleve=\"{$login}\"]");
-            echo ((count($infos) == 1) ? "1" : "0");
+            echo '{"valid": '.((count($infos) == 1) ? 'true' : 'false').',';
+            $ex = new Entities ("c_user[login=\"{$login}\"]");
+            echo '"exists": '.((count($ex) == 1) ? 'true' : 'false').'}';
         }
         else
-            echo "0";
+            echo "{}";
     }
 
     /**

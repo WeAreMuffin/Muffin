@@ -11,7 +11,7 @@
                 <table>
                     <tr>
                         <td>
-                            <span style="color: rgb(255, 173, 0);" class='icon-star3'></span>
+                            <span style="color: #542437;" class='icon-star3'></span>
                             <span class='icon-star'></span>
                             <span class='icon-star'></span>
                         </td>
@@ -31,7 +31,7 @@
                         <td>
                             <span class='icon-star'></span>
                             <span class='icon-star'></span>
-                            <span style="color: #542437;" class='icon-star3'></span>
+                            <span style="color: rgb(255, 173, 0);" class='icon-star3'></span>
                         </td>
                         <td> ─  </td>
                         <td> Je maitrise cette compétence, j'ai un niveau avancé. </td>
@@ -267,3 +267,38 @@
 </script>
 
 
+
+<!-- Modale des conditions générales -->
+<div class="modal fade" id="modal-update-terms" tabindex="-1" role="dialog" aria-labelledby="MUpdate" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="MUpdate"><span class="icon-search"></span> Paramètres de confidentialité</h4>
+            </div>
+            <div class="modal-body">
+                    <h3>Plus qu'un petit détail...</h3>
+                    <p>Avec l'ajout des profils dans la version courante, les utilisateurs peuvent maintenant explorer les profils des autres
+                    étudiants.</p>
+                    <p><b>Pour des raisons évidentes de confidentialité, tu peux choisir si ton profil sera public, et visible par tous les membres
+                    connectés, ou privé.</b></p>
+                    <p>Ces choix peuvent etres changés à tout moment dans les paramètres.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-visibility-private class="btn btn-warning">privé</button>
+                <button type="button" data-visibility-public class="btn btn-primary">public</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+
+function ___updateVisi(v)
+{
+    $.ajax({ type: "POST",  url: "User/updateVisibility", data: {visible: v} });
+    $("#modal-update-terms").modal("hide");
+}
+
+$("#modal-update-terms [data-visibility-private]").click(function(){___updateVisi("0")});
+$("#modal-update-terms [data-visibility-public]").click(function(){___updateVisi("1")});
+</script>
