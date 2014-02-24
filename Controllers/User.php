@@ -60,7 +60,7 @@ class User extends Controller
             $login = $_SESSION['login'];
         $user = Moon::get ('c_user', 'login', $login);
         $self = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
-        $this->addData("public", ($user->comp_public == 1));
+        $this->addData("public", ($user != NULL && $user->comp_public == 1));
         $this->addData("self", $self);
         if ($user)
         {
@@ -188,7 +188,7 @@ class User extends Controller
                              ." LIMIT 0,5")
                             ->fetchAll(PDO::FETCH_CLASS);
         $exch = $bd->query("SELECT * FROM c_user_competences c
-                             WHERE c.id_user = ".$uid
+                             WHERE (`want_to_learn` != 0 OR `want_to_teach` != 0) AND c.id_user = ".$uid
                              ." LIMIT 0,5")
                             ->fetchAll(PDO::FETCH_CLASS);
 
