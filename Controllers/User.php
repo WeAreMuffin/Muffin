@@ -59,7 +59,9 @@ class User extends Controller
         if ($login == NULL)
             $login = $_SESSION['login'];
         $user = Moon::get ('c_user', 'login', $login);
+        $self = Moon::get ('c_user', 'id', $_SESSION['muffin_id']);
         $this->addData("public", ($user->comp_public == 1));
+        $this->addData("self", $self);
         if ($user)
         {
             $this->prepareUserData($login, $user);
