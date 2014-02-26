@@ -1,7 +1,7 @@
 RSA
 ----------------------------
 Un exemple d'encryptage RSA avec du Javscript (côté Client) et
-décryptage avec du php (côté Serveur).
+de décryptage avec du php (côté Serveur).
 
 Library
 ----------------------------
