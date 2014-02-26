@@ -1,11 +1,11 @@
 RSA
 ----------------------------
-Un exemple d'encryptage rsa avec du javscript (Client) et
-décryptage avec du php (Serveur).
+Un exemple d'encryptage RSA avec du Javscript (côté Client) et
+décryptage avec du php (côté Serveur).
 
-Library utilisée
+Library
 ----------------------------
-- Jvascript
+- Javascript
 pidCrypt    (https://www.pidder.de/pidcrypt/)
 JQuery      (http://jquery.com/)
 
