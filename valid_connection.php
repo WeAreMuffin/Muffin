@@ -4,7 +4,8 @@
  * valid_connection.php
  * @author: Stéphane Barale (C0r3y8) stephane.barale@gmail.com
  */
-set_include_path(get_include_path() . PATH_SEPARATOR . "C:\wamp\www\Rsa\library\phpseclib");
+$include_path = $_SERVER["DOCUMENT_ROOT"] . "/RSA/library/phpseclib";
+set_include_path(get_include_path() . PATH_SEPARATOR . $include_path);
 include 'Crypt/RSA.php';
 session_start();
 

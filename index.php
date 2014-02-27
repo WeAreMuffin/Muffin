@@ -14,7 +14,7 @@ require_once 'generate_rsa_key.php';
  */
 $filenames = array(
     "privateKey" => "private/private",
-    "publicKey" =>  "private/public"
+    "publicKey" => "private/public"
 );
 if (!load_key($filenames)) {
     $error = TRUE;
