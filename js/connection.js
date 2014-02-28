@@ -19,12 +19,13 @@ function initConnection(pseudo, pwd) {
             console.log("Connection error.");
         else {
             console.log("Cle public recue.");
-            
+
             console.log("Traitement de la cle publique...");
             params = certParser(publicKey);
-            if (params.b64) {
-                console.log("Cle public ok.");
-                
+            if (params.b64)
+            {
+                console.log("Cle publique ok.");
+
                 console.log("Debut de l'encryptage des donees.");
                 pk = pidCryptUtil.decodeBase64(params.b64);
                 rsa = new pidCrypt.RSA();
@@ -32,15 +33,17 @@ function initConnection(pseudo, pwd) {
                 asn = pidCrypt.ASN1.decode(pidCryptUtil.toByteArray(pk));
                 tree = asn.toHexTree();
                 rsa.setPublicKeyFromASN(tree);
-                
+
                 console.log("Encryption en cours...");
                 pseudo_crypt = rsa.encrypt(pseudo);
                 pwd_crypt = rsa.encrypt(pwd);
-                crypted = {
+
+                crypted =
+                {
                     pseudo: pidCryptUtil.fragment(pidCryptUtil.encodeBase64(pidCryptUtil.convertFromHex(pseudo_crypt)), 64),
                     password: pidCryptUtil.fragment(pidCryptUtil.encodeBase64(pidCryptUtil.convertFromHex(pwd_crypt)), 64)
                 };
-                
+
                 console.log("Identifiants cryptés.");
                 console.log("Preparation de l'envoi au serveur.");
                 send_data(crypted, "login");

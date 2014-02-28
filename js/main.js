@@ -5,25 +5,25 @@
 $("#submit").click(function() {
     var pseudoText;
     var pwdText;
-    var md5Pseudo;
-    var md5Pwd;
+    var sha1Pseudo;
+    var sha1Password;
 
     pseudoText = $('#pseudo').val();
     pwdText = $('#password').val();
 
     if (pseudoText != "" && pwdText != "") {
         console.log("Valeurs valides.");
-        console.log("Encryptage des valeurs en md5...");
-        md5Pseudo = pidCrypt.MD5(pseudoText);
-        md5Pwd = pidCrypt.MD5(pwdText);
+        console.log("Encryptage des valeurs en SHA1...");
+        sha1Pseudo = pidCrypt.SHA1(pseudoText);
+        sha1Password = pidCrypt.SHA1(pwdText);
         console.log("Encryptage termine.");
-        console.log("--- Valeurs MD5 ---");
-        console.log(md5Pseudo);
-        console.log(md5Pwd);
+        console.log("--- Valeurs SHA1 ---");
+        console.log(sha1Pseudo);
+        console.log(sha1Password);
         console.log("-------------------");
 
         console.log("Initalisation de la connection...");
-        initConnection(md5Pseudo, md5Pwd);
+        initConnection(sha1Pseudo, sha1Password);
     }
 });
 

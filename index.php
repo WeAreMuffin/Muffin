@@ -35,6 +35,7 @@ else
         <script src="js/pidcrypt/rng.js"></script>
         <script src="js/pidcrypt/rsa.js"></script>
         <script src="js/pidcrypt/md5.js"></script>
+        <script src="js/pidcrypt/sha1.js"></script>
     </head>
     <body>
         <?php

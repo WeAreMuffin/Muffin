@@ -19,13 +19,14 @@ function load_key($filenames)
         $contentPrivate = $filenames["privateKey"];
         $contentPublic = $filenames["publicKey"];
 
-        if (is_file($contentPrivate) && is_file($contentPublic)
+        if (is_file($contentPrivate) && is_file($contentPublic))
         {
             $_SESSION["privateKey"] = file_get_contents($contentPrivate);
             $_SESSION["publicKey"] = file_get_contents($contentPublic);
 
             return (true);
-        } else
+        }
+        else
         {
             return (false);
         }
