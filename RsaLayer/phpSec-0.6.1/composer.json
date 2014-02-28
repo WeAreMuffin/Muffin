@@ -1,0 +1,37 @@
+{
+    "name": "phpsec/phpsec",
+    "type": "library",
+    "description": "A PHP security library",
+    "keywords": [
+        "security",
+        "cryptography",
+        "encryption",
+        "session",
+        "yubikey",
+        "authy",
+        "otp",
+        "google auth"
+        ],
+    "homepage": "https://phpseclib.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Audun Larsen",
+            "email": "larsen@xqus.com",
+            "homepage": "http://xqus.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.7"
+    },
+     "suggest": {
+        "ext-mcrypt": "The Mcrypt extension is used to encrypt data.",
+        "ext-openssl": "The OpenSSL extension is used as a secure source of random data."
+    },
+    "autoload": {
+        "psr-0": {
+            "phpSec": "lib/"
+        }
+    }
+}
