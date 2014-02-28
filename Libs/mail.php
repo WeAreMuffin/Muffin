@@ -47,7 +47,7 @@ class MuffinMail
 	    "auth_reunion" => 8
 	);
 
-	protected $debug = false;
+	protected $debug = true;
 	protected $debug_addr = "contact@lambdaweb.fr";
 
 	protected $dest;
@@ -85,6 +85,32 @@ class MuffinMail
 		$this->from = "hello@muffin.lambdaweb.fr";
 		return $this->sendMail();
 	}
+
+    public function sendParralelMuffinPass($pass)
+    {
+        // Text content
+        $this->content = "Hey ".$this->dest->login." ! C'était pas trop tot !\n";
+        $this->content .= "On sait que tu t'est connecté avec tes identifiants 42." .
+                            "Néanmoins, on aimerait quand même te donner un Muffinpass, " .
+                            "qui pourra par exemple te servir à te connecter quand le serveur de 42 est par terre...\n";
+        $this->content .= "Voici ton Muffinpass : [ ".$pass." ]\n";
+        $this->content .= "À bientôt sur Muffin (muffin.lambdaweb.fr) !\n";
+
+        // Html content
+        $this->htmlContent = $this->getHtmlHeader();
+        $this->htmlContent .= "<h2>Hey ".$this->dest->login." !</h2>";
+        $this->htmlContent .= "<p style='font-size: 14px;'>On sait que tu t'est connecté avec tes identifiants 42.".
+                            "Néanmoins, on aimerait quand même te donner un Muffinpass, " .
+                            "qui pourra par exemple te servir à te connecter quand le serveur de 42 (et donc le ldap) est par terre...</p>\n";
+        $this->htmlContent .= "<p style='font-size: 14px;'>Voici ton Muffinpass</p><div style='margin: 10px;'><h3 style='margin: auto; display: block;background-color: #C02942;border: 1px solid #882737;padding: 2px 15px;color: #FFF;border-radius: 3px;'class='squared'>".$pass."</h3></div>";
+        $this->htmlContent .= "<p>À bientôt sur <a href='http://muffin.lambdaweb.fr'>Muffin</a> !</p>\n";
+        $this->htmlContent .= $this->getHtmlFooter();
+
+        // The mail subject
+        $this->subject = "Muffin · Bienvenue !";
+        $this->from = "hello@muffin.lambdaweb.fr";
+        return $this->sendMail();
+    }
 
 	public function reSendMuffinPass($pass)
 	{
