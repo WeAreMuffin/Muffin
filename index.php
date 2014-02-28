@@ -1,7 +1,6 @@
 <?php
 require_once 'generate_rsa_key.php';
 
-
 /*
  * Load rsa key
  */
@@ -9,12 +8,18 @@ $filenames = array(
     "privateKey" => "private/private",
     "publicKey" => "private/public"
 );
-if (!load_key($filenames)) {
+
+if (!load_key($filenames))
+{
     $error = TRUE;
-} else {
+}
+else
+{
     $error = FALSE;
 }
+
 ?>
+
 <!DOCTYPE html>
 
 <html>
