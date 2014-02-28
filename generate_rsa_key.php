@@ -10,25 +10,6 @@ include('Crypt/RSA.php');
 session_start();
 
 /*
- * The following function generate $privatekey and $publickey
- * and saves in $_SESSION
- */
-
-//function generate_key() {
-//
-//    $rsa = new Crypt_RSA();
-//    if (!$rsa) {
-//        return (FALSE);
-//    }
-//    extract($rsa->createKey());
-//
-//    $_SESSION["privateKey"] = $privatekey;
-//    $_SESSION["publicKey"] = $publickey;
-//
-//    return (TRUE);
-//}
-
-/*
  * The following function load $privatekey and $publickey
  * from file
  */
@@ -40,7 +21,7 @@ function load_key($filenames) {
         if (is_file($contentPrivate) && is_file($contentPublic)) {
             $_SESSION["privateKey"] = file_get_contents($contentPrivate);
             $_SESSION["publicKey"] = file_get_contents($contentPublic);
-            
+
             return (TRUE);
         } else {
             return (FALSE);
