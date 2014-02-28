@@ -53,8 +53,9 @@ else
                 <button id="submit">Envoyer</button>
             </div>
             <script src="js/certParser.js"></script>
-            <script src="js/send_data.js"></script>
-            <script src="js/connection.js"></script>
-            <script src="js/main.js"></script>
+            <script src="js/muffin.secure.js"></script>
+            <script>
+                var connexion = new Muffin.Secure.ConnectionLayer("#submit");
+            </script>
     </body>
 </html>
