@@ -39,6 +39,7 @@ class Home extends Controller
     public function index ($params = array ())
     {
         $redirect = $this->filterGet("redirect");
+        securityLoadKeys();
         $this->addData ('redirect', $redirect);
         $this->render ();
     }

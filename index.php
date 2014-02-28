@@ -14,6 +14,7 @@ require_once(__DIR__.'/Moon/loader.php');
  * @TODO: TO REMOVE IN PRODUCTION ENVIRONMENT
  */
 apc_clear_cache();
+apc_clear_cache("user");
 
 Core::startEngine();
 

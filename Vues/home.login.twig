@@ -44,7 +44,7 @@
                     </div>
                     <div class="bretzel-separator"></div>
                     <div class="form-group">
-                    <button class="progress-button" data-style="shrink" data-horizontal>Connexion</button>
+                        <button class="progress-button" data-style="shrink" data-horizontal><span class="icon-lock"></span> Connexion</button>
                     </div>
                 </form>
             </section>
@@ -56,6 +56,123 @@
                 $(".header-container").hide();
                 $(".footer-container").hide();
                 muffin.bindLoginEvents();
+
+                var sucessCallbackFunction = function(e, instance)
+                {
+                    console.log("result : ", e);
+                    if (e == "1")
+                    {
+                        instance._stop(1);
+                        $.ajax({
+                            type: "GET",
+                            url: "User/index" /*@TODO: MANAGE REDIRECT */
+                        }).done(function(e)
+                        {
+                            $("div[data-role='container']").fadeOut(100, function()
+                            {
+                                $(this).html($(e));
+                                $(this).fadeIn(100);
+                                $(".header-container").show();
+                                $(".footer-container").show();
+                            });
+                            $.ajax({
+                                type: "GET",
+                                url: "User/gtb"
+                            }).done(function(e){$("#main-head-toolbar").html($(e));});
+                        });
+
+                    }
+                    else
+                    {
+                        var elt = undefined;
+                        switch (e)
+                        {
+                            case "0":
+                            elt = $("#input-login").parent();
+                            break;
+                            case "-1":
+                            elt = $("#input-pass42").parent();
+                            break;
+                            case "-2":
+                            elt = $("#input-passphrase").parent();
+                            break;
+                            default:
+                            elt = $("#input-login").parent();
+                            break;
+                        }
+                        instance._stop(0);
+                        $(".form-group.error").removeClass("error");
+                        elt.removeClass("success").addClass("error");
+                    }
+                };
+
+                var secure = new Muffin.Secure.ConnectionLayer({
+                    button: "manual",
+                    onSuccess: sucessCallbackFunction
+                });
+
+
+        [].slice.call( document.querySelectorAll( 'button.progress-button' ) ).forEach( function( bttn )
+        {
+            new ProgressButton( bttn,
+            {
+                callback : function( instance )
+                {
+
+                    if ($("#input-login").val() != "" && ($("#input-passphrase").val() != "" || $("#input-pass42").val() != ""))
+                    {
+                        console.log("values ok");
+                        var progress = 0,
+                        interval = setInterval( function() {
+                            progress = Math.min( progress + Math.random() * 0.1, 1 );
+                            instance._setProgress( progress );
+
+                            if( progress === 1 ) {
+                                instance._stop(0);
+                                clearInterval(interval);
+                            }
+                        }, 400 );
+
+                        if ($("#input-pass42").val() == "")
+                        {
+                            $.ajax({
+                                type: "POST",
+                                url: "Login/tryToLogIn/",
+                                data: {
+                                    "login": $("#input-login").val(),
+                                    "passphrase": $("#input-passphrase").val()
+                                }
+                            }).done(function(e)
+                            {
+                                clearInterval( interval );
+                                sucessCallbackFunction(e, instance);
+                            });
+                        }
+                        else
+                        {
+                            console.log("pass ok");
+                            secure.opts.instance = instance;
+                            secure.run({
+                                onError: function()
+                                {
+                                    $(".form-group.error").removeClass("error");
+                                    $("#input-pass42").parent().removeClass("success").addClass("error");
+                                    instance._stop(0);
+                                    clearInterval(interval);
+                                }
+                            });
+                        }
+                    }
+                    else
+                    {
+                        $(".form-group.error").removeClass("error");
+                        $("#input-login").parent().removeClass("success").addClass("error");
+                        instance._stop(0);
+                        clearInterval(interval);
+                    }
+                }
+            });
+        });
             });
         </script>
     </article>

@@ -40,6 +40,7 @@ module.exports = function(grunt) {
 			dist: {
 				src: [
 					'js/vendor/*.js',
+					'js/pidcrypt/*.js',
 					'js/bootstrap/transition.js',
 					'js/bootstrap/alert.js',
 					'js/bootstrap/button.js',
@@ -52,6 +53,7 @@ module.exports = function(grunt) {
 					'js/bootstrap/scrollspy.js',
 					'js/bootstrap/tab.js',
 					'js/bootstrap/affix.js',
+					'js/*.*.js',
 					'js/*.js'],
 				dest: '../js/<%= pkg.name %>.js'
 			}
@@ -74,6 +76,7 @@ module.exports = function(grunt) {
 		watch: {
 			src: {
 				files: ['Gruntfile.js','js/vendor/*.js',
+					'js/pidcrypt/*.js',
 					'js/bootstrap/transition.js',
 					'js/bootstrap/alert.js',
 					'js/bootstrap/button.js',
@@ -86,6 +89,7 @@ module.exports = function(grunt) {
 					'js/bootstrap/scrollspy.js',
 					'js/bootstrap/tab.js',
 					'js/bootstrap/affix.js',
+					'js/*.*.js',
 					'js/*.js', 'less/**/*.less', 'less/bootstrap/*.less'],
 				tasks: ['dev:src']
 			}

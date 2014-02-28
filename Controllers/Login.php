@@ -113,15 +113,21 @@ class Login extends Controller
         } /* Connexion avec les logins 42 */
         else if ($login and $code42 != NULL)
         {
+            $res = RSADecode($login, $code42);
+
             sleep(2); // On fait un petit slepp pour eviter le ldap-force
-            /* On essaye de s'authentifier */
-            $result = Auth42::authenticate($login, $code42);
-            if ($result === true)
+
+            if (count($res) > 1)
             {
-                $this->registerNewUser($login, $code42);
+                /* On essaye de s'authentifier */
+                $result = Auth42::authenticate($res['login'], $res['pass']);
+                if ($result === true)
+                {
+                    $this->registerNewUser($res['login'],$res['pass']);
+                }
+                else
+                    echo "-3";
             }
-            else
-                echo "-3";
         }
         else
             echo "0";

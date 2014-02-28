@@ -38,9 +38,11 @@
 }
 }());
 
-
-
-window.Muffin = {};
+if (window.Muffin == undefined)
+{
+	var Muffin = {};
+	window.Muffin = Muffin;
+}
 
 function goToUrl(url, elt)
 {
