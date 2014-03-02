@@ -34,8 +34,8 @@ class Reunion extends Controller
      */
     public function index ($params)
     {
-        $this->addData("inscrit", $this->get_reunions_aray());
-        $this->addData("feedback", $this->get_feedback_aray());
+        $this->addData("inscrit", $this->get_reunions_array());
+        $this->addData("feedback", $this->get_feedback_array());
         $this->addData('aujourdhui', $this->get_reunions_today());
         $this->addData('past', $this->get_reunions_past());
         $this->addData('future', $this->get_reunions_future());
@@ -47,8 +47,8 @@ class Reunion extends Controller
      */
     public function mine ($params)
     {
-        $this->addData("inscrit", $this->get_reunions_aray(true));
-        $this->addData("feedback", $this->get_feedback_aray(true));
+        $this->addData("inscrit", $this->get_reunions_array(true));
+        $this->addData("feedback", $this->get_feedback_array(true));
         $this->addData('aujourdhui', $this->get_reunions_today(true));
         $this->addData('past', $this->get_reunions_past(true));
         $this->addData('future', $this->get_reunions_future(true));
@@ -156,7 +156,7 @@ class Reunion extends Controller
     }
 
 
-    protected function get_reunions_aray($me = false)
+    protected function get_reunions_array($me = false)
     {
 
         $q = "  SELECT *
@@ -176,7 +176,7 @@ class Reunion extends Controller
         return ($result);
     }
 
-    protected function get_feedback_aray($me = false)
+    protected function get_feedback_array($me = false)
     {
 
         $q = "  SELECT *
@@ -311,34 +311,6 @@ class Reunion extends Controller
         }
         echo ($render);
     }
-
-    /**
-     * @PathInfo('user/competence')
-     */
-    public function pasbien($params)
-    {
-
-        // On récupère le login fourni dans l'url
-        $login = $this->getUrlParam ('user');
-        $render = "0";
-        $competence = $this->getUrlParam ('competence');
-        if ($login and $competence)
-	{
-	    $c = Moon::get('c_competences', 'id_competence', $competence);
-	    ($c->nom_usuel == NULL ? $c = $c->nom_competence : $c = $c->nom_usuel);
-            $cpt = new Entities("c_echanges[id_propose=\"$login\"][competence=\"$competence\"][resume=\"accepte\"]");
-            if ($cpt)
-            {
-                $i = array ("id_demande" => $_SESSION['muffin_id'],
-                    "id_propose" => $login, "competence" => $competence);
-                $res = Core::getBdd ()->update (array("resume" => "pasbien"), 'c_echanges', $i);
-		$this->notifier($_SESSION["login"]." vous remercie de l'avoir aidé sur le projet / la notion ".$c, $login);
-                $render = "1";
-            }
-        }
-        echo ($render);
-    }
-
 
     protected function notifier($message, $id)
     {

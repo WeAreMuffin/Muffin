@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-02-28
+   mNymdhy          shddmy hNd       Sorti du four le 2014-03-02
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -55,6 +55,835 @@ Math.floor(r/a.labels.length);s=(m-2*c.scaleGridLineWidth-2*c.barValueSpacing-(c
 d*m,p+c.scaleFontSize),b.rotate(-(w*(Math.PI/180))),b.fillText(a.labels[d],0,0),b.restore()):b.fillText(a.labels[d],n+d*m+m/2,p+c.scaleFontSize+3),b.beginPath(),b.moveTo(n+(d+1)*m,p+3),b.lineWidth=c.scaleGridLineWidth,b.strokeStyle=c.scaleGridLineColor,b.lineTo(n+(d+1)*m,5),b.stroke();b.lineWidth=c.scaleLineWidth;b.strokeStyle=c.scaleLineColor;b.beginPath();b.moveTo(n,p+5);b.lineTo(n,5);b.stroke();b.textAlign="right";b.textBaseline="middle";for(d=0;d<j.steps;d++)b.beginPath(),b.moveTo(n-3,p-(d+1)*
 k),c.scaleShowGridLines?(b.lineWidth=c.scaleGridLineWidth,b.strokeStyle=c.scaleGridLineColor,b.lineTo(n+r+5,p-(d+1)*k)):b.lineTo(n-0.5,p-(d+1)*k),b.stroke(),c.scaleShowLabels&&b.fillText(j.labels[d],n-8,p-(d+1)*k)},function(d){b.lineWidth=c.barStrokeWidth;for(var e=0;e<a.datasets.length;e++){b.fillStyle=a.datasets[e].fillColor;b.strokeStyle=a.datasets[e].strokeColor;for(var f=0;f<a.datasets[e].data.length;f++){var g=n+c.barValueSpacing+m*f+s*e+c.barDatasetSpacing*e+c.barStrokeWidth*e;b.beginPath();
 b.moveTo(g,p);b.lineTo(g,p-d*v(a.datasets[e].data[f],j,k)+c.barStrokeWidth/2);b.lineTo(g+s,p-d*v(a.datasets[e].data[f],j,k)+c.barStrokeWidth/2);b.lineTo(g+s,p);c.barShowStroke&&b.stroke();b.closePath();b.fill()}}},b)},D=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(a){window.setTimeout(a,1E3/60)},F={}};
+;(function ( $, window, document, undefined ) {
+
+  // This is the default calendar template. This can be overridden.
+  var clndrTemplate = "<div class='clndr-controls'>" +
+    "<div class='clndr-control-button'><span class='clndr-previous-button'>previous</span></div><div class='month'><%= month %> <%= year %></div><div class='clndr-control-button rightalign'><span class='clndr-next-button'>next</span></div>" +
+    "</div>" +
+  "<table class='clndr-table' border='0' cellspacing='0' cellpadding='0'>" +
+    "<thead>" +
+    "<tr class='header-days'>" +
+    "<% for(var i = 0; i < daysOfTheWeek.length; i++) { %>" +
+      "<td class='header-day'><%= daysOfTheWeek[i] %></td>" +
+    "<% } %>" +
+    "</tr>" +
+    "</thead>" +
+    "<tbody>" +
+    "<% for(var i = 0; i < numberOfRows; i++){ %>" +
+      "<tr>" +
+      "<% for(var j = 0; j < 7; j++){ %>" +
+      "<% var d = j + i * 7; %>" +
+      "<td class='<%= days[d].classes %>'><div class='day-contents'><%= days[d].day %>" +
+      "</div></td>" +
+      "<% } %>" +
+      "</tr>" +
+    "<% } %>" +
+    "</tbody>" +
+  "</table>";
+
+  var pluginName = 'clndr';
+
+  var defaults = {
+    template: clndrTemplate,
+    weekOffset: 0,
+    startWithMonth: null,
+    clickEvents: {
+      click: null,
+      nextMonth: null,
+      previousMonth: null,
+      nextYear: null,
+      previousYear: null,
+      today: null,
+      onMonthChange: null,
+      onYearChange: null
+    },
+    targets: {
+      nextButton: 'clndr-next-button',
+      previousButton: 'clndr-previous-button',
+      nextYearButton: 'clndr-next-year-button',
+      previousYearButton: 'clndr-previous-year-button',
+      todayButton: 'clndr-today-button',
+      day: 'day',
+      empty: 'empty'
+    },
+    events: [],
+    extras: null,
+    dateParameter: 'date',
+    multiDayEvents: null,
+    doneRendering: null,
+    render: null,
+    daysOfTheWeek: null,
+    showAdjacentMonths: true,
+    adjacentDaysChangeMonth: false,
+    ready: null,
+    constraints: null,
+    forceSixRows: null
+  };
+
+  // The actual plugin constructor
+  function Clndr( element, options ) {
+    this.element = element;
+    console.log("calendar initialisation...");
+    // merge the default options with user-provided options
+    this.options = $.extend(true, {}, defaults, options);
+
+    // if there are events, we should run them through our addMomentObjectToEvents function
+    // which will add a date object that we can use to make life easier. This is only necessary
+    // when events are provided on instantiation, since our setEvents function uses addMomentObjectToEvents.
+    if(this.options.events.length) {
+      if(this.options.multiDayEvents) {
+        this.options.events = this.addMultiDayMomentObjectsToEvents(this.options.events);
+      } else {
+        this.options.events = this.addMomentObjectToEvents(this.options.events);
+      }
+    }
+
+    // this object will store a reference to the current month.
+    // it's a moment object, which allows us to poke at it a little if we need to.
+    // this will serve as the basis for switching between months & is the go-to
+    // internally if we want to know which month we're currently at.
+    if(this.options.startWithMonth) {
+      this.month = moment(this.options.startWithMonth).startOf('month');
+    } else {
+      this.month = moment().startOf('month');
+    }
+
+    // if we've got constraints set, make sure the month is within them.
+    if(this.options.constraints) {
+      // first check if the start date exists & is later than now.
+      if(this.options.constraints.startDate) {
+        var startMoment = moment(this.options.constraints.startDate);
+        if(this.month.isBefore(startMoment, 'month')) {
+          this.month.set('month', startMoment.month());
+          this.month.set('year', startMoment.year());
+        }
+      }
+      // make sure the month (whether modified or not) is before the endDate
+      if(this.options.constraints.endDate) {
+        var endMoment = moment(this.options.constraints.endDate);
+        if(this.month.isAfter(endMoment, 'month')) {
+          this.month.set('month', endMoment.month()).set('year', endMoment.year());
+        }
+      }
+    }
+
+    this._defaults = defaults;
+    this._name = pluginName;
+
+    // Some first-time initialization -> day of the week offset,
+    // template compiling, making and storing some elements we'll need later,
+    // & event handling for the controller.
+    this.init();
+  }
+
+  Clndr.prototype.init = function () {
+    // create the days of the week using moment's current language setting
+    this.daysOfTheWeek = this.options.daysOfTheWeek || [];
+    if(!this.options.daysOfTheWeek) {
+      this.daysOfTheWeek = [];
+      for(var i = 0; i < 7; i++) {
+        this.daysOfTheWeek.push( moment().weekday(i).format('dd').charAt(0) );
+      }
+    }
+    // shuffle the week if there's an offset
+    if(this.options.weekOffset) {
+      this.daysOfTheWeek = this.shiftWeekdayLabels(this.options.weekOffset);
+    }
+
+    // quick & dirty test to make sure rendering is possible.
+    if( !$.isFunction(this.options.render) ) {
+      this.options.render = null;
+      if (typeof _ === 'undefined') {
+        throw new Error("Underscore was not found. Please include underscore.js OR provide a custom render function.");
+      }
+      else {
+        // we're just going ahead and using underscore here if no render method has been supplied.
+        this.compiledClndrTemplate = _.template(this.options.template);
+      }
+    }
+
+    // create the parent element that will hold the plugin & save it for later
+    $(this.element).html("<div class='clndr'></div>");
+    this.calendarContainer = $('.clndr', this.element);
+
+    // attach event handlers for clicks on buttons/cells
+    this.bindEvents();
+
+    // do a normal render of the calendar template
+    this.render();
+
+    // if a ready callback has been provided, call it.
+    if(this.options.ready) {
+      this.options.ready.apply(this, []);
+    }
+  };
+
+  Clndr.prototype.shiftWeekdayLabels = function(offset) {
+    var days = this.daysOfTheWeek;
+    for(var i = 0; i < offset; i++) {
+      days.push( days.shift() );
+    }
+    return days;
+  };
+
+  // This is where the magic happens. Given a moment object representing the current month,
+  // an array of calendarDay objects is constructed that contains appropriate events and
+  // classes depending on the circumstance.
+  Clndr.prototype.createDaysObject = function(currentMonth) {
+    // this array will hold numbers for the entire grid (even the blank spaces)
+    daysArray = [];
+    var date = currentMonth.startOf('month');
+
+    // filter the events list (if it exists) to events that are happening last month, this month and next month (within the current grid view)
+    this.eventsLastMonth = [];
+    this.eventsThisMonth = [];
+    this.eventsNextMonth = [];
+
+    if(this.options.events.length) {
+
+      // MULTI-DAY EVENT PARSING
+      // if we're using multi-day events, the start or end must be in the current month
+      if(this.options.multiDayEvents) {
+        this.eventsThisMonth = $(this.options.events).filter( function() {
+          return this._clndrStartDateObject.format("YYYY-MM") <= currentMonth.format("YYYY-MM")
+          || currentMonth.format("YYYY-MM") <= this._clndrEndDateObject.format("YYYY-MM");
+        }).toArray();
+
+        if(this.options.showAdjacentMonths) {
+          var lastMonth = currentMonth.clone().subtract('months', 1);
+          var nextMonth = currentMonth.clone().add('months', 1);
+          this.eventsLastMonth = $(this.options.events).filter( function() {
+            return this._clndrStartDateObject.format("YYYY-MM") <= lastMonth.format("YYYY-MM")
+          || lastMonth.format("YYYY-MM") <= this._clndrEndDateObject.format("YYYY-MM");
+          }).toArray();
+
+          this.eventsNextMonth = $(this.options.events).filter( function() {
+            return this._clndrStartDateObject.format("YYYY-MM") <= nextMonth.format("YYYY-MM")
+          || nextMonth.format("YYYY-MM") <= this._clndrEndDateObject.format("YYYY-MM");
+          }).toArray();
+        }
+      }
+
+      // SINGLE-DAY EVENT PARSING
+      // if we're using single-day events, use _clndrDateObject
+      else {
+        this.eventsThisMonth = $(this.options.events).filter( function() {
+          return this._clndrDateObject.format("YYYY-MM") == currentMonth.format("YYYY-MM");
+        }).toArray();
+
+        // filter the adjacent months as well, if the option is true
+        if(this.options.showAdjacentMonths) {
+          var lastMonth = currentMonth.clone().subtract('months', 1);
+          var nextMonth = currentMonth.clone().add('months', 1);
+          this.eventsLastMonth = $(this.options.events).filter( function() {
+            return this._clndrDateObject.format("YYYY-MM") == lastMonth.format("YYYY-MM");
+          }).toArray();
+
+          this.eventsNextMonth = $(this.options.events).filter( function() {
+            return this._clndrDateObject.format("YYYY-MM") == nextMonth.format("YYYY-MM");
+          }).toArray();
+        }
+      }
+    }
+
+    // if diff is greater than 0, we'll have to fill in last days of the previous month
+    // to account for the empty boxes in the grid.
+    // we also need to take into account the weekOffset parameter
+    var diff = date.weekday() - this.options.weekOffset;
+    if(diff < 0) diff += 7;
+
+    if(this.options.showAdjacentMonths) {
+      for(var i = 0; i < diff; i++) {
+        var day = moment([currentMonth.year(), currentMonth.month(), i - diff + 1]);
+        daysArray.push( this.createDayObject(day, this.eventsLastMonth) );
+      }
+    } else {
+      for(var i = 0; i < diff; i++) {
+        daysArray.push( this.calendarDay({ classes: this.options.targets.empty + " last-month" }) );
+      }
+    }
+
+    // now we push all of the days in a month
+    var numOfDays = date.daysInMonth();
+    for(var i = 1; i <= numOfDays; i++) {
+      var day = moment([currentMonth.year(), currentMonth.month(), i]);
+      daysArray.push(this.createDayObject(day, this.eventsThisMonth) )
+    }
+
+    // ...and if there are any trailing blank boxes, fill those in
+    // with the next month first days
+    var i = 1;
+    while(daysArray.length % 7 !== 0) {
+      if(this.options.showAdjacentMonths) {
+        var day = moment([currentMonth.year(), currentMonth.month(), numOfDays + i]);
+        daysArray.push( this.createDayObject(day, this.eventsNextMonth) );
+      } else {
+        daysArray.push( this.calendarDay({ classes: this.options.targets.empty + " next-month" }) );
+      }
+      i++;
+    }
+
+    // if we want to force six rows of calendar, now's our last chance to add another row.
+    // if the 42 seems explicit it's because we're creating a 7-row grid and 6 rows of 7 is always 42!
+    if(this.options.forceSixRows && daysArray.length !== 42 ) {
+      var start = moment(daysArray[daysArray.length - 1].date).add('days', 1);
+      while(daysArray.length < 42) {
+        if(this.options.showAdjacentMonths) {
+          daysArray.push( this.createDayObject(moment(start), this.eventsNextMonth) );
+          start.add('days', 1);
+        } else {
+          daysArray.push( this.calendarDay({ classes: this.options.targets.empty + " next-month" }) );
+        }
+      }
+    }
+
+    return daysArray;
+  };
+
+  Clndr.prototype.createDayObject = function(day, monthEvents) {
+    var eventsToday = [];
+    var now = moment();
+    var self = this;
+
+    var j = 0, l = monthEvents.length;
+    for(j; j < l; j++) {
+      // keep in mind that the events here already passed the month/year test.
+      // now all we have to compare is the moment.date(), which returns the day of the month.
+      if(self.options.multiDayEvents) {
+        var start = monthEvents[j]._clndrStartDateObject;
+        var end = monthEvents[j]._clndrEndDateObject;
+        // if today is the same day as start or is after the start, and
+        // if today is the same day as the end or before the end ...
+        // woohoo semantics!
+        if( ( day.isSame(start, 'day') || day.isAfter(start, 'day') ) &&
+          ( day.isSame(end, 'day') || day.isBefore(end, 'day') ) ) {
+          eventsToday.push( monthEvents[j] );
+        }
+      } else {
+        if( monthEvents[j]._clndrDateObject.date() == day.date() ) {
+          eventsToday.push( monthEvents[j] );
+        }
+      }
+    }
+
+    var extraClasses = "";
+
+    if(now.format("YYYY-MM-DD") == day.format("YYYY-MM-DD")) {
+       extraClasses += " today";
+    }
+    if(day.isBefore(now, 'day')) {
+      extraClasses += " past";
+    }
+    if(eventsToday.length) {
+       extraClasses += " event";
+    }
+    if(this.month.month() > day.month()) {
+       extraClasses += " adjacent-month";
+
+       this.month.year() === day.year()
+           ? extraClasses += " last-month"
+           : extraClasses += " next-month";
+
+    } else if(this.month.month() < day.month()) {
+       extraClasses += " adjacent-month";
+
+       this.month.year() === day.year()
+           ? extraClasses += " next-month"
+           : extraClasses += " last-month";
+    }
+
+    // if there are constraints, we need to add the inactive class to the days outside of them
+    if(this.options.constraints) {
+      if(this.options.constraints.startDate && day.isBefore(moment( this.options.constraints.startDate ))) {
+        extraClasses += " inactive";
+      }
+      if(this.options.constraints.endDate && day.isAfter(moment( this.options.constraints.endDate ))) {
+        extraClasses += " inactive";
+      }
+    }
+
+    // validate moment date
+    if (!day.isValid() && day.hasOwnProperty('_d') && day._d != undefined) {
+        day = moment(day._d);
+    }
+
+    // we're moving away from using IDs in favor of classes, since when
+    // using multiple calendars on a page we are technically violating the
+    // uniqueness of IDs.
+    extraClasses += " calendar-day-" + day.format("YYYY-MM-DD");
+
+    // day of week
+    extraClasses += " calendar-dow-" + day.weekday();
+
+    return this.calendarDay({
+      day: day.date(),
+      classes: this.options.targets.day + extraClasses,
+      events: eventsToday,
+      date: day
+    });
+  };
+
+  Clndr.prototype.render = function() {
+    // get rid of the previous set of calendar parts.
+    // TODO: figure out if this is the right way to ensure proper garbage collection?
+    this.calendarContainer.children().remove();
+    // get an array of days and blank spaces
+    var days = this.createDaysObject(this.month);
+    // this is to prevent a scope/naming issue between this.month and data.month
+    var currentMonth = this.month;
+
+    var data = {
+      daysOfTheWeek: this.daysOfTheWeek,
+      numberOfRows: Math.ceil(days.length / 7),
+      days: days,
+      month: this.month.format('MMMM'),
+      year: this.month.year(),
+      eventsThisMonth: this.eventsThisMonth,
+      eventsLastMonth: this.eventsLastMonth,
+      eventsNextMonth: this.eventsNextMonth,
+      extras: this.options.extras
+    };
+
+    // render the calendar with the data above & bind events to its elements
+    if(!this.options.render) {
+      this.calendarContainer.html(this.compiledClndrTemplate(data));
+    } else {
+      this.calendarContainer.html(this.options.render.apply(this, [data]));
+    }
+
+    // if there are constraints, we need to add the 'inactive' class to the controls
+    if(this.options.constraints) {
+      // in the interest of clarity we're just going to remove all inactive classes and re-apply them each render.
+      for(target in this.options.targets) {
+        if(target != this.options.targets.day) {
+          this.element.find('.' + this.options.targets[target]).toggleClass('inactive', false);
+        }
+      }
+
+      var start = null;
+      var end = null;
+
+      if(this.options.constraints.startDate) {
+        start = moment(this.options.constraints.startDate);
+      }
+      if(this.options.constraints.endDate) {
+        end = moment(this.options.constraints.endDate);
+      }
+      // deal with the month controls first.
+      // are we at the start month?
+      if(start && this.month.isSame( start, 'month' )) {
+        this.element.find('.' + this.options.targets.previousButton).toggleClass('inactive', true);
+      }
+      // are we at the end month?
+      if(end && this.month.isSame( end, 'month' )) {
+        this.element.find('.' + this.options.targets.nextButton).toggleClass('inactive', true);
+      }
+      // what's last year looking like?
+      if(start && moment(start).subtract('years', 1).isBefore(moment(this.month).subtract('years', 1)) ) {
+        this.element.find('.' + this.options.targets.previousYearButton).toggleClass('inactive', true);
+      }
+      // how about next year?
+      if(end && moment(end).add('years', 1).isAfter(moment(this.month).add('years', 1)) ) {
+        this.element.find('.' + this.options.targets.nextYearButton).toggleClass('inactive', true);
+      }
+      // today? we could put this in init(), but we want to support the user changing the constraints on a living instance.
+      if(( start && start.isAfter( moment(), 'month' ) ) || ( end && end.isBefore( moment(), 'month' ) )) {
+        this.element.find('.' + this.options.targets.today).toggleClass('inactive', true);
+      }
+    }
+
+
+    if(this.options.doneRendering) {
+      this.options.doneRendering.apply(this, []);
+    }
+  };
+
+  Clndr.prototype.bindEvents = function() {
+    var $container = $(this.element);
+    var self = this;
+
+    // target the day elements and give them click events
+    $container.on('click', '.'+this.options.targets.day, function(event) {
+      if(self.options.clickEvents.click) {
+        var target = self.buildTargetObject(event.currentTarget, true);
+        self.options.clickEvents.click.apply(self, [target]);
+      }
+      // if adjacentDaysChangeMonth is on, we need to change the month here.
+      if(self.options.adjacentDaysChangeMonth) {
+        if($(event.currentTarget).is(".last-month")) {
+          self.backActionWithContext(self);
+        } else if($(event.currentTarget).is(".next-month")) {
+          self.forwardActionWithContext(self);
+        }
+      }
+    });
+    // target the empty calendar boxes as well
+    $container.on('click', '.'+this.options.targets.empty, function(event) {
+      if(self.options.clickEvents.click) {
+        var target = self.buildTargetObject(event.currentTarget, false);
+        self.options.clickEvents.click.apply(self, [target]);
+      }
+      if(self.options.adjacentDaysChangeMonth) {
+        if($(event.currentTarget).is(".last-month")) {
+          self.backActionWithContext(self);
+        } else if($(event.currentTarget).is(".next-month")) {
+          self.forwardActionWithContext(self);
+        }
+      }
+    });
+
+    // bind the previous, next and today buttons
+    $container
+      .on('click', '.'+this.options.targets.previousButton, { context: this }, this.backAction)
+      .on('click', '.'+this.options.targets.nextButton, { context: this }, this.forwardAction)
+      .on('click', '.'+this.options.targets.todayButton, { context: this }, this.todayAction)
+      .on('click', '.'+this.options.targets.nextYearButton, { context: this }, this.nextYearAction)
+      .on('click', '.'+this.options.targets.previousYearButton, { context: this }, this.previousYearAction);
+  }
+
+  // If the user provided a click callback we'd like to give them something nice to work with.
+  // buildTargetObject takes the DOM element that was clicked and returns an object with
+  // the DOM element, events, and the date (if the latter two exist). Currently it is based on the id,
+  // however it'd be nice to use a data- attribute in the future.
+  Clndr.prototype.buildTargetObject = function(currentTarget, targetWasDay) {
+    // This is our default target object, assuming we hit an empty day with no events.
+    var target = {
+      element: currentTarget,
+      events: [],
+      date: null
+    };
+    // did we click on a day or just an empty box?
+    if(targetWasDay) {
+      var dateString;
+
+      // Our identifier is in the list of classNames. Find it!
+      var classNameIndex = currentTarget.className.indexOf('calendar-day-');
+      if(classNameIndex !== 0) {
+        // our unique identifier is always 23 characters long.
+        // If this feels a little wonky, that's probably because it is.
+        // Open to suggestions on how to improve this guy.
+        dateString = currentTarget.className.substring(classNameIndex + 13, classNameIndex + 23);
+        target.date = moment(dateString);
+      } else {
+        target.date = null;
+      }
+
+      // do we have events?
+      if(this.options.events) {
+        // are any of the events happening today?
+        if(this.options.multiDayEvents) {
+          target.events = $.makeArray( $(this.options.events).filter( function() {
+            // filter the dates down to the ones that match.
+            return ( ( target.date.isSame(this._clndrStartDateObject, 'day') || target.date.isAfter(this._clndrStartDateObject, 'day') ) &&
+              ( target.date.isSame(this._clndrEndDateObject, 'day') || target.date.isBefore(this._clndrEndDateObject, 'day') ) );
+          }) );
+        } else {
+          target.events = $.makeArray( $(this.options.events).filter( function() {
+            // filter the dates down to the ones that match.
+            return this._clndrDateObject.format('YYYY-MM-DD') == dateString;
+          }) );
+        }
+      }
+    }
+
+    return target;
+  }
+
+  // the click handlers in bindEvents need a context, so these are wrappers
+  // to the actual functions. Todo: better way to handle this?
+  Clndr.prototype.forwardAction = function(event) {
+    var self = event.data.context;
+    self.forwardActionWithContext(self);
+  };
+
+  Clndr.prototype.backAction = function(event) {
+    var self = event.data.context;
+    self.backActionWithContext(self);
+  };
+
+  // These are called directly, except for in the bindEvent click handlers,
+  // where forwardAction and backAction proxy to these guys.
+  Clndr.prototype.backActionWithContext = function(self) {
+    // before we do anything, check if there is an inactive class on the month control.
+    // if it does, we want to return and take no action.
+    if(self.element.find('.' + self.options.targets.previousButton).hasClass('inactive')) {
+      return;
+    }
+
+    // is subtracting one month going to switch the year?
+    var yearChanged = !self.month.isSame( moment(self.month).subtract('months', 1), 'year');
+    self.month.subtract('months', 1);
+
+    self.render();
+
+    if(self.options.clickEvents.previousMonth) {
+      self.options.clickEvents.previousMonth.apply( self, [moment(self.month)] );
+    }
+    if(self.options.clickEvents.onMonthChange) {
+      self.options.clickEvents.onMonthChange.apply( self, [moment(self.month)] );
+    }
+    if(yearChanged) {
+      if(self.options.clickEvents.onYearChange) {
+        self.options.clickEvents.onYearChange.apply( self, [moment(self.month)] );
+      }
+    }
+  };
+
+  Clndr.prototype.forwardActionWithContext = function(self) {
+    // before we do anything, check if there is an inactive class on the month control.
+    // if it does, we want to return and take no action.
+    if(self.element.find('.' + self.options.targets.nextButton).hasClass('inactive')) {
+      return;
+    }
+
+    // is adding one month going to switch the year?
+    var yearChanged = !self.month.isSame( moment(self.month).add('months', 1), 'year');
+    self.month.add('months', 1);
+
+    self.render();
+
+    if(self.options.clickEvents.nextMonth) {
+      self.options.clickEvents.nextMonth.apply(self, [moment(self.month)]);
+    }
+    if(self.options.clickEvents.onMonthChange) {
+      self.options.clickEvents.onMonthChange.apply(self, [moment(self.month)]);
+    }
+    if(yearChanged) {
+      if(self.options.clickEvents.onYearChange) {
+        self.options.clickEvents.onYearChange.apply( self, [moment(self.month)] );
+      }
+    }
+  };
+
+  Clndr.prototype.todayAction = function(event) {
+    var self = event.data.context;
+
+    // did we switch months when the today button was hit?
+    var monthChanged = !self.month.isSame(moment(), 'month');
+    var yearChanged = !self.month.isSame(moment(), 'year');
+
+    self.month = moment().startOf('month');
+
+    // fire the today event handler regardless of whether the month changed.
+    if(self.options.clickEvents.today) {
+      self.options.clickEvents.today.apply( self, [moment(self.month)] );
+    }
+
+    if(monthChanged) {
+      // no need to re-render if we didn't change months.
+      self.render();
+
+      self.month = moment();
+      // fire the onMonthChange callback
+      if(self.options.clickEvents.onMonthChange) {
+        self.options.clickEvents.onMonthChange.apply( self, [moment(self.month)] );
+      }
+      // maybe fire the onYearChange callback?
+      if(yearChanged) {
+        if(self.options.clickEvents.onYearChange) {
+          self.options.clickEvents.onYearChange.apply( self, [moment(self.month)] );
+        }
+      }
+    }
+  };
+
+  Clndr.prototype.nextYearAction = function(event) {
+    var self = event.data.context;
+    // before we do anything, check if there is an inactive class on the month control.
+    // if it does, we want to return and take no action.
+    if(self.element.find('.' + self.options.targets.nextYearButton).hasClass('inactive')) {
+      return;
+    }
+
+    self.month.add('years', 1);
+    self.render();
+
+    if(self.options.clickEvents.nextYear) {
+      self.options.clickEvents.nextYear.apply( self, [moment(self.month)] );
+    }
+    if(self.options.clickEvents.onMonthChange) {
+      self.options.clickEvents.onMonthChange.apply( self, [moment(self.month)] );
+    }
+    if(self.options.clickEvents.onYearChange) {
+      self.options.clickEvents.onYearChange.apply( self, [moment(self.month)] );
+    }
+  };
+
+  Clndr.prototype.previousYearAction = function(event) {
+    var self = event.data.context;
+    // before we do anything, check if there is an inactive class on the month control.
+    // if it does, we want to return and take no action.
+    if(self.element.find('.' + self.options.targets.previousYear).hasClass('inactive')) {
+      return;
+    }
+
+    self.month.subtract('years', 1);
+    self.render();
+
+    if(self.options.clickEvents.previousYear) {
+      self.options.clickEvents.previousYear.apply( self, [moment(self.month)] );
+    }
+    if(self.options.clickEvents.onMonthChange) {
+      self.options.clickEvents.onMonthChange.apply( self, [moment(self.month)] );
+    }
+    if(self.options.clickEvents.onYearChange) {
+      self.options.clickEvents.onYearChange.apply( self, [moment(self.month)] );
+    }
+  };
+
+  Clndr.prototype.forward = function(options) {
+    this.month.add('months', 1);
+    this.render();
+    if(options && options.withCallbacks) {
+      if(this.options.clickEvents.onMonthChange) {
+        this.options.clickEvents.onMonthChange.apply( this, [moment(this.month)] );
+      }
+
+      // We entered a new year
+      if (this.month.month() === 0 && this.options.clickEvents.onYearChange) {
+        this.options.clickEvents.onYearChange.apply( this, [moment(this.month)] );
+      }
+    }
+
+    return this;
+  }
+
+  Clndr.prototype.back = function(options) {
+    this.month.subtract('months', 1);
+    this.render();
+    if(options && options.withCallbacks) {
+      if(this.options.clickEvents.onMonthChange) {
+        this.options.clickEvents.onMonthChange.apply( this, [moment(this.month)] );
+      }
+
+      // We went all the way back to previous year
+      if (this.month.month() === 11 && this.options.clickEvents.onYearChange) {
+        this.options.clickEvents.onYearChange.apply( this, [moment(this.month)] );
+      }
+    }
+
+    return this;
+  }
+
+  // alternate names for convenience
+  Clndr.prototype.next = function(options) {
+    this.forward(options);
+    return this;
+  }
+
+  Clndr.prototype.previous = function(options) {
+    this.back(options);
+    return this;
+  }
+
+  Clndr.prototype.setMonth = function(newMonth, options) {
+    // accepts 0 - 11 or a full/partial month name e.g. "Jan", "February", "Mar"
+    this.month.month(newMonth);
+    this.render();
+    if(options && options.withCallbacks) {
+      if(this.options.clickEvents.onMonthChange) {
+        this.options.clickEvents.onMonthChange.apply( this, [moment(this.month)] );
+      }
+    }
+    return this;
+  }
+
+  Clndr.prototype.nextYear = function(options) {
+    this.month.add('year', 1);
+    this.render();
+    if(options && options.withCallbacks) {
+      if(this.options.clickEvents.onYearChange) {
+        this.options.clickEvents.onYearChange.apply( this, [moment(this.month)] );
+      }
+    }
+    return this;
+  }
+
+  Clndr.prototype.previousYear = function(options) {
+    this.month.subtract('year', 1);
+    this.render();
+    if(options && options.withCallbacks) {
+      if(this.options.clickEvents.onYearChange) {
+        this.options.clickEvents.onYearChange.apply( this, [moment(this.month)] );
+      }
+    }
+    return this;
+  }
+
+  Clndr.prototype.setYear = function(newYear, options) {
+    this.month.year(newYear);
+    this.render();
+    if(options && options.withCallbacks) {
+      if(this.options.clickEvents.onYearChange) {
+        this.options.clickEvents.onYearChange.apply( this, [moment(this.month)] );
+      }
+    }
+    return this;
+  }
+
+  Clndr.prototype.setEvents = function(events) {
+    // go through each event and add a moment object
+    if(this.options.multiDayEvents) {
+      this.options.events = this.addMultiDayMomentObjectsToEvents(events);
+    } else {
+      this.options.events = this.addMomentObjectToEvents(events);
+    }
+
+    this.render();
+    return this;
+  };
+
+  Clndr.prototype.addEvents = function(events) {
+    // go through each event and add a moment object
+    if(this.options.multiDayEvents) {
+      this.options.events = $.merge(this.options.events, this.addMultiDayMomentObjectsToEvents(events));
+    } else {
+      this.options.events = $.merge(this.options.events, this.addMomentObjectToEvents(events));
+    }
+
+    this.render();
+    return this;
+  };
+
+  Clndr.prototype.addMomentObjectToEvents = function(events) {
+    var self = this;
+    var i = 0, l = events.length;
+    for(i; i < l; i++) {
+      events[i]._clndrDateObject = moment( events[i][self.options.dateParameter] );
+    }
+    return events;
+  }
+
+  Clndr.prototype.addMultiDayMomentObjectsToEvents = function(events) {
+    var self = this;
+    var i = 0, l = events.length;
+    for(i; i < l; i++) {
+      events[i]._clndrStartDateObject = moment( events[i][self.options.multiDayEvents.startDate] );
+      events[i]._clndrEndDateObject = moment( events[i][self.options.multiDayEvents.endDate] );
+    }
+    return events;
+  }
+
+  Clndr.prototype.calendarDay = function(options) {
+    var defaults = { day: "", classes: this.options.targets.empty, events: [], date: null };
+    return $.extend({}, defaults, options);
+  }
+
+  $.fn.clndr = function(options) {
+    if(this.length === 1) {
+      if(!this.data('plugin_clndr')) {
+        var clndr_instance = new Clndr(this, options);
+        this.data('plugin_clndr', clndr_instance);
+        return clndr_instance;
+      }
+    } else if(this.length > 1) {
+      throw new Error("CLNDR does not support multiple elements yet. Make sure your clndr selector returns only one element.");
+    }
+  }
+
+})( jQuery, window, document );
+
 ;(function(e){"use strict";function t(t){var r=t.data;t.isDefaultPrevented()||(t.preventDefault(),e(t.target).ajaxSubmit(r))}function r(t){var r=t.target,a=e(r);if(!a.is("[type=submit],[type=image]")){var n=a.closest("[type=submit]");if(0===n.length)return;r=n[0]}var i=this;if(i.clk=r,"image"==r.type)if(void 0!==t.offsetX)i.clk_x=t.offsetX,i.clk_y=t.offsetY;else if("function"==typeof e.fn.offset){var o=a.offset();i.clk_x=t.pageX-o.left,i.clk_y=t.pageY-o.top}else i.clk_x=t.pageX-r.offsetLeft,i.clk_y=t.pageY-r.offsetTop;setTimeout(function(){i.clk=i.clk_x=i.clk_y=null},100)}function a(){if(e.fn.ajaxSubmit.debug){var t="[jquery.form] "+Array.prototype.join.call(arguments,"");window.console&&window.console.log?window.console.log(t):window.opera&&window.opera.postError&&window.opera.postError(t)}}var n={};n.fileapi=void 0!==e("<input type='file'/>").get(0).files,n.formdata=void 0!==window.FormData;var i=!!e.fn.prop;e.fn.attr2=function(){if(!i)return this.attr.apply(this,arguments);var e=this.prop.apply(this,arguments);return e&&e.jquery||"string"==typeof e?e:this.attr.apply(this,arguments)},e.fn.ajaxSubmit=function(t){function r(r){var a,n,i=e.param(r,t.traditional).split("&"),o=i.length,s=[];for(a=0;o>a;a++)i[a]=i[a].replace(/\+/g," "),n=i[a].split("="),s.push([decodeURIComponent(n[0]),decodeURIComponent(n[1])]);return s}function o(a){for(var n=new FormData,i=0;a.length>i;i++)n.append(a[i].name,a[i].value);if(t.extraData){var o=r(t.extraData);for(i=0;o.length>i;i++)o[i]&&n.append(o[i][0],o[i][1])}t.data=null;var s=e.extend(!0,{},e.ajaxSettings,t,{contentType:!1,processData:!1,cache:!1,type:u||"POST"});t.uploadProgress&&(s.xhr=function(){var r=e.ajaxSettings.xhr();return r.upload&&r.upload.addEventListener("progress",function(e){var r=0,a=e.loaded||e.position,n=e.total;e.lengthComputable&&(r=Math.ceil(100*(a/n))),t.uploadProgress(e,a,n,r)},!1),r}),s.data=null;var l=s.beforeSend;return s.beforeSend=function(e,r){r.data=t.formData?t.formData:n,l&&l.call(this,e,r)},e.ajax(s)}function s(r){function n(e){var t=null;try{e.contentWindow&&(t=e.contentWindow.document)}catch(r){a("cannot get iframe.contentWindow document: "+r)}if(t)return t;try{t=e.contentDocument?e.contentDocument:e.document}catch(r){a("cannot get iframe.contentDocument: "+r),t=e.document}return t}function o(){function t(){try{var e=n(g).readyState;a("state = "+e),e&&"uninitialized"==e.toLowerCase()&&setTimeout(t,50)}catch(r){a("Server abort: ",r," (",r.name,")"),s(k),j&&clearTimeout(j),j=void 0}}var r=f.attr2("target"),i=f.attr2("action");w.setAttribute("target",d),(!u||/post/i.test(u))&&w.setAttribute("method","POST"),i!=m.url&&w.setAttribute("action",m.url),m.skipEncodingOverride||u&&!/post/i.test(u)||f.attr({encoding:"multipart/form-data",enctype:"multipart/form-data"}),m.timeout&&(j=setTimeout(function(){T=!0,s(D)},m.timeout));var o=[];try{if(m.extraData)for(var l in m.extraData)m.extraData.hasOwnProperty(l)&&(e.isPlainObject(m.extraData[l])&&m.extraData[l].hasOwnProperty("name")&&m.extraData[l].hasOwnProperty("value")?o.push(e('<input type="hidden" name="'+m.extraData[l].name+'">').val(m.extraData[l].value).appendTo(w)[0]):o.push(e('<input type="hidden" name="'+l+'">').val(m.extraData[l]).appendTo(w)[0]));m.iframeTarget||v.appendTo("body"),g.attachEvent?g.attachEvent("onload",s):g.addEventListener("load",s,!1),setTimeout(t,15);try{w.submit()}catch(c){var p=document.createElement("form").submit;p.apply(w)}}finally{w.setAttribute("action",i),r?w.setAttribute("target",r):f.removeAttr("target"),e(o).remove()}}function s(t){if(!x.aborted&&!F){if(M=n(g),M||(a("cannot access response document"),t=k),t===D&&x)return x.abort("timeout"),S.reject(x,"timeout"),void 0;if(t==k&&x)return x.abort("server abort"),S.reject(x,"error","server abort"),void 0;if(M&&M.location.href!=m.iframeSrc||T){g.detachEvent?g.detachEvent("onload",s):g.removeEventListener("load",s,!1);var r,i="success";try{if(T)throw"timeout";var o="xml"==m.dataType||M.XMLDocument||e.isXMLDoc(M);if(a("isXml="+o),!o&&window.opera&&(null===M.body||!M.body.innerHTML)&&--O)return a("requeing onLoad callback, DOM not available"),setTimeout(s,250),void 0;var u=M.body?M.body:M.documentElement;x.responseText=u?u.innerHTML:null,x.responseXML=M.XMLDocument?M.XMLDocument:M,o&&(m.dataType="xml"),x.getResponseHeader=function(e){var t={"content-type":m.dataType};return t[e.toLowerCase()]},u&&(x.status=Number(u.getAttribute("status"))||x.status,x.statusText=u.getAttribute("statusText")||x.statusText);var l=(m.dataType||"").toLowerCase(),c=/(json|script|text)/.test(l);if(c||m.textarea){var f=M.getElementsByTagName("textarea")[0];if(f)x.responseText=f.value,x.status=Number(f.getAttribute("status"))||x.status,x.statusText=f.getAttribute("statusText")||x.statusText;else if(c){var d=M.getElementsByTagName("pre")[0],h=M.getElementsByTagName("body")[0];d?x.responseText=d.textContent?d.textContent:d.innerText:h&&(x.responseText=h.textContent?h.textContent:h.innerText)}}else"xml"==l&&!x.responseXML&&x.responseText&&(x.responseXML=X(x.responseText));try{E=_(x,l,m)}catch(b){i="parsererror",x.error=r=b||i}}catch(b){a("error caught: ",b),i="error",x.error=r=b||i}x.aborted&&(a("upload aborted"),i=null),x.status&&(i=x.status>=200&&300>x.status||304===x.status?"success":"error"),"success"===i?(m.success&&m.success.call(m.context,E,"success",x),S.resolve(x.responseText,"success",x),p&&e.event.trigger("ajaxSuccess",[x,m])):i&&(void 0===r&&(r=x.statusText),m.error&&m.error.call(m.context,x,i,r),S.reject(x,"error",r),p&&e.event.trigger("ajaxError",[x,m,r])),p&&e.event.trigger("ajaxComplete",[x,m]),p&&!--e.active&&e.event.trigger("ajaxStop"),m.complete&&m.complete.call(m.context,x,i),F=!0,m.timeout&&clearTimeout(j),setTimeout(function(){m.iframeTarget?v.attr("src",m.iframeSrc):v.remove(),x.responseXML=null},100)}}}var l,c,m,p,d,v,g,x,b,y,T,j,w=f[0],S=e.Deferred();if(S.abort=function(e){x.abort(e)},r)for(c=0;h.length>c;c++)l=e(h[c]),i?l.prop("disabled",!1):l.removeAttr("disabled");if(m=e.extend(!0,{},e.ajaxSettings,t),m.context=m.context||m,d="jqFormIO"+(new Date).getTime(),m.iframeTarget?(v=e(m.iframeTarget),y=v.attr2("name"),y?d=y:v.attr2("name",d)):(v=e('<iframe name="'+d+'" src="'+m.iframeSrc+'" />'),v.css({position:"absolute",top:"-1000px",left:"-1000px"})),g=v[0],x={aborted:0,responseText:null,responseXML:null,status:0,statusText:"n/a",getAllResponseHeaders:function(){},getResponseHeader:function(){},setRequestHeader:function(){},abort:function(t){var r="timeout"===t?"timeout":"aborted";a("aborting upload... "+r),this.aborted=1;try{g.contentWindow.document.execCommand&&g.contentWindow.document.execCommand("Stop")}catch(n){}v.attr("src",m.iframeSrc),x.error=r,m.error&&m.error.call(m.context,x,r,t),p&&e.event.trigger("ajaxError",[x,m,r]),m.complete&&m.complete.call(m.context,x,r)}},p=m.global,p&&0===e.active++&&e.event.trigger("ajaxStart"),p&&e.event.trigger("ajaxSend",[x,m]),m.beforeSend&&m.beforeSend.call(m.context,x,m)===!1)return m.global&&e.active--,S.reject(),S;if(x.aborted)return S.reject(),S;b=w.clk,b&&(y=b.name,y&&!b.disabled&&(m.extraData=m.extraData||{},m.extraData[y]=b.value,"image"==b.type&&(m.extraData[y+".x"]=w.clk_x,m.extraData[y+".y"]=w.clk_y)));var D=1,k=2,A=e("meta[name=csrf-token]").attr("content"),L=e("meta[name=csrf-param]").attr("content");L&&A&&(m.extraData=m.extraData||{},m.extraData[L]=A),m.forceSync?o():setTimeout(o,10);var E,M,F,O=50,X=e.parseXML||function(e,t){return window.ActiveXObject?(t=new ActiveXObject("Microsoft.XMLDOM"),t.async="false",t.loadXML(e)):t=(new DOMParser).parseFromString(e,"text/xml"),t&&t.documentElement&&"parsererror"!=t.documentElement.nodeName?t:null},C=e.parseJSON||function(e){return window.eval("("+e+")")},_=function(t,r,a){var n=t.getResponseHeader("content-type")||"",i="xml"===r||!r&&n.indexOf("xml")>=0,o=i?t.responseXML:t.responseText;return i&&"parsererror"===o.documentElement.nodeName&&e.error&&e.error("parsererror"),a&&a.dataFilter&&(o=a.dataFilter(o,r)),"string"==typeof o&&("json"===r||!r&&n.indexOf("json")>=0?o=C(o):("script"===r||!r&&n.indexOf("javascript")>=0)&&e.globalEval(o)),o};return S}if(!this.length)return a("ajaxSubmit: skipping submit process - no element selected"),this;var u,l,c,f=this;"function"==typeof t?t={success:t}:void 0===t&&(t={}),u=t.type||this.attr2("method"),l=t.url||this.attr2("action"),c="string"==typeof l?e.trim(l):"",c=c||window.location.href||"",c&&(c=(c.match(/^([^#]+)/)||[])[1]),t=e.extend(!0,{url:c,success:e.ajaxSettings.success,type:u||e.ajaxSettings.type,iframeSrc:/^https/i.test(window.location.href||"")?"javascript:false":"about:blank"},t);var m={};if(this.trigger("form-pre-serialize",[this,t,m]),m.veto)return a("ajaxSubmit: submit vetoed via form-pre-serialize trigger"),this;if(t.beforeSerialize&&t.beforeSerialize(this,t)===!1)return a("ajaxSubmit: submit aborted via beforeSerialize callback"),this;var p=t.traditional;void 0===p&&(p=e.ajaxSettings.traditional);var d,h=[],v=this.formToArray(t.semantic,h);if(t.data&&(t.extraData=t.data,d=e.param(t.data,p)),t.beforeSubmit&&t.beforeSubmit(v,this,t)===!1)return a("ajaxSubmit: submit aborted via beforeSubmit callback"),this;if(this.trigger("form-submit-validate",[v,this,t,m]),m.veto)return a("ajaxSubmit: submit vetoed via form-submit-validate trigger"),this;var g=e.param(v,p);d&&(g=g?g+"&"+d:d),"GET"==t.type.toUpperCase()?(t.url+=(t.url.indexOf("?")>=0?"&":"?")+g,t.data=null):t.data=g;var x=[];if(t.resetForm&&x.push(function(){f.resetForm()}),t.clearForm&&x.push(function(){f.clearForm(t.includeHidden)}),!t.dataType&&t.target){var b=t.success||function(){};x.push(function(r){var a=t.replaceTarget?"replaceWith":"html";e(t.target)[a](r).each(b,arguments)})}else t.success&&x.push(t.success);if(t.success=function(e,r,a){for(var n=t.context||this,i=0,o=x.length;o>i;i++)x[i].apply(n,[e,r,a||f,f])},t.error){var y=t.error;t.error=function(e,r,a){var n=t.context||this;y.apply(n,[e,r,a,f])}}if(t.complete){var T=t.complete;t.complete=function(e,r){var a=t.context||this;T.apply(a,[e,r,f])}}var j=e("input[type=file]:enabled",this).filter(function(){return""!==e(this).val()}),w=j.length>0,S="multipart/form-data",D=f.attr("enctype")==S||f.attr("encoding")==S,k=n.fileapi&&n.formdata;a("fileAPI :"+k);var A,L=(w||D)&&!k;t.iframe!==!1&&(t.iframe||L)?t.closeKeepAlive?e.get(t.closeKeepAlive,function(){A=s(v)}):A=s(v):A=(w||D)&&k?o(v):e.ajax(t),f.removeData("jqxhr").data("jqxhr",A);for(var E=0;h.length>E;E++)h[E]=null;return this.trigger("form-submit-notify",[this,t]),this},e.fn.ajaxForm=function(n){if(n=n||{},n.delegation=n.delegation&&e.isFunction(e.fn.on),!n.delegation&&0===this.length){var i={s:this.selector,c:this.context};return!e.isReady&&i.s?(a("DOM not ready, queuing ajaxForm"),e(function(){e(i.s,i.c).ajaxForm(n)}),this):(a("terminating; zero elements found by selector"+(e.isReady?"":" (DOM not ready)")),this)}return n.delegation?(e(document).off("submit.form-plugin",this.selector,t).off("click.form-plugin",this.selector,r).on("submit.form-plugin",this.selector,n,t).on("click.form-plugin",this.selector,n,r),this):this.ajaxFormUnbind().bind("submit.form-plugin",n,t).bind("click.form-plugin",n,r)},e.fn.ajaxFormUnbind=function(){return this.unbind("submit.form-plugin click.form-plugin")},e.fn.formToArray=function(t,r){var a=[];if(0===this.length)return a;var i=this[0],o=t?i.getElementsByTagName("*"):i.elements;if(!o)return a;var s,u,l,c,f,m,p;for(s=0,m=o.length;m>s;s++)if(f=o[s],l=f.name,l&&!f.disabled)if(t&&i.clk&&"image"==f.type)i.clk==f&&(a.push({name:l,value:e(f).val(),type:f.type}),a.push({name:l+".x",value:i.clk_x},{name:l+".y",value:i.clk_y}));else if(c=e.fieldValue(f,!0),c&&c.constructor==Array)for(r&&r.push(f),u=0,p=c.length;p>u;u++)a.push({name:l,value:c[u]});else if(n.fileapi&&"file"==f.type){r&&r.push(f);var d=f.files;if(d.length)for(u=0;d.length>u;u++)a.push({name:l,value:d[u],type:f.type});else a.push({name:l,value:"",type:f.type})}else null!==c&&c!==void 0&&(r&&r.push(f),a.push({name:l,value:c,type:f.type,required:f.required}));if(!t&&i.clk){var h=e(i.clk),v=h[0];l=v.name,l&&!v.disabled&&"image"==v.type&&(a.push({name:l,value:h.val()}),a.push({name:l+".x",value:i.clk_x},{name:l+".y",value:i.clk_y}))}return a},e.fn.formSerialize=function(t){return e.param(this.formToArray(t))},e.fn.fieldSerialize=function(t){var r=[];return this.each(function(){var a=this.name;if(a){var n=e.fieldValue(this,t);if(n&&n.constructor==Array)for(var i=0,o=n.length;o>i;i++)r.push({name:a,value:n[i]});else null!==n&&n!==void 0&&r.push({name:this.name,value:n})}}),e.param(r)},e.fn.fieldValue=function(t){for(var r=[],a=0,n=this.length;n>a;a++){var i=this[a],o=e.fieldValue(i,t);null===o||void 0===o||o.constructor==Array&&!o.length||(o.constructor==Array?e.merge(r,o):r.push(o))}return r},e.fieldValue=function(t,r){var a=t.name,n=t.type,i=t.tagName.toLowerCase();if(void 0===r&&(r=!0),r&&(!a||t.disabled||"reset"==n||"button"==n||("checkbox"==n||"radio"==n)&&!t.checked||("submit"==n||"image"==n)&&t.form&&t.form.clk!=t||"select"==i&&-1==t.selectedIndex))return null;if("select"==i){var o=t.selectedIndex;if(0>o)return null;for(var s=[],u=t.options,l="select-one"==n,c=l?o+1:u.length,f=l?o:0;c>f;f++){var m=u[f];if(m.selected){var p=m.value;if(p||(p=m.attributes&&m.attributes.value&&!m.attributes.value.specified?m.text:m.value),l)return p;s.push(p)}}return s}return e(t).val()},e.fn.clearForm=function(t){return this.each(function(){e("input,select,textarea",this).clearFields(t)})},e.fn.clearFields=e.fn.clearInputs=function(t){var r=/^(?:color|date|datetime|email|month|number|password|range|search|tel|text|time|url|week)$/i;return this.each(function(){var a=this.type,n=this.tagName.toLowerCase();r.test(a)||"textarea"==n?this.value="":"checkbox"==a||"radio"==a?this.checked=!1:"select"==n?this.selectedIndex=-1:"file"==a?/MSIE/.test(navigator.userAgent)?e(this).replaceWith(e(this).clone(!0)):e(this).val(""):t&&(t===!0&&/hidden/.test(a)||"string"==typeof t&&e(this).is(t))&&(this.value="")})},e.fn.resetForm=function(){return this.each(function(){("function"==typeof this.reset||"object"==typeof this.reset&&!this.reset.nodeType)&&this.reset()})},e.fn.enable=function(e){return void 0===e&&(e=!0),this.each(function(){this.disabled=!e})},e.fn.selected=function(t){return void 0===t&&(t=!0),this.each(function(){var r=this.type;if("checkbox"==r||"radio"==r)this.checked=t;else if("option"==this.tagName.toLowerCase()){var a=e(this).parent("select");t&&a[0]&&"select-one"==a[0].type&&a.find("option").selected(!1),this.selected=t}})},e.fn.ajaxSubmit.debug=!1})("undefined"!=typeof jQuery?jQuery:window.Zepto);
 /*!
  * jQuery Cookie Plugin v1.2

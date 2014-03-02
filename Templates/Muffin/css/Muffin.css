@@ -799,120 +799,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-.odometer.odometer-auto-theme,
-.odometer.odometer-theme-default {
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  position: relative;
-}
-.odometer.odometer-auto-theme,
-.odometer.odometer-theme-default {
-  *display: inline;
-}
-.odometer.odometer-auto-theme .odometer-digit,
-.odometer.odometer-theme-default .odometer-digit {
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  position: relative;
-}
-.odometer.odometer-auto-theme .odometer-digit,
-.odometer.odometer-theme-default .odometer-digit {
-  *display: inline;
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
-.odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
-  display: inline-block;
-  vertical-align: middle;
-  *vertical-align: auto;
-  visibility: hidden;
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
-.odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
-  *display: inline;
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
-.odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
-  text-align: left;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
-.odometer.odometer-theme-default .odometer-digit .odometer-ribbon {
-  display: block;
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,
-.odometer.odometer-theme-default .odometer-digit .odometer-ribbon-inner {
-  display: block;
-  -webkit-backface-visibility: hidden;
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-value,
-.odometer.odometer-theme-default .odometer-digit .odometer-value {
-  display: block;
-  -webkit-transform: translateZ(0);
-}
-.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,
-.odometer.odometer-theme-default .odometer-digit .odometer-value.odometer-last-value {
-  position: absolute;
-}
-.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
-.odometer.odometer-theme-default.odometer-animating-up .odometer-ribbon-inner {
-  -webkit-transition: -webkit-transform 2s;
-  -moz-transition: -moz-transform 2s;
-  -ms-transition: -ms-transform 2s;
-  -o-transition: -o-transform 2s;
-  transition: transform 2s;
-}
-.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,
-.odometer.odometer-theme-default.odometer-animating-up.odometer-animating .odometer-ribbon-inner {
-  -webkit-transform: translateY(-100%);
-  -moz-transform: translateY(-100%);
-  -ms-transform: translateY(-100%);
-  -o-transform: translateY(-100%);
-  transform: translateY(-100%);
-}
-.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,
-.odometer.odometer-theme-default.odometer-animating-down .odometer-ribbon-inner {
-  -webkit-transform: translateY(-100%);
-  -moz-transform: translateY(-100%);
-  -ms-transform: translateY(-100%);
-  -o-transform: translateY(-100%);
-  transform: translateY(-100%);
-}
-.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
-.odometer.odometer-theme-default.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
-  -webkit-transition: -webkit-transform 2s;
-  -moz-transition: -moz-transform 2s;
-  -ms-transition: -ms-transform 2s;
-  -o-transition: -o-transform 2s;
-  transition: transform 2s;
-  -webkit-transform: translateY(0);
-  -moz-transform: translateY(0);
-  -ms-transform: translateY(0);
-  -o-transform: translateY(0);
-  transform: translateY(0);
-}
-.odometer.odometer-auto-theme,
-.odometer.odometer-theme-default {
-  font-family: "Helvetica Neue", sans-serif;
-  line-height: 1.1em;
-}
-.odometer.odometer-auto-theme .odometer-value,
-.odometer.odometer-theme-default .odometer-value {
-  text-align: center;
-}
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
@@ -12530,6 +12416,280 @@ div[data-role="form-container"] form .visible > * {
 .progress-button[data-style="shrink"][data-horizontal].state-error .content {
   -webkit-transform: translateY(-100%);
   transform: translateY(-100%);
+}
+.calendar .planning-filters .filter-element {
+  display: inline-block;
+}
+.calendar .planning-filters .filter-element .active {
+  background-color: rgba(119, 43, 14, 0);
+  color: #c02942;
+  border: 1px solid #c02942;
+}
+.calendar .clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.calendar .clearfix {
+  display: inline-block;
+}
+.calendar html[xmlns] .clearfix {
+  display: block;
+}
+.calendar * html .clearfix {
+  height: 1%;
+}
+.calendar .noselect {
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.calendar h4 {
+  width: 75%;
+  text-align: center;
+  font-weight: normal;
+  color: white;
+  font-size: 14px;
+  margin: 0 auto 1em auto;
+  padding: 1em;
+  background: #b63642;
+}
+.calendar p {
+  text-align: center;
+  font-family: 'Droid Sans Mono';
+  margin: 3em auto 1em auto;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid #414141;
+  background: #f4f4f4;
+}
+.calendar .cal1 {
+  margin: 30px auto;
+  /*max-width: 600px;*/
+  position: relative;
+  font-size: 14px;
+}
+.calendar .cal1 .clndr {
+  position: relative;
+}
+.calendar .cal1 .clndr .clndr-controls {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+}
+.calendar .cal1 .clndr .clndr-controls .month {
+  float: left;
+  width: 33%;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.5);
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button {
+  float: left;
+  width: 33%;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button.rightalign {
+  text-align: right;
+  width: 34%;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-next-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-next-button:hover {
+  background: #ddd;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-next-button.inactive {
+  opacity: 0.5;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-next-button.inactive:hover {
+  background: none;
+  cursor: default;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-previous-button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-previous-button:hover {
+  background: #ddd;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-previous-button.inactive {
+  opacity: 0.5;
+}
+.calendar .cal1 .clndr .clndr-controls .clndr-control-button .clndr-previous-button.inactive:hover {
+  background: none;
+  cursor: default;
+}
+.calendar .cal1 .clndr .event-listing {
+  position: absolute;
+  width: 300px;
+  text-align: left;
+  right: -330px;
+  top: 0px;
+}
+.calendar .cal1 .clndr .event-listing .event-item .event-item-date {
+  color: rgba(0, 0, 0, 0.4);
+}
+.calendar .cal1 .clndr .event-listing .event-item .event-item-name {
+  font-weight: bold;
+}
+.calendar .cal1 .clndr .event-listing .event-item .event-item-description {
+  font-size: 0.9em;
+  color: rgba(0, 0, 0, 0.6);
+  padding-left: 18px;
+  line-height: 16px;
+}
+.calendar .cal1 .clndr .event-listing .event-item + .event-item {
+  margin-top: 5px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .event-listing .event-item.event-past {
+  opacity: 0.4;
+}
+.calendar .cal1 .clndr .event-listing .event-item-nothing {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 1.1em;
+  margin: auto;
+  display: block;
+}
+.calendar .cal1 .clndr .clndr-table {
+  table-layout: fixed;
+  width: 100%;
+  /* Le header avec le nom des jours */
+}
+.calendar .cal1 .clndr .clndr-table .header-days {
+  height: 30px;
+  font-size: 10px;
+  background: rgba(0, 0, 0, 0.03);
+}
+.calendar .cal1 .clndr .clndr-table .header-days .header-day {
+  vertical-align: middle;
+  text-align: center;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: #413e4a;
+}
+.calendar .cal1 .clndr .clndr-table .header-days .header-day:first-child {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .clndr-table .header-days .header-day:last-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .clndr-table tr {
+  height: 85px;
+}
+.calendar .cal1 .clndr .clndr-table tr td {
+  vertical-align: top;
+}
+.calendar .cal1 .clndr .clndr-table tr .day {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: inherit;
+}
+.calendar .cal1 .clndr .clndr-table tr .day:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .clndr-table tr .day.today {
+  background: #eaa598;
+}
+.calendar .cal1 .clndr .clndr-table tr .day.today:hover {
+  background: #e2806d;
+}
+.calendar .cal1 .clndr .clndr-table tr .day.today.event {
+  background: #cd4243;
+}
+.calendar .cal1 .clndr .clndr-table tr .day.event {
+  background: #d7455d;
+  color: #f7e4be;
+}
+.calendar .cal1 .clndr .clndr-table tr .day.event:hover {
+  background: #c02942;
+}
+.calendar .cal1 .clndr .clndr-table tr .day.inactive {
+  background: rgba(0, 0, 0, 0.05);
+}
+.calendar .cal1 .clndr .clndr-table tr .day:last-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .clndr-table tr .day .day-contents {
+  box-sizing: border-box;
+  padding: 0px 8px;
+  font-size: 12px;
+  text-align: right;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .day-events {
+  box-sizing: border-box;
+  width: 100%;
+  clear: both;
+  padding: 0px 5px;
+  font-size: 10px;
+  text-align: left;
+  vertical-align: bottom;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .day-events .event-icon {
+  float: right;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .day-events .event-line {
+  margin-top: 2px;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .day-events .event-line .event-line-title {
+  line-height: 10px;
+  word-break: break-word;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  margin: auto;
+  padding: 0;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .event-more {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 9px;
+  width: 100%;
+  padding: 3px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.calendar .cal1 .clndr .clndr-table tr .empty,
+.calendar .cal1 .clndr .clndr-table tr .adjacent-month {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: inherit;
+  background: rgba(255, 255, 255, 0.4);
+}
+.calendar .cal1 .clndr .clndr-table tr .empty:hover,
+.calendar .cal1 .clndr .clndr-table tr .adjacent-month:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.calendar .cal1 .clndr .clndr-table tr .empty:last-child,
+.calendar .cal1 .clndr .clndr-table tr .adjacent-month:last-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .clndr-table tr:last-child .day {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.calendar .cal1 .clndr .clndr-table tr:last-child .empty {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 /*
  * Pour les média queries délicates.
