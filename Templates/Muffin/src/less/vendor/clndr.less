@@ -58,7 +58,7 @@
         padding: 1em;
         background: #b63642;
     }
-
+/*
     p
     {
         text-align: center;
@@ -69,7 +69,7 @@
         border-bottom: 2px solid #414141;
         background: #f4f4f4;
     }
-
+*/
     //////////////////////////////////
 
     @clndr-border: 1px solid rgba(0, 0, 0, 0.1);
@@ -329,6 +329,28 @@
                             margin-top: 4px;
                             border-top: 1px solid rgba(0, 0, 0, 0.15);
                             background-color: rgba(0, 0, 0, 0.2);
+                            cursor: pointer;
+
+                            &+.tooltip
+                            {
+                                .tooltip-arrow
+                                {
+                                    border-bottom-color: @muffin-red;
+                                }
+
+                                .tooltip-inner
+                                {
+                                    background-color: darken(@muffin-red, 10%);
+                                    text-align: left;
+                                    color: @muffin-yellow;
+
+                                    p
+                                    {
+                                        color: @muffin-yellow;
+                                        margin: 0;
+                                    }
+                                }
+                            }
                         }
                     }
 

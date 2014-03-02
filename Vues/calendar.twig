@@ -38,7 +38,7 @@
 			      	<%= days[d].day %>
 			      </div>
 			      <div class='day-events'>
-	      			<% var length = 0; %>
+	      			<% var length = 0; var moretitle = "";%>
 			      	<% _.each(days[d].events, function(event, i) { %>
 			      		<% if (showTd(event)) { %>
 			      			<% if (i < 2) { %>
@@ -48,13 +48,13 @@
 								      	<%= event.titre %>
 							      	</div>
 						      	</div>
-					    	<% } %>
+					    	<% } else { moretitle += "<p><b>" + moment(event.date).format("HH:mm") + "</b> " + event.titre + "</p>"; } %>
 	      					<% length++; %>
 					    <% } %>
 				    <% }); %>
 			      </div>
 			    <% if (length > 2) { %>
-			      	<div class="event-more">
+			      	<div class="event-more" data-toggle="tooltip" title="<%= moretitle %>" data-placement="bottom">
 				      	et <% print(length - 2) %> de plus...
 			      	</div>
 				<% } %>
@@ -145,7 +145,11 @@ $(document).ready( function() {
       }
     },
     showAdjacentMonths: true,
-    adjacentDaysChangeMonth: true
+    adjacentDaysChangeMonth: true,
+    doneRendering: function(){
+    	$('div[data-toggle="tooltip"]').tooltip({html: true});
+    	console.log("redered !");
+    }
   });
 
   $.getJSON('Calendar/getAllEvents', function(json)

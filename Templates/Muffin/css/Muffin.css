@@ -12417,6 +12417,20 @@ div[data-role="form-container"] form .visible > * {
   -webkit-transform: translateY(-100%);
   transform: translateY(-100%);
 }
+.calendar {
+  /*
+    p
+    {
+        text-align: center;
+        font-family: 'Droid Sans Mono';
+        margin: 3em auto 1em auto;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        border-bottom: 2px solid #414141;
+        background: #f4f4f4;
+    }
+*/
+}
 .calendar .planning-filters .filter-element {
   display: inline-block;
 }
@@ -12459,15 +12473,6 @@ div[data-role="form-container"] form .visible > * {
   margin: 0 auto 1em auto;
   padding: 1em;
   background: #b63642;
-}
-.calendar p {
-  text-align: center;
-  font-family: 'Droid Sans Mono';
-  margin: 3em auto 1em auto;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  border-bottom: 2px solid #414141;
-  background: #f4f4f4;
 }
 .calendar .cal1 {
   margin: 30px auto;
@@ -12668,6 +12673,19 @@ div[data-role="form-container"] form .visible > * {
   margin-top: 4px;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .event-more + .tooltip .tooltip-arrow {
+  border-bottom-color: #c02942;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .event-more + .tooltip .tooltip-inner {
+  background-color: #962034;
+  text-align: left;
+  color: #f7e4be;
+}
+.calendar .cal1 .clndr .clndr-table tr .day .event-more + .tooltip .tooltip-inner p {
+  color: #f7e4be;
+  margin: 0;
 }
 .calendar .cal1 .clndr .clndr-table tr .empty,
 .calendar .cal1 .clndr .clndr-table tr .adjacent-month {
