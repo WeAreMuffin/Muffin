@@ -9311,6 +9311,9 @@ textarea {
   color: #000;
   padding: 0.2em 0;
 }
+.light {
+  color: rgba(0, 0, 0, 0.3);
+}
 /* ===== Initializr Styles ==================================================
    Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
    ========================================================================== */
@@ -11610,6 +11613,9 @@ h1.title-remain,
   margin: 15px;
   display: block;
 }
+.liste-reunions li a[data-load-target] {
+  cursor: pointer;
+}
 .liste-reunions li .attrs {
   width: 40px;
   margin-top: 10px;
@@ -11720,6 +11726,68 @@ h1.title-remain,
 .button:hover {
   border: 1px solid rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.7);
+}
+li.reunion-mine {
+  border-left: 10px solid #e06f82;
+  margin-left: 5px;
+}
+/*
+    ------------------------------------------------------------------------
+        Reunions monopage (Reunion/p/$ID)
+    ------------------------------------------------------------------------
+*/
+.reunion-p .reunion-title {
+  font-size: 1.4em;
+  text-transform: uppercase;
+  margin: 5px;
+}
+.reunion-p .reunion-title .main-title {
+  color: #c02942;
+  font-weight: bold;
+}
+.reunion-p .reunion-title .sub-title {
+  margin-left: 5px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.reunion-p .reunion-title .button {
+  font-size: 0.7em;
+}
+.reunion-p .middle {
+  clear: both;
+  padding: 10px 0;
+}
+.reunion-p .bottom {
+  color: rgba(0, 0, 0, 0.4);
+}
+.reunion-p .bottom > div {
+  margin-right: 10px;
+  display: inline-block;
+}
+.reunion-p .bottom .user {
+  text-transform: capitalize;
+}
+.reunion-p .bottom .legend {
+  color: rgba(0, 0, 0, 0.25);
+}
+.reunion-p .reunions-resume {
+  display: block;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.reunion-p .reunions-resume.panel {
+  padding: 0px 10px;
+}
+.reunion-p .reunions-resume.panel p {
+  color: rgba(0, 0, 0, 0.5);
+  margin: 5px;
+}
+.reunion-p .reunions-participants .thumbs {
+  max-height: 50px;
+  height: 50px;
+  display: inline-block;
+}
+.reunion-p .reunions-participants .thumbs img {
+  width: auto;
+  height: 100%;
 }
 /*
     ------------------------------------------------------------------------
@@ -12480,6 +12548,9 @@ div[data-role="form-container"] form .visible > * {
   position: relative;
   font-size: 14px;
 }
+.calendar .cal1 a[data-load-target] {
+  cursor: pointer;
+}
 .calendar .cal1 .clndr {
   position: relative;
 }
@@ -12547,6 +12618,9 @@ div[data-role="form-container"] form .visible > * {
   text-align: left;
   right: -330px;
   top: 0px;
+}
+.calendar .cal1 .clndr .event-listing a[data-load-target] {
+  cursor: pointer;
 }
 .calendar .cal1 .clndr .event-listing .event-item .event-item-date {
   color: rgba(0, 0, 0, 0.4);

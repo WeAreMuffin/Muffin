@@ -108,6 +108,11 @@ textarea {
     padding: 0.2em 0;
 }
 
+.light
+{
+    color: rgba(0, 0, 0, 0.3);
+}
+
 
 /* ===== Initializr Styles ==================================================
    Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
@@ -3106,6 +3111,11 @@ h1.title-remain,
         margin: 15px;
         display: block;
 
+        a[data-load-target]
+        {
+            cursor: pointer;
+        }
+
         .attrs
         {
             width: 40px;
@@ -3269,6 +3279,104 @@ h1.title-remain,
     {
         border: 1px solid rgba(0, 0, 0, 0.4);
         color: rgba(0, 0, 0, 0.7);
+    }
+}
+
+li.reunion-mine
+{
+    border-left: 10px solid lighten(@muffin-red, 20%);
+    margin-left: 5px;
+}
+
+/*
+    ------------------------------------------------------------------------
+        Reunions monopage (Reunion/p/$ID)
+    ------------------------------------------------------------------------
+*/
+
+.reunion-p
+{
+    .reunion-title
+    {
+        font-size: 1.4em;
+        text-transform: uppercase;
+        margin: 5px;
+
+        .main-title
+        {
+            color: @muffin-red;
+            font-weight: bold;
+        }
+
+        .sub-title
+        {
+            margin-left: 5px;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .button
+        {
+            font-size: 0.7em;
+        }
+    }
+
+    .middle
+    {
+        clear: both;
+        padding: 10px 0;
+    }
+
+    .bottom
+    {
+        color: rgba(0, 0, 0, 0.4);
+        & > div
+        {
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .user
+        {
+            text-transform: capitalize;
+        }
+
+        .legend
+        {
+            color: rgba(0, 0, 0, 0.25);
+        }
+    }
+
+    .reunions-resume
+    {
+        display: block;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+        &.panel
+        {
+            padding: 0px 10px;
+
+            p
+            {
+                color: rgba(0, 0, 0, 0.5);
+                margin: 5px;
+            }
+        }
+    }
+
+    .reunions-participants
+    {
+        .thumbs
+        {
+            max-height: 50px;
+            height: 50px;
+            display: inline-block;
+
+            img
+            {
+                width: auto;
+                height: 100%;
+            }
+        }
     }
 }
 

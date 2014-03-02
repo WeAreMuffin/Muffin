@@ -1,5 +1,4 @@
-
-		    <li>
+		    <li {{ reunion.reunion_organisateur == uid ? "class='reunion-mine'" }}>
 		    	<div class="attrs">
 		    	{% if reunion.reunion_type > 1 %}
 		    		<div data-toggle="tooltip" title="{{ reunion.description_type }}"><span class="icon-{{ reunion.icone_type }}"></span></div>
@@ -10,39 +9,39 @@
 		    	</div>
 		    	<div class="content">
 				    <p>
-		    			{% if reunion.reunion_type > 1 %}
-					    {{ reunion.nom_type }} sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
-					    {% else %}
-					    Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
-		    			{% endif %}
+				    	<a data-load-target="Reunion/p/{{ reunion.reunion_id }}">
+			    			{% if reunion.reunion_type > 1 %}
+						    {{ reunion.nom_type }} sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
+						    {% else %}
+						    Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
+			    			{% endif %}
+					    </a>
 					     · <span class="date">{{ reunion.reunion_date }}</span>
 
 						{# si la reunion est a venir #}
-					    {% if not mine and not is_past %}
+					    {% if reunion.reunion_organisateur != uid and not is_past %}
 
-						    {% if reunion.reunion_id in inscrit %}
+						    {% if uid in reunion.c_reunion_participe.id_user %}
 						    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">se désinscrire</a>
 						    {% else %}
 						    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">participer</a>
 						    {% endif %}
 
 						{# si on a participe a la reunion #}
-						{% elseif not mine and reunion.reunion_id in inscrit %}
+						{% elseif reunion.reunion_organisateur != uid and uid in reunion.c_reunion_participe.id_user %}
 
 							<span class="simple-text right"><span class="icon-checkmark2"></span> vous avez participé</span>
 
 						{# si on est le créateur de la réunion et qu'elle n'est pas envore passée #}
-						{% elseif mine and not is_past %}
-
+						{% elseif reunion.reunion_organisateur == uid and not is_past %}
 						    <a data-action="delete-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">
 						    <span class="icon-close"></span> Annuler
 						    </a>
 
 					    {% endif %}
-
 				    </p>
 					{# si on a participe a la reunion #}
-					{% if not mine and is_past and reunion.reunion_id in inscrit %}
+					{% if reunion.reunion_organisateur != uid and is_past and reunion.reunion_id in inscrit %}
 					    <div class="middle">
 					    	{% if reunion.reunion_id in feedback %}
 					    		<span class="simple-text right"></span>
@@ -74,7 +73,7 @@
 				     		<span class="icon-calendar2"></span> <span class="date-calendar">{{ reunion.reunion_date }}</span>
 						</div>
 						<div>
-				     		<p class="reunions-resume"><span class="icon-info3"></span> {{ reunion.reunion_texte }}<p>
+				     		<p class="reunions-resume"><span class="icon-info3"></span> {{ reunion.reunion_texte }}</p>
 						</div>
 			     	</div>
 		     	</div>

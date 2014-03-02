@@ -53,56 +53,56 @@ class Calendar extends Controller
             $elt["desc"] = $value->reunion_texte;
             $elt["type"] = "bubbles";
             $elt["categorie"] = "réunion";
-            $elt["link"] = "Reunion/index";
+            $elt["link"] = "Reunion/p/".$value->reunion_id;
             $json[] = $elt;
         }
 
-        /* for tests */
+        // /* for tests */
 
-        	$elt = array();
-            $elt["date"] = "2014-03-15 15:00";
-            $elt["titre"] = "Atelier écriture arts et dessins";
-            $elt["desc"] = "On va tous écrire plein de trucs !";
-            $elt["type"] = "write";
-            $elt["categorie"] = "atelier";
-            $elt["link"] = "Reunion/index";
-            $json[] = $elt;
+        // 	$elt = array();
+        //     $elt["date"] = "2014-03-15 15:00";
+        //     $elt["titre"] = "Atelier écriture arts et dessins";
+        //     $elt["desc"] = "On va tous écrire plein de trucs !";
+        //     $elt["type"] = "write";
+        //     $elt["categorie"] = "atelier";
+        //     $elt["link"] = "Reunion/index";
+        //     $json[] = $elt;
 
-        	$elt = array();
-            $elt["date"] = "2014-03-15 16:00";
-            $elt["titre"] = "Atelier écriture arts et dessins et peinture";
-            $elt["desc"] = "On va tous écrire plein de trucs !";
-            $elt["type"] = "write";
-            $elt["categorie"] = "atelier";
-            $elt["link"] = "Reunion/index";
-            $json[] = $elt;
+        // 	$elt = array();
+        //     $elt["date"] = "2014-03-15 16:00";
+        //     $elt["titre"] = "Atelier écriture arts et dessins et peinture";
+        //     $elt["desc"] = "On va tous écrire plein de trucs !";
+        //     $elt["type"] = "write";
+        //     $elt["categorie"] = "atelier";
+        //     $elt["link"] = "Reunion/index";
+        //     $json[] = $elt;
 
-        	$elt = array();
-            $elt["date"] = "2014-03-15 17:00";
-            $elt["titre"] = "Atelier écriture arts et dessins et animé";
-            $elt["desc"] = "On va tous écrire plein de trucs !";
-            $elt["type"] = "write";
-            $elt["categorie"] = "atelier";
-            $elt["link"] = "Reunion/index";
-            $json[] = $elt;
+        // 	$elt = array();
+        //     $elt["date"] = "2014-03-15 17:00";
+        //     $elt["titre"] = "Atelier écriture arts et dessins et animé";
+        //     $elt["desc"] = "On va tous écrire plein de trucs !";
+        //     $elt["type"] = "write";
+        //     $elt["categorie"] = "atelier";
+        //     $elt["link"] = "Reunion/index";
+        //     $json[] = $elt;
 
-        	$elt = array();
-            $elt["date"] = "2014-03-15 19:00";
-            $elt["titre"] = "Atelier écriture arts et dessins";
-            $elt["desc"] = "On va tous écrire plein de trucs !";
-            $elt["type"] = "write";
-            $elt["categorie"] = "atelier";
-            $elt["link"] = "Reunion/index";
-            $json[] = $elt;
+        // 	$elt = array();
+        //     $elt["date"] = "2014-03-15 19:00";
+        //     $elt["titre"] = "Atelier écriture arts et dessins";
+        //     $elt["desc"] = "On va tous écrire plein de trucs !";
+        //     $elt["type"] = "write";
+        //     $elt["categorie"] = "atelier";
+        //     $elt["link"] = "Reunion/index";
+        //     $json[] = $elt;
 
-        	$elt = array();
-            $elt["date"] = "2014-03-15 21:00";
-            $elt["titre"] = "Atelier écriture";
-            $elt["desc"] = "On va tous écrire plein de trucs !";
-            $elt["type"] = "write";
-            $elt["categorie"] = "atelier";
-            $elt["link"] = "Reunion/index";
-            $json[] = $elt;
+        // 	$elt = array();
+        //     $elt["date"] = "2014-03-15 21:00";
+        //     $elt["titre"] = "Atelier écriture";
+        //     $elt["desc"] = "On va tous écrire plein de trucs !";
+        //     $elt["type"] = "write";
+        //     $elt["categorie"] = "atelier";
+        //     $elt["link"] = "Reunion/index";
+        //     $json[] = $elt;
 
 
 
