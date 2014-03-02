@@ -1,0 +1,154 @@
+
+<ul class="horizontal-buttons">
+    <li id="reunions-button-add">
+        <a class="btn" data-load-target="Reunion/create">
+        	<span class="icon-bullhorn"></span><span class='side-legend'> Nouvelle réunion</span>
+        </a>
+    </li>
+    <li id="reunions-button-add">
+        <a class="btn" data-load-target="Reunion/index">
+        	<span class="icon-user"></span><span class='side-legend'> Liste des réunions</span>
+        </a>
+    </li>
+</ul>
+
+<div class="loading reunion-p">
+	<p class="reunion-title">
+		<span class="main-title">
+		{% if reunion.reunion_type > 1 %}
+		    {{ reunion.nom_type }} sur {{ reunion.c_competences.nom_usuel|default(reunion.c_competences.nom_competence) }}
+	    {% else %}
+			Réunion sur {{ reunion.c_competences.nom_usuel|default(reunion.c_competences.nom_competence) }}
+		{% endif %}
+		</span>
+		<span class="sub-title">
+			<span class="date light">{{ reunion.reunion_date }}</span>
+
+
+		</span>
+	</p>
+
+	<div class="middle actions">
+
+				{# si la reunion est a venir #}
+			    {% if not mine and date > 0 %}
+
+				    {% if participe %}
+				    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button">se désinscrire</a>
+				    {% else %}
+				    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button">participer</a>
+				    {% endif %}
+
+				{# si on a participe a la reunion #}
+				{% elseif not mine and participe %}
+
+					<span class="simple-text"><span class="icon-checkmark2"></span> vous avez participé</span>
+
+				{# si on est le créateur de la réunion et qu'elle n'est pas envore passée #}
+				{% elseif mine and date > 0 %}
+
+				    <a data-action="delete-reunion" data-reunion="{{ reunion.reunion_id }}" class="button">
+				    	<span class="icon-close"></span> Annuler
+				    </a>
+				    <a data-load-target="Reunion/edit/{{ reunion.reunion_id }}" class="button">
+				    	<span class="icon-edit"></span> Éditer
+				    </a>
+
+			    {% endif %}
+
+			{# si on a participe a la reunion
+			{% if not mine and date < 0 and participe %}
+			    <div class="middle">
+			    	{% if feedback.feedback[0] %}
+			    		<span class="simple-text"></span>
+			    	{% else %}
+			    		<span class="simple-text">votre avis :</span>
+			    		<a class="button feedback red" data-reunion="{{ reunion.reunion_id }}" data-feedback="0" data-type="feedback">
+			    			<span class="icon-sad2"></span>
+			    		</a>
+			    		<a class="button feedback orange" data-reunion="{{ reunion.reunion_id }}" data-feedback="1" data-type="feedback">
+			    			<span class="icon-neutral"></span>
+			    		</a>
+			    		<a class="button feedback green" data-reunion="{{ reunion.reunion_id }}" data-feedback="2" data-type="feedback">
+			    			<span class="icon-smiley"></span>
+			    		</a>
+			    	{% endif %}
+			    </div>
+		    {% endif %}#}
+	</div>
+
+	<div class="bottom">
+     	<div data-placement="bottom" data-toggle="tooltip" title="Durée (approximative) de la réunion">
+     		<span class="legend"><span class="icon-clock"></span> Durée </span> {{ reunion.reunion_duree }}h
+		</div>
+		<div data-placement="bottom" data-toggle="tooltip" title="Lieu de la réunion">
+     		<span class="legend"><span class="icon-place"></span> Lieu </span> {{ reunion.reunion_lieu }}
+		</div>
+		<div data-placement="bottom" data-toggle="tooltip" title="Organisateur de la réunion">
+     		<span class="legend"><span class="icon-user2"></span> Organisateur </span>
+     		<span class="user">{{ reunion.c_user.c_42_logins.prenom|lower }} {{ reunion.c_user.c_42_logins.nom|lower }}</span>
+		</div>
+		<div data-placement="bottom" data-toggle="tooltip" title="Date de la réunion">
+     		<span class="legend"><span class="icon-calendar2"></span> Date </span> <span class="date-calendar">{{ reunion.reunion_date }}</span>
+		</div>
+ 	</div>
+	<div class="reunions-resume panel">
+ 		<p>{{ reunion.reunion_texte }}</p>
+	</div>
+
+	<div class="reunions-participants">
+ 		<p class="light">
+ 			{{ plu("personne", reunion.c_reunion_participe.id_user, "s", "", "Aucune") }}
+ 			participe{{ reunion.c_reunion_participe.id_user|length > 1 ? "nt" }}</p>
+ 		{% for personne in reunion.c_reunion_participe %}
+ 			<div class="thumbs">
+            	<img src="data:image/jpeg;base64,{{ personne.c_user.c_42_logins.picture }}">
+            </div>
+ 		{% endfor %}
+	</div>
+
+
+	<script type="text/javascript">
+	moment.lang('fr');
+	$(".date").each(function()
+	{
+		var ctn = $(this).text();
+		$(this).html(moment(ctn).fromNow());
+	});
+	$(".date-calendar").each(function()
+	{
+		var ctn = $(this).text();
+		$(this).html(moment(ctn).calendar());
+	});
+	$("[data-action='participer-reunion']").click(function(){
+		var id = $(this).attr("data-reunion");
+		var btn = $(this);
+		var ctnr = btn.parent().parent().parent().find(".reunion-count");
+		$.get('Reunion/participer/' + id, function(e)
+		{
+			if (e == "1")
+			{
+				ctnr.html(parseInt(ctnr.html()) + 1);
+				btn.html('<span class="icon-checkmark2"></span> Vous etes inscrit');
+			}
+			else if (e == "-1")
+			{
+				ctnr.html(parseInt(ctnr.html()) - 1);
+				btn.html('<span class="icon-close"></span> Vous etes désinscrit');
+			}
+		});
+	});
+	$("[data-feedback]").click(function()
+	{
+		var value = $(this).attr("data-feedback");
+		var id = $(this).attr("data-reunion");
+		var elt = $(this).parent();
+		$.get('Reunion/feedback/' + id + "/" + value, function(e)
+		{
+			elt.html("<span class='simple-text right'><span class='icon-checkmark3'></span> Merci !</span>");
+		});
+	});
+	$("[data-toggle='tooltip']").tooltip();
+	Muffin.bindAjaxEvents();
+	</script>
+</div>

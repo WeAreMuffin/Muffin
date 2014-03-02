@@ -34,18 +34,38 @@ class Reunion extends Controller
      */
     public function index ($params)
     {
-        $this->addData("inscrit", $this->get_reunions_array());
-        $this->addData("feedback", $this->get_feedback_array());
         $this->addData('aujourdhui', $this->get_reunions_today());
         $this->addData('past', $this->get_reunions_past());
         $this->addData('future', $this->get_reunions_future());
+        $this->addData('uid', $_SESSION['muffin_id']);
         $this->render();
     }
 
-    /*
-     * Les réunions de l'utilisateur
+    /**
+     * @PathInfo('id')
+     * Donne le détail d'une réunion
      */
-    public function mine ($params)
+    public function p ($params)
+    {
+        $id = $this->getUrlParam("id");
+        $this->registerParams($params);
+        $reunion = Moon::get("c_reunion", "reunion_id", $id);
+        $this->addData("reunion", $reunion);
+        $date = new DateTime($reunion->reunion_date, new DateTimeZone('Europe/Paris'));
+        $this->addData("feedback", new Entities('c_reunion_participe[id_user="'.$_SESSION['muffin_id'].'"][id_reunion="'.$id.'"]'));
+        $this->addData("reunion", $reunion);
+        $this->addData("mine", ($reunion->reunion_organisateur == $_SESSION['muffin_id']));
+        $this->addData("participe", in_array($_SESSION['muffin_id'], $reunion->c_reunion_participe->id_user));
+        $this->addData("date", -1 * ($date->diff(new DateTime("now"))->format("%r%a%H%I")));
+        $this->render();
+    }
+
+
+    /**
+     * Les réunions de l'utilisateur
+     * @deprecated since 4.2
+     */
+    /*public function mine ($params)
     {
         $this->addData("inscrit", $this->get_reunions_array(true));
         $this->addData("feedback", $this->get_feedback_array(true));
@@ -53,10 +73,26 @@ class Reunion extends Controller
         $this->addData('past', $this->get_reunions_past(true));
         $this->addData('future', $this->get_reunions_future(true));
         $this->render();
-    }
+    }*/
 
     public function create ($params)
     {
+        $this->addData('competences', new Entities("c_competences"));
+        $this->addData('types', new Entities("c_reunion_type"));
+        $this->addData('user_role', Role::getUserAuth($_SESSION['muffin_id']));
+        $this->render();
+    }
+
+    /**
+     * @PathInfo('id')
+     * edite une réunion existante
+     */
+    public function edit ($params)
+    {
+        $id = $this->getUrlParam("id");
+        $this->registerParams($params);
+        $reunion = Moon::get("c_reunion", "reunion_id", $id);
+        $this->addData("reunion", $reunion);
         $this->addData('competences', new Entities("c_competences"));
         $this->addData('types', new Entities("c_reunion_type"));
         $this->addData('user_role', Role::getUserAuth($_SESSION['muffin_id']));
@@ -108,7 +144,7 @@ class Reunion extends Controller
                 INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE DATE(`reunion_date`) = CURRENT_DATE() AND `reunion_date` > NOW()
-                AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
+                -- AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -127,7 +163,7 @@ class Reunion extends Controller
                 INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE DATE(`reunion_date`) > CURRENT_DATE() AND `reunion_date` > NOW()
-                AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
+                -- AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -146,7 +182,7 @@ class Reunion extends Controller
                 INNER JOIN `c_reunion_type` rt ON r.reunion_type = rt.id_type
                 LEFT JOIN  `c_competences` c ON r.reunion_competence = c.id_competence
                 WHERE `reunion_date` < NOW()
-                AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
+                -- AND r.reunion_organisateur ".($me ? "=" : "!=")." :uid;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -163,7 +199,7 @@ class Reunion extends Controller
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
                 WHERE rp.id_user = :id GROUP BY r.reunion_id
-                AND r.reunion_organisateur ".($me ? "=" : "!=")." :id;
+                -- AND r.reunion_organisateur ".($me ? "=" : "!=")." :id;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -183,7 +219,7 @@ class Reunion extends Controller
                 FROM  `c_reunion` r
                 LEFT JOIN  `c_reunion_participe` rp ON r.reunion_id = rp.id_reunion
                 WHERE rp.id_user = :id AND rp.feedback IS NOT NULL GROUP BY r.reunion_id
-                AND r.reunion_organisateur ".($me ? "=" : "!=")." :id;
+                -- AND r.reunion_organisateur ".($me ? "=" : "!=")." :id;
             ";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
@@ -255,6 +291,44 @@ class Reunion extends Controller
                 $res = Core::getBdd ()->insert ($i, 'c_reunion');
                 $this->alertInterestedPeopleForNewReunion($res, $competence);
 				//$this->notifier($_SESSION["login"]." voudrait vous aider sur le projet / la notion ".$c, $login);
+                $render = "1";
+            /*
+            }
+            */
+        }
+        echo ($render);
+    }
+
+    public function update ($params)
+    {
+        $render = "0";
+        $lieu = $this->filterPost("lieu");
+        $text = $this->filterPost("texte");
+        $date = $this->filterPost("date");
+        $time = $this->filterPost("time");
+        $duree = $this->filterPost("duree");
+        $type = $this->filterPost("type");
+        $id = $this->filterPost("reunion_id");
+        $competence = $this->filterPost('competence');
+        if ($competence)
+        {
+            /*
+
+            > Permet de brider l'ajout de reunions. A decommenter si necessaire.
+
+            $cpt = new Entities("c_reunion[reunion_organisateur=\"".$_SESSION['muffin_id']."\"][reunion_competence=\"$competence\"]");
+            if (count($cpt) == 0)
+            {
+            */
+                $u = array ("reunion_organisateur" => $_SESSION['muffin_id'],
+                    "reunion_id" => $id);
+                $i = array ("reunion_organisateur" => $_SESSION['muffin_id'],
+                    "reunion_competence" => $competence, "reunion_texte" => $text, "reunion_type" => $type,
+                    "reunion_date" => $date." ".$time.":00", "reunion_duree" => $duree, "reunion_lieu" => $lieu);
+                $res = Core::getBdd ()->update ($i, 'c_reunion', $u);
+                //var_dump($res);
+                //$this->alertInterestedPeopleForNewReunion($res, $competence); /* @TODO faire un mail d'update */
+                //$this->notifier($_SESSION["login"]." voudrait vous aider sur le projet / la notion ".$c, $login);
                 $render = "1";
             /*
             }

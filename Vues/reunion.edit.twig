@@ -1,0 +1,93 @@
+
+
+<div class="loading light-form">
+	<h1>Modifier la réunion</h1>
+	<form id="form-edit-reunion" class="form-reunion">
+		<div class="form-group">
+			<label for="text-reunion-create">Description :</label>
+			<textarea name="texte" id="text-reunion-create">{{ reunion.reunion_texte }}</textarea>
+		</div>
+
+		<div class="form-group">
+			<label for="cmp-reunion-create">Thème :</label>
+			<select name="competence" id="cmp-reunion-create">
+				{% for cmp in competences %}
+				    <option name="competence" value="{{ cmp.id_competence }}"
+				     {{ reunion.reunion_competence == cmp.id_competence ? "selected='selected'" }}>
+				     	{{ cmp.nom_usuel|default(cmp.nom_competence) }}
+				    </option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="type-reunion-create">Type de réunion :</label>
+			<select name="type" id="type-reunion-create">
+				{% for type in types %}
+					{% if (type.role_type b-and user_role) > 0 %}
+					    <option name="type" value="{{ type.id_type }}"
+							{{ type.id_type == reunion.reunion_type ? "selected='selected'" }}>
+							{{ type.nom_type }}
+					    </option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="date-reunion-create">Date :</label>
+			<span>Le </span>
+			<input name="date" value="{{ reunion.reunion_date|split(' ')|first }}" type="date" id="date-reunion-create" required>
+			<span> à </span>
+			<input name="time" value="{{ reunion.reunion_date|split(' ')|last }}" type="time" id="time-reunion-create">
+			<span> heure(s). </span>
+		</div>
+
+		<div class="form-group">
+			<label for="duree-reunion-create">Durée :</label>
+			<span>Environ </span><input name="duree" value="{{ reunion.reunion_duree }}" type="number" id="duree-reunion-create"><span> heure(s).</span>
+		</div>
+
+		<div class="form-group">
+			<label for="lieu-reunion-create">Lieu :</label>
+			<span>En </span><input name="lieu" value="{{ reunion.reunion_lieu }}" type="text" placeholder="ex: Amphi, e1..." id="lieu-reunion-create">
+		</div>
+	<div class="bretzel-separator"></div>
+		<div class="form-group">
+		<div class="ajax-result" style="display: none;"></div>
+		<a class="button" data-load-target="Reunion/p/{{ reunion.reunion_id }}"><span class="icon-back"></span> Retour à la réunion</a>
+		<a onclick="$('#form-edit-reunion').submit();" id="btn_reunion_create" class="button">Mettre à jour <span id="reunion_icon" class='icon-uniF488'></span></a>
+		</div>
+		<input name="reunion_id" value="{{ reunion.reunion_id }}" type="hidden">
+	</form>
+    <script>
+
+        var create_end = function(a, b, c)
+        {
+        	if (a == "1")
+        	{
+	        	$("#btn_reunion_create").html("Enregistré <span class='icon-checkmark2'></span>");
+				NProgress.done();
+				Muffin.goToUrl("Reunion/p/{{ reunion.reunion_id }}");
+        	}
+        	else
+	        	$("#btn_reunion_create").html("Une erreur s'est produite <span class='icon-close'></span>");
+
+        }
+
+		var pts = {
+			target: '#form-edit-reunion .ajax-result',
+			beforeSubmit: Muffin.showRequest,
+			success: create_end,
+			url: "Reunion/update",
+			type: "post"
+		};
+
+		$('#form-edit-reunion').submit(function() {
+			$(this).ajaxSubmit(pts);
+			$('a[role="indicator"]').html("<span class='icon-checkmark2'></span> Mis à jour.");
+			return false;
+		});
+		Muffin.bindAjaxEvents();
+    </script>
+</div>
