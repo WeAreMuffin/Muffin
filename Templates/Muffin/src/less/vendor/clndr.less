@@ -1,0 +1,369 @@
+//@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+.calendar
+{
+
+    .planning-filters
+    {
+        .filter-element
+        {
+            display: inline-block;
+
+            .active
+            {
+                background-color: rgba(119, 43, 14, 0.0);
+                color: @muffin-red;
+                border: 1px solid @muffin-red;
+            }
+        }
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+
+    .clearfix {
+        display: inline-block;
+    }
+
+    html[xmlns] .clearfix {
+        display: block;
+    }
+
+    * html .clearfix {
+        height: 1%;
+    }
+
+    .noselect
+    {
+        -webkit-user-select: none; /* Chrome/Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+    }
+
+    h4
+    {
+        width: 75%;
+        text-align: center;
+        //font-family: 'Droid Sans Mono';
+        font-weight: normal;
+        color: white;
+        font-size: 14px;
+        margin: 0 auto 1em auto;
+        padding: 1em;
+        background: #b63642;
+    }
+
+    p
+    {
+        text-align: center;
+        font-family: 'Droid Sans Mono';
+        margin: 3em auto 1em auto;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        border-bottom: 2px solid #414141;
+        background: #f4f4f4;
+    }
+
+    //////////////////////////////////
+
+    @clndr-border: 1px solid rgba(0, 0, 0, 0.1);
+    @clndr-transparent-border: 1px solid rgba(0, 0, 0, 0.1);//@muffin-yellow;
+
+    .cal1
+    {
+        margin: 30px auto;
+        /*max-width: 600px;*/
+        position: relative;
+        //font-family: 'Droid Sans Mono';
+        font-size: 14px;
+
+        .clndr
+        {
+            position: relative;
+
+            .clndr-controls
+            {
+                .clearfix;
+                width: 100%;
+                position: relative;
+
+                .month
+                {
+                    float: left;
+                    width: 33%;
+                    text-align: center;
+                    text-transform: uppercase;
+                    color: rgba(0, 0, 0, 0.5);
+                }
+
+                .clndr-control-button
+                {
+                    float: left;
+                    width: 33%;
+
+                    &.rightalign
+                    {
+                        text-align: right;
+                        width: 34%;
+                    }
+                    .clndr-next-button
+                    {
+                        cursor: pointer;
+                        .noselect;
+                        &:hover { background: #ddd; }
+                        &.inactive
+                        {
+                            opacity: 0.5;
+                            &:hover
+                            {
+                                background: none;
+                                cursor: default;
+                            }
+                        }
+                    }
+                    .clndr-previous-button
+                    {
+                        cursor: pointer;
+                        .noselect;
+                        &:hover { background: #ddd; }
+                        &.inactive
+                        {
+                            opacity: 0.5;
+                            &:hover
+                            {
+                                background: none;
+                                cursor: default;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .event-listing
+            {
+                position: absolute;
+                width: 300px;
+                text-align: left;
+                right: -330px;
+                top: 0px;
+
+                .event-item
+                {
+                    .event-item-date
+                    {
+                        color: rgba(0, 0, 0, 0.4);
+                    }
+                    .event-item-name
+                    {
+                        font-weight: bold;
+                    }
+                    .event-item-description
+                    {
+                        font-size: 0.9em;
+                        color: rgba(0, 0, 0, 0.6);
+                        padding-left: 18px;
+                        line-height: 16px;
+                    }
+
+
+                    &+.event-item
+                    {
+                        margin-top: 5px;
+                        border-top: 1px solid rgba(0, 0, 0, 0.1);
+                    }
+
+                    &.event-past
+                    {
+                        opacity: 0.4;
+                    }
+                }
+
+                .event-item-nothing
+                {
+                    text-align: center;
+                    color: rgba(0, 0, 0, 0.25);
+                    font-size: 1.1em;
+                    margin: auto;
+                    display: block;
+                }
+            }
+
+            .clndr-table
+            {
+                table-layout: fixed;
+                width: 100%;
+
+                /* Le header avec le nom des jours */
+                .header-days
+                {
+                    height: 30px;
+                    font-size: 10px;
+                    background: rgba(0, 0, 0, 0.03);
+
+                    .header-day
+                    {
+                        vertical-align: middle;
+                        text-align: center;
+                        border-left: @clndr-transparent-border;
+                        border-top: @clndr-border;
+
+                        color: @muffin-black;
+
+                        &:first-child
+                        {
+                            border-left: @clndr-border;
+                        }
+                        &:last-child
+                        {
+                            border-right: @clndr-border;
+                        }
+                    }
+                }
+
+                tr
+                {
+                    height: 85px;
+
+                    td
+                    {
+                        vertical-align: top;
+                    }
+
+                    .day
+                    {
+                        border-left: @clndr-border;
+                        border-top: @clndr-border;
+                        width: 100%;
+                        height: inherit;
+
+                        &:hover { background: rgba(0, 0, 0, 0.1); }
+
+                        &.today
+                        {
+                            background: lighten(@muffin-orange, 20%);
+                            &:hover { background: lighten(@muffin-orange, 10%); }
+                            &.event
+                            {
+                                background: mix(@muffin-orange, @muffin-red);
+                            }
+                        }
+
+                        &.event
+                        {
+                            background: lighten(@muffin-red, 10%);
+                            color: @muffin-yellow;
+                            &:hover
+                            {
+                                background: @muffin-red;
+                            }
+
+
+                        }
+
+                        &.inactive
+                        {
+                            background: rgba(0, 0, 0, 0.05);
+                        }
+
+                        &:last-child
+                        {
+                            border-right: @clndr-border;
+                        }
+
+                        .day-contents
+                        {
+                            box-sizing: border-box;
+                            // width: 100%;
+                            // height: 100%;
+                            padding: 0px 8px;
+                            font-size: 12px;
+                            text-align: right;
+                        }
+
+                        .day-events
+                        {
+                            box-sizing: border-box;
+                            width: 100%;
+                            clear: both;
+                            padding: 0px 5px;
+                            font-size: 10px;
+                            text-align: left;
+                            vertical-align: bottom;
+
+                            .event-icon
+                            {
+                                float: right;
+                            }
+
+                            .event-line
+                            {
+                                margin-top: 2px;
+
+                                .event-line-title
+                                {
+                                    line-height: 10px;
+                                    word-break: break-word;
+                                    max-width: 100%;
+                                    text-overflow: ellipsis;
+                                    margin: auto;
+                                    padding: 0;
+                                }
+                            }
+
+                        }
+
+                        .event-more
+                        {
+                            font-size: 0.7em;
+                            text-transform: uppercase;
+                            text-align: center;
+                            line-height: 9px;
+                            width: 100%;
+                            padding: 3px;
+                            margin-top: 4px;
+                            border-top: 1px solid rgba(0, 0, 0, 0.15);
+                            background-color: rgba(0, 0, 0, 0.2);
+                        }
+                    }
+
+                    .empty, .adjacent-month
+                    {
+                        border-left: @clndr-border;
+                        border-top: @clndr-border;
+                        width: 100%;
+                        height: inherit;
+                        background: rgba(255, 255, 255, 0.4);
+
+                        &:hover { background: rgba(255, 255, 255, 0.5); }
+
+                        &:last-child
+                        {
+                            border-right: @clndr-border;
+                        }
+                    }
+
+                    &:last-child
+                    {
+                        .day
+                        {
+                            border-bottom: @clndr-border;
+                        }
+
+                        .empty
+                        {
+                            border-bottom: @clndr-border;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+}

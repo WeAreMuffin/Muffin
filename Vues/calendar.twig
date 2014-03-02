@@ -1,0 +1,212 @@
+
+<div class="calendar">
+
+	<h1>Planning</h1>
+
+	<ul class="planning-filters"></ul>
+	<div class="cal1">
+    </div>
+    <script type="text/template" id="template-calendar">
+    <% var showTd = function(event){
+    	return(Muffin.calendar.filters.length == 0 || _.contains(Muffin.calendar.filters, event.categorie) == true)
+    };
+    %>
+        <div class="clndr-controls">
+          <div class='clndr-control-button'>
+          	<span class='clndr-previous-button'><span class="icon-arrow-left"></span></span>
+          </div>
+          <div class='month'><%= month %> <%= year %></div>
+          <div class='clndr-control-button rightalign'>
+          	<span class='clndr-next-button'><span class="icon-arrow-right"></span></span>
+          </div>
+        </div>
+		  <table class='clndr-table' border='0' cellspacing='0' cellpadding='0'>
+		    <thead>
+		    <tr class='header-days'>
+		    <% for(var i = 0; i < daysOfTheWeek.length; i++) { %>
+		      <td class='header-day'><%= daysOfTheWeek[i] %></td>
+		    <% } %>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    <% for(var i = 0; i < numberOfRows; i++){ %>
+		      <tr>
+		      <% for(var j = 0; j < 7; j++){ %>
+		      <% var d = j + i * 7; %>
+		      <td class='<%= days[d].classes %>'>
+			      <div class='day-contents'>
+			      	<%= days[d].day %>
+			      </div>
+			      <div class='day-events'>
+	      			<% var length = 0; %>
+			      	<% _.each(days[d].events, function(event, i) { %>
+			      		<% if (showTd(event)) { %>
+			      			<% if (i < 2) { %>
+						      	<div class="event-line">
+							      	<div class="event-line-title">
+								      	<b><% print(moment(event.date).format("HH:mm")) %></b>
+								      	<%= event.titre %>
+							      	</div>
+						      	</div>
+					    	<% } %>
+	      					<% length++; %>
+					    <% } %>
+				    <% }); %>
+			      </div>
+			    <% if (length > 2) { %>
+			      	<div class="event-more">
+				      	et <% print(length - 2) %> de plus...
+			      	</div>
+				<% } %>
+		      </td>
+		      <% } %>
+		      </tr>
+		    <% } %>
+		    </tbody>
+		  </table>
+		<div class="event-listing">
+		  <div class="event-listing-title"><h4>En <%= month %> <%= year %></h4></div>
+		  <% _.each(eventsThisMonth, function(event) { %>
+		      <div class="event-item <% moment(event.date).isBefore() ? print('event-past') : '' %>">
+		      	<span class="icon-<%= event.type %>"></span>
+		        <span class="event-item-name"><%= event.titre %></span>
+		        <span class="event-item-date"><% print(moment(event.date).calendar()) %></span>
+		        <div class="event-item-description"><%= event.desc %></div>
+		      </div>
+		    <% }); %>
+		  <% if (eventsThisMonth.length == 0) { %>
+		        <span class="event-item-nothing">Rien de prévu ce jour ci</span>
+		  <% } %>
+		</div>
+      </script>
+
+      <script type="text/template" id="template-events">
+		  <div class="event-listing-title"><h4>Le <% print(date.format("dddd Do MMMM YYYY")) %></h4></div>
+		  <% _.each(events, function(event, i) { %>
+		      <div class="event-item">
+		      	<span class="icon-<%= event.type %>"></span>
+		        <span class="event-item-name"><%= event.titre %></span>
+		        <span class="event-item-date"><% print(moment(event.date).calendar()) %></span>
+		        <div class="event-item-description"><%= event.desc %></div>
+		      </div>
+		    <% }); %>
+		  <% if (events.length == 0) { %>
+		        <span class="event-item-nothing">Rien de prévu ce jour ci</span>
+		  <% } %>
+      </script>
+
+      <script type="text/template" id="template-filter-elt">
+      	<li class="filter-element">
+      		<a class="button" <% all ? print('data-calendar-reset') : ''%> data-calendar-filter="<%= nom %>"><%= nom %></a>
+      	</li>
+      </script>
+</div>
+
+<script>
+// call this from the developer console and you can control both instances
+var calendars = {};
+
+$(document).ready( function() {
+
+	window.Muffin.calendar = {};
+	window.Muffin.calendar.filters = [];
+
+  var thisMonth = moment().format('YYYY-MM');
+
+  var eventTemplateContent = $('#template-events').html();
+  var eventTemplate = _.template(eventTemplateContent);
+
+  var eventArray = [];
+
+  var cal = $('.cal1').clndr({
+    events: eventArray,
+    template: $('#template-calendar').html(),
+    clickEvents: {
+      click: function(target) {
+        $(".event-listing").html(eventTemplate(target));
+      },
+      nextMonth: function() {
+        console.log('next month.');
+      },
+      previousMonth: function() {
+        console.log('previous month.');
+      },
+      onMonthChange: function() {
+        console.log('month changed.');
+      },
+      nextYear: function() {
+        console.log('next year.');
+      },
+      previousYear: function() {
+        console.log('previous year.');
+      },
+      onYearChange: function() {
+        console.log('year changed.');
+      }
+    },
+    showAdjacentMonths: true,
+    adjacentDaysChangeMonth: true
+  });
+
+  $.getJSON('Calendar/getAllEvents', function(json)
+  {
+  	var filters = _.uniq(_.pluck(json, 'categorie'));
+  	var filterCont = $(".planning-filters");
+  	var filterElt = _.template($("#template-filter-elt").html());
+  	filterCont.html("");
+  	filterCont.append(filterElt({nom: "tout afficher", all: true}));
+  	_.each(filters, function(value)
+  	{
+  		filterCont.append(filterElt({nom: value, all: false}));
+  	});
+
+  	$("[data-calendar-filter]").click(function()
+  	{
+  		var filter = $(this).attr("data-calendar-filter");
+  		var all = ($(this).attr("data-calendar-reset") != undefined);
+  		var isActive = $(this).hasClass('active');
+  		if (isActive && !all)
+  		{
+  			Muffin.calendar.filters = _.without(Muffin.calendar.filters, filter);
+  			$(this).removeClass("active");
+  			if (Muffin.calendar.filters.length == 0)
+  			{
+  				$("[data-calendar-reset]").addClass("active");
+  			}
+  		}
+  		else if (!isActive && !all)
+  		{
+  			Muffin.calendar.filters.push(filter);
+  			$(this).addClass("active");
+  			if (Muffin.calendar.filters.length)
+  			{
+  				$("[data-calendar-reset]").removeClass("active");
+  			}
+  		}
+  		else if (!isActive && all)
+  		{
+  			Muffin.calendar.filters = [];
+  			$("[data-calendar-filter].active").removeClass("active");
+  			$(this).addClass("active");
+  		}
+  		cal.render();
+  	})
+  	console.log(json);
+  	cal.setEvents(json);
+  });
+
+  // bind both clndrs to the left and right arrow keys
+  $(document).keydown( function(e) {
+    if(e.keyCode == 37) {
+      // left arrow
+      cal.back();
+    }
+    if(e.keyCode == 39) {
+      // right arrow
+      cal.forward();
+    }
+  });
+
+});
+
+</script>
