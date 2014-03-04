@@ -110,7 +110,7 @@ class Stats extends Controller
         $inactif = $insc - $actif;
         $noninscrit = $all - $insc;
 
-        ($count_exch > 150 && $best_proposer != NULL && $best_accepte != NULL && $best_bien != NULL )
+        ($count_exch > 15 && $best_proposer != NULL && $best_accepte != NULL && $best_bien != NULL )
 	        ? ($remarquable = 1)
 	        : ($remarquable = 0);
 

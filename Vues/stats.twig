@@ -38,6 +38,9 @@
 		<div class="stats-top-users-graph">
 			<canvas id="chart-top-users" width="760" height="300"></canvas>
 		</div>
+		<!-- <div class="stats-top-users-graph">
+			<div id="chart-top-users-n"></div>
+		</div> -->
 	</div>
 
 	<div class="stats-container">
@@ -59,6 +62,64 @@
 </div>
 
 <script>
+
+// $('#chart-top-users-n').highcharts({
+// 			credits: {
+// 				enabled: false
+// 			},
+//             chart: {
+//             	backgroundColor: "rgba(0, 0, 0, 0)",
+//             	width: 760,
+//             	height: 200,
+//                 type: 'column'
+//             },
+//             tooltip:
+//             {
+//             	backgroundColor: "#413E4A",
+//                 pointFormat: '{point.y} échange(s)',
+//                 borderColor: "#413E4A",
+//                 borderRadius: 2,
+//                 shadow: false,
+//             	style: {color: "#E4D0A7"}
+//             },
+//             title: {
+//                 text: ''
+//             },
+//             xAxis: {
+//             	lineColor: "rgba(0, 0, 0, 0.05)",
+//             	gridLineColor: "rgba(0, 0, 0, 0.05)",
+//                 categories: {{ top_ten_logins }},
+//                 labels: {
+//                 	enabled: true
+//                 }
+//             },
+//             colors: ["#D95B43", "#C02942"],
+//             yAxis: {
+//             	lineColor: "rgba(0, 0, 0, 0.05)",
+//             	gridLineColor: "rgba(0, 0, 0, 0.05)",
+//             	labels: { style: {color: "rgba(0, 0, 0, 0.35)"}},
+//                 min: 0,
+//                 title: {
+//                     text: ''
+//                 }
+//             },
+//             legend: {
+//                 enabled: false
+//             },
+//             series: [{
+//                 name: '',
+//                 data: {{ top_ten_data }},
+//                 dataLabels: {
+//                     enabled: false,
+//                     style: {
+//                         fontSize: '13px',
+//                         fontFamily: 'Verdana, sans-serif',
+//                         textShadow: '0 0 3px black'
+//                     }
+//                 }
+//             }]
+//         });
+
 var dataTT = {
 	labels : {{ top_ten_logins }},
 	datasets : [
