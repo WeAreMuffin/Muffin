@@ -1,4 +1,4 @@
-
+{#
 <ul class="horizontal-list" id="drafts-menu">
     <li data-index-toggle="1" data-load-target="Drafts/create" data-expand><a><span class="icon-pencil"></span> <span class="side-legend"> Ecrire</span></a></li>
     <li data-index-toggle="2" data-load-target="Drafts/all" data-expand><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
@@ -38,12 +38,7 @@
                 <a class="btn-draft-edit" data-draft-load data-draft-id="{{ draft.draft_id }}"><span class="icon-pencil"></span> Edit</a>
                 <a class="btn-draft-read" data-id="{{ draft.draft_id }}"><span class="icon-eye"></span> Read</a>
                 <a class="btn-draft-delete" data-id="{{ draft.draft_id }}"><span class="icon-trash"></span> Delete</a>
-                {#
-                {#
-                <div class="draft-text">
-                    <p>{{ truncate(draft.draft_content, 400, " (...)") }}</p>
-                </div>
-                #}
+
                 </a>
             </li>
         {% endfor %}
@@ -59,3 +54,4 @@
     Muffin.draft.watch();
 </script>
 
+#}

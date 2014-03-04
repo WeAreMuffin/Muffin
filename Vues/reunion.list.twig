@@ -1,26 +1,25 @@
-		    <li {{ reunion.reunion_organisateur == uid ? "class='reunion-mine'" }}>
+		    <li>
 		    	<div class="attrs">
 		    	{% if reunion.reunion_type > 1 %}
 		    		<div data-toggle="tooltip" title="{{ reunion.description_type }}"><span class="icon-{{ reunion.icone_type }}"></span></div>
 		    	{% endif %}
 		    	</div>
 		    	<div class="icon">
-		    		<span class="icon-{{ reunion.icone }}"></span>
+		    		<span class="icon-{{ reunion.c_competences.icone }}"></span>
 		    	</div>
 		    	<div class="content">
 				    <p>
 				    	<a data-load-target="Reunion/p/{{ reunion.reunion_id }}">
-			    			{% if reunion.reunion_type > 1 %}
-						    {{ reunion.nom_type }} sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
-						    {% else %}
-						    Réunion sur <b>{{ reunion.nom_usuel|default(reunion.nom_competence) }}</b>
-			    			{% endif %}
+						{% if reunion.reunion_type > 1 %}
+						    {{ reunion.nom_type }} sur {{ reunion.c_competences.nom_usuel|default(reunion.c_competences.nom_competence) }}
+					    {% else %}
+							Réunion sur {{ reunion.c_competences.nom_usuel|default(reunion.c_competences.nom_competence) }}
+						{% endif %}
 					    </a>
 					     · <span class="date">{{ reunion.reunion_date }}</span>
 
 						{# si la reunion est a venir #}
 					    {% if reunion.reunion_organisateur != uid and not is_past %}
-
 						    {% if uid in reunion.c_reunion_participe.id_user %}
 						    	<a data-action="participer-reunion" data-reunion="{{ reunion.reunion_id }}" class="button right">se désinscrire</a>
 						    {% else %}
@@ -43,7 +42,7 @@
 					{# si on a participe a la reunion #}
 					{% if reunion.reunion_organisateur != uid and is_past and reunion.reunion_id in inscrit %}
 					    <div class="middle">
-					    	{% if reunion.reunion_id in feedback %}
+					    	{% if feedback.feedback != null %}
 					    		<span class="simple-text right"></span>
 					    	{% else %}
 					    		<a class="button feedback right red" data-reunion="{{ reunion.reunion_id }}" data-feedback="0" data-type="feedback">
@@ -67,7 +66,10 @@
 				     		<span class="icon-place"></span> {{ reunion.reunion_lieu }}
 						</div>
 						<div data-placement="bottom" data-toggle="tooltip" title="Organisateur de la réunion">
-				     		<span class="icon-user2"></span> <span class="user">{{ reunion.prenom|lower }} {{ reunion.nom|lower }}</span>
+						{{ reunion.reunion_organisateur == uid ? "<a class='reunion-mine'" ~ 'data-load-target="Reunion/p/' ~ reunion.reunion_id ~ '">' }}
+				     		<span class="icon-user2"></span> <span class="user">
+				     		{{ reunion.c_user.c_42_logins.prenom|lower }} {{ reunion.c_user.c_42_logins.nom|lower }}</span>
+						{{ reunion.reunion_organisateur == uid ? "</a>" }}
 						</div>
 						<div data-placement="bottom" data-toggle="tooltip" title="Date de la réunion">
 				     		<span class="icon-calendar2"></span> <span class="date-calendar">{{ reunion.reunion_date }}</span>

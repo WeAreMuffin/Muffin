@@ -34,9 +34,9 @@ class Reunion extends Controller
      */
     public function index ($params)
     {
-        $this->addData('aujourdhui', $this->get_reunions_today());
-        $this->addData('past', $this->get_reunions_past());
-        $this->addData('future', $this->get_reunions_future());
+        $this->addData('aujourdhui', new Entities('c_reunion[reunion_date=CURRENT_DATE()][reunion_date>NOW()]'));
+        $this->addData('future', new Entities('c_reunion[reunion_date!=CURRENT_DATE()][reunion_date>NOW()]'));
+        $this->addData('past', new Entities('c_reunion[reunion_date!=CURRENT_DATE()][reunion_date<NOW()]'));
         $this->addData('uid', $_SESSION['muffin_id']);
         $this->render();
     }

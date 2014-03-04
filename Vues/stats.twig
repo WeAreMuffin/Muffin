@@ -1,7 +1,7 @@
 
 <div class="stats-charts">
 
-	{% if remarquable %}
+	{% if remarquable and false %}
 		<div class="stats-container-full">
 			<h3><span class="icon-medal"></span> Cadets remarquables</h3>
 			<div class="stats-best-podium">
@@ -29,8 +29,9 @@
 				</blockquote>
 			</div>
 		</div>
-	{% else %}
+	{#{% else %}
 		<h1 class="title-remain">Plus que <span class="odometer">{{ remain }}</span> échanges pour trouver des cadets remarquables...</h1>
+		#}
 	{% endif %}
 
 	<div class="stats-container">

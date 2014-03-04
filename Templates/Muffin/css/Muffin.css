@@ -11727,9 +11727,8 @@ h1.title-remain,
   border: 1px solid rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.7);
 }
-li.reunion-mine {
-  border-left: 10px solid #e06f82;
-  margin-left: 5px;
+a.reunion-mine {
+  color: #c02942;
 }
 /*
     ------------------------------------------------------------------------
@@ -11984,6 +11983,64 @@ ul#draft-panel,
 ul.user-draft.draft-list {
   padding: 0px;
 }
+/* Mixitup details */
+#all-drafts-list .mix {
+  opacity: 0;
+  display: none;
+}
+.filter-sort-panel {
+  padding: 0;
+  margin: 0;
+}
+.filter-sort-panel .filter,
+.filter-sort-panel .sort {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0px 6px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 0.7em;
+}
+.filter-sort-panel .filter:hover,
+.filter-sort-panel .sort:hover {
+  background-color: rgba(197, 5, 36, 0.15);
+}
+.filter-sort-panel .filter.active,
+.filter-sort-panel .sort.active {
+  background-color: #c02942;
+  color: #f7e4be;
+  border: 1px solid #962034;
+}
+.filter-sort-panel .legend {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+.filter-sort-panel .legend li {
+  display: inline-block;
+  margin: 5px;
+}
+.filter-sort-panel .legend li.legend-title {
+  color: rgba(0, 0, 0, 0.4);
+}
+.filter-sort-panel .legend li.action {
+  background-color: #c02942;
+  color: #f7e4be;
+  border: 1px solid #962034;
+  padding: 0px 6px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  cursor: pointer;
+  font-weight: bold;
+}
+.filter-sort-panel .legend + .legend {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 20px;
+  margin-left: 30px;
+}
 .draft-list {
   padding: 0px;
 }
@@ -12001,7 +12058,7 @@ ul.user-draft.draft-list {
   vertical-align: top;
 }
 .draft-list li:nth-child(2n) {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 .draft-list li .middle {
   margin-right: 15px;
@@ -12016,46 +12073,36 @@ ul.user-draft.draft-list {
 }
 .draft-list li .draft-title {
   padding: 5px;
-  display: block;
-  color: #c02942;
-  border-bottom: 5px solid rgba(0, 0, 0, 0.05);
+  margin: 0px;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.5);
+  border: none;
+}
+.draft-list li .draft-title h1 {
+  display: inline-block;
+  font-size: 1.2em;
+  margin: 0;
 }
 .draft-list li .draft-title h5 {
-  margin: 0px;
   color: rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
+  margin: 0px;
+  padding-left: 10px;
+  display: inline-block;
 }
 .draft-list li .draft-text {
   color: rgba(0, 0, 0, 0.4);
   margin-left: 5px;
   margin-right: 5px;
 }
+.draft-list li .draft-text p {
+  white-space: normal;
+}
 .draft-list li .list-visibility {
   padding-left: 5px;
   color: rgba(0, 0, 0, 0.3);
   font-size: 0.9em;
   text-transform: uppercase;
-}
-.draft-list li .draft-title {
-  padding: 5px;
-  margin: 0px;
-  display: inline-block;
-  color: #c02942;
-  border: none;
-}
-.draft-list li .draft-title h1 {
-  display: inline-block;
-  font-size: 1.5em;
-}
-.draft-list li .draft-title h5 {
-  margin: 0px;
-  padding-left: 10px;
-  display: inline-block;
-  color: rgba(0, 0, 0, 0.3);
-  text-transform: uppercase;
-}
-.draft-list li .draft-text p {
-  white-space: normal;
 }
 .drafter-article {
   width: 85%;

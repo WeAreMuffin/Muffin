@@ -74,6 +74,8 @@ class Search extends Controller
         echo(json_encode($res));
     }
 
+    function cmp($a, $b) { return (strcmp($a["text"], $b["text"])); }
+
     /**
      * The main search function
      * @TODO confidentialité
@@ -82,8 +84,10 @@ class Search extends Controller
     {
         // On récupère le login fourni dans l'url
         $query = $this->filterPost('search');
-        $users = $this->searchGlobalUsers($query);
-        echo(json_encode($users));
+        $s = $this->searchGlobalUsers($query);
+        $s = array_merge($s, $this->searchGlobalDrafts($query));
+        $s = array_merge($s, $this->searchGlobalReunions($query));
+        echo(json_encode($s));
     }
 
     protected function searchGlobalUsers($q)
@@ -91,7 +95,7 @@ class Search extends Controller
         $return = array();
         $qu = "  SELECT * FROM c_user u
                 INNER JOIN c_42_logins cl
-                ON u.login = cl.login_eleve WHERE u.login LIKE :login";
+                ON u.login = cl.login_eleve WHERE u.login LIKE :login LIMIT 0,5";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($qu);
         $r->execute(array("login" => '%'.$q.'%'));
@@ -101,7 +105,46 @@ class Search extends Controller
                               "icon" => $e->user_icone,
                               "text" => $e->login,
                               "desc" => strtolower($e->prenom." ".$e->nom),
+                              "attr" => "",
                               "link" => "User/p/".$e->login);
+        }
+        return ($return);
+    }
+
+    protected function searchGlobalDrafts($q)
+    {
+        $return = array();
+        $qu = "  SELECT * FROM c_drafts u WHERE draft_name LIKE :name AND (public > 0 OR draft_author = :login)";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($qu);
+        $r->execute(array("name" => '%'.$q.'%', "login" => $_SESSION['muffin_id']));
+        while ($e = $r->fetchObject())
+        {
+            $return[] = array(
+                              "icon" => "write",
+                              "text" => $e->draft_name,
+                              "desc" => "",
+                              "attr" => "data-expand",
+                              "link" => "Drafts/read/".$e->draft_id);
+        }
+        return ($return);
+    }
+
+    protected function searchGlobalReunions($q)
+    {
+        $return = array();
+        $qu = "  SELECT * FROM c_reunion u WHERE reunion_texte LIKE :name AND reunion_date > NOW()";
+        $bd = Core::getBdd()->getDb();
+        $r = $bd->prepare($qu);
+        $r->execute(array("name" => '%'.$q.'%'));
+        while ($e = $r->fetchObject())
+        {
+            $return[] = array(
+                              "icon" => "bubbles",
+                              "text" => $e->reunion_texte,
+                              "desc" => "",
+                              "attr" => "",
+                              "link" => "Reunion/p/".$e->reunion_id);
         }
         return ($return);
     }

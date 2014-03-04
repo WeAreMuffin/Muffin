@@ -1,44 +1,87 @@
 
-<ul class="horizontal-list" id="drafts-menu">
-    <li data-index-toggle="1" data-load-target="Drafts/create" data-expand><a><span class="icon-pencil"></span> <span class="side-legend"> Ecrire</span></a></li>
-    <li data-index-toggle="2" class="active"><a><span class="icon-file2"></span> <span class="side-legend"> Derniers drafts</span></a></li>
-    <li data-index-toggle="3" data-load-target="Drafts/mine" data-expand><a><span class="icon-user4"></span> <span class="side-legend"> Mes drafts</span></a></li>
-</ul>
 
 <ul id="drafts-panel">
     <li data-index="2" style="display: block;">
+        <ul class="filter-sort-panel">
+            <ul class="legend">
+                <li class="action" data-load-target="Drafts/create" data-expand>
+                    <a><span class="icon-pencil"></span> <span class="side-legend"> Nouveau</span></a>
+                </li>
+            </ul>
+            <ul class="legend">
+                <li class="legend-title">Afficher</li>
+                <li class="filter active" data-filter="draft-mine draft-other">Tous</li>
+                <li class="filter" data-filter="draft-mine">Mes drafts</li>
+                <li class="filter" data-filter="draft-other">Autres drafts</li>
+            </ul>
 
-    {% if not drafts|length %}
-        <h1 style="color: rgba(0, 0, 0, 0.2);">
-            Aucun draft pour le moment...
-        </h1>
-    {% else %}
-        <ul class="draft-list read-list">
-        {% for draft in drafts %}
-            <li id="draft-element-{{ draft.draft_id }}" data-id="{{ draft.draft_id }}">
-                <a class="draft-item--li">
-                <div class="draft-title">
-                    <h1>{{ draft.draft_name }}</h1>
-                         <span class="list-visibility">
-                            <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span>
-                             · par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
-                        </span>
-                </div>
-                <a data-action="star" data-id="{{ draft.draft_id }}" class="right middle">
-                    <span data-star
-                        class="icon-{{ draft.c_drafts_like.id_draft_like|length ? 'starfull' : 'starempty' }}"></span> {{ draft.c_drafts_like.id_draft_like|length }}
-                </a>
-                <a class="right middle"><span class="icon-eye3"></span> {{ draft.draft_views }} vues</a>
-                </a>
-            </li>
-        {% endfor %}
+            <ul class="legend">
+                <li class="legend-title">Trier par</li>
+                <li class="sort" data-sort="data-name" data-order="desc">Nom</li>
+                <li class="sort" data-sort="data-author" data-order="asc">Auteur</li>
+                <li class="sort" data-sort="data-date" data-order="asc">Date</li>
+                <li class="sort" data-sort="data-views" data-order="asc">Vues</li>
+                <li class="sort" data-sort="data-stars" data-order="asc">Étoiles</li>
+            </ul>
         </ul>
-    {% endif %}
+        {% if not drafts|length %}
+            <h1 style="color: rgba(0, 0, 0, 0.2);">
+                Aucun draft pour le moment...
+            </h1>
+        {% else %}
+            <ul id="all-drafts-list" class="draft-list read-list">
+            {% for draft in drafts %}
+            {% if draft.draft_author == webdata.session.muffin_id or draft.public %}
+                <li
+                    class="mix {{ draft.draft_author == webdata.session.muffin_id ? 'draft-mine' : 'draft-other' }}"
+                    id="draft-element-{{ draft.draft_id }}"
+                    data-id="{{ draft.draft_id }}"
+                    data-stars="{{ draft.c_drafts_like.id_draft_like|length }}"
+                    data-author="{{ draft.draft_author }}"
+                    data-views="{{ draft.draft_views }}"
+                    data-date="{{ draft.draft_date_c }}"
+                    data-name="{{ draft.draft_name }}">
+
+                    <a class="draft-item--li">
+                    <div class="draft-title">
+                        <h1> {{ draft.draft_name }}</h1>
+                             <span class="list-visibility">
+                                <span class="raw-date" data-date="{{ draft.draft_date_c }}">le {{ draft.draft_date_c }} </span>
+                                 · par {{ draft.c_user.c_42_logins.prenom|lower }} {{ draft.c_user.c_42_logins.nom|lower }}
+                            </span>
+                    </div>
+                    <a data-action="star" data-id="{{ draft.draft_id }}" class="right middle">
+                        <span data-star
+                            class="icon-{{ draft.c_drafts_like.id_draft_like|length ? 'starfull' : 'starempty' }}"></span> {{ draft.c_drafts_like.id_draft_like|length }}
+                    </a>
+                    <a class="right middle"><span class="icon-eye3"></span> {{ draft.draft_views }} vues</a>
+                    {% if draft.draft_author == webdata.session.muffin_id %}
+                        <a class="btn-draft-edit" data-draft-load data-draft-id="{{ draft.draft_id }}"><span class="icon-pencil"></span> Editer</a>
+                        <a class="btn-draft-read" data-id="{{ draft.draft_id }}"><span class="icon-eye"></span> Lire</a>
+                        <!-- <a class="btn-draft-delete" data-id="{{ draft.draft_id }}"><span class="icon-trash"></span> Supprimer</a> -->
+                        {% if draft.public == 0 %}
+                            <span class="right middle icon-lock"></span>
+                        {% elseif draft.public == 1 %}
+                            <span class="right middle icon-marvin"></span>
+                        {% elseif draft.public == 2 %}
+                            <span class="right middle icon-earth"></span>
+                        {% endif %}
+                    {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
 
     </li>
 </ul>
 
 <script>
+    $('#all-drafts-list').mixitup({
+        layoutMode: "list",
+        effects: ["grayscale"]
+    });
     Muffin.bindAjaxEvents();
     Muffin.draft.init();
     Muffin.draft.watch();

@@ -751,7 +751,7 @@ Muffin.search.afterSearch = function(responseText, statusText, xhr, $form) {
 	$('#main-search-form--button').html("<span class='icon-search'></span>");
 	var ctn = $.parseJSON(responseText);
 	var ctainer = $("#main-search-form--results");
-	var template = _.template("	<div class='row' data-load-target='<%= link %>'>\
+	var template = _.template("	<div class='row' data-load-target='<%= link %>' <%= attr %>>\
 		                          	<div class='row-icon'><span class='icon-<%= icon %>'></span></div>\
 									<div class='content'>\
 										<div class='content-title'><%= text %></div>\
