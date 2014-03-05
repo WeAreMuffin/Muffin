@@ -63,7 +63,7 @@ i {
 body {
     font-size: 1em;
     line-height: 1.4;
-    background-color: #F7E4BE;
+    background-color: #F8F8F8;
     color: #413E4A;
     font-family: 'Lato', sans-serif;
 }
@@ -126,6 +126,12 @@ body {
     width: 90%;
     margin: 0 5%;
     transition: 0.2s all;
+
+    &.main
+    {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 }
 
 /* ===================
@@ -134,18 +140,13 @@ body {
 
 .header-container {
     height: 50px;
-    border-bottom: 5px solid rgba(158, 72, 56, 1);
-    /* @modif#head#fixed
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     width: 100%;
     z-index: 999;
 
     header > h1.title
     {
-        margin: 7px 4px 4px 4px;
+        margin: 12px 4px 4px 4px;
         font-size: 1.7em;
     }
 
@@ -153,13 +154,13 @@ body {
 
 
 .footer-container {
-    border-top: 5px solid rgba(158, 72, 56, 1);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .header-container,
 .footer-container
 {
-    background: #D95B43;
+    background: #fff;
 
     &.empty
     {
@@ -174,7 +175,7 @@ header > h1.title
 }
 
 .title {
-    color: #F7E4BE;
+    color: @muffin-orange;
 }
 
 /* ==============
@@ -196,7 +197,7 @@ nav {
         text-decoration: none;
         font-weight: bold;
 
-        color: #F7E4BE;
+        color: @muffin-gray;
         background: #413E4A;
 
         &:hover,
@@ -221,7 +222,10 @@ nav {
     /* @modif#head#fixed
     padding: 110px 0 160px 0px;
     */
-    padding: 20px 0px 160px 0px;
+    padding: 20px 10px 160px 10px;
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
 
     article h1 {
         font-size: 2em;
@@ -229,7 +233,7 @@ nav {
     }
 
     aside {
-        color: #F7E4BE;
+        color: @muffin-gray;
     }
 }
 
@@ -246,7 +250,7 @@ nav {
     }
 
     footer {
-        color: #F7E4BE;
+        color: #BE9B8D;
         padding: 0px 0;
 
     }
@@ -378,7 +382,7 @@ nav {
                 margin: auto;
                 padding: 10px;
                 display: block;
-                background-color: lighten(@muffin-yellow, 2%)
+                background-color: #fff;
             }
 
             &:after
@@ -631,11 +635,12 @@ div[role="simple-row"]
     .big-button
     {
         display: block;
+        transition: 0.2s all;
         padding: 2px 15px;
         margin: 5px;
-        background-color: @muffin-red;
-        border: 1px solid #882737;
-        color: #FFF;
+        background-color: #FFF;
+        border: 1px solid lighten(@muffin-gray, 10%);
+        color: @muffin-gray;
         border-radius: 3px;
         width: 200px;
         text-transform: uppercase;
@@ -645,7 +650,10 @@ div[role="simple-row"]
 
         &:hover
         {
-            background-color: #CF4B61;
+            transition: 0.2s all;
+            color: #FFF;
+            background-color: @muffin-red;
+            border-color: @muffin-red;
         }
     }
 
@@ -921,7 +929,7 @@ ul.oneline
 
     p, a
     {
-        color: rgba(158, 72, 56, 1);
+        color: @muffin-gray;
     }
 
     a
@@ -1237,7 +1245,7 @@ input + button > span[class^="icon-"] {
     position: relative;
     height: 160px;
     display: block;
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(0, 0, 0, 0.02);
     margin-bottom: 30px;
     padding-bottom: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1565,7 +1573,7 @@ div[data-role="container"]
             display: inline-block;
             width: 79%;
             padding-right: 10px;
-            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            // border-right: 1px solid rgba(0, 0, 0, 0.1);
         }
     }
 
@@ -1580,7 +1588,8 @@ div[data-role="container"]
             display: inline-block;
             text-align: center;
             border: 0px;
-            margin: 5px;
+            padding: 0px 5px 5px 5px;
+            margin: 0px;
 
             a
             {
@@ -1710,7 +1719,7 @@ div[data-role="container"]
 
     #main-search-form--button
     {
-        color: @muffin-orange-dark;
+        color: @muffin-gray;
         position: relative;
         z-index: 1000;
         width: 33px;
@@ -1728,7 +1737,7 @@ div[data-role="container"]
         right: 0px;
         z-index: 60;
         width: 310px;
-        background-color: @muffin-yellow;
+        background-color: #fff;
         top: 30px;
 
         .row
@@ -1927,7 +1936,7 @@ aside.side-menu
 
             &.separator
             {
-                border-top: 1px solid #CABA9C;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
                 height: 2px;
                 margin: 10px 33%;
             }
@@ -1981,7 +1990,7 @@ div[role="add-competence"]
 }
 
 p {
-    color: #887D72;
+    color: #8D8686;
 }
 
 
@@ -2003,11 +2012,11 @@ p {
             float: right;
             font-size: 0.7em;
             line-height: 40px;
-            color: @muffin-orange-dark;
+            color: @muffin-gray;
 
             &:hover
                 {
-                color: #723B30;
+                color: darken(@muffin-gray, 10%);
             }
 
             &[role="indicator"]
@@ -2168,7 +2177,7 @@ div[data-role="form-container"]
             }
 
             a.clear-all {
-                color: #F7E4BE;
+                color: @muffin-gray;
                 position: relative;
                 top: 2px;
             }
@@ -2507,7 +2516,7 @@ ul[data-role="liste-competences"]
     	    padding-top: 5px;
     	    padding-left: 10px;
     	    font-size: 1.5em;
-    	    border-bottom: 2px solid @muffin-orange;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     	}
 
     	&.competence-tabbed
@@ -2527,7 +2536,7 @@ ul[data-role="liste-competences"]
 
     	    &+li.competence-tabbed
     	    {
-    		  border-top: 1px solid rgba(0,0,0,0.1);
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
     	    }
 
     	    &:hover
@@ -2650,7 +2659,7 @@ ul[data-role="liste-competences"]
     	    {
         		background-color: @muffin-forest;
         		border-color: @muffin-forest;
-                color: #F7E4BE;
+                color: @muffin-gray;
     	    }
 
     	    &.attente,
@@ -2734,7 +2743,7 @@ a.btn.ask
 
         .keywords-container {
             position: relative;
-            background: #F7E4BE;
+            background: @muffin-gray;
             border: 1px solid #413E4A;
         }
 
@@ -2751,7 +2760,7 @@ a.btn.ask
 
         .keywords-container:after {
             border-color: rgba(247, 228, 190, 0);
-            border-right-color: #F7E4BE;
+            border-right-color: @muffin-gray;
             border-width: 5px;
             margin-top: -5px;
         }
@@ -2780,7 +2789,7 @@ a.btn.ask
             border: 1px solid #413E4A;
             opacity: 0;
             position: absolute;
-            background-color: #F7E4BE;
+            background-color: @muffin-gray;
             z-index: -500;
             right: -375px;
             top: 43px;
@@ -2793,7 +2802,7 @@ a.btn.ask
             border: 1px solid #413E4A;
             display: block;
             position: absolute;
-            background-color: #F7E4BE;
+            background-color: @muffin-gray;
             z-index: 997;
             right: -345px;
             top: 43px;
@@ -3095,7 +3104,7 @@ h1.title-remain,
         position: relative;
         -webkit-font-smoothing: antialiased;
         top: -15px;
-        background: rgb(247, 228, 190);
+        background: #fff;
         padding: 0px 25px;
     }
 }
@@ -4203,7 +4212,7 @@ div[data-role="form-container"] form .visible > *
     padding: 0 60px;
     outline: none;
     border: none;
-    background-color: @muffin-yellow;
+    background-color: #fff;
     border-radius: 3px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     // background: #1d9650;
