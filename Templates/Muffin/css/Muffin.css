@@ -11985,7 +11985,6 @@ ul.user-draft.draft-list {
 }
 /* Mixitup details */
 #all-drafts-list .mix {
-  opacity: 0;
   display: none;
 }
 .filter-sort-panel {
