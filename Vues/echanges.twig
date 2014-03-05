@@ -7,7 +7,10 @@
 
 	<li data-index="1"> <!-- Help the world ! -->
 		{% if users_to_help|length %}
-		<h1>Des gens ont besoin de vous :</h1>
+		<div class="help">
+			<h1>Des gens ont besoin de vous</h1>
+			<p>Propose ton aide à de nouvelles personnes, donne un coup de pouce à leur projet, et mets fin à leur détresse</p>
+		</div>
 		{% set section = "" %}
 		{% set counter = 0 %}
 		<ul data-role="liste-competences">
