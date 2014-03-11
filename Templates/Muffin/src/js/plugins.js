@@ -156,6 +156,7 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
+			$('#all-drafts-list').mixItUp('destroy');
 			if(history.pushState)
 			{
 			    history.pushState(null, null, "#/" + urlToGo);
@@ -1180,6 +1181,18 @@ Muffin.draft.onRead = function()
     Prism.highlightAll();
 }
 
+Muffin.draft.deinit = function()
+{
+	$('[data-draft-load]').unbind("click");
+	$('[data-action="preview"]').unbind("click");
+	$('[data-action="edit"]').unbind("click");
+	$('[data-action="save"]').unbind("click");
+	$(".triple-toggle input[type='radio']").unbind("change");
+	$(".btn-draft-read[data-id]").unbind("click");
+	$(".btn-draft-delete").unbind("click");
+	$("li[id^='draft-element-']").unbind("click");
+}
+
 Muffin.draft.init = function()
 {
     var dr = $("#draft-aera");
@@ -1191,6 +1204,8 @@ Muffin.draft.init = function()
 	{
 		p.checked = true;
 	}
+
+    Muffin.draft.deinit();
 
 	$("[data-draft-load]").click(function(e)
 	{
