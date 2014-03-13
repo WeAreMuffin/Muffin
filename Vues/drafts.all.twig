@@ -5,23 +5,25 @@
         <ul class="filter-sort-panel">
             <ul class="legend">
                 <li class="action" data-load-target="Drafts/create" data-expand>
-                    <a><span class="icon-pencil"></span> <span class="side-legend"> Nouveau</span></a>
+                    <a>
+                        <span class="icon-pencil"></span> <span class="side-legend"> Nouveau</span>
+                    </a>
                 </li>
             </ul>
             <ul class="legend">
                 <li class="legend-title">Afficher</li>
-                <li class="filter active" data-filter="draft-mine draft-other">Tous</li>
-                <li class="filter" data-filter="draft-mine">Mes drafts</li>
-                <li class="filter" data-filter="draft-other">Autres drafts</li>
+                <li class="filter active" data-filter="all">Tous</li>
+                <li class="filter" data-filter=".draft-mine">Mes drafts</li>
+                <li class="filter" data-filter=".draft-other">Autres drafts</li>
             </ul>
 
             <ul class="legend">
                 <li class="legend-title">Trier par</li>
-                <li class="sort" data-sort="data-name" data-order="desc">Nom</li>
-                <li class="sort" data-sort="data-author" data-order="asc">Auteur</li>
-                <li class="sort" data-sort="data-date" data-order="asc">Date</li>
-                <li class="sort" data-sort="data-views" data-order="asc">Vues</li>
-                <li class="sort" data-sort="data-stars" data-order="asc">Étoiles</li>
+                <li class="sort" data-sort="name:desc">Nom</li>
+                <li class="sort" data-sort="author:asc">Auteur</li>
+                <li class="sort" data-sort="date:asc">Date</li>
+                <li class="sort" data-sort="views:asc">Vues</li>
+                <li class="sort" data-sort="stars:asc">Étoiles</li>
             </ul>
         </ul>
         {% if not drafts|length %}
@@ -78,9 +80,27 @@
 </ul>
 
 <script>
-    $('#all-drafts-list').mixitup({
-        layoutMode: "list",
-        effects: ["grayscale"]
+    $("#drafts-panel [data-load-target]").click(function()
+    {
+        $('#all-drafts-list').mixItUp('destroy');
+    });
+
+    $('#all-drafts-list').mixItUp({
+        layout: {
+            display: "block"
+        },
+        callbacks:
+        {
+            onMixEnd: function(){
+                Muffin.bindAjaxEvents();
+                Muffin.draft.init();
+            }
+        },
+        animation: {
+            duration: 400,
+            effects: 'translateZ(-360px) stagger(34ms) scale(0.01)',
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        }
     });
     Muffin.bindAjaxEvents();
     Muffin.draft.init();
