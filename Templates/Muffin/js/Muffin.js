@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-03-08
+   mNymdhy          shddmy hNd       Sorti du four le 2014-03-15
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -29946,7 +29946,6 @@ Muffin.draft.init = function()
 
 	$("[data-draft-load]").click(function(e)
 	{
-    	$('#all-drafts-list').mixItUp('destroy');
 		var elt = $(this);
 		var draft_id = $(this).attr("data-draft-id");
 		if (draft_id)
@@ -29986,7 +29985,6 @@ Muffin.draft.init = function()
 
     $('[data-action="edit"]').click(function()
     {
-    	$('#all-drafts-list').mixItUp('destroy');
         dr.show();
         mk.hide();
         $('[data-action="edit"]').hide();
@@ -30016,7 +30014,6 @@ Muffin.draft.init = function()
 
     $(".btn-draft-read[data-id]").click(function()
     {
-    	$('#all-drafts-list').mixItUp('destroy');
     	var elt = $(this);
 		var _id = elt.attr("data-id");
 		Muffin.draft.read(_id);
@@ -30032,7 +30029,6 @@ Muffin.draft.init = function()
 
     $("li[id^='draft-element-']").click(function()
     {
-    	$('#all-drafts-list').mixItUp('destroy');
     	var elt = $(this);
 		var _id = elt.attr("data-id");
 
