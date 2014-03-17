@@ -119,6 +119,8 @@ class User extends Controller
     {
         $datas = new Entities('c_42_time[login="'.$login.'"]');
         $q = "SELECT avg(duration) AS moy, date FROM `c_42_time` GROUP BY `date`";
+        // $q = "SELECT avg(duration) AS moy, date FROM `c_42_time`
+        //         WHERE DATE_SUB(CURDATE(),INTERVAL 14 DAY) < date GROUP BY `date`";
         $bd = Core::getBdd()->getDb();
         $r = $bd->prepare($q);
         $r->execute(array());
