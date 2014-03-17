@@ -1,88 +1,78 @@
-        <div role="simple-row" id="p-user-stats" class="loading p-stat">
-            <canvas id="p-user-chart" width="800" height="300"></canvas>
+        <div style="max-height: 250px;" role="simple-row" id="p-user-stats" class="loading p-stat">
         </div>
         <script type="text/javascript">
-        var globalLang = moment();
-        moment.lang('fr');
-        var dates = "{{stats_time.date|join(',')}}";
-        dates = _.map(dates.split(","), function(e){ return (moment(e).fromNow());});
-        var options = {
-            scaleShowGridLines: false,
-            scaleLabel : "<%=value%> h",
-            scaleFontColor: "rgba(0, 0, 0, 0.4)",
-            scaleOverride: true,
-            scaleSteps : 4,
-            scaleStepWidth : 6,
-            scaleStartValue : 0,
-            onAnimationComplete: function()
-            {
-                ctx = $("#p-user-chart").get(0).getContext("2d");
 
-                var i_user = "{{ infos.prenom }}";
-                var i_userl = ctx.measureText(i_user).width;
-                var g_user = "Moyenne de la promotion";
-                var g_userl = ctx.measureText(g_user).width;
-                var l_pad = 90;
-                var sp = 10;
-
-                ctx.fillStyle = "rgba(192, 41, 66, 1)";
-                ctx.beginPath();
-                ctx.arc(l_pad, sp, 6, 0, Math.PI*2, true);
-                ctx.closePath();
-                ctx.fill();
-                ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-                ctx.fillText(i_user, l_pad + sp + i_userl, sp);
-
-                ctx.fillStyle = "rgb(247, 228, 190)";
-                ctx.beginPath();
-                ctx.arc(l_pad, sp, 3, 0, Math.PI*2, true);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = "rgb(217, 91, 67)";
-                ctx.beginPath();
-                ctx.arc(l_pad + 4*sp + i_userl, sp, 6, 0, Math.PI*2, true);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = "rgb(247, 228, 190)";
-                ctx.beginPath();
-                ctx.arc(l_pad + 4*sp + i_userl, sp, 3, 0, Math.PI*2, true);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-                ctx.fillText(g_user, l_pad + 5*sp + g_userl + i_userl, sp);
-
-                ctx.font = "20px 'Lato', sans-serif";
-                var t = "TEMPS DE CONNEXION EN HEURES PAR JOUR";
-                var l = ctx.measureText(t);
-                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-                ctx.fillText(t, (800 - (800 - l.width) / 2), 50);
-            }
-        };
-
-        var data = {
-            labels : dates,
-            datasets : [
-                {
-                    fillColor : "rgba(192, 41, 66, 0.5)",
-                    strokeColor : "rgba(192, 41, 66, 1)",
-                    pointColor : "rgba(192, 41, 66, 1)",
-                    pointStrokeColor : "rgb(247, 228, 190)",
-                    data : [{{stats_time.duration|join(',')}}]
+$(function () {
+        $('#p-user-stats').highcharts({
+            chart: {
+                type: 'spline',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                height: 250
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            colors: [
+               'rgba(192, 41, 66, 1)',
+               'rgba(158, 72, 56, 0.5)'
+            ],
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    overflow: 'justify'
                 },
-                {
-                    fillColor : "rgba(216, 154, 126,0.3)",
-                    strokeColor : "rgba(158, 72, 56, 0.5)",
-                    pointColor : "rgb(217, 91, 67)",
-                    pointStrokeColor : "rgb(247, 228, 190)",
-                    data : [{{stats_time_avg|join(',')}}]
+                offset: 0,
+                lineColor: "rgba(0, 0, 0, 0.1)"
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                tickInterval: 6,
+                labels: {
+                format: '{value} h'
+                },
+                min: 0,
+                max: 24,
+                minorGridLineWidth: 0,
+                gridLineWidth: 0,
+                alternateGridColor: null
+            },
+            tooltip: {
+                valueSuffix: ' h'
+            },
+            plotOptions: {
+                spline: {
+                    lineWidth: 4,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    },
+                    pointInterval: 3600000*24, // one hour
+                    pointStart: Date.UTC(2014, 2, 14, 0, 0, 0)
                 }
-            ]
-        }
-        var ctx = $("#p-user-chart").get(0).getContext("2d");
+            },
+            series: [{
+                name: "{{ infos.prenom }}",
+                data: [{{stats_time.duration|join(',')}}]
 
-        new Chart(ctx).Line(data,options);
-
+            }, {
+                name: 'Promotion',
+                data: [{{stats_time_avg|join(',')}}]
+            }]
+            ,
+            navigation: {
+                menuItemStyle: {
+                    fontSize: '10px'
+                }
+            }
+        });
+    });
         </script>
