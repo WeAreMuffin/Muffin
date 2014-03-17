@@ -80,11 +80,10 @@
 </ul>
 
 <script>
-    $("#drafts-panel [data-load-target]").click(function()
+    $("[data-load-target]").click(function()
     {
         $('#all-drafts-list').mixItUp('destroy');
     });
-
     $('#all-drafts-list').mixItUp({
         layout: {
             display: "block"
