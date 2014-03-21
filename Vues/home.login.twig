@@ -57,6 +57,13 @@
                 $(".footer-container").hide();
                 muffin.bindLoginEvents();
 
+                $(document).keyup(function(event) {
+                    if (event.keyCode == 13)
+                    {
+                        $("button.progress-button").trigger("click");
+                    }
+                });
+
                 var sucessCallbackFunction = function(e, instance)
                 {
                     console.log("result : ", e);
