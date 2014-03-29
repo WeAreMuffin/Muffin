@@ -29681,7 +29681,7 @@ Muffin.draft.save = function()
 	$("[role='indicator']").html("Enregistrement...");
 	if ($("#draft-aera").val() != "")
 	{
-		var title = $("#aera > header > h1").html();
+		var title = $("#aera > header > h1").text();
 		var text = $("#draft-aera").val();
 
 		if ($("#aera").attr("data-draft-id") == undefined)
