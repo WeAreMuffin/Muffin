@@ -93,6 +93,27 @@
 			elt.html("<span class='simple-text right'><span class='icon-checkmark3'></span> Merci !</span>");
 		});
 	});
+	$("[data-action='delete-reunion']").click(function(){
+		var id = $(this).attr("data-reunion");
+		var btn = $(this);
+		var ctnr = btn.parent().parent().parent().find(".reunion-count");
+		var r=confirm("Vous etes sur le point de supprimer la réunion.\nCette action est irréversible.\nVoulez vous continuer ?");
+		if (r==true)
+		{
+			$.get('Reunion/delete/' + id, function(e)
+			{
+				if (e == "1")
+				{
+					ctnr.html(parseInt(ctnr.html()) + 1);
+					btn.html('<span class="icon-checkmark2"></span> Supprimé');
+					setTimeout(function()
+					{
+						btn.parent().parent().parent().slideUp().remove();
+					}, 500);
+				}
+			});
+		}
+	});
 	$("[data-toggle='tooltip']").tooltip();
 	Muffin.bindAjaxEvents();
 	</script>

@@ -11814,6 +11814,7 @@ a.reunion-mine {
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.4);
   border-radius: 3px;
+  font-size: 0.8em;
   float: none;
   padding: 6px 13px;
   margin-left: 20px;
@@ -11982,10 +11983,6 @@ a.reunion-mine {
 ul#draft-panel,
 ul.user-draft.draft-list {
   padding: 0px;
-}
-/* Mixitup details */
-#all-drafts-list .mix {
-  display: none;
 }
 .filter-sort-panel {
   padding: 0;

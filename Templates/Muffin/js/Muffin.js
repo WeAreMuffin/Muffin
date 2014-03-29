@@ -7,7 +7,7 @@
    sNd sy     mNNmdy   sdNNNNs        Muffin - v1.1.4     
    Nd        dNNNNNy      ysNm        ---------------
   sNh           ssy         mN                        
-   mNymdhy          shddmy hNd       Sorti du four le 2014-03-15
+   mNymdhy          shddmy hNd       Sorti du four le 2014-03-29
    sdNNNNNmsssssssssmNNNNNNNh             
      syyhddddddddddddddhhyss         Copyright (c) 2014 André Aubin
     sNNm shhh shhh shhd smNN                    
@@ -28783,7 +28783,7 @@ if (window.Muffin == undefined)
 
 function goToUrl(url, elt)
 {
-
+	Muffin.ajaxlock = true;
 	var highlightMenu = function(hash)
 	{
 		var e = $('ul[role="side-menu"] li a[data-load-target^="' + hash + '"]');
@@ -28836,6 +28836,7 @@ function goToUrl(url, elt)
 				data.addClass("complete");
 				treatResize();
 				window.location.hash = "/" + url;
+				Muffin.ajaxlock = false;
 			}, 100);
 	});
 
@@ -28884,6 +28885,7 @@ Muffin.href.locationHashChanged = function()
   |                         	     CORE FUNCTIONS                                  |
    ----------------------------------------------------------------------------------- */
 
+Muffin.ajaxlock = false;
 
 function bindAjaxEvents()
 {
@@ -28893,15 +28895,21 @@ function bindAjaxEvents()
 		var urlToGo = $(this).attr("data-load-target");
 		$(this).click(function()
 		{
-			$('#all-drafts-list').mixItUp('destroy');
-			if(history.pushState)
+			if (Muffin.ajaxlock)
 			{
-			    history.pushState(null, null, "#/" + urlToGo);
-			    goToUrl(urlToGo, $(this));
+				return false;
 			}
 			else
 			{
-				window.location.hash = "#/" + urlToGo;
+				if(history.pushState)
+				{
+				    history.pushState(null, null, "#/" + urlToGo);
+				    goToUrl(urlToGo, $(this));
+				}
+				else
+				{
+					window.location.hash = "#/" + urlToGo;
+				}
 			}
 		});
 	});
@@ -29993,7 +30001,13 @@ Muffin.draft.init = function()
 
     $('[data-action="save"]').click(function()
     {
+    	var elt = $(this);
+    	$(this).append('<span style="margin-left: 10px;color:#699B3B;" class="icon-checkmark"></span>');
         Muffin.draft.save();
+        setTimeout(function()
+        {
+        	elt.find("span").last().remove();
+        }, 500);
     });
 
     $(".triple-toggle input[type='radio']").change(function()
@@ -30021,10 +30035,15 @@ Muffin.draft.init = function()
 
     $(".btn-draft-delete").click(function()
     {
-    	var elt = $(this);
-    	var li = elt.parent();
-		var _id = elt.attr("data-id");
-		Muffin.draft.delete(_id, li);
+
+		var r=confirm("Vous etes sur le point de supprimer un draft.\nCette action est irréversible.\nVoulez vous continuer ?");
+		if (r==true)
+		{
+	    	var elt = $(this);
+	    	var li = elt.parent();
+			var _id = elt.attr("data-id");
+			Muffin.draft.delete(_id, li);
+		}
     });
 
     $("li[id^='draft-element-']").click(function()

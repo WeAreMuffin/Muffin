@@ -19,11 +19,11 @@
 
             <ul class="legend">
                 <li class="legend-title">Trier par</li>
-                <li class="sort" data-sort="name:desc">Nom</li>
-                <li class="sort" data-sort="author:asc">Auteur</li>
-                <li class="sort" data-sort="date:asc">Date</li>
-                <li class="sort" data-sort="views:asc">Vues</li>
-                <li class="sort" data-sort="stars:asc">Étoiles</li>
+                <li class="sort" data-sort="name">Nom</li>
+                <!-- <li class="sort" data-sort="author">Auteur</li> -->
+                <li class="sort" data-sort="date">Date</li>
+                <li class="sort" data-sort="views">Vues</li>
+                <li class="sort" data-sort="stars">Étoiles</li>
             </ul>
         </ul>
         {% if not drafts|length %}
@@ -35,7 +35,7 @@
             {% for draft in drafts %}
             {% if draft.draft_author == webdata.session.muffin_id or draft.public %}
                 <li
-                    class="mix {{ draft.draft_author == webdata.session.muffin_id ? 'draft-mine' : 'draft-other' }}"
+                    class="sortable {{ draft.draft_author == webdata.session.muffin_id ? 'draft-mine' : 'draft-other' }}"
                     id="draft-element-{{ draft.draft_id }}"
                     data-id="{{ draft.draft_id }}"
                     data-stars="{{ draft.c_drafts_like.id_draft_like|length }}"
@@ -60,7 +60,7 @@
                     {% if draft.draft_author == webdata.session.muffin_id %}
                         <a class="btn-draft-edit" data-draft-load data-draft-id="{{ draft.draft_id }}"><span class="icon-pencil"></span> Editer</a>
                         <a class="btn-draft-read" data-id="{{ draft.draft_id }}"><span class="icon-eye"></span> Lire</a>
-                        <!-- <a class="btn-draft-delete" data-id="{{ draft.draft_id }}"><span class="icon-trash"></span> Supprimer</a> -->
+                        <a class="btn-draft-delete" data-id="{{ draft.draft_id }}"><span class="icon-trash"></span> Supprimer</a>
                         {% if draft.public == 0 %}
                             <span class="right middle icon-lock"></span>
                         {% elseif draft.public == 1 %}
@@ -80,27 +80,79 @@
 </ul>
 
 <script>
-    $("[data-load-target]").click(function()
+sortIntList = function(attr)
+{
+    var root = $("#all-drafts-list");
+    var elements = $(".sortable");
+    elements = elements.sort(function(a, b)
     {
-        $('#all-drafts-list').mixItUp('destroy');
+        return (parseInt(a.getAttribute("data-" + attr)) < parseInt(b.getAttribute("data-" + attr)));
     });
-    $('#all-drafts-list').mixItUp({
-        layout: {
-            display: "block"
-        },
-        callbacks:
-        {
-            onMixEnd: function(){
-                Muffin.bindAjaxEvents();
-                Muffin.draft.init();
-            }
-        },
-        animation: {
-            duration: 400,
-            effects: 'translateZ(-360px) stagger(34ms) scale(0.01)',
-            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-        }
+    root.append(elements);
+}
+
+sortStrList = function(attr)
+{
+    var root = $("#all-drafts-list");
+    var elements = $(".sortable");
+    elements = elements.sort(function(a, b)
+    {
+        return (
+            a.getAttribute("data-" + attr).toLowerCase() >
+            b.getAttribute("data-" + attr).toLowerCase());
     });
+    root.append(elements);
+}
+
+sortDateList = function(attr)
+{
+    var root = $("#all-drafts-list");
+    var elements = $(".sortable");
+    elements = elements.sort(function(a, b)
+    {
+        return (a.getAttribute("data-" + attr) > b.getAttribute("data-" + attr));
+    });
+    root.append(elements);
+}
+
+getSortHashes = function()
+{
+    return {
+        name: sortStrList,
+        date: sortDateList,
+        views: sortIntList,
+        stars: sortIntList
+    };
+}
+
+
+$(".filter").click(function()
+{
+    $(this).parent().find(".active").removeClass("active");
+    $(this).addClass("active");
+    var to_keep = $(this).attr("data-filter");
+    if (to_keep == "all")
+    {
+        $(".sortable").show();
+    }
+    else
+    {
+        $(".sortable").show();
+        $(".sortable").not(to_keep).hide();
+    }
+});
+
+$(".sort").click(function()
+{
+    $(this).parent().find(".active").removeClass("active");
+    $(this).addClass("active");
+    var sort = $(this).attr("data-sort");
+    getSortHashes()[sort](sort);
+});
+
+</script>
+
+<script>
     Muffin.bindAjaxEvents();
     Muffin.draft.init();
     Muffin.draft.watch();
