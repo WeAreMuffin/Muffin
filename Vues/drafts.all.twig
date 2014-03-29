@@ -84,9 +84,8 @@ sortIntList = function(attr)
 {
     var root = $("#all-drafts-list");
     var elements = $(".sortable");
-    elements = elements.sort(function(a, b)
-    {
-        return (parseInt(a.getAttribute("data-" + attr)) < parseInt(b.getAttribute("data-" + attr)));
+    elements = _.sortBy(elements, function(value){
+        return parseInt(value.getAttribute("data-" + attr));
     });
     root.append(elements);
 }
@@ -95,11 +94,8 @@ sortStrList = function(attr)
 {
     var root = $("#all-drafts-list");
     var elements = $(".sortable");
-    elements = elements.sort(function(a, b)
-    {
-        return (
-            a.getAttribute("data-" + attr).toLowerCase() >
-            b.getAttribute("data-" + attr).toLowerCase());
+    elements = _.sortBy(elements, function(value){
+        return value.getAttribute("data-" + attr).toLowerCase();
     });
     root.append(elements);
 }
@@ -108,11 +104,19 @@ sortDateList = function(attr)
 {
     var root = $("#all-drafts-list");
     var elements = $(".sortable");
-    elements = elements.sort(function(a, b)
-    {
-        return (a.getAttribute("data-" + attr) > b.getAttribute("data-" + attr));
+    elements = _.sortBy(elements, function(value){
+        return value.getAttribute("data-" + attr).toLowerCase();
     });
     root.append(elements);
+}
+
+reverseList = function()
+{
+    var root = $("#all-drafts-list");
+    var elements = $(".sortable");
+    $(".sortable").each(function(index, el) {
+        root.prepend($(this));
+    });
 }
 
 getSortHashes = function()
@@ -144,10 +148,17 @@ $(".filter").click(function()
 
 $(".sort").click(function()
 {
-    $(this).parent().find(".active").removeClass("active");
-    $(this).addClass("active");
-    var sort = $(this).attr("data-sort");
-    getSortHashes()[sort](sort);
+    if ($(this).is(".active"))
+    {
+        reverseList();
+    }
+    else
+    {
+        $(this).parent().find(".active").removeClass("active");
+        $(this).addClass("active");
+        var sort = $(this).attr("data-sort");
+        getSortHashes()[sort](sort);
+    }
 });
 
 </script>
