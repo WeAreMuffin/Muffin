@@ -23,7 +23,7 @@ Un petit site web pour **partager** son **savoir** faire et **recueillir** les *
 
 ```bash
 # clone du depot avec mise a jour automatique des sous-modules
-git clone --recurse-submodules git@github.com:lambda2/Muffin.git
+git clone --recurse-submodules git@github.com:WeAreMuffin/Muffin.git
 ```
 - Ensuite, configurer l'acces à la base de données en éditant le fichier d'exemple `Muffin/Config/configuration.yml.sample`.
 Une fois les identifiants de connexion à la base de données définis, enregistrer le fichier sous le nom `Muffin/Config/configuration.yml`.
