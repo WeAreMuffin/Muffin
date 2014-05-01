@@ -38,7 +38,8 @@ vim Muffin/Config/configuration.yml
 La strucure vide de la base de données est disponible dans le fichier `Muffin/database.sql`.
 Pour des raisons de confidentialité évidentes, il n'y a **que** la structure.
 
-> Pour importer la base de données, il peut etre plus comfortable de passer par une interface graphique comme phpmyadmin.
+> Pour importer la base de données, il est conseillé d'effectuer l'import en ligne de commande, mê
+e si il semble peut être plus confortable de passer par une interface graphique comme PhpMyAdmin.
 
 3. Pour les développeurs
 ---------------------------
