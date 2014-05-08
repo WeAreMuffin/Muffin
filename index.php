@@ -13,11 +13,15 @@ require_once(__DIR__.'/Moon/loader.php');
 /**
  * @TODO: TO REMOVE IN PRODUCTION ENVIRONMENT
  */
-apc_clear_cache();
-apc_clear_cache("user");
+if (false and $_SERVER["REMOTE_ADDR"] != "62.210.34.161")
+    header("Location: uc.php");
+else
+{
+    apc_clear_cache();
+    apc_clear_cache("user");
 
-Core::startEngine();
+    Core::startEngine();
 
-Core::route();
-
+    Core::route();
+}
 ?>
