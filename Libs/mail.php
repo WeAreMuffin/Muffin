@@ -47,7 +47,7 @@ class MuffinMail
 	    "auth_reunion" => 8
 	);
 
-	protected $debug = true;
+	protected $debug = false;
 	protected $debug_addr = "contact@lambdaweb.fr";
 
 	protected $dest;
